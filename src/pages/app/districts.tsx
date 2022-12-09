@@ -16,9 +16,13 @@ import {
   useColorModeValue,
   TableCaption,
   Thead,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
 } from "@chakra-ui/react"
 
 import AppLayout from "@/layouts/AppLayout"
+import PageHeader from "@/components/PageHeader"
 
 const Districts = () => {
   const { t } = useTranslation()
@@ -32,9 +36,10 @@ const Districts = () => {
 
   return (
     <AppLayout hasPadding={false}>
-      <Heading size="lg" marginBottom={8} fontWeight="semibold" marginTop={8}>
-        {t("district")}
-      </Heading>
+      <PageHeader
+        title={t("districts")}
+        actions={<Button colorScheme="brand">Criar</Button>}
+      />
       <Box
         marginBottom={9}
         boxShadow={{ base: "none", sm: useColorModeValue("md", "md-dark") }}

@@ -34,6 +34,7 @@
     "changePassword": "Alterar sua senha",
     "changePasswordText": "Para alterar sua senha digite uma nova abaixo.",
     "changePasswordTokenError": "O token é inválido.",
-    "district": "Bairro"
+    "district": "Bairro",
+    "districts": "Bairros"
   }
 }
