@@ -1,18 +1,18 @@
 import { Box, Button, Flex, Heading, Image } from "@chakra-ui/react"
 
-interface StoreSectionProps {
+interface BrandProps {
   logo: string
   storeName: string
 }
 
-const StoreSection = ({ logo, storeName }: StoreSectionProps) => (
+const Brand = ({ logo, storeName }: BrandProps) => (
   <Flex marginBottom={12} overflowX="hidden" alignItems="center">
     <Image
       src={logo}
       alt={storeName}
       width="30px"
-      marginRight={3}
-      marginLeft="7px"
+      marginRight={4}
+      marginLeft="8px"
     />
     <Flex direction="column" alignItems="center">
       <Heading
@@ -28,4 +28,4 @@ const StoreSection = ({ logo, storeName }: StoreSectionProps) => (
   </Flex>
 )
 
-export default StoreSection
+export default Brand

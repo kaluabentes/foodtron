@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 
 import Menu from "@/components/Menu"
 import MenuItem from "@/components/Menu/MenuItem"
-import StoreSection from "@/components/StoreSection"
+import Brand from "@/components/Brand"
 import { bottomMenu, topMenu } from "@/config/appMenu"
 
 import MenuToggleButton from "./MenuToggleButton"
@@ -24,13 +24,14 @@ const SideNav = ({ isClosed = false, onToggle }: SideNavProps) => {
       width="100%"
       maxWidth={isClosed ? "68px" : "220px"}
       padding={3}
+      paddingTop={5}
       backgroundColor="gray.900"
       height="100vh"
       transition="0.5s"
       position="relative"
     >
       <MenuToggleButton onClick={onToggle} />
-      <StoreSection logo="/comet.svg" storeName="Comet" />
+      <Brand logo="/comet.svg" storeName="Comet" />
       <Flex direction="column" flexGrow={1} justifyContent="space-between">
         <Menu>
           {topMenu.map((item) => (

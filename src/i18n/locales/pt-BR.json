@@ -36,6 +36,7 @@
     "changePasswordTokenError": "O token é inválido.",
     "district": "Bairro",
     "districts": "Bairros",
-    "signinGoogle": "Fazer login com Google"
+    "signinGoogle": "Entrar com Google",
+    "signinEmail": "Fazer login com email"
   }
 }

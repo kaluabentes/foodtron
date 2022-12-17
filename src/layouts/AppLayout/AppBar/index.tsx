@@ -30,8 +30,8 @@ const AppBar = ({
     pr={2}
   >
     <BarIconButton onClick={onMenuClick} label="Menu" icon={<BiMenu />} />
-    <Flex alignItems="center">
-      <Image src="/comet.svg" alt="Comet" width="45px" />
+    <Flex alignItems="center" gap="10px">
+      <Image src="/comet.svg" alt="Comet" width="30px" />
       <Heading
         size="20px"
         fontWeight="700"

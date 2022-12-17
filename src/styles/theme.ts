@@ -21,8 +21,8 @@ const theme = extendTheme({
     useSystemColorMode: false,
   },
   fonts: {
-    heading: `'Poppins', sans-serif`,
-    body: `'Poppins', sans-serif`,
+    heading: `'Rubik', sans-serif`,
+    body: `'Rubik', sans-serif`,
   },
   styles: {
     global: (props: StyleFunctionProps) => ({
