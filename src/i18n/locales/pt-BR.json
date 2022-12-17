@@ -35,6 +35,7 @@
     "changePasswordText": "Para alterar sua senha digite uma nova abaixo.",
     "changePasswordTokenError": "O token é inválido.",
     "district": "Bairro",
-    "districts": "Bairros"
+    "districts": "Bairros",
+    "signinGoogle": "Fazer login com Google"
   }
 }

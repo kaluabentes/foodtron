@@ -4,9 +4,12 @@ import { Heading, Box, Button, useColorModeValue } from "@chakra-ui/react"
 import DataItem from "@/components/DataItem"
 import AppLayout from "@/layouts/AppLayout"
 import PageHeader from "@/components/PageHeader"
+import { getSession, useSession } from "next-auth/react"
+import { GetServerSideProps } from "next"
 
 const Profile = () => {
   const { t } = useTranslation()
+  const { data: session } = useSession()
 
   return (
     <AppLayout hasPadding={false}>
@@ -27,6 +30,25 @@ const Profile = () => {
       </Box>
     </AppLayout>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/signin",
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      session,
+    },
+  }
 }
 
 export default Profile

@@ -31,13 +31,7 @@ const AppBar = ({
   >
     <BarIconButton onClick={onMenuClick} label="Menu" icon={<BiMenu />} />
     <Flex alignItems="center">
-      <Image
-        src="/cashtron.svg"
-        alt="Cashtron"
-        height="45px"
-        minWidth="45px"
-        width="45px"
-      />
+      <Image src="/comet.svg" alt="Comet" width="45px" />
       <Heading
         size="20px"
         fontWeight="700"
@@ -45,7 +39,7 @@ const AppBar = ({
         color="white"
         whiteSpace="nowrap"
       >
-        Cashtron
+        Comet
       </Heading>
     </Flex>
     <BarIconButton

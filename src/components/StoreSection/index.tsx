@@ -10,12 +10,9 @@ const StoreSection = ({ logo, storeName }: StoreSectionProps) => (
     <Image
       src={logo}
       alt={storeName}
-      height="40px"
-      minWidth="40px"
-      width="40px"
-      objectFit="cover"
+      width="30px"
       marginRight={3}
-      marginLeft="2px"
+      marginLeft="7px"
     />
     <Flex direction="column" alignItems="center">
       <Heading

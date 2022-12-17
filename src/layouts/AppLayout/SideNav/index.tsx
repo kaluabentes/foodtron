@@ -30,12 +30,14 @@ const SideNav = ({ isClosed = false, onToggle }: SideNavProps) => {
       position="relative"
     >
       <MenuToggleButton onClick={onToggle} />
-      <StoreSection logo="/cashtron.svg" storeName="Cashtron" />
+      <StoreSection logo="/comet.svg" storeName="Comet" />
       <Flex direction="column" flexGrow={1} justifyContent="space-between">
         <Menu>
           {topMenu.map((item) => (
             <MenuItem
-              onClick={() => router.push(item.path)}
+              onClick={() =>
+                item.onClick ? item.onClick() : router.push(item.path)
+              }
               icon={item.icon}
               isActive={item.path === router.asPath}
               isClosed={isClosed}
@@ -47,7 +49,9 @@ const SideNav = ({ isClosed = false, onToggle }: SideNavProps) => {
         <Menu>
           {bottomMenu.map((item) => (
             <MenuItem
-              onClick={() => router.push(item.path)}
+              onClick={() =>
+                item.onClick ? item.onClick() : router.push(item.path)
+              }
               icon={item.icon}
               isActive={item.path === router.asPath}
               isClosed={isClosed}
