@@ -39,7 +39,11 @@ const AppLayout = ({
     <Flex direction={{ base: "column", md: "row" }}>
       {navigation}
       <Container
-        maxWidth={{ base: "100%", md: isFullWidth ? "100%" : "container.lg" }}
+        maxWidth={{
+          base: "100%",
+          sm: "container.sm",
+          md: "container.lg",
+        }}
         padding={hasPadding ? undefined : 0}
         as="main"
         marginTop={{ base: "60px", md: "0" }}
