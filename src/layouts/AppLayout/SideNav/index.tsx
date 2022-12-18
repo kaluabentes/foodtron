@@ -34,8 +34,9 @@ const SideNav = ({ isClosed = false, onToggle }: SideNavProps) => {
       <Brand logo="/comet.svg" storeName="Comet" />
       <Flex direction="column" flexGrow={1} justifyContent="space-between">
         <Menu>
-          {topMenu.map((item) => (
+          {topMenu.map((item, index) => (
             <MenuItem
+              key={String(index + 1)}
               onClick={() =>
                 item.onClick ? item.onClick() : router.push(item.path)
               }
@@ -48,8 +49,9 @@ const SideNav = ({ isClosed = false, onToggle }: SideNavProps) => {
           ))}
         </Menu>
         <Menu>
-          {bottomMenu.map((item) => (
+          {bottomMenu.map((item, index) => (
             <MenuItem
+              key={String(index + 1)}
               onClick={() =>
                 item.onClick ? item.onClick() : router.push(item.path)
               }

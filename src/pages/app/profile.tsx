@@ -5,13 +5,22 @@ import {
   Button,
   useColorModeValue,
   Image,
+  Flex,
+  Table,
+  Tr,
+  Td,
+  Spinner,
+  Tbody,
 } from "@chakra-ui/react"
+import { get } from "lodash"
 
 import DataItem from "@/components/DataItem"
 import AppLayout from "@/layouts/AppLayout"
 import PageHeader from "@/components/PageHeader"
 import { getSession, useSession } from "next-auth/react"
 import { GetServerSideProps } from "next"
+import { useEffect, useState } from "react"
+import useIsPageLoaded from "@/hooks/useIsPageLoaded"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context)
@@ -35,24 +44,47 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Profile = () => {
   const { t } = useTranslation()
   const { data: session } = useSession()
+  const isPageLoaded = useIsPageLoaded()
+  const boxShadow = useColorModeValue("md", "md-dark")
+  const boxBackground = useColorModeValue("white", "gray.800")
 
   return (
-    <AppLayout hasPadding={false}>
+    <AppLayout>
       <PageHeader
         title={t("profile")}
         actions={<Button colorScheme="brand">Editar</Button>}
       />
-      <Box
-        marginBottom={9}
-        boxShadow={{ base: "none", sm: useColorModeValue("md", "md-dark") }}
-        backgroundColor={useColorModeValue("white", "gray.800")}
-        borderRadius={{ base: "none", sm: 10 }}
-        padding={5}
-      >
-        <DataItem label={t("name")} value={session?.user?.name} />
-        <DataItem label={t("email")} value={session?.user?.email} />
-        {/* <DataItem label={t("role")} value="Administrador" /> */}
-      </Box>
+      {!isPageLoaded && (
+        <Flex padding={10} align="center" justifyContent="center">
+          <Spinner colorScheme="brand" />
+        </Flex>
+      )}
+      {isPageLoaded && (
+        <Flex
+          boxShadow={boxShadow}
+          backgroundColor={boxBackground}
+          borderRadius={10}
+          direction="column"
+          gap="8px"
+        >
+          <Table>
+            <Tbody>
+              <Tr>
+                <Td>
+                  <strong>{t("name")}</strong>
+                </Td>
+                <Td>{get(session, "user.name", "")}</Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <strong>{t("email")}</strong>
+                </Td>
+                <Td>{get(session, "user.email", "")}</Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </Flex>
+      )}
     </AppLayout>
   )
 }

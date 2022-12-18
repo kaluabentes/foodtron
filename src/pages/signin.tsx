@@ -72,16 +72,17 @@ const Signin = ({ providers }: SigninProps) => {
             name="email"
             onChange={formik.handleChange}
             value={formik.values.email}
+            placeholder="example@domain.com"
           />
           <FormErrorMessage fontSize="xs">
             {formik.errors.email}
           </FormErrorMessage>
         </FormControl>
-        <Button variant="brand" width="full" type="submit" marginBottom={5}>
+        <Button variant="brand" width="full" type="submit" marginBottom={7}>
           {`${t("signin")} `}
         </Button>
       </form>
-      <Flex align="center" gap="20px" marginBottom={5}>
+      <Flex align="center" gap="20px" marginBottom={7}>
         <Box flex="1" height="0.5px" background="gray.300" />
         <Text color="gray.300">or</Text>
         <Box flex="1" height="0.5px" background="gray.300" />

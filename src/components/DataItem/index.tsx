@@ -19,8 +19,7 @@ const DataItem = ({ label, value }: DataItemProps) => (
       "1px solid rgba(0, 0, 0, 0.1)",
       "1px solid rgba(219, 218, 218, 0.1)"
     )}
-    paddingBottom={5}
-    paddingTop={5}
+    paddingBottom="8px"
     _last={{ borderBottom: "none" }}
   >
     <Box width="30%">
