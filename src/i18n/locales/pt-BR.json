@@ -22,6 +22,7 @@
     "passwordMatchMessage": "As senhas devem ser iguais",
     "requiredMessage": "Este campo é obrigatório",
     "emailInUse": "Endereço de email já está sendo utilizado",
+    "invalidEmail": "Formato de email inválido",
     "USER": "Usuário",
     "ADMIN": "Administrador",
     "forgotPasswordEmailSent": "Um email de alteração de senha foi enviado para <0>{{email}}</0>",
