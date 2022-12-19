@@ -48,6 +48,12 @@ const Profile = () => {
   const boxShadow = useColorModeValue("md", "md-dark")
   const boxBackground = useColorModeValue("white", "gray.800")
 
+  useEffect(() => {
+    if (!session?.user?.name) {
+      window.location.reload()
+    }
+  }, [])
+
   return (
     <AppLayout>
       <PageHeader

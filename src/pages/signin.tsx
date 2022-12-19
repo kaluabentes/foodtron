@@ -1,9 +1,8 @@
-import { Trans, useTranslation } from "react-i18next"
+import { useTranslation } from "react-i18next"
 import {
   Alert,
   AlertDescription,
   AlertIcon,
-  AlertTitle,
   Box,
   Button,
   Flex,
@@ -13,12 +12,9 @@ import {
   Heading,
   Input,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react"
-import { useFormik } from "formik"
 import * as Yup from "yup"
-import { getProviders, signIn } from "next-auth/react"
-import { GetServerSideProps } from "next"
+import { signIn } from "next-auth/react"
 import { FcGoogle } from "react-icons/fc"
 import { useRouter } from "next/router"
 import { useState } from "react"
@@ -26,38 +22,23 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 
 import AuthLayout from "@/layouts/AuthLayout"
-import Link from "@/components/Link"
-
-interface SigninProps {
-  providers: {
-    google: any
-  }
-}
 
 interface SignInData {
   email: string
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const providers = await getProviders()
-
-  return {
-    props: {
-      providers,
-    },
-  }
-}
-
-const Signin = ({ providers }: SigninProps) => {
+const Signin = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const [isLoadingEmail, setIsLoadingEmail] = useState(false)
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false)
+
   const signinValidationSchema = Yup.object({
     email: Yup.string()
       .email(t("invalidEmail")!)
       .required(t("requiredMessage")!),
   })
+
   const {
     register,
     handleSubmit,
@@ -70,7 +51,7 @@ const Signin = ({ providers }: SigninProps) => {
     setIsLoadingEmail(true)
     signIn("email", {
       email: data.email,
-      callbackUrl: "/app/profile",
+      callbackUrl: "/complete-signin",
     })
   }
 
@@ -81,10 +62,15 @@ const Signin = ({ providers }: SigninProps) => {
       </Heading>
       {router.query.error === "OAuthCallback" ||
         (router.query.error === "OAuthAccountNotLinked" && (
-          <Alert status="error" borderRadius="md" marginBottom={5}>
+          <Alert
+            status="error"
+            borderRadius="md"
+            marginBottom={5}
+            alignItems="start"
+          >
             <AlertIcon />
             <AlertDescription>
-              Você já utilizou este email, entre abaixo.
+              Para logar entre com o seu email abaixo.
             </AlertDescription>
           </Alert>
         ))}
@@ -121,7 +107,7 @@ const Signin = ({ providers }: SigninProps) => {
         isLoading={isLoadingGoogle}
         onClick={() => {
           setIsLoadingGoogle(true)
-          signIn(providers.google.id, { callbackUrl: "/app/profile" })
+          signIn("google", { callbackUrl: "/complete-signin" })
         }}
       >
         {`${t("signinGoogle")} `}

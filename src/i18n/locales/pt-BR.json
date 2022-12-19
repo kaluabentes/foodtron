@@ -38,6 +38,8 @@
     "district": "Bairro",
     "districts": "Bairros",
     "signinGoogle": "Entrar com Google",
-    "signinEmail": "Fazer login com email"
+    "signinEmail": "Fazer login com email",
+    "completeSignin": "Complete o cadastro",
+    "userName": "Nome do usuário"
   }
 }
