@@ -24,7 +24,7 @@ const AppMenu = ({ isOpen, onClose }: AppMenuProps) => {
         maxWidth="220px"
         padding={3}
         backgroundColor="white"
-        height="100vh"
+        height="100%"
         transition="0.3s"
         position="fixed"
         top="0"

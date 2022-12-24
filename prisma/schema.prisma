@@ -43,6 +43,7 @@ model User {
   name          String?
   email         String?   @unique
   role          String?
+  onBoardingStep String?
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -65,5 +66,38 @@ model Store {
   id    String @id @default(cuid())
   name  String
   logo  String
+  cover String
+  address String
+  whatsapp String
+  facebook String
+  instagram String
+  minimumOrderPrice Decimal
+  isClosed Boolean
   users User[]
+  schedules StoreSchedule[]
+  deliveryLocations StoreDeliveryLocation[]
+}
+
+model StoreSchedule {
+  id    String @id @default(cuid())
+  weekDay String
+  start Int
+  end Int
+  isScheduledClosing Boolean
+  storeId       String
+  store         Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@index([storeId])
+}
+
+model StoreDeliveryLocation {
+  id    String @id @default(cuid())
+  district String
+  tax Decimal
+  estimatedTime Int
+
+  storeId       String
+  store         Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@index([storeId])
 }

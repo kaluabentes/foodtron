@@ -3,9 +3,15 @@ import { ReactNode } from "react"
 
 interface MenuProps {
   children: ReactNode
+  isFixed?: boolean
+  position?: "bottom" | "top"
 }
 
-const Menu = ({ children }: MenuProps) => (
+const Menu = ({
+  children,
+  isFixed = false,
+  position = "bottom",
+}: MenuProps) => (
   <Flex
     as="ul"
     direction="column"
@@ -13,6 +19,9 @@ const Menu = ({ children }: MenuProps) => (
     margin={0}
     gap={2}
     overflowX="hidden"
+    position={isFixed ? "fixed" : "static"}
+    top={position === "top" ? "0px" : "initial"}
+    bottom={position === "bottom" ? "0px" : "initial"}
   >
     {children}
   </Flex>

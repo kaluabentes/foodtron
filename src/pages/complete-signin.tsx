@@ -117,6 +117,9 @@ const CompleteSignin = () => {
             {errors.userName?.message}
           </FormErrorMessage>
         </FormControl>
+        <Heading size="sm" marginBottom={5}>
+          {t("storeInformation")}
+        </Heading>
         <FormControl
           isInvalid={Boolean(errors.storeName?.message)}
           marginBottom={4}

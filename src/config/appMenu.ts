@@ -7,8 +7,9 @@ import {
   BiMoney,
   BiCollection,
   BiGridAlt,
-  BiExit,
+  BiLogOut,
   BiMap,
+  BiHomeHeart,
 } from "react-icons/bi"
 
 interface RouteItem {
@@ -39,28 +40,23 @@ export const topMenu: RouteItem[] = [
     label: "Bairros",
     path: "/app/districts",
   },
+]
+
+export const bottomMenu: RouteItem[] = [
+  {
+    icon: BiHomeHeart,
+    label: "Loja",
+    path: "/app/store",
+  },
   {
     icon: BiUser,
     label: "Perfil",
     path: "/app/profile",
   },
-]
-
-export const bottomMenu: RouteItem[] = [
   {
-    icon: BiHelpCircle,
-    label: "Ajuda",
-    path: "/app/help",
-  },
-  {
-    icon: BiCog,
-    label: "Configurações",
-    path: "/app/help",
-  },
-  {
-    icon: BiExit,
+    icon: BiLogOut,
     label: "Sair",
     path: "/app/logout",
-    onClick: () => signOut(),
+    onClick: () => signOut({ callbackUrl: "/signin" }),
   },
 ]

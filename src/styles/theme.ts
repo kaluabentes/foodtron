@@ -23,6 +23,7 @@ const theme = extendTheme({
         }),
         outline: {
           borderColor: "gray.300",
+          background: "white",
         },
       },
     },

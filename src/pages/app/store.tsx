@@ -25,14 +25,14 @@ import useIsPageLoaded from "@/hooks/useIsPageLoaded"
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context)
 
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: "/signin",
-  //       permanent: false,
-  //     },
-  //   }
-  // }
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/signin",
+        permanent: false,
+      },
+    }
+  }
 
   return {
     props: {
@@ -48,16 +48,16 @@ const Profile = () => {
   const boxShadow = useColorModeValue("md", "md-dark")
   const boxBackground = useColorModeValue("white", "gray.800")
 
-  // useEffect(() => {
-  //   if (!session?.user?.name) {
-  //     window.location.reload()
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (!session?.user?.name) {
+      window.location.reload()
+    }
+  }, [])
 
   return (
     <AppLayout>
       <PageHeader
-        title={t("profile")}
+        title={t("store")}
         actions={<Button colorScheme="brand">Editar</Button>}
       />
       {!isPageLoaded && (
@@ -80,12 +80,6 @@ const Profile = () => {
                   <strong>{t("name")}</strong>
                 </Td>
                 <Td>{get(session, "user.name", "")}</Td>
-              </Tr>
-              <Tr>
-                <Td>
-                  <strong>{t("email")}</strong>
-                </Td>
-                <Td>{get(session, "user.email", "")}</Td>
               </Tr>
             </Tbody>
           </Table>

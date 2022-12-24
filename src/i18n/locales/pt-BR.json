@@ -40,6 +40,10 @@
     "signinGoogle": "Entrar com Google",
     "signinEmail": "Fazer login com email",
     "completeSignin": "Complete o cadastro",
-    "userName": "Nome do usuário"
+    "userName": "Nome do usuário",
+    "restaurantData": "Dados do restaurante",
+    "store": "Loja",
+    "logout": "Logout",
+    "storeInformation": "Informações da empresa"
   }
 }
