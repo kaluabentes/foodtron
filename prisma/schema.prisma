@@ -64,15 +64,17 @@ model VerificationToken {
 
 model Store {
   id    String @id @default(cuid())
-  name  String
-  logo  String
-  cover String
-  address String
-  whatsapp String
-  facebook String
-  instagram String
-  minimumOrderPrice Decimal
-  isClosed Boolean
+  name  String?
+  logo  String?
+  cover String?
+  address String?
+  whatsapp String?
+  facebook String?
+  instagram String?
+  subdomain String?
+  customDomain String?
+  minimumOrderPrice Decimal?
+  isClosed Boolean?
   users User[]
   schedules StoreSchedule[]
   deliveryLocations StoreDeliveryLocation[]

@@ -4,10 +4,15 @@ import * as Yup from "yup"
 import { authOptions } from "./[...nextauth]"
 
 import prisma from "@/lib/prisma"
+import axios from "axios"
+
+const PROJECT_ID = process.env.PROJECT_ID_VERCEL!
+const VERCEL_BEARER_TOKEN = process.env.VERCEL_BEARER_TOKEN!
 
 const schema = Yup.object({
   userName: Yup.string().required(),
   storeName: Yup.string().required(),
+  subdomain: Yup.string().required(),
 })
 
 const completeSignin = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -27,9 +32,24 @@ const completeSignin = async (req: NextApiRequest, res: NextApiResponse) => {
     const store = await prisma.store.create({
       data: {
         name: req.body.storeName,
-        logo: "",
+        subdomain: req.body.subdomain,
       },
     })
+
+    const domainName = `${req.body.subdomain}.vercel.app`
+    const domainApiUrl = `https://api.vercel.com/projects/${PROJECT_ID}/domains`
+    const domainResponse = await axios.post(
+      domainApiUrl,
+      {
+        name: domainName,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${VERCEL_BEARER_TOKEN}`,
+        },
+      }
+    )
+    console.log("domainResponse", domainResponse.data)
 
     const updateUser = await prisma.user.update({
       where: {

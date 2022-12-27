@@ -14,7 +14,7 @@ const Home = () => {
         variant="brand"
         width="full"
         type="submit"
-        onClick={() => router.push("/signin")}
+        onClick={() => router.push("/auth/signin")}
       >
         {`${t("signin")} `}
       </Button>

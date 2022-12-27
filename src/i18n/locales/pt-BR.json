@@ -44,6 +44,9 @@
     "restaurantData": "Dados do restaurante",
     "store": "Loja",
     "logout": "Logout",
-    "storeInformation": "Informações da empresa"
+    "storeInformation": "Informações da empresa",
+    "subdomain": "Subdomínio",
+    "cover": "Capa",
+    "logo": "Logo"
   }
 }

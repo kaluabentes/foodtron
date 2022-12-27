@@ -57,6 +57,6 @@ export const bottomMenu: RouteItem[] = [
     icon: BiLogOut,
     label: "Sair",
     path: "/app/logout",
-    onClick: () => signOut({ callbackUrl: "/signin" }),
+    onClick: () => signOut({ callbackUrl: "/auth/signin" }),
   },
 ]

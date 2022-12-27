@@ -14,6 +14,7 @@ const AuthLayout = ({ children, isLarge = false }: AuthLayoutProps) => (
   >
     <Box
       height={{ base: "100vh", sm: "initial" }}
+      overflowY={{ base: "auto", sm: "initial" }}
       width="100%"
       maxWidth={isLarge ? "600px" : "400px"}
       backgroundColor={useColorModeValue("white", "gray.800")}

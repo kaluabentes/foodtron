@@ -14,7 +14,7 @@ import {
   Text,
 } from "@chakra-ui/react"
 import * as Yup from "yup"
-import { signIn } from "next-auth/react"
+import { getSession, signIn } from "next-auth/react"
 import { FcGoogle } from "react-icons/fc"
 import { useRouter } from "next/router"
 import { useState } from "react"
@@ -22,6 +22,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 
 import AuthLayout from "@/layouts/AuthLayout"
+import { GetServerSideProps } from "next"
 
 interface SignInData {
   email: string
@@ -51,7 +52,7 @@ const Signin = () => {
     setIsLoadingEmail(true)
     signIn("email", {
       email: data.email,
-      callbackUrl: "/complete-signin",
+      callbackUrl: "/auth/complete-signin",
     })
   }
 
@@ -107,7 +108,7 @@ const Signin = () => {
         isLoading={isLoadingGoogle}
         onClick={() => {
           setIsLoadingGoogle(true)
-          signIn("google", { callbackUrl: "/complete-signin" })
+          signIn("google", { callbackUrl: "/auth/complete-signin" })
         }}
       >
         {`${t("signinGoogle")} `}

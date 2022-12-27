@@ -12,6 +12,8 @@ import {
   FormLabel,
   Heading,
   Input,
+  InputGroup,
+  InputRightAddon,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react"
@@ -28,10 +30,14 @@ import axios from "axios"
 
 import AuthLayout from "@/layouts/AuthLayout"
 import prisma from "@/lib/prisma"
+import StoreCoverAvatar from "@/components/StoreCoverAvatar"
 
-interface SignInData {
+export interface CompleteSignInData {
   storeName: string
   userName: string
+  subdomain: string
+  cover: string
+  logo: string
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -66,26 +72,29 @@ const CompleteSignin = () => {
   const signinValidationSchema = Yup.object({
     storeName: Yup.string().required(t("requiredMessage")!),
     userName: Yup.string().required(t("requiredMessage")!),
+    subdomain: Yup.string().required(t("requiredMessage")!),
   })
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInData>({
+    setValue,
+  } = useForm<CompleteSignInData>({
     resolver: yupResolver(signinValidationSchema),
     defaultValues: {
-      userName: session?.user?.name || "",
+      userName: session?.user?.name!,
     },
   })
 
-  const handleSubmitCallback = async (data: SignInData) => {
+  const handleSubmitCallback = async (data: CompleteSignInData) => {
     setIsLoadingEmail(true)
 
     try {
       await axios.post("/api/auth/complete-signin", {
         storeName: data.storeName,
         userName: data.userName,
+        subdomain: data.subdomain,
       })
 
       setTimeout(() => {
@@ -96,8 +105,14 @@ const CompleteSignin = () => {
     }
   }
 
+  useEffect(() => {
+    if (session?.user?.name) {
+      setValue("userName", session.user.name)
+    }
+  }, [session?.user?.name])
+
   return (
-    <AuthLayout>
+    <AuthLayout isLarge>
       <Heading size="lg" marginBottom={5} fontWeight="semibold">
         {t("completeSignin")}
       </Heading>
@@ -105,7 +120,7 @@ const CompleteSignin = () => {
       <form onSubmit={handleSubmit(handleSubmitCallback)}>
         <FormControl
           isInvalid={Boolean(errors.userName?.message)}
-          marginBottom={4}
+          marginBottom={10}
         >
           <FormLabel htmlFor="userName">{t("userName")}</FormLabel>
           <Input
@@ -120,20 +135,47 @@ const CompleteSignin = () => {
         <Heading size="sm" marginBottom={5}>
           {t("storeInformation")}
         </Heading>
-        <FormControl
-          isInvalid={Boolean(errors.storeName?.message)}
-          marginBottom={4}
+        <Box
+          borderColor="blackAlpha.200"
+          borderWidth="1px"
+          borderStyle="solid"
+          boxShadow="md"
+          borderRadius="md"
+          marginBottom={5}
+          overflow="hidden"
         >
-          <FormLabel htmlFor="storeName">{t("storeName")}</FormLabel>
-          <Input
-            id="storeName"
-            placeholder="Padaria do Seu José"
-            {...register("storeName")}
-          />
-          <FormErrorMessage fontSize="xs">
-            {errors.storeName?.message}
-          </FormErrorMessage>
-        </FormControl>
+          <StoreCoverAvatar register={register} errors={errors} />
+          <Box p={{ base: 4, md: 6 }}>
+            <FormControl
+              isInvalid={Boolean(errors.storeName?.message)}
+              marginBottom={4}
+            >
+              <FormLabel htmlFor="storeName">{t("storeName")}</FormLabel>
+              <Input
+                id="storeName"
+                placeholder="Padaria do Seu José"
+                {...register("storeName")}
+              />
+              <FormErrorMessage fontSize="xs">
+                {errors.storeName?.message}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={Boolean(errors.subdomain?.message)}>
+              <FormLabel htmlFor="subdomain">{t("subdomain")}</FormLabel>
+              <InputGroup>
+                <Input
+                  id="subdomain"
+                  placeholder="seujose"
+                  {...register("subdomain")}
+                />
+                <InputRightAddon children=".vercel.app" />
+              </InputGroup>
+              <FormErrorMessage fontSize="xs">
+                {errors.subdomain?.message}
+              </FormErrorMessage>
+            </FormControl>
+          </Box>
+        </Box>
         <Button
           isLoading={isLoadingEmail}
           width="full"

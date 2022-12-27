@@ -1,25 +1,26 @@
 import { GetStaticProps } from "next"
 import React from "react"
 
+import prisma from "@/lib/prisma"
+
 interface IndexProps {
   site: string
 }
 
 export const getStaticPaths = async () => {
+  const stores = await prisma.store.findMany()
+
   return {
-    paths: [
-      {
-        params: {
-          site: "kalux",
-        },
+    paths: stores.map((store) => ({
+      params: {
+        site: store.subdomain,
       },
-    ],
+    })),
     fallback: true,
   }
 }
 
 export const getStaticProps = async ({ params }: any) => {
-  console.log(params)
   return {
     props: {
       site: params.site,
