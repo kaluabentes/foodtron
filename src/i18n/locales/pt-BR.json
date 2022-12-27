@@ -47,6 +47,21 @@
     "storeInformation": "Informações da empresa",
     "subdomain": "Subdomínio",
     "cover": "Capa",
-    "logo": "Logo"
+    "logo": "Logo",
+    "subdomainAlreadyInUse": "Subdomínio já em uso",
+    "admin": "Administrador",
+    "user": "Usuário",
+    "closed": "Fechado",
+    "open": "Aberto",
+    "yes": "Sim",
+    "no": "Não",
+    "address": "Endereço",
+    "whatsapp": "Whatsapp",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "customDomain": "Domínio personalizado",
+    "minimumOrderPrice": "Preço mínimo por pedido",
+    "isClosed": "Está fechado",
+    "isOpen": "Está aberto"
   }
 }

@@ -21,38 +21,44 @@ import { getSession, useSession } from "next-auth/react"
 import { GetServerSideProps } from "next"
 import { useEffect, useState } from "react"
 import useIsPageLoaded from "@/hooks/useIsPageLoaded"
+import auth from "@/middlewares/auth"
+import { Store } from "@prisma/client"
+
+interface StoreProps {
+  store: Store
+}
+
+const APEX_DOMAIN = process.env.NEXT_PUBLIC_APEX_DOMAIN!
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context)
+  const authResult = await auth(context)
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/auth/signin",
-        permanent: false,
-      },
-    }
+  if (authResult.redirect) {
+    return authResult
   }
+
+  const user = await prisma.user.findFirst({
+    where: {
+      email: authResult.props.session.user?.email,
+    },
+    include: {
+      store: true,
+    },
+  })
 
   return {
     props: {
-      session,
+      store: user?.store,
     },
   }
 }
 
-const Profile = () => {
+const Store = ({ store }: StoreProps) => {
   const { t } = useTranslation()
   const { data: session } = useSession()
   const isPageLoaded = useIsPageLoaded()
   const boxShadow = useColorModeValue("md", "md-dark")
   const boxBackground = useColorModeValue("white", "gray.800")
-
-  useEffect(() => {
-    if (!session?.user?.name) {
-      window.location.reload()
-    }
-  }, [])
 
   return (
     <AppLayout>
@@ -77,9 +83,75 @@ const Profile = () => {
             <Tbody>
               <Tr>
                 <Td>
-                  <strong>{t("name")}</strong>
+                  <Box as="span" fontWeight="500">
+                    {t("name")}
+                  </Box>
                 </Td>
-                <Td>{get(session, "user.name", "")}</Td>
+                <Td>{store.name}</Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <Box as="span" fontWeight="500">
+                    {t("address")}
+                  </Box>
+                </Td>
+                <Td>{store.address}</Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <Box as="span" fontWeight="500">
+                    {t("whatsapp")}
+                  </Box>
+                </Td>
+                <Td>{store.whatsapp}</Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <Box as="span" fontWeight="500">
+                    {t("facebook")}
+                  </Box>
+                </Td>
+                <Td>{store.facebook}</Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <Box as="span" fontWeight="500">
+                    {t("instagram")}
+                  </Box>
+                </Td>
+                <Td>{store.instagram}</Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <Box as="span" fontWeight="500">
+                    {t("subdomain")}
+                  </Box>
+                </Td>
+                <Td>{`${store.subdomain}.${APEX_DOMAIN}`}</Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <Box as="span" fontWeight="500">
+                    {t("customDomain")}
+                  </Box>
+                </Td>
+                <Td>{store.customDomain}</Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <Box as="span" fontWeight="500">
+                    {t("minimumOrderPrice")}
+                  </Box>
+                </Td>
+                <Td>{String(store.minimumOrderPrice)}</Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <Box as="span" fontWeight="500">
+                    {t("isOpen")}
+                  </Box>
+                </Td>
+                <Td>{store.isOpen ? t("yes") : t("no")}</Td>
               </Tr>
             </Tbody>
           </Table>
@@ -89,4 +161,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default Store

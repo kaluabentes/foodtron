@@ -8,6 +8,7 @@ import axios from "axios"
 
 const PROJECT_ID = process.env.PROJECT_ID_VERCEL!
 const VERCEL_BEARER_TOKEN = process.env.VERCEL_BEARER_TOKEN!
+const APEX_DOMAIN = process.env.NEXT_PUBLIC_APEX_DOMAIN!
 
 const schema = Yup.object({
   userName: Yup.string().required(),
@@ -36,9 +37,9 @@ const completeSignin = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     })
 
-    const domainName = `${req.body.subdomain}.vercel.app`
+    const domainName = `${req.body.subdomain}.${APEX_DOMAIN}`
     const domainApiUrl = `https://api.vercel.com/projects/${PROJECT_ID}/domains`
-    const domainResponse = await axios.post(
+    await axios.post(
       domainApiUrl,
       {
         name: domainName,
@@ -49,14 +50,14 @@ const completeSignin = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       }
     )
-    console.log("domainResponse", domainResponse.data)
 
-    const updateUser = await prisma.user.update({
+    await prisma.user.update({
       where: {
         email: session.user?.email!,
       },
       data: {
         name: req.body.userName,
+        role: "admin",
         store: {
           connect: {
             id: store.id,
@@ -65,13 +66,14 @@ const completeSignin = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     })
 
-    // Criar store
-    console.log("updateUser", updateUser)
-
     return res.status(200).send({
       status: "ok",
     })
   } catch (error: any) {
+    if (error.response) {
+      return res.status(400).send(error.response.data)
+    }
+
     return res.status(400).send(error)
   }
 }

@@ -21,38 +21,43 @@ import { getSession, useSession } from "next-auth/react"
 import { GetServerSideProps } from "next"
 import { useEffect, useState } from "react"
 import useIsPageLoaded from "@/hooks/useIsPageLoaded"
+import auth from "@/middlewares/auth"
+import prisma from "@/lib/prisma"
+import { User } from "@prisma/client"
+
+interface ProfileProps {
+  user: User
+}
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context)
+  const authResult = await auth(context)
 
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: "/auth/signin",
-  //       permanent: false,
-  //     },
-  //   }
-  // }
+  if (authResult.redirect) {
+    return authResult
+  }
+
+  const user = await prisma.user.findFirst({
+    where: {
+      email: authResult.props.session.user?.email,
+    },
+  })
 
   return {
     props: {
-      session,
+      user: user,
     },
   }
 }
 
-const Profile = () => {
+const Profile = ({ user }: ProfileProps) => {
   const { t } = useTranslation()
   const { data: session } = useSession()
   const isPageLoaded = useIsPageLoaded()
   const boxShadow = useColorModeValue("md", "md-dark")
   const boxBackground = useColorModeValue("white", "gray.800")
-
-  // useEffect(() => {
-  //   if (!session?.user?.name) {
-  //     window.location.reload()
-  //   }
-  // }, [])
+  const Role = new Map()
+  Role.set("admin", t("admin"))
+  Role.set("user", t("user"))
 
   return (
     <AppLayout>
@@ -77,15 +82,27 @@ const Profile = () => {
             <Tbody>
               <Tr>
                 <Td>
-                  <strong>{t("name")}</strong>
+                  <Box as="span" fontWeight="500">
+                    {t("name")}
+                  </Box>
                 </Td>
-                <Td>{get(session, "user.name", "")}</Td>
+                <Td>{get(user, "name", "")}</Td>
               </Tr>
               <Tr>
                 <Td>
-                  <strong>{t("email")}</strong>
+                  <Box as="span" fontWeight="500">
+                    {t("email")}
+                  </Box>
                 </Td>
-                <Td>{get(session, "user.email", "")}</Td>
+                <Td>{get(user, "email", "")}</Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <Box as="span" fontWeight="500">
+                    {t("role")}
+                  </Box>
+                </Td>
+                <Td>{Role.get(get(user, "role", ""))}</Td>
               </Tr>
             </Tbody>
           </Table>

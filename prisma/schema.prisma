@@ -42,7 +42,7 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
-  role          String?
+  role          String? @default("user")
   onBoardingStep String?
   emailVerified DateTime?
   image         String?
@@ -71,10 +71,10 @@ model Store {
   whatsapp String?
   facebook String?
   instagram String?
-  subdomain String?
+  subdomain String? @unique
   customDomain String?
   minimumOrderPrice Decimal?
-  isClosed Boolean?
+  isOpen Boolean? @default(false)
   users User[]
   schedules StoreSchedule[]
   deliveryLocations StoreDeliveryLocation[]

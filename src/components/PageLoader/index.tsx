@@ -34,7 +34,7 @@ export default function PageLoader() {
       alignItems="center"
       height="100vh"
       width="100vw"
-      background="white"
+      background="gray.100"
       visibility={isShown ? "visible" : "hidden"}
       opacity={isShown ? "1" : "0"}
       transition="0.5s"
@@ -43,7 +43,12 @@ export default function PageLoader() {
       top={0}
       left={0}
     >
-      <Spinner color="brand.400" size="xl" />
+      <Spinner
+        thickness="4px"
+        color="brand.400"
+        emptyColor="gray.200"
+        size="xl"
+      />
     </Flex>
   )
 }

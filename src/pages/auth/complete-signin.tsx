@@ -27,6 +27,7 @@ import { useEffect, useState } from "react"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 import axios from "axios"
+import slugify from "slugify"
 
 import AuthLayout from "@/layouts/AuthLayout"
 import prisma from "@/lib/prisma"
@@ -67,7 +68,7 @@ const CompleteSignin = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const { data: session } = useSession()
-  const [isLoadingEmail, setIsLoadingEmail] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const signinValidationSchema = Yup.object({
     storeName: Yup.string().required(t("requiredMessage")!),
@@ -80,6 +81,8 @@ const CompleteSignin = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    setError,
+    watch,
   } = useForm<CompleteSignInData>({
     resolver: yupResolver(signinValidationSchema),
     defaultValues: {
@@ -88,7 +91,7 @@ const CompleteSignin = () => {
   })
 
   const handleSubmitCallback = async (data: CompleteSignInData) => {
-    setIsLoadingEmail(true)
+    setIsLoading(true)
 
     try {
       await axios.post("/api/auth/complete-signin", {
@@ -101,7 +104,15 @@ const CompleteSignin = () => {
         router.push("/app/profile")
       }, 3000)
     } catch (error: any) {
+      if (error?.response?.data?.error?.domain) {
+        setError("subdomain", {
+          message: t("subdomainAlreadyInUse")!,
+        })
+      }
+
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -110,6 +121,21 @@ const CompleteSignin = () => {
       setValue("userName", session.user.name)
     }
   }, [session?.user?.name])
+
+  useEffect(() => {
+    const subscription = watch(({ storeName }, { name, type }) => {
+      if (name === "storeName") {
+        setValue(
+          "subdomain",
+          slugify(storeName!, {
+            replacement: "",
+            lower: true,
+          })
+        )
+      }
+    })
+    return () => subscription.unsubscribe()
+  }, [watch])
 
   return (
     <AuthLayout isLarge>
@@ -168,7 +194,9 @@ const CompleteSignin = () => {
                   placeholder="seujose"
                   {...register("subdomain")}
                 />
-                <InputRightAddon children=".vercel.app" />
+                <InputRightAddon
+                  children={`.${process.env.NEXT_PUBLIC_APEX_DOMAIN}`}
+                />
               </InputGroup>
               <FormErrorMessage fontSize="xs">
                 {errors.subdomain?.message}
@@ -177,7 +205,7 @@ const CompleteSignin = () => {
           </Box>
         </Box>
         <Button
-          isLoading={isLoadingEmail}
+          isLoading={isLoading}
           width="full"
           type="submit"
           colorScheme="brand"

@@ -19,7 +19,7 @@ const StoreCoverAvatar = ({ errors, register }: StoreCoverAvatarProps) => {
 
   return (
     <Box>
-      <FormControl isInvalid={Boolean(errors.cover?.message)} marginBottom={4}>
+      <FormControl isInvalid={Boolean(errors?.cover?.message)} marginBottom={4}>
         <FormLabel
           htmlFor="cover"
           background="gray.200"
