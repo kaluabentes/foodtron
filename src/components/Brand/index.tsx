@@ -3,9 +3,10 @@ import { Box, Button, Flex, Heading, Image } from "@chakra-ui/react"
 interface BrandProps {
   logo: string
   storeName: string
+  blue?: boolean
 }
 
-const Brand = ({ logo, storeName }: BrandProps) => (
+const Brand = ({ logo, storeName, blue = false }: BrandProps) => (
   <Flex marginBottom={12} overflowX="hidden" alignItems="center">
     <Image
       src={logo}
@@ -19,8 +20,8 @@ const Brand = ({ logo, storeName }: BrandProps) => (
         size="20px"
         fontWeight="700"
         overflow="hidden"
-        color="white"
         whiteSpace="nowrap"
+        color={blue ? "brand.400" : "white"}
       >
         {storeName}
       </Heading>

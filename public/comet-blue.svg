@@ -7,7 +7,7 @@
    version="1.1"
    viewBox="0 0 10.583 10.655"
    id="svg6"
-   sodipodi:docname="comet.svg"
+   sodipodi:docname="comet-blue.svg"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -39,5 +39,5 @@
      fill="#ffffff"
      stroke-width="0.0071851"
      id="path2"
-     style="fill:#ffffff;fill-opacity:1" />
+     style="fill:#1c30e3;fill-opacity:1" />
 </svg>

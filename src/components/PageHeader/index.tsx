@@ -7,8 +7,14 @@ interface PageHeaderProps {
 }
 
 const PageHeader = ({ title, actions }: PageHeaderProps) => (
-  <Flex as="header" justifyContent="space-between" alignItems="center">
-    <Heading size="lg" marginBottom={8} fontWeight="semibold" marginTop={8}>
+  <Flex
+    as="header"
+    justifyContent="space-between"
+    alignItems="center"
+    paddingTop={5}
+    paddingBottom={5}
+  >
+    <Heading size="lg" fontWeight="semibold">
       {title}
     </Heading>
     <Flex>{actions}</Flex>

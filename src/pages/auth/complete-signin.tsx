@@ -1,9 +1,5 @@
-import { Trans, useTranslation } from "react-i18next"
+import { useTranslation } from "react-i18next"
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
   Box,
   Button,
   Flex,
@@ -11,27 +7,27 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
+  Image,
   Input,
   InputGroup,
   InputRightAddon,
   Text,
-  useColorModeValue,
+  useToast,
 } from "@chakra-ui/react"
-import { useFormik } from "formik"
 import * as Yup from "yup"
-import { getProviders, getSession, signIn, useSession } from "next-auth/react"
+import { getProviders, getSession, useSession } from "next-auth/react"
 import { GetServerSideProps } from "next"
-import { FcGoogle } from "react-icons/fc"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 import axios from "axios"
 import slugify from "slugify"
+import { Cloudinary } from "@cloudinary/url-gen"
 
 import AuthLayout from "@/layouts/AuthLayout"
 import prisma from "@/lib/prisma"
-import StoreCoverAvatar from "@/components/StoreCoverAvatar"
+import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 
 export interface CompleteSignInData {
   storeName: string
@@ -51,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (user?.storeId) {
     return {
       redirect: {
-        destination: "/app/profile",
+        destination: "/admin/profile",
         permanent: false,
       },
     }
@@ -69,6 +65,9 @@ const CompleteSignin = () => {
   const router = useRouter()
   const { data: session } = useSession()
   const [isLoading, setIsLoading] = useState(false)
+  const [cover, setCover] = useState("")
+  const [logo, setLogo] = useState("")
+  const toast = useToast()
 
   const signinValidationSchema = Yup.object({
     storeName: Yup.string().required(t("requiredMessage")!),
@@ -93,16 +92,35 @@ const CompleteSignin = () => {
   const handleSubmitCallback = async (data: CompleteSignInData) => {
     setIsLoading(true)
 
+    const payload = {
+      storeName: data.storeName,
+      userName: data.userName,
+      subdomain: data.subdomain,
+      logo: logo,
+      cover: cover,
+    }
+
+    console.log("payload", payload)
+
     try {
       await axios.post("/api/auth/complete-signin", {
         storeName: data.storeName,
         userName: data.userName,
         subdomain: data.subdomain,
+        logo: logo,
+        cover: cover,
       })
 
-      setTimeout(() => {
-        router.push("/app/profile")
-      }, 3000)
+      toast({
+        title: "Conta criada",
+        description: "Conta criado sucesso",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      })
+
+      router.push("/admin/store")
     } catch (error: any) {
       if (error?.response?.data?.error?.domain) {
         setError("subdomain", {
@@ -139,6 +157,9 @@ const CompleteSignin = () => {
 
   return (
     <AuthLayout isLarge>
+      <Flex justifyContent="center">
+        <Image src="/comet-blue.svg" width="80px" mb={10} />
+      </Flex>
       <Heading size="lg" marginBottom={5} fontWeight="semibold">
         {t("completeSignin")}
       </Heading>
@@ -170,7 +191,13 @@ const CompleteSignin = () => {
           marginBottom={5}
           overflow="hidden"
         >
-          <StoreCoverAvatar register={register} errors={errors} />
+          <StoreMidiaUpload
+            onCoverChange={(value) => {
+              console.log("cover", cover)
+              setCover(value)
+            }}
+            onLogoChange={setLogo}
+          />
           <Box p={{ base: 4, md: 6 }}>
             <FormControl
               isInvalid={Boolean(errors.storeName?.message)}

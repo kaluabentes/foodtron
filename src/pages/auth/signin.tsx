@@ -10,6 +10,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
+  Image,
   Input,
   Text,
 } from "@chakra-ui/react"
@@ -22,7 +23,6 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 
 import AuthLayout from "@/layouts/AuthLayout"
-import { GetServerSideProps } from "next"
 
 interface SignInData {
   email: string
@@ -58,8 +58,11 @@ const Signin = () => {
 
   return (
     <AuthLayout>
+      <Flex justifyContent="center">
+        <Image src="/comet-blue.svg" width="80px" mb={10} />
+      </Flex>
       <Heading size="lg" marginBottom={10} fontWeight="semibold">
-        {t("signin")}
+        {t("signinComet")}
       </Heading>
       {router.query.error === "OAuthCallback" ||
         (router.query.error === "OAuthAccountNotLinked" && (

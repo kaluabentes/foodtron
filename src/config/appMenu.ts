@@ -23,22 +23,22 @@ export const topMenu: RouteItem[] = [
   {
     icon: BiCollection,
     label: "Pedidos",
-    path: "/app/orders",
+    path: "/admin/orders",
   },
   {
     icon: BiMoney,
     label: "Caixa",
-    path: "/app/cashier",
+    path: "/admin/cashier",
   },
   {
     icon: BiGridAlt,
     label: "Produtos",
-    path: "/app/products",
+    path: "/admin/products",
   },
   {
     icon: BiMap,
     label: "Bairros",
-    path: "/app/districts",
+    path: "/admin/districts",
   },
 ]
 
@@ -46,17 +46,17 @@ export const bottomMenu: RouteItem[] = [
   {
     icon: BiHomeHeart,
     label: "Loja",
-    path: "/app/store",
+    path: "/admin/store",
   },
   {
     icon: BiUser,
     label: "Perfil",
-    path: "/app/profile",
+    path: "/admin/profile",
   },
   {
     icon: BiLogOut,
     label: "Sair",
-    path: "/app/logout",
+    path: "/admin/logout",
     onClick: () => signOut({ callbackUrl: "/auth/signin" }),
   },
 ]
