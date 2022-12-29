@@ -26,38 +26,48 @@ import prisma from "@/lib/prisma"
 import { User } from "@prisma/client"
 
 interface ProfileProps {
-  user: User
+  user?: User
+  error?: any
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const authResult = await auth(context)
+  try {
+    const authResult = await auth(context)
 
-  if (authResult.redirect) {
-    return authResult
-  }
+    if (authResult.redirect) {
+      return authResult
+    }
 
-  const user = await prisma.user.findFirst({
-    where: {
-      email: authResult.props.session.user?.email,
-    },
-  })
+    const user = await prisma.user.findFirst({
+      where: {
+        email: authResult.props.session.user?.email,
+      },
+    })
 
-  return {
-    props: {
-      user: user,
-    },
+    return {
+      props: {
+        user: user,
+      },
+    }
+  } catch (error: any) {
+    return {
+      props: {
+        error,
+      },
+    }
   }
 }
 
-const Profile = ({ user }: ProfileProps) => {
+const Profile = ({ user, error }: ProfileProps) => {
   const { t } = useTranslation()
-  const { data: session } = useSession()
   const isPageLoaded = useIsPageLoaded()
   const boxShadow = useColorModeValue("md", "md-dark")
   const boxBackground = useColorModeValue("white", "gray.800")
   const Role = new Map()
   Role.set("admin", t("admin"))
   Role.set("user", t("user"))
+
+  console.log("error:", error)
 
   return (
     <AppLayout>
