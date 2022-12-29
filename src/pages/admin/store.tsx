@@ -33,49 +33,49 @@ interface StoreProps {
 
 const APEX_DOMAIN = process.env.NEXT_PUBLIC_APEX_DOMAIN!
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const authResult = await auth(context)
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const authResult = await auth(context)
 
-//   if (authResult.redirect) {
-//     return authResult
-//   }
+  if (authResult.redirect) {
+    return authResult
+  }
 
-//   const user = await prisma.user.findFirst({
-//     where: {
-//       email: authResult.props.session.user?.email,
-//     },
-//     include: {
-//       store: true,
-//     },
-//   })
+  const user = await prisma.user.findFirst({
+    where: {
+      email: authResult.props.session.user?.email,
+    },
+    include: {
+      store: true,
+    },
+  })
 
-//   return {
-//     props: {
-//       store: user?.store,
-//     },
-//   }
-// }
+  return {
+    props: {
+      store: user?.store,
+    },
+  }
+}
 
-// const Store = ({ store }: StoreProps) => {
-const Store = () => {
+// const Store = () => {
+const Store = ({ store }: StoreProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const boxShadow = useColorModeValue("md", "md-dark")
   const boxBackground = useColorModeValue("white", "gray.800")
-  const store = {
-    id: "",
-    name: "",
-    logo: "",
-    cover: "",
-    address: "",
-    whatsapp: "",
-    facebook: "",
-    instagram: "",
-    subdomain: "",
-    customDomain: "",
-    minimumOrderPrice: 0,
-    isOpen: false,
-  }
+  // const store = {
+  //   id: "",
+  //   name: "",
+  //   logo: "",
+  //   cover: "",
+  //   address: "",
+  //   whatsapp: "",
+  //   facebook: "",
+  //   instagram: "",
+  //   subdomain: "",
+  //   customDomain: "",
+  //   minimumOrderPrice: 0,
+  //   isOpen: false,
+  // }
 
   return (
     <AppLayout>
