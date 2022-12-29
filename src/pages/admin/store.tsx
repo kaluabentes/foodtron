@@ -26,56 +26,69 @@ import auth from "@/middlewares/auth"
 import { Store } from "@prisma/client"
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 import TruncateText from "@/components/TruncateText"
+import { Decimal } from "@prisma/client/runtime"
 
 interface StoreProps {
-  store: Store
+  store?: Store
+  error?: any
 }
 
 const APEX_DOMAIN = process.env.NEXT_PUBLIC_APEX_DOMAIN!
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const authResult = await auth(context)
+  try {
+    const authResult = await auth(context)
 
-  if (authResult.redirect) {
-    return authResult
-  }
+    if (authResult.redirect) {
+      return authResult
+    }
 
-  const user = await prisma.user.findFirst({
-    where: {
-      email: authResult.props.session.user?.email,
-    },
-    include: {
-      store: true,
-    },
-  })
+    const user = await prisma.user.findFirst({
+      where: {
+        email: authResult.props.session.user?.email,
+      },
+      include: {
+        store: true,
+      },
+    })
 
-  return {
-    props: {
-      store: user?.store,
-    },
+    return {
+      props: {
+        store: user?.store,
+      },
+    }
+  } catch (error: any) {
+    return {
+      props: {
+        error,
+      },
+    }
   }
 }
 
+const storeFallback = {
+  id: "",
+  name: "",
+  logo: "",
+  cover: "",
+  address: "",
+  whatsapp: "",
+  facebook: "",
+  instagram: "",
+  subdomain: "",
+  customDomain: "",
+  minimumOrderPrice: null,
+  isOpen: false,
+}
+
 // const Store = () => {
-const Store = ({ store }: StoreProps) => {
+const Store = ({ store = storeFallback, error }: StoreProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const boxShadow = useColorModeValue("md", "md-dark")
   const boxBackground = useColorModeValue("white", "gray.800")
-  // const store = {
-  //   id: "",
-  //   name: "",
-  //   logo: "",
-  //   cover: "",
-  //   address: "",
-  //   whatsapp: "",
-  //   facebook: "",
-  //   instagram: "",
-  //   subdomain: "",
-  //   customDomain: "",
-  //   minimumOrderPrice: 0,
-  //   isOpen: false,
-  // }
+
+  console.log("error", error)
 
   return (
     <AppLayout>
