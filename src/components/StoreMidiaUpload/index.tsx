@@ -84,6 +84,10 @@ const StoreMidiaUpload = ({
   }
 
   useEffect(() => {
+    window.cloudinary.createUploadWidget(cloudinaryOptions)
+  }, [])
+
+  useEffect(() => {
     setLogo(defaultLogo)
     setCover(defaultCover)
   }, [defaultCover, defaultLogo])
