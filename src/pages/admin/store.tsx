@@ -62,7 +62,20 @@ const Store = () => {
   const isPageLoaded = useIsPageLoaded()
   const boxShadow = useColorModeValue("md", "md-dark")
   const boxBackground = useColorModeValue("white", "gray.800")
-  const store = {}
+  const store = {
+    id: "",
+    name: "",
+    logo: "",
+    cover: "",
+    address: "",
+    whatsapp: "",
+    facebook: "",
+    instagram: "",
+    subdomain: "",
+    customDomain: "",
+    minimumOrderPrice: 0,
+    isOpen: false,
+  }
 
   return (
     <AppLayout>
