@@ -1,10 +1,8 @@
 import { useTranslation } from "react-i18next"
 import {
-  Heading,
   Box,
   Button,
   useColorModeValue,
-  Image,
   Flex,
   Table,
   Tr,
@@ -13,20 +11,15 @@ import {
   Tbody,
   Link,
 } from "@chakra-ui/react"
-import { get } from "lodash"
 
-import DataItem from "@/components/DataItem"
 import AppLayout from "@/layouts/AppLayout"
 import PageHeader from "@/components/PageHeader"
 import { getSession, useSession } from "next-auth/react"
 import { GetServerSideProps } from "next"
-import { useEffect, useState } from "react"
 import useIsPageLoaded from "@/hooks/useIsPageLoaded"
-import auth from "@/middlewares/auth"
 import { Store } from "@prisma/client"
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 import TruncateText from "@/components/TruncateText"
-import { Decimal } from "@prisma/client/runtime"
 
 interface StoreProps {
   store?: Store
@@ -37,15 +30,20 @@ const APEX_DOMAIN = process.env.NEXT_PUBLIC_APEX_DOMAIN!
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    const authResult = await auth(context)
+    const session = await getSession(context)
 
-    if (authResult.redirect) {
-      return authResult
+    if (!session) {
+      return {
+        redirect: {
+          destination: "/auth/signin",
+          permanent: false,
+        },
+      }
     }
 
     const user = await prisma.user.findFirst({
       where: {
-        email: authResult.props.session.user?.email,
+        email: session.user?.email,
       },
       include: {
         store: true,
