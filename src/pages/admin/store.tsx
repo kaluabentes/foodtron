@@ -20,73 +20,43 @@ import useIsPageLoaded from "@/hooks/useIsPageLoaded"
 import { Store } from "@prisma/client"
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 import TruncateText from "@/components/TruncateText"
+import prisma from "@/lib/prisma"
+import auth from "@/middlewares/auth"
 
 interface StoreProps {
-  store?: Store
-  error?: any
+  store: Store
 }
 
 const APEX_DOMAIN = process.env.NEXT_PUBLIC_APEX_DOMAIN!
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  try {
-    const session = await getSession(context)
+  const authResult = await auth(context)
 
-    if (!session) {
-      return {
-        redirect: {
-          destination: "/auth/signin",
-          permanent: false,
-        },
-      }
-    }
+  if (authResult.redirect) {
+    return authResult
+  }
 
-    const user = await prisma.user.findFirst({
-      where: {
-        email: session.user?.email,
-      },
-      include: {
-        store: true,
-      },
-    })
+  const user = await prisma.user.findFirst({
+    where: {
+      email: authResult.props.session.user?.email,
+    },
+    include: {
+      store: true,
+    },
+  })
 
-    return {
-      props: {
-        store: user?.store,
-      },
-    }
-  } catch (error: any) {
-    return {
-      props: {
-        error,
-      },
-    }
+  return {
+    props: {
+      store: user?.store,
+    },
   }
 }
 
-const storeFallback = {
-  id: "",
-  name: "",
-  logo: "",
-  cover: "",
-  address: "",
-  whatsapp: "",
-  facebook: "",
-  instagram: "",
-  subdomain: "",
-  customDomain: "",
-  minimumOrderPrice: null,
-  isOpen: false,
-}
-
-// const Store = () => {
-const Store = ({ store = storeFallback, error }: StoreProps) => {
+const Store = ({ store }: StoreProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const boxShadow = useColorModeValue("md", "md-dark")
   const boxBackground = useColorModeValue("white", "gray.800")
-
-  console.log("error", error)
 
   return (
     <AppLayout>
