@@ -11,6 +11,7 @@ import {
   Td,
   Spinner,
   Tbody,
+  Link,
 } from "@chakra-ui/react"
 import { get } from "lodash"
 
@@ -148,7 +149,13 @@ const Store = ({ store }: StoreProps) => {
                       </Box>
                     </Td>
                     <Td>
-                      <TruncateText>{`${store.subdomain}.${APEX_DOMAIN}`}</TruncateText>
+                      <Link
+                        href={`https://${store.subdomain}.${APEX_DOMAIN}`}
+                        isExternal
+                        color="brand.500"
+                      >
+                        <TruncateText>{`${store.subdomain}.${APEX_DOMAIN}`}</TruncateText>
+                      </Link>
                     </Td>
                   </Tr>
                   <Tr>

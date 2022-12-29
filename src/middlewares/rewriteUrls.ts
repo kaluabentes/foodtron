@@ -12,7 +12,7 @@ const rewriteUrls = (req: NextRequest) => {
       ? hostname.replace(`.${APEX_DOMAIN}`, "")
       : hostname.replace(`.localhost:3000`, "")
 
-  if (hostname === "localhost:3000" || hostname === `cometorder.vercel.app`) {
+  if (hostname === "localhost:3000" || hostname === `gocomet.app`) {
     return NextResponse.rewrite(url)
   }
 
