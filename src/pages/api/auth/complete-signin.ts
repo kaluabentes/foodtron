@@ -9,6 +9,8 @@ import axios from "axios"
 const PROJECT_ID = process.env.PROJECT_ID_VERCEL!
 const VERCEL_BEARER_TOKEN = process.env.VERCEL_BEARER_TOKEN!
 const APEX_DOMAIN = process.env.NEXT_PUBLIC_APEX_DOMAIN!
+const GODADDY_API_KEY = process.env.GODADDY_API_KEY!
+const GODADDY_SECRET = process.env.GODADDY_SECRET!
 
 const schema = Yup.object({
   userName: Yup.string().required(),
@@ -49,6 +51,23 @@ const completeSignin = async (req: NextApiRequest, res: NextApiResponse) => {
       {
         headers: {
           Authorization: `Bearer ${VERCEL_BEARER_TOKEN}`,
+        },
+      }
+    )
+
+    const goDaddyApiUrl = `https://api.godaddy.com/v1/domains/${APEX_DOMAIN}/records`
+    await axios.patch(
+      goDaddyApiUrl,
+      [
+        {
+          type: "CNAME",
+          name: store.subdomain,
+          data: "cname.vercel-dns.com.",
+        },
+      ],
+      {
+        headers: {
+          Authorization: `sso-key ${GODADDY_API_KEY}:${GODADDY_SECRET}`,
         },
       }
     )
