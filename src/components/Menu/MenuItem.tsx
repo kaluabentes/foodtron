@@ -26,30 +26,6 @@ const MenuItem = ({
   isClosed = false,
   isLight = false,
 }: MenuItemProps) => {
-  const textColor = (() => {
-    if (isLight) {
-      return isActive ? "gray.800" : "gray.500"
-    }
-
-    return isActive ? "white" : "gray.400"
-  })()
-
-  const iconColor = (() => {
-    if (isLight) {
-      return isActive ? "gray.800" : "gray.500"
-    }
-
-    return isActive ? "white" : "gray.400"
-  })()
-
-  const backgroundColor = (() => {
-    if (isLight) {
-      return isActive ? "gray.100" : "white"
-    }
-
-    return isActive ? "gray.800" : "gray.900"
-  })()
-
   return (
     <Tooltip
       label={isClosed ? children : ""}
@@ -62,9 +38,9 @@ const MenuItem = ({
         listStyleType="none"
         borderRadius={7}
         transition="0.2s"
-        backgroundColor={backgroundColor}
+        backgroundColor={isActive ? "gray.100" : "white"}
         _hover={{
-          backgroundColor: isLight ? "gray.100" : "gray.800",
+          backgroundColor: "gray.100",
         }}
       >
         <Flex
@@ -83,14 +59,16 @@ const MenuItem = ({
             paddingLeft={3}
             paddingRight={3}
           >
-            <Icon fontSize="20px" color={iconColor} as={icon} />
+            <Icon
+              fontSize="20px"
+              color={isActive ? "brand.500" : "gray.700"}
+              as={icon}
+            />
           </Flex>
           <Text
-            color={textColor}
-            fontSize="sm"
+            color={isActive ? "brand.500" : "gray.700"}
             padding={2}
             margin={0}
-            fontWeight="medium"
           >
             {children}
           </Text>

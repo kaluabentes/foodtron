@@ -20,9 +20,9 @@ import PageHeader from "@/components/PageHeader"
 import { getSession, useSession } from "next-auth/react"
 import { GetServerSideProps } from "next"
 import { useEffect, useState } from "react"
-import useIsPageLoaded from "@/hooks/useIsPageLoaded"
+import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import auth from "@/middlewares/auth"
-import prisma from "@/lib/prisma"
+import prisma from "@/lib/infra/prisma"
 import { User } from "@prisma/client"
 
 interface ProfileProps {

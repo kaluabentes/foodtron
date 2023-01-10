@@ -3,11 +3,11 @@ import { Session, unstable_getServerSession } from "next-auth"
 import * as Yup from "yup"
 import { authOptions } from "./[...nextauth]"
 
-import prisma from "@/lib/prisma"
+import prisma from "@/lib/infra/prisma"
 import axios from "axios"
+import addGoDaddyRecord from "@/lib/infra/godaddy/addGoDaddyRecord"
+import addVercelSubdomain from "@/lib/infra/vercel/addVercelDomain"
 
-const PROJECT_ID = process.env.PROJECT_ID_VERCEL!
-const VERCEL_BEARER_TOKEN = process.env.VERCEL_BEARER_TOKEN!
 const APEX_DOMAIN = process.env.NEXT_PUBLIC_APEX_DOMAIN!
 const GODADDY_API_KEY = process.env.GODADDY_API_KEY!
 const GODADDY_SECRET = process.env.GODADDY_SECRET!
@@ -32,6 +32,9 @@ const completeSignin = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await schema.validate(req.body)
 
+    await addVercelSubdomain(req.body.subdomain)
+    await addGoDaddyRecord(req.body.subdomain)
+
     const store = await prisma.store.create({
       data: {
         name: req.body.storeName,
@@ -40,37 +43,6 @@ const completeSignin = async (req: NextApiRequest, res: NextApiResponse) => {
         cover: req.body.cover,
       },
     })
-
-    const domainName = `${req.body.subdomain}.${APEX_DOMAIN}`
-    const domainApiUrl = `https://api.vercel.com/projects/${PROJECT_ID}/domains`
-    await axios.post(
-      domainApiUrl,
-      {
-        name: domainName,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${VERCEL_BEARER_TOKEN}`,
-        },
-      }
-    )
-
-    const goDaddyApiUrl = `https://api.godaddy.com/v1/domains/${APEX_DOMAIN}/records`
-    await axios.patch(
-      goDaddyApiUrl,
-      [
-        {
-          type: "CNAME",
-          name: store.subdomain,
-          data: "cname.vercel-dns.com.",
-        },
-      ],
-      {
-        headers: {
-          Authorization: `sso-key ${GODADDY_API_KEY}:${GODADDY_SECRET}`,
-        },
-      }
-    )
 
     await prisma.user.update({
       where: {

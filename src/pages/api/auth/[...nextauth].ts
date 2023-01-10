@@ -4,7 +4,7 @@ import EmailProvider from "next-auth/providers/email"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import jwt from "jsonwebtoken"
 
-import prisma from "@/lib/prisma"
+import prisma from "@/lib/infra/prisma"
 import { JWT } from "next-auth/jwt"
 
 export const authOptions: NextAuthOptions = {

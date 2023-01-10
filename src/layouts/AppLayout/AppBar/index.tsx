@@ -20,11 +20,12 @@ const AppBar = ({
     <Flex
       alignItems="center"
       justifyContent="space-between"
-      background="gray.900"
+      background="white"
       height="60px"
       width="100%"
       position="fixed"
       zIndex="100"
+      shadow="md"
       top="0"
       left="0"
       pl={2}
@@ -32,12 +33,12 @@ const AppBar = ({
     >
       <BarIconButton onClick={onMenuClick} label="Menu" icon={<BiMenu />} />
       <Flex alignItems="center" gap="10px">
-        <Image src="/comet.svg" alt="Comet" width="30px" />
+        <Image src="/comet-blue.svg" alt="Comet" width="30px" />
         <Heading
           size="20px"
           fontWeight="700"
           overflow="hidden"
-          color="white"
+          color="brand.500"
           whiteSpace="nowrap"
         >
           Comet

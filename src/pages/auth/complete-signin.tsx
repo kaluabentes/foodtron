@@ -26,7 +26,7 @@ import slugify from "slugify"
 import { Cloudinary } from "@cloudinary/url-gen"
 
 import AuthLayout from "@/layouts/AuthLayout"
-import prisma from "@/lib/prisma"
+import prisma from "@/lib/infra/prisma"
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 
 export interface CompleteSignInData {
@@ -92,16 +92,6 @@ const CompleteSignin = () => {
   const handleSubmitCallback = async (data: CompleteSignInData) => {
     setIsLoading(true)
 
-    const payload = {
-      storeName: data.storeName,
-      userName: data.userName,
-      subdomain: data.subdomain,
-      logo: logo,
-      cover: cover,
-    }
-
-    console.log("payload", payload)
-
     try {
       await axios.post("/api/auth/complete-signin", {
         storeName: data.storeName,
@@ -128,7 +118,7 @@ const CompleteSignin = () => {
         })
       }
 
-      console.log(error)
+      console.log("> Complete signin error: ", error)
     } finally {
       setIsLoading(false)
     }
@@ -191,13 +181,7 @@ const CompleteSignin = () => {
           marginBottom={5}
           overflow="hidden"
         >
-          <StoreMidiaUpload
-            onCoverChange={(value) => {
-              console.log("cover", cover)
-              setCover(value)
-            }}
-            onLogoChange={setLogo}
-          />
+          <StoreMidiaUpload onCoverChange={setCover} onLogoChange={setLogo} />
           <Box p={{ base: 4, md: 6 }}>
             <FormControl
               isInvalid={Boolean(errors.storeName?.message)}

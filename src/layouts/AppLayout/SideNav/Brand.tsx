@@ -7,21 +7,21 @@ interface BrandProps {
 }
 
 const Brand = ({ logo, storeName, blue = false }: BrandProps) => (
-  <Flex marginBottom={12} overflowX="hidden" alignItems="center">
+  <Flex marginBottom={8} overflowX="hidden" alignItems="center">
     <Image
       src={logo}
       alt={storeName}
       width="30px"
-      marginRight={4}
+      marginRight={3}
       marginLeft="8px"
     />
     <Flex direction="column" alignItems="center">
       <Heading
-        size="20px"
+        size="md"
         fontWeight="700"
         overflow="hidden"
         whiteSpace="nowrap"
-        color={blue ? "brand.400" : "white"}
+        color={blue ? "brand.500" : "white"}
       >
         {storeName}
       </Heading>

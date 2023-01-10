@@ -65,6 +65,9 @@
     "isOpen": "Está aberto",
     "editCover": "Editar foto de capa",
     "editLogo": "Adicionar logo",
-    "signinComet": "Crie uma conta no Comet"
+    "signinComet": "Crie uma conta no Comet",
+    "editStore": "Editar loja",
+    "save": "Salvar",
+    "cancel": "Cancel"
   }
 }

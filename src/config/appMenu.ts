@@ -10,6 +10,7 @@ import {
   BiLogOut,
   BiMap,
   BiHomeHeart,
+  BiAlarm,
 } from "react-icons/bi"
 
 interface RouteItem {
@@ -26,11 +27,6 @@ export const topMenu: RouteItem[] = [
     path: "/admin/orders",
   },
   {
-    icon: BiMoney,
-    label: "Caixa",
-    path: "/admin/cashier",
-  },
-  {
     icon: BiGridAlt,
     label: "Produtos",
     path: "/admin/products",
@@ -39,6 +35,11 @@ export const topMenu: RouteItem[] = [
     icon: BiMap,
     label: "Bairros",
     path: "/admin/districts",
+  },
+  {
+    icon: BiAlarm,
+    label: "Horários",
+    path: "/admin/schedules",
   },
 ]
 

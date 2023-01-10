@@ -23,6 +23,7 @@ const theme = extendTheme({
         }),
         outline: {
           borderColor: "gray.300",
+          borderWidth: "2px",
           background: "white",
         },
       },
@@ -40,6 +41,7 @@ const theme = extendTheme({
     global: (props: StyleFunctionProps) => ({
       body: {
         bg: mode("gray.100", "gray.900")(props),
+        overflow: "hidden",
       },
     }),
   },

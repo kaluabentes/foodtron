@@ -2,9 +2,9 @@ import { GetStaticProps } from "next"
 import React from "react"
 import { BsWhatsapp, BsFacebook, BsInstagram } from "react-icons/bs"
 
-import prisma from "@/lib/prisma"
+import prisma from "@/lib/infra/prisma"
 import { useTranslation } from "react-i18next"
-import useIsPageLoaded from "@/hooks/useIsPageLoaded"
+import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import {
   Box,
   Button,
