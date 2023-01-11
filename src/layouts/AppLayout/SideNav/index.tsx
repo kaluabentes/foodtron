@@ -42,7 +42,7 @@ const SideNav = ({ isClosed = false, onToggle }: SideNavProps) => {
                 item.onClick ? item.onClick() : router.push(item.path)
               }
               icon={item.icon}
-              isActive={item.path === router.asPath}
+              isActive={router.asPath.includes(item.path)}
               isClosed={isClosed}
             >
               {item.label}
@@ -57,7 +57,7 @@ const SideNav = ({ isClosed = false, onToggle }: SideNavProps) => {
                 item.onClick ? item.onClick() : router.push(item.path)
               }
               icon={item.icon}
-              isActive={item.path === router.asPath}
+              isActive={router.asPath.includes(item.path)}
               isClosed={isClosed}
             >
               {item.label}

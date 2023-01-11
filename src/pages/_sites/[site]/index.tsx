@@ -42,15 +42,20 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }: any) => {
-  const store = await prisma.store.findFirst({
+  const store = (await prisma.store.findFirst({
     where: {
       subdomain: params.site,
     },
-  })
+  })) as Store
+
+  console.log("store.minimumOrderPrice", store.minimumOrderPrice)
 
   return {
     props: {
-      store,
+      store: {
+        ...store,
+        minimumOrderPrice: Number(store.minimumOrderPrice).toFixed(2),
+      },
     },
   }
 }

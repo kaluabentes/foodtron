@@ -30,7 +30,7 @@ const AppMenu = ({ isOpen, onClose }: AppMenuProps) => {
         top="0"
         left={isOpen ? "0" : "-220px"}
         visibility={isOpen ? "visible" : "hidden"}
-        boxShadow="md"
+        shadow="md"
         zIndex={100}
       >
         <CloseButton
@@ -54,7 +54,7 @@ const AppMenu = ({ isOpen, onClose }: AppMenuProps) => {
                 }
                 icon={item.icon}
                 isLight
-                isActive={item.path === router.asPath}
+                isActive={router.asPath.includes(item.path)}
               >
                 {item.label}
               </MenuItem>
@@ -68,7 +68,7 @@ const AppMenu = ({ isOpen, onClose }: AppMenuProps) => {
                   item.onClick ? item.onClick() : router.push(item.path)
                 }
                 icon={item.icon}
-                isActive={item.path === router.asPath}
+                isActive={router.asPath.includes(item.path)}
                 isLight
               >
                 {item.label}

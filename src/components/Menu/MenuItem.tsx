@@ -67,6 +67,7 @@ const MenuItem = ({
           </Flex>
           <Text
             color={isActive ? "brand.500" : "gray.700"}
+            fontSize="md"
             padding={2}
             margin={0}
           >
