@@ -4,11 +4,6 @@ import { mode } from "@chakra-ui/theme-tools"
 
 const theme = extendTheme({
   components: {
-    Input: {
-      baseStyle: {
-        background: "gray.300",
-      },
-    },
     Button: {
       baseStyle: {
         fontWeight: "500",
@@ -23,7 +18,7 @@ const theme = extendTheme({
         }),
         outline: {
           borderColor: "gray.300",
-          borderWidth: "2px",
+          borderWidth: "1px",
           background: "white",
         },
       },
