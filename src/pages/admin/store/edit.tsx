@@ -93,6 +93,7 @@ const EditStore = ({ store }: StorePageProps) => {
         isClosable: true,
         position: "bottom-right",
       })
+      router.push("/admin/store")
     } catch (error: any) {
       console.log("> Update store: ", error)
     } finally {
