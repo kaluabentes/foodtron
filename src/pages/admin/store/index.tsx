@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       store: {
         ...user?.store,
-        minimumOrderPrice: user?.store?.minimumOrderPrice?.toFixed(2),
+        minimumOrderPrice: Number(user?.store?.minimumOrderPrice).toFixed(2),
       },
     },
   }
