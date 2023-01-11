@@ -22,7 +22,6 @@ import {
 } from "@chakra-ui/react"
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 import { Store } from "@prisma/client"
-import TruncateText from "@/components/TruncateText"
 
 interface IndexProps {
   store: Store
@@ -48,13 +47,11 @@ export const getStaticProps = async ({ params }: any) => {
     },
   })) as Store
 
-  console.log("store.minimumOrderPrice", store.minimumOrderPrice)
-
   return {
     props: {
       store: {
         ...store,
-        minimumOrderPrice: Number(store.minimumOrderPrice).toFixed(2),
+        minimumOrderPrice: Number(store?.minimumOrderPrice).toFixed(2),
       },
     },
   }

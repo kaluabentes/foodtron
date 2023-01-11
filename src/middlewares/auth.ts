@@ -2,6 +2,8 @@ import { GetServerSidePropsContext, PreviewData } from "next"
 import { getSession } from "next-auth/react"
 import { ParsedUrlQuery } from "querystring"
 
+import prisma from "@/lib/infra/prisma"
+
 const auth = async (
   context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>,
   permissions = ["user", "admin"]
