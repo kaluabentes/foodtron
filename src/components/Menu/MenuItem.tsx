@@ -30,17 +30,17 @@ const MenuItem = ({
     <Tooltip
       label={isClosed ? children : ""}
       placement="right"
-      color="white"
-      backgroundColor="gray.700"
+      color="gray.800"
+      backgroundColor="white"
     >
       <Box
         as="li"
         listStyleType="none"
         borderRadius={7}
         transition="0.2s"
-        backgroundColor={isActive ? "gray.100" : "white"}
+        backgroundColor={isActive ? "gray.700" : "gray.800"}
         _hover={{
-          backgroundColor: "gray.100",
+          backgroundColor: "gray.700",
         }}
       >
         <Flex
@@ -59,18 +59,9 @@ const MenuItem = ({
             paddingLeft={3}
             paddingRight={3}
           >
-            <Icon
-              fontSize="20px"
-              color={isActive ? "brand.500" : "gray.700"}
-              as={icon}
-            />
+            <Icon fontSize="20px" color="gray.300" as={icon} />
           </Flex>
-          <Text
-            color={isActive ? "brand.500" : "gray.700"}
-            fontSize="md"
-            padding={2}
-            margin={0}
-          >
+          <Text color="gray.300" fontSize="md" padding={2} margin={0}>
             {children}
           </Text>
         </Flex>

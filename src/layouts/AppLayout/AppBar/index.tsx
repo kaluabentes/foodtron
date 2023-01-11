@@ -35,7 +35,7 @@ const AppBar = ({
       <Flex alignItems="center" gap="10px">
         <Image src="/comet-blue.svg" alt="Comet" width="30px" />
         <Heading
-          size="20px"
+          fontSize="2xl"
           fontWeight="700"
           overflow="hidden"
           color="brand.500"

@@ -25,14 +25,14 @@ const SideNav = ({ isClosed = false, onToggle }: SideNavProps) => {
       maxWidth={isClosed ? "68px" : "220px"}
       padding={3}
       paddingTop={5}
-      backgroundColor="white"
+      backgroundColor="gray.800"
       shadow="md"
       height="100vh"
       transition="0.5s"
       position="relative"
     >
       <MenuToggleButton onClick={onToggle} />
-      <Brand logo="/comet-blue.svg" storeName="Comet" blue />
+      <Brand logo="/comet-blue.svg" storeName="Comet" />
       <Flex direction="column" flexGrow={1} justifyContent="space-between">
         <Menu>
           {topMenu.map((item, index) => (
