@@ -146,7 +146,7 @@ const CompleteSignin = () => {
   }, [watch])
 
   return (
-    <AuthLayout isLarge>
+    <AuthLayout>
       <Flex justifyContent="center">
         <Image src="/comet-blue.svg" width="80px" mb={10} />
       </Flex>
