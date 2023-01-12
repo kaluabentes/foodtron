@@ -10,22 +10,21 @@ import {
   Tbody,
   Link,
 } from "@chakra-ui/react"
+import { GetServerSideProps } from "next"
+import { useRouter } from "next/router"
 
 import AppLayout from "@/layouts/AppLayout"
 import PageHeader from "@/components/PageHeader"
-import { getSession, useSession } from "next-auth/react"
-import { GetServerSideProps } from "next"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
-import { Store } from "@prisma/client"
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 import TruncateText from "@/components/TruncateText"
 import prisma from "@/lib/infra/prisma"
 import auth from "@/middlewares/auth"
 import { DataCell, DataHead, DataValue } from "@/components/DataTable"
-import { useRouter } from "next/router"
+import StoreProps from "@/modules/admin/store/interfaces/StoreProps"
 
-interface StoreProps {
-  store: Store
+interface StorePageProps {
+  store: StoreProps
 }
 
 const APEX_DOMAIN = process.env.NEXT_PUBLIC_APEX_DOMAIN!
@@ -37,26 +36,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return authResult
   }
 
-  const user = await prisma.user.findFirst({
+  const store = await prisma.store.findFirst({
     where: {
-      email: authResult.props.session.user?.email,
-    },
-    include: {
-      store: true,
+      id: authResult.props.session.user?.storeId!,
     },
   })
 
   return {
     props: {
       store: {
-        ...user?.store,
-        minimumOrderPrice: Number(user?.store?.minimumOrderPrice).toFixed(2),
+        ...store,
+        minimumOrderPrice: store?.minimumOrderPrice?.toFixed(2),
       },
     },
   }
 }
 
-const Store = ({ store }: StoreProps) => {
+const Store = ({ store }: StorePageProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const boxShadow = useColorModeValue("md", "md-dark")
@@ -179,7 +175,12 @@ const Store = ({ store }: StoreProps) => {
                       {t("minimumOrderPrice")}
                     </Box>
                   </DataHead>
-                  <DataValue>{String(store.minimumOrderPrice)}</DataValue>
+                  <DataValue>
+                    R${" "}
+                    {Number(store.minimumOrderPrice).toLocaleString("pt-BR", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </DataValue>
                 </DataCell>
                 <DataCell>
                   <DataHead>

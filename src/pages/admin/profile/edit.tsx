@@ -33,6 +33,7 @@ import { useForm } from "react-hook-form"
 import { useRef, useState } from "react"
 import axios from "axios"
 import { User } from "@prisma/client"
+import useUpdateProfile from "@/modules/admin/profile/hooks/useUpdateProfile"
 
 interface ProfileEditProps {
   user: User
@@ -45,8 +46,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return authResult
   }
 
-  console.log(authResult.props.session.user)
-
   return {
     props: {
       user: authResult.props.session.user,
@@ -58,33 +57,11 @@ const EditProfile = ({ user }: ProfileEditProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
-  const [isSaving, setIsSaving] = useState(false)
-  const toast = useToast()
+  const { handleSubmitCallback, isSaving } = useUpdateProfile()
 
   const { register, handleSubmit, setValue, formState, getValues } = useForm({
     defaultValues: user,
   })
-
-  const handleSubmitCallback = async (data: User) => {
-    setIsSaving(true)
-
-    try {
-      await axios.patch("/api/profile/update", data)
-      toast({
-        title: "Feito!",
-        description: "Informações atualizados com sucesso",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-        position: "bottom-right",
-      })
-      router.push("/admin/profile")
-    } catch (error: any) {
-      console.log("> Update profile error: ", error)
-    } finally {
-      setIsSaving(false)
-    }
-  }
 
   return (
     <AppLayout>
