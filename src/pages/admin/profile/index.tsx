@@ -13,17 +13,20 @@ import {
   Tbody,
 } from "@chakra-ui/react"
 import { get } from "lodash"
+import { getSession, useSession } from "next-auth/react"
+import { GetServerSideProps } from "next"
+import { useEffect, useState } from "react"
 
 import DataItem from "@/components/DataItem"
 import AppLayout from "@/layouts/AppLayout"
 import PageHeader from "@/components/PageHeader"
-import { getSession, useSession } from "next-auth/react"
-import { GetServerSideProps } from "next"
-import { useEffect, useState } from "react"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import auth from "@/middlewares/auth"
 import prisma from "@/lib/infra/prisma"
 import { User } from "@prisma/client"
+import { DataCell, DataHead, DataValue } from "@/components/DataTable"
+import TruncateText from "@/components/TruncateText"
+import { useRouter } from "next/router"
 
 interface ProfileProps {
   user: User
@@ -54,6 +57,8 @@ const Profile = ({ user }: ProfileProps) => {
   const isPageLoaded = useIsPageLoaded()
   const boxShadow = useColorModeValue("md", "md-dark")
   const boxBackground = useColorModeValue("white", "gray.800")
+  const router = useRouter()
+
   const Role = new Map()
   Role.set("admin", t("admin"))
   Role.set("user", t("user"))
@@ -62,7 +67,14 @@ const Profile = ({ user }: ProfileProps) => {
     <AppLayout>
       <PageHeader
         title={t("profile")}
-        actions={<Button colorScheme="brand">Editar</Button>}
+        actions={
+          <Button
+            colorScheme="brand"
+            onClick={() => router.push("/admin/profile/edit")}
+          >
+            Editar
+          </Button>
+        }
       />
       {!isPageLoaded && (
         <Flex padding={10} align="center" justifyContent="center">
@@ -70,42 +82,42 @@ const Profile = ({ user }: ProfileProps) => {
         </Flex>
       )}
       {isPageLoaded && (
-        <Flex
+        <Box
           boxShadow={boxShadow}
           backgroundColor={boxBackground}
           borderRadius={10}
-          direction="column"
-          gap="8px"
         >
-          <Table>
-            <Tbody>
-              <Tr>
-                <Td>
-                  <Box as="span" fontWeight="500">
-                    {t("name")}
-                  </Box>
-                </Td>
-                <Td>{get(user, "name", "")}</Td>
-              </Tr>
-              <Tr>
-                <Td>
-                  <Box as="span" fontWeight="500">
-                    {t("email")}
-                  </Box>
-                </Td>
-                <Td>{get(user, "email", "")}</Td>
-              </Tr>
-              <Tr>
-                <Td>
-                  <Box as="span" fontWeight="500">
-                    {t("role")}
-                  </Box>
-                </Td>
-                <Td>{Role.get(get(user, "role", ""))}</Td>
-              </Tr>
-            </Tbody>
-          </Table>
-        </Flex>
+          <DataCell>
+            <DataHead>
+              <Box as="span" fontWeight="500">
+                {t("name")}
+              </Box>
+            </DataHead>
+            <DataValue>
+              <TruncateText>{user.name}</TruncateText>
+            </DataValue>
+          </DataCell>
+          <DataCell>
+            <DataHead>
+              <Box as="span" fontWeight="500">
+                {t("email")}
+              </Box>
+            </DataHead>
+            <DataValue>
+              <TruncateText>{user.email}</TruncateText>
+            </DataValue>
+          </DataCell>
+          <DataCell>
+            <DataHead>
+              <Box as="span" fontWeight="500">
+                {t("role")}
+              </Box>
+            </DataHead>
+            <DataValue>
+              <TruncateText>{user.role}</TruncateText>
+            </DataValue>
+          </DataCell>
+        </Box>
       )}
     </AppLayout>
   )

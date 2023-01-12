@@ -23,9 +23,6 @@ const auth = async (
     where: {
       email: session.user?.email,
     },
-    include: {
-      store: true,
-    },
   })
 
   if (!permissions.includes(user?.role!)) {

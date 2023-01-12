@@ -68,6 +68,7 @@
     "signinComet": "Crie uma conta no Comet",
     "editStore": "Editar loja",
     "save": "Salvar",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "editProfile": "Editar perfil"
   }
 }
