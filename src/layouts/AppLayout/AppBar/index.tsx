@@ -1,6 +1,6 @@
 import { Flex, Heading, Image } from "@chakra-ui/react"
 import { BiBell, BiMenu } from "react-icons/bi"
-import AppMenu from "./AppMenu"
+import SideNav from "./SideNav"
 import BarIconButton from "./BarIconButtom"
 
 interface AppBarProps {
@@ -50,7 +50,7 @@ const AppBar = ({
         icon={<BiBell />}
       />
     </Flex>
-    <AppMenu isOpen={isOpen} onClose={onClose} />
+    <SideNav isOpen={isOpen} onClose={onClose} />
   </>
 )
 

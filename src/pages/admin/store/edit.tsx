@@ -101,7 +101,7 @@ const EditStore = ({ store }: StorePageProps) => {
         )}
         {isPageLoaded && (
           <Box
-            boxShadow="md"
+            shadow="sm"
             backgroundColor="white"
             borderRadius={10}
             overflow="hidden"

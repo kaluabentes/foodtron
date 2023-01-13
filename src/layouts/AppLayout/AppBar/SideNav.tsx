@@ -5,13 +5,14 @@ import Menu from "@/components/Menu"
 import MenuItem from "@/components/Menu/MenuItem"
 import ClickOutside from "@/components/ClickOutside"
 import { topMenu, bottomMenu } from "@/config/appMenu"
+import Brand from "../SideNav/Brand"
 
-interface AppMenuProps {
+interface SideNavProps {
   isOpen: boolean
   onClose: () => void
 }
 
-const AppMenu = ({ isOpen, onClose }: AppMenuProps) => {
+const SideNav = ({ isOpen, onClose }: SideNavProps) => {
   const router = useRouter()
 
   return (
@@ -23,7 +24,7 @@ const AppMenu = ({ isOpen, onClose }: AppMenuProps) => {
         width="100%"
         maxWidth="220px"
         padding={3}
-        backgroundColor="gray.800"
+        backgroundColor="white"
         height="100%"
         transition="0.3s"
         position="fixed"
@@ -44,6 +45,7 @@ const AppMenu = ({ isOpen, onClose }: AppMenuProps) => {
           _hover={{ backgroundColor: "gray.100" }}
           _active={{ backgroundColor: "gray.100" }}
         />
+        <Brand logo="/comet-blue.svg" storeName="Comet" blue />
         <Flex direction="column" flexGrow={1} justifyContent="space-between">
           <Menu>
             {topMenu.map((item: any, index) => (
@@ -81,4 +83,4 @@ const AppMenu = ({ isOpen, onClose }: AppMenuProps) => {
   )
 }
 
-export default AppMenu
+export default SideNav

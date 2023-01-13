@@ -55,8 +55,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Profile = ({ user }: ProfileProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
-  const boxShadow = useColorModeValue("md", "md-dark")
-  const boxBackground = useColorModeValue("white", "gray.800")
   const router = useRouter()
 
   const Role = new Map()
@@ -82,11 +80,7 @@ const Profile = ({ user }: ProfileProps) => {
         </Flex>
       )}
       {isPageLoaded && (
-        <Box
-          boxShadow={boxShadow}
-          backgroundColor={boxBackground}
-          borderRadius={10}
-        >
+        <Box shadow="sm" backgroundColor="white" borderRadius={10}>
           <DataCell>
             <DataHead>
               <Box as="span" fontWeight="500">

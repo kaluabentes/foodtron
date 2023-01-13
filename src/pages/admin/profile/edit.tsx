@@ -89,7 +89,7 @@ const EditProfile = ({ user }: ProfileEditProps) => {
         )}
         {isPageLoaded && (
           <Box
-            boxShadow="md"
+            shadow="sm"
             backgroundColor="white"
             borderRadius={10}
             overflow="hidden"

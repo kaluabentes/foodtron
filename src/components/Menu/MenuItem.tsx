@@ -38,9 +38,10 @@ const MenuItem = ({
         listStyleType="none"
         borderRadius={7}
         transition="0.2s"
-        backgroundColor={isActive ? "gray.700" : "gray.800"}
+        backgroundColor={isActive ? "gray.200" : "white"}
+        color={isActive ? "gray.900" : "gray.600"}
         _hover={{
-          backgroundColor: "gray.700",
+          backgroundColor: "gray.200",
         }}
       >
         <Flex
@@ -59,9 +60,9 @@ const MenuItem = ({
             paddingLeft={3}
             paddingRight={3}
           >
-            <Icon fontSize="20px" color="gray.300" as={icon} />
+            <Icon fontSize="20px" as={icon} />
           </Flex>
-          <Text color="gray.300" fontSize="md" padding={2} margin={0}>
+          <Text fontSize="md" padding={2} margin={0}>
             {children}
           </Text>
         </Flex>

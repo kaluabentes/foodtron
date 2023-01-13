@@ -80,8 +80,8 @@ const Store = ({ store }: StorePageProps) => {
       {isPageLoaded && (
         <>
           <Box
-            boxShadow={boxShadow}
-            backgroundColor={boxBackground}
+            shadow="sm"
+            backgroundColor="white"
             borderRadius={10}
             overflow="hidden"
             marginBottom={8}
