@@ -21,7 +21,7 @@ import {
   BreadcrumbLink,
 } from "@chakra-ui/react"
 
-import AppLayout from "@/layouts/AppLayout"
+import AdminLayout from "@/layouts/AdminLayout"
 import PageHeader from "@/components/PageHeader"
 
 const Districts = () => {
@@ -35,7 +35,7 @@ const Districts = () => {
     }))
 
   return (
-    <AppLayout hasPadding={false}>
+    <AdminLayout hasPadding={false}>
       <PageHeader
         title={t("districts")}
         actions={<Button colorScheme="brand">Criar</Button>}
@@ -71,7 +71,7 @@ const Districts = () => {
           </Table>
         </TableContainer>
       </Box>
-    </AppLayout>
+    </AdminLayout>
   )
 }
 

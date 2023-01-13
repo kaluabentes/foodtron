@@ -1,9 +1,18 @@
 import { useTranslation } from "react-i18next"
-import { Box, Button, Flex, Spinner, Link } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  Flex,
+  Spinner,
+  Link,
+  Switch,
+  Text,
+  Badge,
+} from "@chakra-ui/react"
 import { GetServerSideProps } from "next"
 import { useRouter } from "next/router"
 
-import AppLayout from "@/layouts/AppLayout"
+import AdminLayout from "@/layouts/AdminLayout"
 import PageHeader from "@/components/PageHeader"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
@@ -12,6 +21,7 @@ import prisma from "@/lib/infra/prisma"
 import auth from "@/middlewares/auth"
 import { DataCell, DataHead, DataValue } from "@/components/DataTable"
 import StoreProps from "@/modules/admin/store/interfaces/StoreProps"
+import { useState } from "react"
 
 interface StorePageProps {
   store: StoreProps
@@ -46,18 +56,27 @@ const Store = ({ store }: StorePageProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
+  const [isOpen, setIsOpen] = useState(store.isOpen!)
 
   return (
-    <AppLayout>
+    <AdminLayout>
       <PageHeader
         title={t("store")}
         actions={
-          <Button
-            colorScheme="brand"
-            onClick={() => router.push("/admin/store/edit")}
-          >
-            Editar
-          </Button>
+          <Flex gap={3} alignItems="center">
+            {isOpen ? (
+              <Badge colorScheme="green">Aberto</Badge>
+            ) : (
+              <Badge colorScheme="red">Fechado</Badge>
+            )}
+            <Switch isChecked={isOpen} />
+            <Button
+              colorScheme="brand"
+              onClick={() => router.push("/admin/store/edit")}
+            >
+              Editar
+            </Button>
+          </Flex>
         }
       />
       {!isPageLoaded && (
@@ -183,7 +202,7 @@ const Store = ({ store }: StorePageProps) => {
           </Box>
         </>
       )}
-    </AppLayout>
+    </AdminLayout>
   )
 }
 

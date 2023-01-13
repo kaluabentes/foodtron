@@ -5,8 +5,8 @@ import Menu from "@/components/Menu"
 import MenuItem from "@/components/Menu/MenuItem"
 import { bottomMenu, topMenu } from "@/config/appMenu"
 
-import Brand from "./Brand"
 import MenuToggleButton from "./MenuToggleButton"
+import Brand from "@/components/Brand"
 
 interface SideNavProps {
   isClosed?: boolean

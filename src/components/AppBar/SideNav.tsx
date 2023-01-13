@@ -5,7 +5,7 @@ import Menu from "@/components/Menu"
 import MenuItem from "@/components/Menu/MenuItem"
 import ClickOutside from "@/components/ClickOutside"
 import { topMenu, bottomMenu } from "@/config/appMenu"
-import Brand from "../SideNav/Brand"
+import Brand from "@/components/Brand"
 
 interface SideNavProps {
   isOpen: boolean

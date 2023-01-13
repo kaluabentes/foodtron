@@ -18,7 +18,7 @@ import { GetServerSideProps } from "next"
 import { useEffect, useState } from "react"
 
 import DataItem from "@/components/DataItem"
-import AppLayout from "@/layouts/AppLayout"
+import AdminLayout from "@/layouts/AdminLayout"
 import PageHeader from "@/components/PageHeader"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import auth from "@/middlewares/auth"
@@ -62,7 +62,7 @@ const Profile = ({ user }: ProfileProps) => {
   Role.set("user", t("user"))
 
   return (
-    <AppLayout>
+    <AdminLayout>
       <PageHeader
         title={t("profile")}
         actions={
@@ -113,7 +113,7 @@ const Profile = ({ user }: ProfileProps) => {
           </DataCell>
         </Box>
       )}
-    </AppLayout>
+    </AdminLayout>
   )
 }
 

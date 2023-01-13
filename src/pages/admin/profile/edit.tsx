@@ -8,7 +8,7 @@ import {
   Input,
 } from "@chakra-ui/react"
 
-import AppLayout from "@/layouts/AppLayout"
+import AdminLayout from "@/layouts/AdminLayout"
 import PageHeader from "@/components/PageHeader"
 import { GetServerSideProps } from "next"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
@@ -48,7 +48,7 @@ const EditProfile = ({ user }: ProfileEditProps) => {
   })
 
   return (
-    <AppLayout>
+    <AdminLayout>
       <form onSubmit={handleSubmit(handleSubmitCallback)}>
         <PageHeader
           title={t("editProfile")}
@@ -94,7 +94,7 @@ const EditProfile = ({ user }: ProfileEditProps) => {
           </Box>
         )}
       </form>
-    </AppLayout>
+    </AdminLayout>
   )
 }
 

@@ -4,14 +4,14 @@ import { ReactElement } from "react"
 interface BarIconButtonProps {
   label: string
   icon: ReactElement
-  onClick: () => void
+  onClick?: () => void
 }
 
 const BarIconButton = ({ label, icon, onClick }: BarIconButtonProps) => (
   <IconButton
     onClick={onClick}
     background="white"
-    color="gray.700"
+    color="gray.500"
     aria-label={label}
     fontSize="23px"
     icon={icon}

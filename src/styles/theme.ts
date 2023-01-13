@@ -4,6 +4,9 @@ import { mode } from "@chakra-ui/theme-tools"
 
 const theme = extendTheme({
   components: {
+    Badge: {
+      baseStyle: {},
+    },
     Button: {
       baseStyle: {
         fontWeight: "500",

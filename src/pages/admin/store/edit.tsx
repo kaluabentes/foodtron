@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form"
 import { useState } from "react"
 import { GetServerSideProps } from "next"
 
-import AppLayout from "@/layouts/AppLayout"
+import AdminLayout from "@/layouts/AdminLayout"
 import PageHeader from "@/components/PageHeader"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
@@ -66,7 +66,7 @@ const EditStore = ({ store }: StorePageProps) => {
   })
 
   return (
-    <AppLayout>
+    <AdminLayout>
       <form
         onSubmit={handleSubmit((data: StoreProps) =>
           handleSubmitCallback({ ...data, isOpen })
@@ -236,7 +236,7 @@ const EditStore = ({ store }: StorePageProps) => {
           </Box>
         )}
       </form>
-    </AppLayout>
+    </AdminLayout>
   )
 }
 
