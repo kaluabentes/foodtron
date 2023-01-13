@@ -2,23 +2,17 @@ import { useTranslation } from "react-i18next"
 import {
   Box,
   Button,
-  useColorModeValue,
   Flex,
-  Table,
-  Tr,
   Spinner,
-  Tbody,
-  Link,
   FormControl,
   Input,
   InputGroup,
   InputRightAddon,
   Switch,
-  useToast,
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { GetServerSideProps } from "next"
 
 import AppLayout from "@/layouts/AppLayout"

@@ -43,7 +43,7 @@ const EditProfile = ({ user }: ProfileEditProps) => {
   const router = useRouter()
   const { handleSubmitCallback, isSaving } = useUpdateProfile()
 
-  const { register, handleSubmit, setValue, formState, getValues } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: user,
   })
 

@@ -1,15 +1,5 @@
 import { useTranslation } from "react-i18next"
-import {
-  Box,
-  Button,
-  useColorModeValue,
-  Flex,
-  Table,
-  Tr,
-  Spinner,
-  Tbody,
-  Link,
-} from "@chakra-ui/react"
+import { Box, Button, Flex, Spinner, Link } from "@chakra-ui/react"
 import { GetServerSideProps } from "next"
 import { useRouter } from "next/router"
 
@@ -55,8 +45,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Store = ({ store }: StorePageProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
-  const boxShadow = useColorModeValue("md", "md-dark")
-  const boxBackground = useColorModeValue("white", "gray.800")
   const router = useRouter()
 
   return (
