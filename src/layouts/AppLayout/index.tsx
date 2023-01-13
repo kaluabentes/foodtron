@@ -26,7 +26,9 @@ const AppLayout = ({ children }: AppLayoutProps) => {
         onMenuClick={() => setIsOpen(true)}
         onClose={() => setIsOpen(false)}
       />
-      {children}
+      <Box as="main" marginTop={{ base: "60px", lg: "0" }} marginBottom="72px">
+        {children}
+      </Box>
       <ShortcutDeck />
     </>
   )

@@ -38,30 +38,18 @@ const Shortcut = ({ icon, path, label }: ShortcutProps) => {
   )
 }
 
-const ShortcutDeck = () => {
-  useEffect(() => {
-    const bodyElement: HTMLBodyElement =
-      document.getElementsByTagName("body")[0]
-    bodyElement.style.paddingBottom = "72px"
-
-    return () => {
-      bodyElement.style.paddingBottom = "0px"
-    }
-  }, [])
-
-  return (
-    <Flex
-      shadow="lg"
-      backgroundColor="white"
-      position="fixed"
-      bottom="0"
-      width="100%"
-    >
-      <Shortcut path="/" label="Menu" icon={BiDish} />
-      <Shortcut path="/orders" label="Pedidos" icon={BiTask} />
-      <Shortcut path="/profile" label="Perfil" icon={BiUser} />
-    </Flex>
-  )
-}
+const ShortcutDeck = () => (
+  <Flex
+    shadow="lg"
+    backgroundColor="white"
+    position="fixed"
+    bottom="0"
+    width="100%"
+  >
+    <Shortcut path="/" label="Menu" icon={BiDish} />
+    <Shortcut path="/orders" label="Pedidos" icon={BiTask} />
+    <Shortcut path="/profile" label="Perfil" icon={BiUser} />
+  </Flex>
+)
 
 export default ShortcutDeck
