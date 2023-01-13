@@ -27,7 +27,7 @@ const Shortcut = ({ icon, path, label }: ShortcutProps) => {
       direction="column"
       alignItems="center"
       flex={1}
-      p={5}
+      p={3}
       gap="2px"
       color={isActive ? "brand.500" : "gray.500"}
       onClick={() => router.push(path)}
@@ -42,7 +42,7 @@ const ShortcutDeck = () => {
   useEffect(() => {
     const bodyElement: HTMLBodyElement =
       document.getElementsByTagName("body")[0]
-    bodyElement.style.paddingBottom = "86.4px"
+    bodyElement.style.paddingBottom = "72px"
   }, [])
 
   return (
