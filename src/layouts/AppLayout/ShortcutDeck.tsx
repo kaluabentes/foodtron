@@ -22,16 +22,19 @@ const Shortcut = ({ icon, path, label }: ShortcutProps) => {
   }
 
   return (
-    <Box
+    <Flex
       as="button"
+      direction="column"
+      alignItems="center"
       flex={1}
       p={5}
+      gap="2px"
       color={isActive ? "brand.500" : "gray.500"}
       onClick={() => router.push(path)}
     >
-      <Icon as={icon} fontSize="22px" />
+      <Icon as={icon} fontSize="28px" />
       <Text fontSize="12px">{label}</Text>
-    </Box>
+    </Flex>
   )
 }
 
