@@ -2,36 +2,20 @@ import { useTranslation } from "react-i18next"
 import {
   Box,
   Button,
-  useColorModeValue,
   Flex,
-  Table,
-  Tr,
   Spinner,
-  Tbody,
-  Link,
   FormControl,
   Input,
-  InputGroup,
-  InputRightAddon,
-  Switch,
-  useToast,
 } from "@chakra-ui/react"
 
 import AppLayout from "@/layouts/AppLayout"
 import PageHeader from "@/components/PageHeader"
 import { GetServerSideProps } from "next"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
-import StoreMidiaUpload from "@/components/StoreMidiaUpload"
-import prisma from "@/lib/infra/prisma"
 import auth from "@/middlewares/auth"
 import { DataCell, DataHead, DataValue } from "@/components/DataTable"
-import StoreProps from "@/modules/store/interfaces/StoreProps"
-import ActionButton from "@/components/ActionButton"
-import { FaRegSave } from "react-icons/fa"
 import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
-import { useRef, useState } from "react"
-import axios from "axios"
 import { User } from "@prisma/client"
 import useUpdateProfile from "@/modules/admin/profile/hooks/useUpdateProfile"
 
