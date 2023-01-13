@@ -22,7 +22,7 @@ const SideNav = ({ isClosed = false, onToggle }: SideNavProps) => {
       direction="column"
       flexGrow="1"
       width="100%"
-      maxWidth={isClosed ? "68px" : "220px"}
+      maxWidth={isClosed ? "68px" : "240px"}
       padding={3}
       paddingTop={5}
       backgroundColor="white"

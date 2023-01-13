@@ -43,6 +43,10 @@ const ShortcutDeck = () => {
     const bodyElement: HTMLBodyElement =
       document.getElementsByTagName("body")[0]
     bodyElement.style.paddingBottom = "72px"
+
+    return () => {
+      bodyElement.style.paddingBottom = "0px"
+    }
   }, [])
 
   return (

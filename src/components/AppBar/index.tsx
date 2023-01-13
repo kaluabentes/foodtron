@@ -25,6 +25,10 @@ const AppBar = ({
     const bodyElement: HTMLBodyElement =
       document.getElementsByTagName("body")[0]
     bodyElement.style.paddingTop = "60px"
+
+    return () => {
+      bodyElement.style.paddingTop = "0px"
+    }
   }, [])
 
   return (
