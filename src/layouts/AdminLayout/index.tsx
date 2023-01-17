@@ -2,6 +2,10 @@ import ActionButton from "@/components/ActionButton"
 import AppBar from "@/components/AppBar"
 import BarIconButton from "@/components/BarIconButton"
 import { Box, Container, Flex, useBreakpointValue } from "@chakra-ui/react"
+import { User } from "@prisma/client"
+import { get } from "lodash"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/router"
 import { ReactNode, useEffect, useRef, useState } from "react"
 import { BiBell } from "react-icons/bi"
 import { FaRegSave } from "react-icons/fa"
@@ -21,20 +25,30 @@ const AdminLayout = ({
   isFullWidth = false,
   hasPadding = true,
 }: AdminLayoutProps) => {
+  const { data, status } = useSession()
+  const user = get(data, "user", undefined)
+  const router = useRouter()
+
   const [isClosed, setIsClosed] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null)
-
-  useEffect(() => {
-    const localIsClosed = JSON.parse(localStorage.getItem("SideNav.isClosed")!)
-    setIsClosed(localIsClosed)
-  }, [])
 
   const handleToggle = () =>
     setIsClosed((prev) => {
       localStorage.setItem("SideNav.isClosed", JSON.stringify(!prev))
       return !prev
     })
+
+  useEffect(() => {
+    const localIsClosed = JSON.parse(localStorage.getItem("SideNav.isClosed")!)
+    setIsClosed(localIsClosed)
+  }, [])
+
+  useEffect(() => {
+    console.log("data", data)
+    if (status === "unauthenticated") {
+      router.push("/auth/signin")
+    }
+  }, [status])
 
   const renderNavigation = useBreakpointValue({
     base: (
@@ -51,7 +65,7 @@ const AdminLayout = ({
   return (
     <Flex direction={{ base: "column", md: "row" }}>
       {renderNavigation}
-      <Box ref={scrollContainerRef} height="100vh" overflow="auto" width="100%">
+      <Box height="100vh" overflow="auto" width="100%">
         <Container
           maxWidth={{ base: "100%", md: isFullWidth ? "100%" : "container.lg" }}
           padding={hasPadding ? undefined : 0}

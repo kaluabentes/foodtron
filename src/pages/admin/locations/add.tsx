@@ -4,49 +4,48 @@ import {
   Button,
   Flex,
   Spinner,
-  FormControl,
   Input,
+  FormHelperText,
 } from "@chakra-ui/react"
 
 import AdminLayout from "@/layouts/AdminLayout"
 import PageHeader from "@/components/PageHeader"
-import { GetServerSideProps } from "next"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
-import auth from "@/middlewares/auth"
-import { DataCell, DataHead, DataValue } from "@/components/DataTable"
 import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
-import { User } from "@prisma/client"
-import useUpdateProfile from "@/modules/admin/profile/hooks/useUpdateProfile"
-
-interface ProfileEditProps {
-  user: User
-}
+import DataField from "@/components/DataField"
+import useAddLocation from "@/modules/admin/locations/hooks/useAddLocation"
+import auth from "@/middlewares/auth"
+import { GetServerSideProps } from "next"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return auth(context)
+  return auth(context, ["admin"])
 }
 
-const EditProfile = ({ user }: ProfileEditProps) => {
+const AddLocation = () => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
-  const { handleSubmitCallback, isSaving } = useUpdateProfile()
+  const { handleSubmitCallback, isSaving } = useAddLocation()
 
   const { register, handleSubmit } = useForm({
-    defaultValues: user,
+    defaultValues: {
+      neighborhood: "",
+      tax: "",
+      estimatedTime: "",
+    },
   })
 
   return (
     <AdminLayout>
       <form onSubmit={handleSubmit(handleSubmitCallback)}>
         <PageHeader
-          title={t("editProfile")}
+          title={t("addLocation")}
           actions={
             <Flex gap="8px">
               <Button
                 variant="outline"
-                onClick={() => router.push("/admin/profile")}
+                onClick={() => router.push("/admin/locations")}
               >
                 {t("cancel")}
               </Button>
@@ -69,18 +68,27 @@ const EditProfile = ({ user }: ProfileEditProps) => {
             overflow="hidden"
             marginBottom={8}
           >
-            <DataCell>
-              <DataHead>
-                <Box as="span" fontWeight="500">
-                  {t("name")}
-                </Box>
-              </DataHead>
-              <DataValue>
-                <FormControl>
-                  <Input {...register("name")} />
-                </FormControl>
-              </DataValue>
-            </DataCell>
+            <DataField
+              label={t("neighborhood")}
+              input={<Input {...register("neighborhood")} isRequired />}
+            />
+            <DataField
+              label={t("tax")}
+              input={<Input {...register("tax")} type="text" isRequired />}
+            />
+            <DataField
+              label={t("estimatedTime")}
+              input={
+                <>
+                  <Input
+                    {...register("estimatedTime")}
+                    type="number"
+                    isRequired
+                  />
+                  <FormHelperText>Tempo estimado em minutos</FormHelperText>
+                </>
+              }
+            />
           </Box>
         )}
       </form>
@@ -88,4 +96,4 @@ const EditProfile = ({ user }: ProfileEditProps) => {
   )
 }
 
-export default EditProfile
+export default AddLocation

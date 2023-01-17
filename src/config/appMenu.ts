@@ -1,10 +1,7 @@
 import { signOut } from "next-auth/react"
 import { IconType } from "react-icons"
 import {
-  BiHelpCircle,
-  BiCog,
   BiUser,
-  BiMoney,
   BiCollection,
   BiGridAlt,
   BiLogOut,
@@ -33,8 +30,8 @@ export const topMenu: RouteItem[] = [
   },
   {
     icon: BiMap,
-    label: "Bairros",
-    path: "/admin/districts",
+    label: "Locais",
+    path: "/admin/locations",
   },
   {
     icon: BiAlarm,

@@ -134,7 +134,7 @@ const StoreMidiaUpload = ({
           height="130px"
           borderRadius="2xl"
           margin="-80px 0 0 0"
-          border="3px solid white"
+          outline="3px solid white"
           overflow="hidden"
           disabled={!isEditable}
         >

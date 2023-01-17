@@ -3,11 +3,13 @@ import { getSession } from "next-auth/react"
 import { ParsedUrlQuery } from "querystring"
 
 import prisma from "@/lib/infra/prisma"
+import { User } from "@prisma/client"
 
 const auth = async (
   context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>,
-  permissions = ["user", "admin"]
-) => {
+  permissions = ["user", "admin"],
+  callback?: (user: User) => any
+): Promise<any> => {
   const session = await getSession(context)
 
   if (!session) {
@@ -34,11 +36,13 @@ const auth = async (
     }
   }
 
+  if (typeof callback !== "undefined") {
+    return callback(user!)
+  }
+
   return {
     props: {
-      session: {
-        user,
-      },
+      user,
     },
   }
 }

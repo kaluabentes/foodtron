@@ -33,23 +33,7 @@ interface ProfileProps {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const authResult = await auth(context)
-
-  if (authResult.redirect) {
-    return authResult
-  }
-
-  const user = await prisma.user.findFirst({
-    where: {
-      email: authResult.props.session.user?.email,
-    },
-  })
-
-  return {
-    props: {
-      user: user,
-    },
-  }
+  return auth(context)
 }
 
 const Profile = ({ user }: ProfileProps) => {

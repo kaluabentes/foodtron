@@ -22,6 +22,7 @@ import auth from "@/middlewares/auth"
 import { DataCell, DataHead, DataValue } from "@/components/DataTable"
 import StoreProps from "@/modules/admin/store/interfaces/StoreProps"
 import { useState } from "react"
+import { User } from "@prisma/client"
 
 interface StorePageProps {
   store: StoreProps
@@ -30,26 +31,24 @@ interface StorePageProps {
 const APEX_DOMAIN = process.env.NEXT_PUBLIC_APEX_DOMAIN!
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const authResult = await auth(context)
-
-  if (authResult.redirect) {
-    return authResult
-  }
-
-  const store = await prisma.store.findFirst({
-    where: {
-      id: authResult.props.session.user?.storeId!,
-    },
-  })
-
-  return {
-    props: {
-      store: {
-        ...store,
-        minimumOrderPrice: store?.minimumOrderPrice?.toFixed(2),
+  return auth(context, ["admin"], async (user: User) => {
+    const store = await prisma.store.findFirst({
+      where: {
+        id: user?.storeId!,
       },
-    },
-  }
+    })
+
+    return {
+      props: {
+        store: {
+          ...store,
+          minimumOrderPrice: store?.minimumOrderPrice
+            ? store?.minimumOrderPrice?.toFixed(2)
+            : null,
+        },
+      },
+    }
+  })
 }
 
 const Store = ({ store }: StorePageProps) => {

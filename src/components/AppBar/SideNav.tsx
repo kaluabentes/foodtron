@@ -22,14 +22,14 @@ const SideNav = ({ isOpen, onClose }: SideNavProps) => {
         direction="column"
         flexGrow="1"
         width="100%"
-        maxWidth="240px"
+        maxWidth="220px"
         padding={3}
         backgroundColor="white"
         height="100%"
         transition="0.3s"
         position="fixed"
         top="0"
-        left={isOpen ? "0" : "-240px"}
+        left={isOpen ? "0" : "-220px"}
         visibility={isOpen ? "visible" : "hidden"}
         shadow="md"
         zIndex={100}

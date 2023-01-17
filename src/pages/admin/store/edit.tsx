@@ -228,7 +228,7 @@ const EditStore = ({ store }: StorePageProps) => {
                 </DataHead>
                 <DataValue>
                   <FormControl>
-                    <Input {...register("minimumOrderPrice")} />
+                    <Input {...register("minimumOrderPrice")} type="number" />
                   </FormControl>
                 </DataValue>
               </DataCell>
