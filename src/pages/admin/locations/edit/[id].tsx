@@ -14,10 +14,13 @@ import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
 import DataField from "@/components/DataField"
-import useUpdateLocation from "@/modules/admin/locations/hooks/useUpdateLocation"
+import useUpdateLocation, {
+  UpdateLocationData,
+} from "@/modules/admin/locations/hooks/useUpdateLocation"
 import auth from "@/middlewares/auth"
 import { GetServerSideProps } from "next"
 import { StoreDeliveryLocation, User } from "@prisma/client"
+import Location from "@/modules/admin/locations/types/Location"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async (user: User) => {
@@ -43,14 +46,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 interface EditLocationProps {
-  location: StoreDeliveryLocation
+  location: Location
 }
 
 const EditLocation = ({ location }: EditLocationProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
-  const { handleSubmitCallback, isSaving } = useUpdateLocation(location.id)
+  const { updateLocation, isSaving } = useUpdateLocation(location.id)
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -62,7 +65,7 @@ const EditLocation = ({ location }: EditLocationProps) => {
 
   return (
     <AdminLayout>
-      <form onSubmit={handleSubmit(handleSubmitCallback)}>
+      <form onSubmit={handleSubmit(updateLocation)}>
         <PageHeader
           title={t("addLocation")}
           actions={

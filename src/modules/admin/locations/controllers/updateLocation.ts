@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client"
 import { NextApiResponse } from "next"
 
 const updateLocation = async (id: string, data: any, res: NextApiResponse) => {
@@ -6,7 +7,10 @@ const updateLocation = async (id: string, data: any, res: NextApiResponse) => {
       where: {
         id: String(id),
       },
-      data,
+      data: {
+        ...data,
+        tax: new Prisma.Decimal(data.tax.replace(",", ".")),
+      },
     })
 
     return res.status(200).send(location)

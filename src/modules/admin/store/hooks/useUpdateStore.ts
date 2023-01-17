@@ -2,7 +2,7 @@ import { useToast } from "@chakra-ui/react"
 import axios from "axios"
 import { useRouter } from "next/router"
 import { useState } from "react"
-import StoreProps from "../interfaces/StoreProps"
+import StoreProps from "../types/StoreProps"
 
 const useUpdateStore = () => {
   const [isSaving, setIsSaving] = useState(false)

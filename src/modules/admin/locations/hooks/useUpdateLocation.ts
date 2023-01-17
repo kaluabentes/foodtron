@@ -4,7 +4,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 import { useState } from "react"
 
-interface AddLocationData {
+export interface UpdateLocationData {
   neighborhood: string
   tax: string
   estimatedTime: string
@@ -15,7 +15,7 @@ const useUpdateLocation = (locationId: string) => {
   const toast = useToast()
   const router = useRouter()
 
-  const handleDelete = async (data: AddLocationData) => {
+  const updateLocation = async (data: UpdateLocationData) => {
     setIsSaving(true)
 
     try {
@@ -36,7 +36,7 @@ const useUpdateLocation = (locationId: string) => {
     }
   }
 
-  return { handleDelete, isSaving }
+  return { updateLocation, isSaving }
 }
 
 export default useUpdateLocation
