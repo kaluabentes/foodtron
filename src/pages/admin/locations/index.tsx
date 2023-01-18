@@ -31,6 +31,7 @@ import { useState } from "react"
 import useDeleteLocation from "@/modules/admin/locations/hooks/useDeleteLocation"
 import useGetLocations from "@/modules/admin/locations/hooks/useGetLocations"
 import LocationsEmptyState from "@/modules/admin/locations/components/LocationsEmptyState"
+import EmptyState from "@/components/EmptyState"
 
 interface Location {
   id: string
@@ -83,7 +84,9 @@ const Locations = ({ locations: preloadedLocations }: LocationsPageProps) => {
 
   const renderData = () => {
     if (!locations.length) {
-      return <LocationsEmptyState />
+      return (
+        <EmptyState message="Não há localizações cadastradas no momento." />
+      )
     }
 
     return (

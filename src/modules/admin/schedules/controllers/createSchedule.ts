@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
+import prisma from "@/lib/infra/prisma"
+
 const createSchedule = async (
   req: NextApiRequest,
   res: NextApiResponse,

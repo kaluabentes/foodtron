@@ -3,7 +3,7 @@ import { ReactNode } from "react"
 
 interface PageHeaderProps {
   title: string
-  actions: ReactNode
+  actions?: ReactNode
 }
 
 const PageHeader = ({ title, actions }: PageHeaderProps) => (
@@ -17,7 +17,7 @@ const PageHeader = ({ title, actions }: PageHeaderProps) => (
     <Heading size="lg" fontWeight="semibold" color="gray.700">
       {title}
     </Heading>
-    <Flex>{actions}</Flex>
+    {actions && <Flex>{actions}</Flex>}
   </Flex>
 )
 

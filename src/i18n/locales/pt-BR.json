@@ -80,6 +80,8 @@
     "weekDay": "Dia da semana",
     "start": "Hora de abertura",
     "end": "Hora do fechamento",
-    "isScheduledClosing": "É fechamento programado?"
+    "isScheduledClosing": "É fechamento programado?",
+    "schedulesEmptyState": "Não há horários cadastrados no momento.",
+    "schedules": "Horários de funcionamento"
   }
 }

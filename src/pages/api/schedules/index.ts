@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 
 import serverAuth from "@/middlewares/serverAuth"
 import createSchedule from "@/modules/admin/schedules/controllers/createSchedule"
+import getSchedules from "@/modules/admin/schedules/controllers/getSchedules"
 
 const scheduleIndexHandler = async (
   req: NextApiRequest,
@@ -19,6 +20,10 @@ const scheduleIndexHandler = async (
 
   if (req.method === "POST") {
     return createSchedule(req, res, auth.user.store.id)
+  }
+
+  if (req.method === "GET") {
+    return getSchedules(res, auth.user.store.id)
   }
 }
 

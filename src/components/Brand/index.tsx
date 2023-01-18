@@ -17,7 +17,7 @@ const Brand = ({ logo, storeName, blue = false }: BrandProps) => (
     />
     <Flex direction="column" alignItems="center">
       <Heading
-        size="md"
+        size="sm"
         fontWeight="700"
         overflow="hidden"
         whiteSpace="nowrap"

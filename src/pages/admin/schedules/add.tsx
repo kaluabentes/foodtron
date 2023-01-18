@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])
 }
 
-const AddLocation = () => {
+const AddSchedule = () => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
@@ -48,7 +48,7 @@ const AddLocation = () => {
             <Flex gap="8px">
               <Button
                 variant="outline"
-                onClick={() => router.push("/admin/locations")}
+                onClick={() => router.push("/admin/schedules")}
               >
                 {t("cancel")}
               </Button>
@@ -74,7 +74,7 @@ const AddLocation = () => {
             <DataField
               label={t("weekDay")}
               input={
-                <Select placeholder="Selecione">
+                <Select {...register("weekDay")} placeholder="Selecione">
                   <option value="0">Domingo</option>
                   <option value="1">Segunda</option>
                   <option value="2">Terça</option>
@@ -104,4 +104,4 @@ const AddLocation = () => {
   )
 }
 
-export default AddLocation
+export default AddSchedule
