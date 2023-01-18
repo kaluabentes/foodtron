@@ -24,32 +24,29 @@ import auth from "@/middlewares/auth"
 import { DataCell, DataHead, DataValue } from "@/components/DataTable"
 import StoreProps from "@/modules/admin/store/types/StoreProps"
 import useUpdateStore from "@/modules/admin/store/hooks/useUpdateStore"
+import { User } from "@prisma/client"
 
 interface StorePageProps {
   store: StoreProps
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const authResult = await auth(context)
-
-  if (authResult.redirect) {
-    return authResult
-  }
-
-  const store = await prisma.store.findFirst({
-    where: {
-      id: authResult.props.session.user?.storeId!,
-    },
-  })
-
-  return {
-    props: {
-      store: {
-        ...store,
-        minimumOrderPrice: store?.minimumOrderPrice?.toFixed(2),
+  return auth(context, ["admin"], async (user: User) => {
+    const store = await prisma.store.findFirst({
+      where: {
+        id: String(user.storeId),
       },
-    },
-  }
+    })
+
+    return {
+      props: {
+        store: {
+          ...store,
+          minimumOrderPrice: store?.minimumOrderPrice?.toFixed(2),
+        },
+      },
+    }
+  })
 }
 
 const EditStore = ({ store }: StorePageProps) => {
