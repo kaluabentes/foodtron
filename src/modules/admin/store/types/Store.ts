@@ -1,4 +1,4 @@
-interface StoreProps {
+interface Store {
   id: string
   name: string | null
   logo: string | null
@@ -13,4 +13,4 @@ interface StoreProps {
   isOpen: boolean | null
 }
 
-export default StoreProps
+export default Store

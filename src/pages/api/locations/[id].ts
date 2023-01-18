@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
-import prisma from "@/lib/infra/prisma"
 import serverAuth from "@/middlewares/serverAuth"
 import getLocation from "@/modules/admin/locations/controllers/getLocation"
 import updateLocation from "@/modules/admin/locations/controllers/updateLocation"

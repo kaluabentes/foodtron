@@ -44,7 +44,6 @@ const AdminLayout = ({
   }, [])
 
   useEffect(() => {
-    console.log("data", data)
     if (status === "unauthenticated") {
       router.push("/auth/signin")
     }

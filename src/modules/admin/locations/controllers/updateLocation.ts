@@ -1,6 +1,8 @@
 import { Prisma } from "@prisma/client"
 import { NextApiResponse } from "next"
 
+import prisma from "@/lib/infra/prisma"
+
 const updateLocation = async (id: string, data: any, res: NextApiResponse) => {
   try {
     const location = await prisma.storeDeliveryLocation.update({

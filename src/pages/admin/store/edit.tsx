@@ -22,12 +22,12 @@ import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 import prisma from "@/lib/infra/prisma"
 import auth from "@/middlewares/auth"
 import { DataCell, DataHead, DataValue } from "@/components/DataTable"
-import StoreProps from "@/modules/admin/store/types/StoreProps"
+import Store from "@/modules/admin/store/types/Store"
 import useUpdateStore from "@/modules/admin/store/hooks/useUpdateStore"
 import { User } from "@prisma/client"
 
 interface StorePageProps {
-  store: StoreProps
+  store: Store
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -53,22 +53,16 @@ const EditStore = ({ store }: StorePageProps) => {
   const { t } = useTranslation()
   const router = useRouter()
 
-  const [isOpen, setIsOpen] = useState(store.isOpen!)
-
   const isPageLoaded = useIsPageLoaded()
-  const { handleSubmitCallback, isSaving } = useUpdateStore()
+  const { updateStore, isSaving } = useUpdateStore()
 
-  const { register, handleSubmit, setValue, formState, getValues } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     defaultValues: store,
   })
 
   return (
     <AdminLayout>
-      <form
-        onSubmit={handleSubmit((data: StoreProps) =>
-          handleSubmitCallback({ ...data, isOpen })
-        )}
-      >
+      <form onSubmit={handleSubmit(updateStore)}>
         <PageHeader
           title={t("editStore")}
           actions={
@@ -112,10 +106,7 @@ const EditStore = ({ store }: StorePageProps) => {
                   </Box>
                 </DataHead>
                 <DataValue>
-                  <Switch
-                    isChecked={isOpen}
-                    onChange={() => setIsOpen((prev) => !prev)}
-                  />
+                  <Switch {...register("isOpen")} />
                 </DataValue>
               </DataCell>
               <DataCell>

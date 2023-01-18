@@ -26,7 +26,7 @@ const SideNav = ({ isClosed = false, onToggle }: SideNavProps) => {
       padding={3}
       paddingTop={5}
       backgroundColor="white"
-      shadow="md"
+      shadow="sm"
       height="100vh"
       transition="0.5s"
       position="relative"

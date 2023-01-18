@@ -83,9 +83,9 @@ model Store {
 
 model StoreSchedule {
   id    String @id @default(cuid())
-  weekDay Int
-  start Int
-  end Int
+  weekDay String
+  start String
+  end String
   isScheduledClosing Boolean
   storeId       String
   store         Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)

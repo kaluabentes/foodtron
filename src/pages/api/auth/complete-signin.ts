@@ -4,13 +4,8 @@ import * as Yup from "yup"
 import { authOptions } from "./[...nextauth]"
 
 import prisma from "@/lib/infra/prisma"
-import axios from "axios"
 import addGoDaddyRecord from "@/lib/infra/godaddy/addGoDaddyRecord"
 import addVercelSubdomain from "@/lib/infra/vercel/addVercelDomain"
-
-const APEX_DOMAIN = process.env.NEXT_PUBLIC_APEX_DOMAIN!
-const GODADDY_API_KEY = process.env.GODADDY_API_KEY!
-const GODADDY_SECRET = process.env.GODADDY_SECRET!
 
 const schema = Yup.object({
   userName: Yup.string().required(),

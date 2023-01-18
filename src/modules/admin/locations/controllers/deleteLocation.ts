@@ -1,5 +1,7 @@
 import { NextApiResponse } from "next"
 
+import prisma from "@/lib/infra/prisma"
+
 const deleteLocation = async (id: string, res: NextApiResponse) => {
   try {
     const location = await prisma.storeDeliveryLocation.delete({

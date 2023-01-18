@@ -20,12 +20,12 @@ import TruncateText from "@/components/TruncateText"
 import prisma from "@/lib/infra/prisma"
 import auth from "@/middlewares/auth"
 import { DataCell, DataHead, DataValue } from "@/components/DataTable"
-import StoreProps from "@/modules/admin/store/types/StoreProps"
+import Store from "@/modules/admin/store/types/Store"
 import { useState } from "react"
 import { User } from "@prisma/client"
 
 interface StorePageProps {
-  store: StoreProps
+  store: Store
 }
 
 const APEX_DOMAIN = process.env.NEXT_PUBLIC_APEX_DOMAIN!

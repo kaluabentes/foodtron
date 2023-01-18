@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next"
 
 import prisma from "@/lib/infra/prisma"
 import serverAuth from "@/middlewares/serverAuth"
-import { Prisma } from "@prisma/client"
 
 const updateStore = async (req: NextApiRequest, res: NextApiResponse) => {
   const auth = await serverAuth(req, res, ["admin"])

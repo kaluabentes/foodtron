@@ -2,14 +2,15 @@ import { useToast } from "@chakra-ui/react"
 import axios from "axios"
 import { useRouter } from "next/router"
 import { useState } from "react"
-import StoreProps from "../types/StoreProps"
+
+import Store from "../types/Store"
 
 const useUpdateStore = () => {
   const [isSaving, setIsSaving] = useState(false)
   const toast = useToast()
   const router = useRouter()
 
-  const handleSubmitCallback = async (data: StoreProps) => {
+  const updateStore = async (data: Store) => {
     setIsSaving(true)
 
     try {
@@ -30,7 +31,7 @@ const useUpdateStore = () => {
     }
   }
 
-  return { handleSubmitCallback, isSaving }
+  return { updateStore, isSaving }
 }
 
 export default useUpdateStore
