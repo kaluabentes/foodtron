@@ -43,8 +43,6 @@ interface LocationsPageProps {
   locations: Location[]
 }
 
-const APEX_DOMAIN = process.env.NEXT_PUBLIC_APEX_DOMAIN!
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async (user: User) => {
     const locations = await prisma.storeDeliveryLocation.findMany({
