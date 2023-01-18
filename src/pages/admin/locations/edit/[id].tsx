@@ -7,20 +7,19 @@ import {
   Input,
   FormHelperText,
 } from "@chakra-ui/react"
+import { GetServerSideProps } from "next"
+import { User } from "@prisma/client"
+import { useRouter } from "next/router"
+import { useForm } from "react-hook-form"
 
 import AdminLayout from "@/layouts/AdminLayout"
 import PageHeader from "@/components/PageHeader"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
-import { useRouter } from "next/router"
-import { useForm } from "react-hook-form"
 import DataField from "@/components/DataField"
-import useUpdateLocation, {
-  UpdateLocationData,
-} from "@/modules/admin/locations/hooks/useUpdateLocation"
+import useUpdateLocation from "@/modules/admin/locations/hooks/useUpdateLocation"
 import auth from "@/middlewares/auth"
-import { GetServerSideProps } from "next"
-import { StoreDeliveryLocation, User } from "@prisma/client"
 import Location from "@/modules/admin/locations/types/Location"
+import prisma from "@/lib/infra/prisma"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async (user: User) => {
