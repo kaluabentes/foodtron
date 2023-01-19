@@ -27,46 +27,41 @@ import auth from "@/middlewares/auth"
 import useGetSchedules from "@/modules/admin/schedules/hooks/useGetSchedules"
 import Schedule from "@/modules/admin/schedules/types/Schedule"
 import useDeleteSchedule from "@/modules/admin/schedules/hooks/useDeleteSchedule"
+import useGetPaymentMethods from "@/modules/admin/payment-methods/hooks/useGetPaymentMethods"
+import PaymentMethod from "@/modules/admin/payment-methods/types/PaymentMethod"
+import useDeletePaymentMethod from "@/modules/admin/payment-methods/hooks/useDeletePaymentMethod"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])
 }
 
-const weekDay = new Map()
-weekDay.set("0", "Domingo")
-weekDay.set("1", "Segunda")
-weekDay.set("2", "Terça")
-weekDay.set("3", "Quarta")
-weekDay.set("4", "Quinta")
-weekDay.set("5", "Sexta")
-weekDay.set("6", "Sábado")
-
-const Schedules = () => {
+const PaymentMethods = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const isPageLoaded = useIsPageLoaded()
 
-  const [selectedScheduleId, setSelectedScheduleId] = useState<
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     string | undefined
   >()
 
-  const { schedules, getSchedules, isLoading } = useGetSchedules()
-  const { deleteSchedule, isDeleting } = useDeleteSchedule()
+  const { paymentMethods, getPaymentMethods, isLoading } =
+    useGetPaymentMethods()
+  const { deletePaymentMethod, isDeleting } = useDeletePaymentMethod()
 
   const handleDeleteConfirm = async () => {
-    if (selectedScheduleId) {
-      await deleteSchedule(selectedScheduleId)
-      await getSchedules()
-      setSelectedScheduleId(undefined)
+    if (selectedPaymentMethod) {
+      await deletePaymentMethod(selectedPaymentMethod)
+      await getPaymentMethods()
+      setSelectedPaymentMethod(undefined)
     }
   }
 
   const renderData = () => {
     if (isLoading) {
-      return <TableSkeleton columns={4} rows={4} />
+      return <TableSkeleton columns={2} rows={4} />
     }
 
-    if (!schedules.length) {
+    if (!paymentMethods.length) {
       return <EmptyState message={t("schedulesEmptyState")} />
     }
 
@@ -80,23 +75,19 @@ const Schedules = () => {
       >
         <Table>
           <Thead>
-            <Th>{t("weekDay")}</Th>
-            <Th>{t("start")}</Th>
-            <Th>{t("end")}</Th>
-            <Th>{t("isScheduledClosing")}</Th>
+            <Th>{t("description")}</Th>
+            <Th>{t("type")}</Th>
           </Thead>
           <Tbody>
-            {schedules.map((schedule: Schedule) => (
-              <Tr key={schedule.id}>
-                <Td>{weekDay.get(schedule.weekDay)}</Td>
-                <Td>{schedule.start}</Td>
-                <Td>{schedule.end}</Td>
-                <Td>{schedule.isScheduledClosing ? t("yes") : t("no")}</Td>
+            {paymentMethods.map((payment: PaymentMethod) => (
+              <Tr key={payment.id}>
+                <Td>{payment.description}</Td>
+                <Td>{payment.type}</Td>
                 <Td>
                   <Flex gap={2}>
                     <IconButton
                       onClick={() =>
-                        router.push(`/admin/schedules/edit/${schedule.id}`)
+                        router.push(`/admin/payment-methods/edit/${payment.id}`)
                       }
                       aria-label="Editar localização"
                       icon={<BiEdit />}
@@ -106,7 +97,7 @@ const Schedules = () => {
                       aria-label="Remover localização"
                       icon={<BiTrash />}
                       size="sm"
-                      onClick={() => setSelectedScheduleId(schedule.id)}
+                      onClick={() => setSelectedPaymentMethod(payment.id)}
                     />
                   </Flex>
                 </Td>
@@ -138,15 +129,15 @@ const Schedules = () => {
       )}
       {isPageLoaded && renderData()}
       <DeleteAlert
-        title="Deletar horário"
+        title="Deletar método de pagamento"
         description="Tem certeza? Você não pode desfazer esta ação."
-        isOpen={Boolean(selectedScheduleId)}
-        isLoading={isDeleting}
-        onClose={() => setSelectedScheduleId(undefined)}
+        isOpen={Boolean(selectedPaymentMethod)}
+        isLoading={isDeleting || isLoading}
+        onClose={() => setSelectedPaymentMethod(undefined)}
         onConfirm={handleDeleteConfirm}
       />
     </AdminLayout>
   )
 }
 
-export default Schedules
+export default PaymentMethods

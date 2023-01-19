@@ -18,29 +18,47 @@ import { useForm } from "react-hook-form"
 import DataField from "@/components/DataField"
 import auth from "@/middlewares/auth"
 import { GetServerSideProps } from "next"
-import useAddSchedule from "@/modules/admin/schedules/hooks/useAddSchedule"
 import useCreatePaymentMethod from "@/modules/admin/payment-methods/hooks/useCreatePaymentMethod"
+import prisma from "@/lib/infra/prisma"
+import PaymentMethod from "@/modules/admin/payment-methods/types/PaymentMethod"
+import useUpdatePaymentMethod from "@/modules/admin/payment-methods/hooks/useUpdatePaymentMethod"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return auth(context, ["admin"])
+  return auth(context, ["admin"], async () => {
+    const { id } = context.query
+    const paymentMethod = await prisma.storePaymentMethod.findFirst({
+      where: {
+        id: String(id),
+      },
+    })
+
+    return {
+      props: {
+        paymentMethod,
+      },
+    }
+  })
 }
 
-const AddPaymentMethod = () => {
+interface EditPaymentMethodProps {
+  paymentMethod: PaymentMethod
+}
+
+const EditPaymentMethod = ({ paymentMethod }: EditPaymentMethodProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
-  const { createPaymentMethod, isSaving } = useCreatePaymentMethod()
+  const { updatePaymentMethod, isUpdating } = useUpdatePaymentMethod(
+    String(paymentMethod.id)
+  )
 
   const { register, handleSubmit } = useForm({
-    defaultValues: {
-      description: "",
-      type: "",
-    },
+    defaultValues: paymentMethod,
   })
 
   return (
     <AdminLayout>
-      <form onSubmit={handleSubmit(createPaymentMethod)}>
+      <form onSubmit={handleSubmit(updatePaymentMethod)}>
         <PageHeader
           title={t("addPayment")}
           actions={
@@ -51,7 +69,7 @@ const AddPaymentMethod = () => {
               >
                 {t("cancel")}
               </Button>
-              <Button colorScheme="brand" isLoading={isSaving} type="submit">
+              <Button colorScheme="brand" isLoading={isUpdating} type="submit">
                 {t("save")}
               </Button>
             </Flex>
@@ -90,4 +108,4 @@ const AddPaymentMethod = () => {
   )
 }
 
-export default AddPaymentMethod
+export default EditPaymentMethod
