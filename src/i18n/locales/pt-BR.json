@@ -82,6 +82,10 @@
     "end": "Hora do fechamento",
     "isScheduledClosing": "É fechamento programado?",
     "schedulesEmptyState": "Não há horários cadastrados no momento.",
-    "schedules": "Horários"
+    "schedules": "Horários",
+    "addPayment": "Adicionar pagamento",
+    "description": "Descrição",
+    "type": "Tipo",
+    "paymentMethods": "Métodos de Pagamento"
   }
 }

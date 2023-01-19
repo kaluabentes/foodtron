@@ -76,9 +76,11 @@ model Store {
   customDomain String?
   minimumOrderPrice Decimal?
   isOpen Boolean? @default(false)
+
   users User[]
   schedules StoreSchedule[]
   deliveryLocations StoreDeliveryLocation[]
+  paymentMethods StorePaymentMethod[]
 }
 
 model StoreSchedule {
@@ -98,6 +100,17 @@ model StoreDeliveryLocation {
   neighborhood String
   tax Decimal
   estimatedTime String
+
+  storeId       String
+  store         Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@index([storeId])
+}
+
+model StorePaymentMethod {
+  id    String @id @default(cuid())
+  description String
+  type String
 
   storeId       String
   store         Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
