@@ -25,17 +25,17 @@ const TableSkeleton = ({ columns, rows }: TableSkeletonProps) => (
   >
     <Table>
       <Thead>
-        {range(columns).map(() => (
-          <Th>
+        {range(columns).map((id) => (
+          <Th key={id}>
             <Skeleton height="10px" />
           </Th>
         ))}
       </Thead>
       <Tbody>
-        {range(rows).map(() => (
-          <Tr>
-            {range(columns).map(() => (
-              <Td>
+        {range(rows).map((id) => (
+          <Tr key={id}>
+            {range(columns).map((childId) => (
+              <Td key={childId}>
                 <Skeleton height="10px" />
               </Td>
             ))}

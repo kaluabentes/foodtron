@@ -19,7 +19,7 @@ const useAddLocation = () => {
     setIsSaving(true)
 
     try {
-      await axios.post("/api/locations/add", data)
+      await axios.post("/api/locations", data)
       toast({
         title: "Feito!",
         description: "Local criado com sucesso",

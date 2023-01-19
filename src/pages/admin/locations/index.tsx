@@ -4,10 +4,6 @@ import {
   Button,
   Flex,
   Spinner,
-  Link,
-  Switch,
-  Text,
-  Badge,
   Table,
   Tr,
   Td,
@@ -22,67 +18,45 @@ import { useRouter } from "next/router"
 import AdminLayout from "@/layouts/AdminLayout"
 import PageHeader from "@/components/PageHeader"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
-import prisma from "@/lib/infra/prisma"
 import auth from "@/middlewares/auth"
-import { User } from "@prisma/client"
 import { BiEdit, BiTrash } from "react-icons/bi"
 import DeleteAlert from "@/components/DeleteAlert"
 import { useState } from "react"
 import useDeleteLocation from "@/modules/admin/locations/hooks/useDeleteLocation"
 import useGetLocations from "@/modules/admin/locations/hooks/useGetLocations"
-import LocationsEmptyState from "@/modules/admin/locations/components/LocationsEmptyState"
 import EmptyState from "@/components/EmptyState"
-
-interface Location {
-  id: string
-  neighborhood: string
-  tax: number
-  estimatedTime: string
-}
-
-interface LocationsPageProps {
-  locations: Location[]
-}
+import TableSkeleton from "@/components/TableSkeleton"
+import Location from "@/modules/admin/locations/types/Location"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return auth(context, ["admin"], async (user: User) => {
-    const locations = await prisma.storeDeliveryLocation.findMany({
-      where: {
-        storeId: user?.storeId!,
-      },
-    })
-
-    return {
-      props: {
-        locations: locations.map((location) => ({
-          ...location,
-          tax: location.tax.toFixed(2),
-        })),
-      },
-    }
-  })
+  return auth(context, ["admin"])
 }
 
-const Locations = ({ locations: preloadedLocations }: LocationsPageProps) => {
+const Locations = () => {
   const { t } = useTranslation()
   const router = useRouter()
 
   const isPageLoaded = useIsPageLoaded()
-  const [selectedLocationId, setSelectedLocationId] = useState()
+  const [selectedLocationId, setSelectedLocationId] = useState<
+    string | undefined
+  >()
   const { deleteLocation, isDeleting } = useDeleteLocation()
 
-  const { locations, getLocations, isLoading } =
-    useGetLocations(preloadedLocations)
+  const { locations, getLocations, isLoading } = useGetLocations()
 
   const handleDeleteConfirm = async () => {
     if (selectedLocationId) {
       await deleteLocation(String(selectedLocationId))
-      await getLocations(locations[0].storeId)
+      await getLocations()
       setSelectedLocationId(undefined)
     }
   }
 
   const renderData = () => {
+    if (isLoading) {
+      return <TableSkeleton columns={4} rows={4} />
+    }
+
     if (!locations.length) {
       return (
         <EmptyState message="Não há localizações cadastradas no momento." />
@@ -105,7 +79,7 @@ const Locations = ({ locations: preloadedLocations }: LocationsPageProps) => {
             <Th>{t("actions")}</Th>
           </Thead>
           <Tbody>
-            {locations.map((location) => (
+            {locations.map((location: Location) => (
               <Tr key={location.id}>
                 <Td>{location.neighborhood}</Td>
                 <Td>{location.tax}</Td>

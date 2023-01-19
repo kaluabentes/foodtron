@@ -2,34 +2,28 @@ import { NextApiRequest, NextApiResponse } from "next"
 
 import prisma from "@/lib/infra/prisma"
 import serverAuth from "@/middlewares/serverAuth"
+import getLocations from "@/modules/admin/locations/controllers/getLocations"
+import createLocation from "@/modules/admin/locations/controllers/createLocation"
 
-const updateStore = async (req: NextApiRequest, res: NextApiResponse) => {
+const locationsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const auth = await serverAuth(req, res, ["admin"])
-  const { storeId } = req.query
+  const storeId = auth.user.store.id
 
   if (auth.unauthorized) {
     return auth.response
   }
 
-  if (req.method !== "GET") {
-    return res.status(400).send("Method not allowed")
+  if (!["GET", "POST"].includes(req.method!)) {
+    return res.status(405).send("Method not allowed")
   }
 
-  try {
-    const locations = await prisma.storeDeliveryLocation.findMany({
-      where: {
-        storeId: String(storeId),
-      },
-    })
+  if (req.method === "GET") {
+    return getLocations(String(storeId), res)
+  }
 
-    return res.status(200).send(locations)
-  } catch (error: any) {
-    if (error.response) {
-      return res.status(400).send(error.response.data)
-    }
-
-    return res.status(400).send(error.message)
+  if (req.method === "POST") {
+    return createLocation(req, res, String(storeId))
   }
 }
 
-export default updateStore
+export default locationsHandler

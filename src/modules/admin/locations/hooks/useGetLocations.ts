@@ -1,16 +1,18 @@
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-const useGetLocations = (preloadedLocations: any[] = []) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [locations, setLocations] = useState(preloadedLocations)
+const useGetLocations = () => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [locations, setLocations] = useState([])
 
-  const getLocations = async (storeId: string) => {
-    setIsLoading(true)
-
+  const getLocations = async () => {
     try {
-      const response = await axios.get(`/api/locations?storeId=${storeId}`)
+      setIsLoading(true)
+
+      const response = await axios.get(`/api/locations`)
+      console.log(response.data)
       setLocations(response.data)
+
       return Promise.resolve()
     } catch (error: any) {
       console.log("> Delete location: ", error)
@@ -18,6 +20,10 @@ const useGetLocations = (preloadedLocations: any[] = []) => {
       setIsLoading(false)
     }
   }
+
+  useEffect(() => {
+    getLocations()
+  }, [])
 
   return { getLocations, isLoading, locations }
 }
