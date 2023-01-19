@@ -82,6 +82,6 @@
     "end": "Hora do fechamento",
     "isScheduledClosing": "É fechamento programado?",
     "schedulesEmptyState": "Não há horários cadastrados no momento.",
-    "schedules": "Horários de funcionamento"
+    "schedules": "Horários"
   }
 }

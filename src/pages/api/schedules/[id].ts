@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 
 import serverAuth from "@/middlewares/serverAuth"
 import deleteSchedule from "@/modules/admin/schedules/controllers/deleteSchedule"
+import updateSchedule from "@/modules/admin/schedules/controllers/updateSchedule"
 
 const singleScheduleHandler = async (
   req: NextApiRequest,
@@ -20,6 +21,10 @@ const singleScheduleHandler = async (
 
   if (req.method === "DELETE") {
     return deleteSchedule(String(id), res)
+  }
+
+  if (req.method === "PATCH") {
+    return updateSchedule(String(id), req.body, res)
   }
 }
 

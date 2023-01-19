@@ -6,6 +6,8 @@ import {
   Spinner,
   Input,
   FormHelperText,
+  Select,
+  Switch,
 } from "@chakra-ui/react"
 import { GetServerSideProps } from "next"
 import { useRouter } from "next/router"
@@ -15,10 +17,10 @@ import AdminLayout from "@/layouts/AdminLayout"
 import PageHeader from "@/components/PageHeader"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import DataField from "@/components/DataField"
-import useUpdateLocation from "@/modules/admin/locations/hooks/useUpdateLocation"
 import auth from "@/middlewares/auth"
-import Location from "@/modules/admin/locations/types/Location"
+import Schedule from "@/modules/admin/schedules/types/Schedule"
 import prisma from "@/lib/infra/prisma"
+import useUpdateSchedule from "@/modules/admin/schedules/hooks/useUpdateSchedule"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async () => {
@@ -26,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       query: { id },
     } = context
 
-    const location = await prisma.storeDeliveryLocation.findFirst({
+    const schedule = await prisma.storeSchedule.findFirst({
       where: {
         id: String(id),
       },
@@ -34,47 +36,40 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     return {
       props: {
-        location: {
-          ...location,
-          tax: location?.tax.toFixed(2),
-        },
+        schedule,
       },
     }
   })
 }
 
-interface EditLocationProps {
-  location: Location
+interface EditScheduleProps {
+  schedule: Schedule
 }
 
-const EditLocation = ({ location }: EditLocationProps) => {
+const EditSchedule = ({ schedule }: EditScheduleProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
-  const { updateLocation, isSaving } = useUpdateLocation(location.id)
+  const { updateSchedule, isUpdating } = useUpdateSchedule(schedule.id!)
 
   const { register, handleSubmit } = useForm({
-    defaultValues: {
-      neighborhood: location.neighborhood,
-      tax: location.tax,
-      estimatedTime: location.estimatedTime,
-    },
+    defaultValues: schedule,
   })
 
   return (
     <AdminLayout>
-      <form onSubmit={handleSubmit(updateLocation)}>
+      <form onSubmit={handleSubmit(updateSchedule)}>
         <PageHeader
-          title={t("addLocation")}
+          title={t("addSchedule")}
           actions={
             <Flex gap="8px">
               <Button
                 variant="outline"
-                onClick={() => router.push("/admin/locations")}
+                onClick={() => router.push("/admin/schedules")}
               >
                 {t("cancel")}
               </Button>
-              <Button colorScheme="brand" isLoading={isSaving} type="submit">
+              <Button colorScheme="brand" isLoading={isUpdating} type="submit">
                 {t("save")}
               </Button>
             </Flex>
@@ -94,25 +89,30 @@ const EditLocation = ({ location }: EditLocationProps) => {
             marginBottom={8}
           >
             <DataField
-              label={t("neighborhood")}
-              input={<Input {...register("neighborhood")} isRequired />}
-            />
-            <DataField
-              label={t("tax")}
-              input={<Input {...register("tax")} type="text" isRequired />}
-            />
-            <DataField
-              label={t("estimatedTime")}
+              label={t("weekDay")}
               input={
-                <>
-                  <Input
-                    {...register("estimatedTime")}
-                    type="number"
-                    isRequired
-                  />
-                  <FormHelperText>Tempo estimado em minutos</FormHelperText>
-                </>
+                <Select {...register("weekDay")} placeholder="Selecione">
+                  <option value="0">Domingo</option>
+                  <option value="1">Segunda</option>
+                  <option value="2">Terça</option>
+                  <option value="3">Quarta</option>
+                  <option value="4">Quinta</option>
+                  <option value="5">Sexta</option>
+                  <option value="6">Sábado</option>
+                </Select>
               }
+            />
+            <DataField
+              label={t("start")}
+              input={<Input {...register("start")} type="time" />}
+            />
+            <DataField
+              label={t("end")}
+              input={<Input {...register("end")} type="time" />}
+            />
+            <DataField
+              label={t("isScheduledClosing")}
+              input={<Switch {...register("isScheduledClosing")} />}
             />
           </Box>
         )}
@@ -121,4 +121,4 @@ const EditLocation = ({ location }: EditLocationProps) => {
   )
 }
 
-export default EditLocation
+export default EditSchedule
