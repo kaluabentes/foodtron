@@ -86,6 +86,11 @@
     "addPayment": "Adicionar pagamento",
     "description": "Descrição",
     "type": "Tipo",
-    "paymentMethods": "Métodos de Pagamento"
+    "paymentMethods": "Métodos de Pagamento",
+    "categories": "Categorias",
+    "categoriesEmptyState": "Não há categorias cadastradas no momento",
+    "title": "Título",
+    "addCategories": "Adicionar categoria",
+    "editCategory": "Editar categoria"
   }
 }

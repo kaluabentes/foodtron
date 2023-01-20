@@ -25,7 +25,7 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-  @@index([userId])
+  @@index(userId)
 }
 
 model Session {
@@ -35,24 +35,24 @@ model Session {
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([userId])
+  @@index(userId)
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  whatsapp String?
-  role          String? @default("user")
+  id             String    @id @default(cuid())
+  name           String?
+  email          String?   @unique
+  whatsapp       String?
+  role           String?   @default("user")
   onBoardingStep String?
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  storeId       String?
-  store         Store?    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  storeId        String?
+  store          Store?    @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
-  @@index([storeId])
+  @@index(storeId)
 }
 
 model VerificationToken {
@@ -64,56 +64,117 @@ model VerificationToken {
 }
 
 model Store {
-  id    String @id @default(cuid())
-  name  String?
-  logo  String?
-  cover String?
-  address String?
-  whatsapp String?
-  facebook String?
-  instagram String?
-  subdomain String? @unique
-  customDomain String?
+  id                String   @id @default(cuid())
+  name              String?
+  logo              String?
+  cover             String?
+  address           String?
+  whatsapp          String?
+  facebook          String?
+  instagram         String?
+  subdomain         String?  @unique
+  customDomain      String?
   minimumOrderPrice Decimal?
-  isOpen Boolean? @default(false)
+  isOpen            Boolean? @default(false)
 
-  users User[]
-  schedules StoreSchedule[]
+  users             User[]
+  schedules         StoreSchedule[]
   deliveryLocations StoreDeliveryLocation[]
-  paymentMethods StorePaymentMethod[]
+  paymentMethods    StorePaymentMethod[]
+  products          Product[]
+  categories        Category[]
+  optionGroups OptionGroup[]
 }
 
 model StoreSchedule {
-  id    String @id @default(cuid())
-  weekDay String
-  start String
-  end String
+  id                 String  @id @default(cuid())
+  weekDay            String
+  start              String
+  end                String
   isScheduledClosing Boolean
-  storeId       String
-  store         Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  storeId            String
+  store              Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
-  @@index([storeId])
+  @@index(storeId)
 }
 
 model StoreDeliveryLocation {
-  id    String @id @default(cuid())
-  neighborhood String
-  tax Decimal
+  id            String  @id @default(cuid())
+  neighborhood  String
+  tax           Decimal
   estimatedTime String
 
-  storeId       String
-  store         Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
-  @@index([storeId])
+  @@index(storeId)
 }
 
 model StorePaymentMethod {
-  id    String @id @default(cuid())
+  id          String @id @default(cuid())
   description String
-  type String
+  type        String
 
-  storeId       String
-  store         Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
-  @@index([storeId])
+  @@index(storeId)
+}
+
+model Product {
+  id          String  @id @default(cuid())
+  title       String
+  description String
+  price       Decimal
+  image       String
+
+  storeId    String
+  store      Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  OptionGroup OptionGroup[]
+
+  @@index(storeId)
+  @@index(categoryId)
+}
+
+model OptionGroup {
+  id        String  @id @default(cuid())
+  title     String
+  required  Boolean
+  maxOption Int
+
+  storeId    String
+  store      Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  options Option[]
+
+  @@index(productId)
+  @@index(storeId)
+}
+
+model Option {
+  id    String  @id @default(cuid())
+  title String
+  price Decimal
+
+  optionGroupId String
+  optionGroup   OptionGroup @relation(fields: [optionGroupId], references: [id], onDelete: Cascade)
+
+  @@index(optionGroupId)
+}
+
+model Category {
+  id    String @id @default(cuid())
+  title String
+
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  products Product[]
+
+  @@index(storeId)
 }

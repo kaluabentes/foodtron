@@ -9,6 +9,8 @@ import {
   BiHomeHeart,
   BiAlarm,
   BiMoney,
+  BiCheckSquare,
+  BiPurchaseTag,
 } from "react-icons/bi"
 
 interface RouteItem {
@@ -30,8 +32,13 @@ export const topMenu: RouteItem[] = [
     path: "/admin/products",
   },
   {
+    icon: BiPurchaseTag,
+    label: "Categorias",
+    path: "/admin/categories",
+  },
+  {
     icon: BiMoney,
-    label: "Pagamento",
+    label: "Pagamentos",
     path: "/admin/payment-methods",
   },
   {

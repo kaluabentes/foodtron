@@ -30,8 +30,8 @@ const MenuItem = ({
     <Tooltip
       label={isClosed ? children : ""}
       placement="right"
-      color="gray.800"
-      backgroundColor="white"
+      color="white"
+      backgroundColor="gray.800"
     >
       <Box
         as="li"
