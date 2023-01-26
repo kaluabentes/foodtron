@@ -26,10 +26,6 @@ import Store from "@/modules/admin/store/types/Store"
 import useUpdateStore from "@/modules/admin/store/hooks/useUpdateStore"
 import { User } from "@prisma/client"
 
-interface StorePageProps {
-  store: Store
-}
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async (user: User) => {
     const store = await prisma.store.findFirst({
@@ -42,11 +38,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: {
         store: {
           ...store,
-          minimumOrderPrice: store?.minimumOrderPrice?.toFixed(2),
+          minimumOrderPrice: store?.minimumOrderPrice?.toFixed(2) || null,
         },
       },
     }
   })
+}
+
+interface StorePageProps {
+  store: Store
 }
 
 const EditStore = ({ store }: StorePageProps) => {

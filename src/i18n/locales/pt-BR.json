@@ -91,6 +91,12 @@
     "categoriesEmptyState": "Não há categorias cadastradas no momento",
     "title": "Título",
     "addCategories": "Adicionar categoria",
-    "editCategory": "Editar categoria"
+    "editCategory": "Editar categoria",
+    "productsEmptyState": "Não há produtos cadastrados no momento",
+    "products": "Produtos",
+    "addProducts": "Adicionar produto",
+    "price": "Preço",
+    "image": "Imagem",
+    "editProduct": "Editar produto"
   }
 }

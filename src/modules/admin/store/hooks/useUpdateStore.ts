@@ -1,3 +1,4 @@
+import useBottomToast from "@/lib/hooks/useBottomToast"
 import { useToast } from "@chakra-ui/react"
 import axios from "axios"
 import { useRouter } from "next/router"
@@ -6,9 +7,10 @@ import { useState } from "react"
 import Store from "../types/Store"
 
 const useUpdateStore = () => {
-  const [isSaving, setIsSaving] = useState(false)
-  const toast = useToast()
+  const toast = useBottomToast()
   const router = useRouter()
+
+  const [isSaving, setIsSaving] = useState(false)
 
   const updateStore = async (data: Store) => {
     setIsSaving(true)
@@ -18,14 +20,13 @@ const useUpdateStore = () => {
       toast({
         title: "Feito!",
         description: "Informações atualizados com sucesso",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-        position: "bottom-right",
       })
       router.push("/admin/store")
     } catch (error: any) {
-      console.log("> Update store: ", error)
+      toast({
+        title: "Não deu boa!",
+        description: error.message,
+      })
     } finally {
       setIsSaving(false)
     }

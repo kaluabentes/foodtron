@@ -5,6 +5,8 @@ import serverAuth from "@/middlewares/serverAuth"
 import addVercelSubdomain from "@/lib/infra/vercel/addVercelDomain"
 import addGoDaddyRecord from "@/lib/infra/godaddy/addGoDaddyRecord"
 import { Prisma } from "@prisma/client"
+import deleteGoDaddyRecord from "@/lib/infra/godaddy/deleteGoDadddyRecord"
+import deleteVercelSubdomain from "@/lib/infra/vercel/deleteVercelDomain"
 
 const updateStore = async (req: NextApiRequest, res: NextApiResponse) => {
   const auth = await serverAuth(req, res, ["admin"])
