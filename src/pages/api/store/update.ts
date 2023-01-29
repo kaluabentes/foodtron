@@ -23,6 +23,8 @@ const updateStore = async (req: NextApiRequest, res: NextApiResponse) => {
     const store = auth.user.store
 
     if (req.body.subdomain !== store.subdomain) {
+      await deleteGoDaddyRecord(store.subdomain)
+      await deleteVercelSubdomain(store.subdomain)
       await addVercelSubdomain(req.body.subdomain)
       await addGoDaddyRecord(req.body.subdomain)
     }

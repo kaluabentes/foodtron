@@ -1,7 +1,7 @@
 interface Option {
   id?: string
   title: string
-  price: number
+  price: string
 }
 
 export default Option

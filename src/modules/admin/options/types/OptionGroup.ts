@@ -4,7 +4,7 @@ interface OptionGroup {
   id?: string
   title: string
   required: boolean
-  maxOption: number
+  maxOption: string
   options?: Option[]
 }
 

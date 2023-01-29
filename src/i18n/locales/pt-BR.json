@@ -97,6 +97,11 @@
     "addProducts": "Adicionar produto",
     "price": "Preço",
     "image": "Imagem",
-    "editProduct": "Editar produto"
+    "editProduct": "Editar produto",
+    "optionsEmptyState": "Não opções cadastradas no momento.",
+    "options": "Opções",
+    "maxOption": "Máximo de opções",
+    "addOptions": "Adicionar opção",
+    "required": "Obrigatório"
   }
 }
