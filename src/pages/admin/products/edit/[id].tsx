@@ -1,5 +1,20 @@
 import { useTranslation } from "react-i18next"
-import { Box, Button, Flex, Spinner, Input, Image } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  Flex,
+  Spinner,
+  Input,
+  Image,
+  Heading,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  IconButton,
+} from "@chakra-ui/react"
 import { GetServerSideProps } from "next"
 import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
@@ -14,6 +29,11 @@ import Product from "@/modules/admin/products/types/Product"
 import useUpdateProduct from "@/modules/admin/products/hooks/useUpdateProduct"
 import Script from "next/script"
 import { get } from "lodash"
+import OptionGroup from "@/modules/admin/options/types/OptionGroup"
+import { useState } from "react"
+import useGetOptions from "@/modules/admin/options/hooks/useGetOptions"
+import EmptyState from "@/components/EmptyState"
+import { BiTrash } from "react-icons/bi"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async () => {
@@ -24,6 +44,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const product = await prisma.product.findFirst({
       where: {
         id: String(id),
+      },
+      include: {
+        optionGroups: true,
       },
     })
 
@@ -51,7 +74,12 @@ const EditProduct = ({ product }: EditProductProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
+
   const { updateProduct, isUpdating } = useUpdateProduct(product.id!)
+  const { options } = useGetOptions()
+  const [productOptions, setProductOptions] = useState<OptionGroup[]>(
+    product.optionGroups!
+  )
 
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: product,
@@ -76,7 +104,18 @@ const EditProduct = ({ product }: EditProductProps) => {
   return (
     <AdminLayout>
       <Script src="https://upload-widget.cloudinary.com/global/all.js" />
-      <form onSubmit={handleSubmit(updateProduct)}>
+      <form
+        onSubmit={handleSubmit((data) =>
+          updateProduct({
+            ...data,
+            optionGroups: productOptions,
+            disconnectOptionGroups: options.filter(
+              (opt: OptionGroup) =>
+                !productOptions.find((childOpt) => childOpt.id === opt.id)
+            ),
+          })
+        )}
+      >
         <PageHeader
           title={t("editProduct")}
           actions={
@@ -133,6 +172,66 @@ const EditProduct = ({ product }: EditProductProps) => {
                 )
               }
             />
+            <Box p={8}>
+              <Heading fontSize="md" mb={4}>
+                Opções
+              </Heading>
+              <Flex gap={2}>
+                {options
+                  .filter(
+                    (opt: OptionGroup) =>
+                      !productOptions.find((childOpt) => childOpt.id === opt.id)
+                  )
+                  .map((opt: OptionGroup) => (
+                    <Button
+                      key={opt.id}
+                      onClick={() =>
+                        setProductOptions((prev) => [...prev, opt])
+                      }
+                    >
+                      {opt.title}
+                    </Button>
+                  ))}
+              </Flex>
+            </Box>
+            <Box p={8} pt={0}>
+              {productOptions.length === 0 ? (
+                <EmptyState message="Não opções criadas no momento." />
+              ) : (
+                <Table>
+                  <Thead>
+                    <Tr>
+                      <Th>Título</Th>
+                      <Th>Máximo de opções</Th>
+                      <Th>Ações</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {productOptions.map((option: OptionGroup) => (
+                      <Tr key={option.id}>
+                        <Td>{option.title}</Td>
+                        <Td>{option.maxOption}</Td>
+                        <Td>
+                          <IconButton
+                            aria-label="Remover produto"
+                            icon={<BiTrash />}
+                            size="sm"
+                            onClick={() =>
+                              setProductOptions((prev) =>
+                                prev.filter(
+                                  (childOption: OptionGroup) =>
+                                    childOption.id !== option.id
+                                )
+                              )
+                            }
+                          />
+                        </Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              )}
+            </Box>
           </Box>
         )}
       </form>

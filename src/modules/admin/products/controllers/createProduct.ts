@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next"
 
 import prisma from "@/lib/infra/prisma"
 import { Prisma } from "@prisma/client"
-import OptionGroup from "../types/OptionGroup"
-import Option from "../types/Option"
+
+import OptionGroup from "../../options/types/OptionGroup"
 
 const createProduct = async (
   req: NextApiRequest,
@@ -11,16 +11,23 @@ const createProduct = async (
   storeId: string
 ) => {
   try {
-    const { price } = req.body
+    const { price, optionGroups } = req.body
 
     const product = await prisma.product.create({
       data: {
-        ...req.body,
+        title: req.body.title,
+        description: req.body.description,
+        image: req.body.image,
         price: new Prisma.Decimal(price.replace(",", ".")),
         store: {
           connect: {
             id: storeId,
           },
+        },
+        optionGroups: {
+          connect: optionGroups.map((opt: OptionGroup) => ({
+            id: opt.id,
+          })),
         },
       },
     })

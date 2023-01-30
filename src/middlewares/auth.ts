@@ -25,7 +25,19 @@ const auth = async (
     where: {
       email: session.user?.email,
     },
+    include: {
+      store: true,
+    },
   })
+
+  if (!user?.storeId) {
+    return {
+      redirect: {
+        destination: "/auth/complete-signin",
+        permanent: false,
+      },
+    }
+  }
 
   if (!permissions.includes(user?.role!)) {
     return {
@@ -42,7 +54,13 @@ const auth = async (
 
   return {
     props: {
-      user,
+      user: {
+        ...user,
+        store: {
+          ...user?.store,
+          minimumOrderPrice: user?.store?.minimumOrderPrice?.toFixed(2) || null,
+        },
+      },
     },
   }
 }

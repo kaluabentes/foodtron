@@ -133,9 +133,7 @@ const EditOption = ({ option: defaultOption }: EditOptionProps) => {
               input={<Switch {...register("required")} />}
             />
             <Box pl={8} pr={8} pt={8}>
-              <Heading fontSize="md" fontWeight="500">
-                Opções
-              </Heading>
+              <Heading fontSize="md">Opções</Heading>
             </Box>
             <Box padding={8} pb={4} pt={4}>
               <Flex
