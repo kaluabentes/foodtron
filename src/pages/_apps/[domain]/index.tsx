@@ -109,7 +109,7 @@ const Index = ({ store, categories }: IndexProps) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>()
 
   return (
-    <AppLayout title="Home">
+    <AppLayout title="Menu">
       <AddressSelectButton
         onClick={() => router.push("/edit-address")}
         address={(street || number || neighborhood) && address}
