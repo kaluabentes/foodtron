@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 interface EditProductProps {
-  product: any
+  product: Product
 }
 
 const cloudinaryOptions = {
