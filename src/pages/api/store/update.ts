@@ -37,6 +37,7 @@ const updateStore = async (req: NextApiRequest, res: NextApiResponse) => {
       },
       data: {
         name: req.body.name || store.name,
+        category: req.body.category || store.category,
         logo: req.body.logo || store.logo,
         cover: req.body.cover || store.cover,
         address: req.body.address || store.address,

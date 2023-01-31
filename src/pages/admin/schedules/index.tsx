@@ -27,19 +27,11 @@ import auth from "@/middlewares/auth"
 import useGetSchedules from "@/modules/admin/schedules/hooks/useGetSchedules"
 import Schedule from "@/modules/admin/schedules/types/Schedule"
 import useDeleteSchedule from "@/modules/admin/schedules/hooks/useDeleteSchedule"
+import weekDayMap from "@/modules/admin/schedules/weekDayMap"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])
 }
-
-const weekDay = new Map()
-weekDay.set("0", "Domingo")
-weekDay.set("1", "Segunda")
-weekDay.set("2", "Terça")
-weekDay.set("3", "Quarta")
-weekDay.set("4", "Quinta")
-weekDay.set("5", "Sexta")
-weekDay.set("6", "Sábado")
 
 const Schedules = () => {
   const { t } = useTranslation()
@@ -88,7 +80,7 @@ const Schedules = () => {
           <Tbody>
             {schedules.map((schedule: Schedule) => (
               <Tr key={schedule.id}>
-                <Td>{weekDay.get(schedule.weekDay)}</Td>
+                <Td>{weekDayMap.get(schedule.weekDay)}</Td>
                 <Td>{schedule.start}</Td>
                 <Td>{schedule.end}</Td>
                 <Td>{schedule.isScheduledClosing ? t("yes") : t("no")}</Td>

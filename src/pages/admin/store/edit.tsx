@@ -132,7 +132,7 @@ const EditStore = ({ store }: StorePageProps) => {
                   </Box>
                 </DataHead>
                 <DataValue>
-                  <Switch {...register("category")} />
+                  <Input {...register("category")} />
                 </DataValue>
               </DataCell>
               <DataCell>

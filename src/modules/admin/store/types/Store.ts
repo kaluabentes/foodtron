@@ -1,3 +1,5 @@
+import Schedule from "../../schedules/types/Schedule"
+
 interface Store {
   id: string
   name: string | null
@@ -12,6 +14,7 @@ interface Store {
   customDomain: string | null
   minimumOrderPrice: Number | null
   isOpen: boolean | null
+  schedules: Schedule[]
 }
 
 export default Store

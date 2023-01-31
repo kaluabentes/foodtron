@@ -8,9 +8,11 @@ import BarIconButton from "@/components/BarIconButton"
 
 interface AppLayoutProps {
   children: ReactNode
+  title?: string
+  rightIcon?: ReactNode
 }
 
-const AppLayout = ({ children }: AppLayoutProps) => {
+const AppLayout = ({ children, title, rightIcon }: AppLayoutProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -18,10 +20,11 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       <AppBar
         title={
           <Heading fontSize="md" fontWeight="500">
-            Menu
+            {title}
           </Heading>
         }
-        leftIcon={<BarIconButton label="Menu" icon={<BiCart />} />}
+        rightIcon={rightIcon}
+        leftIcon={<BarIconButton label="Carrinho" icon={<BiCart />} />}
         isOpen={isOpen}
         onMenuClick={() => setIsOpen(true)}
         onClose={() => setIsOpen(false)}

@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react"
 import "@/styles/fonts"
 import theme from "@/styles/theme"
 import PageLoader from "@/components/PageLoader"
+import { AppContextProvider } from "@/contexts/app"
 
 initI18n()
 
@@ -13,8 +14,10 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <SessionProvider session={session}>
-        <Component {...pageProps} />
-        <PageLoader />
+        <AppContextProvider>
+          <Component {...pageProps} />
+          <PageLoader />
+        </AppContextProvider>
       </SessionProvider>
     </ChakraProvider>
   )
