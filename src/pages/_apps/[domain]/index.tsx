@@ -103,9 +103,7 @@ const Index = ({ store, categories }: IndexProps) => {
   const currentSchedule = store.schedules.find(
     (schedule) => schedule.weekDay === String(currentDay)
   )
-  const currentWeekDay = String(
-    weekDayMap.get(currentSchedule?.weekDay)
-  ).substring(0, 3)
+  const currentWeekDay = String(weekDayMap.get(currentSchedule?.weekDay))
   const currentScheduleTime = `${currentSchedule?.start} ás ${currentSchedule?.end}`
 
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>()

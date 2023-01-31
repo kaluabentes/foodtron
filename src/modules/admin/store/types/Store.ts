@@ -12,7 +12,7 @@ interface Store {
   facebook: string | null
   instagram: string | null
   subdomain: string | null
-  customDomain: string | null
+  customDomain?: string | null
   minimumOrderPrice: Number | null
   isOpen: boolean | null
   schedules: Schedule[]

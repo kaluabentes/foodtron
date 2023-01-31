@@ -178,16 +178,6 @@ const Store = ({ store }: StorePageProps) => {
                 <DataCell>
                   <DataHead>
                     <Box as="span" fontWeight="500">
-                      {t("customDomain")}
-                    </Box>
-                  </DataHead>
-                  <DataValue>
-                    <TruncateText>{store.customDomain}</TruncateText>
-                  </DataValue>
-                </DataCell>
-                <DataCell>
-                  <DataHead>
-                    <Box as="span" fontWeight="500">
                       {t("minimumOrderPrice")}
                     </Box>
                   </DataHead>

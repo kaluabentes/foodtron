@@ -50,16 +50,13 @@ const AdminLayout = ({
   return (
     <Flex direction={{ base: "column", md: "row" }}>
       {renderNavigation}
-      <Box height="100vh" overflow="auto" width="100%">
-        <Container
-          maxWidth={{ base: "100%", md: isFullWidth ? "100%" : "container.lg" }}
-          padding={hasPadding ? undefined : 0}
-          as="main"
-          marginTop={{ base: "60px", lg: "0" }}
-        >
-          {children}
-        </Container>
-      </Box>
+      <Container
+        maxWidth={{ base: "100%", md: isFullWidth ? "100%" : "container.lg" }}
+        padding={hasPadding ? undefined : 0}
+        as="main"
+      >
+        {children}
+      </Container>
     </Flex>
   )
 }

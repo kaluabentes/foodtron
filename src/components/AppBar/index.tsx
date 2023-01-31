@@ -50,15 +50,7 @@ const AppBar = ({
       ) : (
         <Flex alignItems="center" gap="10px">
           <Image src="/comet-blue.svg" alt="Comet" width="30px" />
-          <Heading
-            fontSize="2xl"
-            fontWeight="700"
-            overflow="hidden"
-            color="brand.500"
-            whiteSpace="nowrap"
-          >
-            Comet
-          </Heading>
+          <Image src="/comet-text.svg" alt="Comet" height="12px" />
         </Flex>
       )}
       {leftIcon}

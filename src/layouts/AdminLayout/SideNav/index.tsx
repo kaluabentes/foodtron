@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react"
+import { Flex, Image } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 
 import Menu from "@/components/Menu"
@@ -33,7 +33,11 @@ const SideNav = ({ isClosed = false, setIsClosed }: SideNavProps) => {
       onMouseOver={() => setIsClosed(false)}
       onMouseLeave={() => setIsClosed(true)}
     >
-      <Brand logo="/comet-blue.svg" storeName="Comet" blue />
+      <Brand
+        logo="/comet-blue.svg"
+        storeName={<Image height="12px" src="/comet-text.svg" />}
+        blue
+      />
       <Flex direction="column" flexGrow={1} justifyContent="space-between">
         <Menu>
           {topMenu.map((item, index) => (
