@@ -1,3 +1,4 @@
+import Category from "../../categories/types/Category"
 import OptionGroup from "../../options/types/OptionGroup"
 
 interface Product {
@@ -8,6 +9,8 @@ interface Product {
   image: string
   optionGroups?: OptionGroup[]
   disconnectOptionGroups?: OptionGroup[]
+  categoryId?: String
+  category: Category
 }
 
 export default Product

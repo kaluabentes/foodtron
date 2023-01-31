@@ -1,14 +1,11 @@
-import ActionButton from "@/components/ActionButton"
 import AppBar from "@/components/AppBar"
 import BarIconButton from "@/components/BarIconButton"
 import { Box, Container, Flex, useBreakpointValue } from "@chakra-ui/react"
-import { User } from "@prisma/client"
 import { get } from "lodash"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { ReactNode, useEffect, useRef, useState } from "react"
 import { BiBell } from "react-icons/bi"
-import { FaRegSave } from "react-icons/fa"
 
 import SideNav from "./SideNav"
 
@@ -29,19 +26,8 @@ const AdminLayout = ({
   const user = get(data, "user", undefined)
   const router = useRouter()
 
-  const [isClosed, setIsClosed] = useState(false)
+  const [isClosed, setIsClosed] = useState(true)
   const [isOpen, setIsOpen] = useState(false)
-
-  const handleToggle = () =>
-    setIsClosed((prev) => {
-      localStorage.setItem("SideNav.isClosed", JSON.stringify(!prev))
-      return !prev
-    })
-
-  useEffect(() => {
-    const localIsClosed = JSON.parse(localStorage.getItem("SideNav.isClosed")!)
-    setIsClosed(localIsClosed)
-  }, [])
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -58,7 +44,7 @@ const AdminLayout = ({
         onClose={() => setIsOpen(false)}
       />
     ),
-    lg: <SideNav isClosed={isClosed} onToggle={handleToggle} />,
+    lg: <SideNav isClosed={isClosed} setIsClosed={setIsClosed} />,
   })
 
   return (

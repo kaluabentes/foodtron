@@ -28,6 +28,7 @@ import auth from "@/middlewares/auth"
 import useGetProducts from "@/modules/admin/products/hooks/useGetProducts"
 import useDeleteProduct from "@/modules/admin/products/hooks/useDeleteProduct"
 import Product from "@/modules/admin/products/types/Product"
+import { get } from "lodash"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])
@@ -74,7 +75,7 @@ const Products = () => {
           <Thead>
             <Th>{t("image")}</Th>
             <Th>{t("title")}</Th>
-            <Th>{t("description")}</Th>
+            <Th>{t("category")}</Th>
             <Th>{t("price")}</Th>
             <Th>{t("actions")}</Th>
           </Thead>
@@ -91,8 +92,14 @@ const Products = () => {
                   />
                 </Td>
                 <Td>{product.title}</Td>
-                <Td>{product.description}</Td>
-                <Td>{product.price}</Td>
+                <Td>{get(product, "category.title")}</Td>
+                <Td>
+                  R${" "}
+                  {Number(product.price).toLocaleString("pt-BR", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </Td>
                 <Td>
                   <Flex gap={2}>
                     <IconButton

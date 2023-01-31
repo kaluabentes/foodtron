@@ -1,6 +1,7 @@
 interface Store {
   id: string
   name: string | null
+  category: string | null
   logo: string | null
   cover: string | null
   address: string | null

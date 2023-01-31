@@ -8,6 +8,9 @@ const getProducts = async (res: NextApiResponse, storeId: string) => {
       where: {
         storeId,
       },
+      include: {
+        category: true,
+      },
     })
 
     return res.status(200).send(products)

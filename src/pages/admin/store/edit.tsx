@@ -12,8 +12,8 @@ import {
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
-import { useState } from "react"
 import { GetServerSideProps } from "next"
+import { IMaskMixin } from "react-imask"
 
 import AdminLayout from "@/layouts/AdminLayout"
 import PageHeader from "@/components/PageHeader"
@@ -25,6 +25,10 @@ import { DataCell, DataHead, DataValue } from "@/components/DataTable"
 import Store from "@/modules/admin/store/types/Store"
 import useUpdateStore from "@/modules/admin/store/hooks/useUpdateStore"
 import { User } from "@prisma/client"
+
+const MaskedWhatsappInput = IMaskMixin(({ inputRef, ...props }: any) => (
+  <Input {...props} ref={inputRef} />
+))
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async (user: User) => {
@@ -56,7 +60,7 @@ const EditStore = ({ store }: StorePageProps) => {
   const isPageLoaded = useIsPageLoaded()
   const { updateStore, isSaving } = useUpdateStore()
 
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit, setValue, watch } = useForm({
     defaultValues: store,
   })
 
@@ -124,6 +128,16 @@ const EditStore = ({ store }: StorePageProps) => {
               <DataCell>
                 <DataHead>
                   <Box as="span" fontWeight="500">
+                    {t("category")}
+                  </Box>
+                </DataHead>
+                <DataValue>
+                  <Switch {...register("category")} />
+                </DataValue>
+              </DataCell>
+              <DataCell>
+                <DataHead>
+                  <Box as="span" fontWeight="500">
                     {t("address")}
                   </Box>
                 </DataHead>
@@ -141,10 +155,11 @@ const EditStore = ({ store }: StorePageProps) => {
                 </DataHead>
                 <DataValue>
                   <FormControl>
-                    <Input
-                      type="number"
-                      maxLength={11}
-                      {...register("whatsapp")}
+                    <MaskedWhatsappInput
+                      value={String(watch("whatsapp"))}
+                      mask="(00) 0 0000 0000"
+                      placeholder="(00) 0 0000 0000"
+                      onAccept={(value: string) => setValue("whatsapp", value)}
                     />
                   </FormControl>
                 </DataValue>

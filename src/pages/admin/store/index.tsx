@@ -112,6 +112,16 @@ const Store = ({ store }: StorePageProps) => {
                 <DataCell>
                   <DataHead>
                     <Box as="span" fontWeight="500">
+                      {t("category")}
+                    </Box>
+                  </DataHead>
+                  <DataValue>
+                    <TruncateText>{store.category}</TruncateText>
+                  </DataValue>
+                </DataCell>
+                <DataCell>
+                  <DataHead>
+                    <Box as="span" fontWeight="500">
                       {t("address")}
                     </Box>
                   </DataHead>

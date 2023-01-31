@@ -28,7 +28,7 @@ const MenuItem = ({
 }: MenuItemProps) => {
   return (
     <Tooltip
-      label={isClosed ? children : ""}
+      label=""
       placement="right"
       color="white"
       backgroundColor="gray.800"

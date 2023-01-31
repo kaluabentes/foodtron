@@ -14,6 +14,7 @@ import {
   Tbody,
   Td,
   IconButton,
+  Select,
 } from "@chakra-ui/react"
 import { GetServerSideProps } from "next"
 import { useRouter } from "next/router"
@@ -34,6 +35,8 @@ import OptionGroup from "@/modules/admin/options/types/OptionGroup"
 import EmptyState from "@/components/EmptyState"
 import { BiTrash } from "react-icons/bi"
 import Product from "@/modules/admin/products/types/Product"
+import useGetCategories from "@/modules/admin/categories/hooks/useGetCategories"
+import Category from "@/modules/admin/categories/types/Category"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])
@@ -51,6 +54,8 @@ const AddProduct = () => {
 
   const { createProduct, isCreating } = useCreateProduct()
   const { options } = useGetOptions()
+  const { categories } = useGetCategories()
+
   const [productOptions, setProductOptions] = useState<OptionGroup[]>([])
 
   const { register, handleSubmit, setValue, watch } = useForm({
@@ -59,6 +64,7 @@ const AddProduct = () => {
       description: "",
       price: 0,
       image: "",
+      categoryId: "",
     },
   })
 
@@ -120,6 +126,19 @@ const AddProduct = () => {
               input={<Input {...register("title")} />}
             />
             <DataField
+              label={t("category")}
+              input={
+                <Select {...register("categoryId")} required>
+                  <option value="">Selecione</option>
+                  {categories.map((category: Category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.title}
+                    </option>
+                  ))}
+                </Select>
+              }
+            />
+            <DataField
               label={t("description")}
               input={<Input {...register("description")} />}
             />
@@ -164,7 +183,7 @@ const AddProduct = () => {
                   ))}
               </Flex>
             </Box>
-            <Box p={8} pt={0}>
+            <Box p={8} pt={0} overflow="auto">
               {productOptions.length === 0 ? (
                 <EmptyState message="Não opções criadas no momento." />
               ) : (
@@ -173,6 +192,7 @@ const AddProduct = () => {
                     <Tr>
                       <Th>Título</Th>
                       <Th>Máximo de opções</Th>
+                      <Th>Obrigatório</Th>
                       <Th>Ações</Th>
                     </Tr>
                   </Thead>
@@ -181,6 +201,7 @@ const AddProduct = () => {
                       <Tr key={option.id}>
                         <Td>{option.title}</Td>
                         <Td>{option.maxOption}</Td>
+                        <Td>{option.required ? "Sim" : "Não"}</Td>
                         <Td>
                           <IconButton
                             aria-label="Remover produto"

@@ -8,6 +8,8 @@ import { Prisma } from "@prisma/client"
 import deleteGoDaddyRecord from "@/lib/infra/godaddy/deleteGoDadddyRecord"
 import deleteVercelSubdomain from "@/lib/infra/vercel/deleteVercelDomain"
 
+const formatPhone = (phone: string) => phone.replace(/[\)\(\s]/g, "")
+
 const updateStore = async (req: NextApiRequest, res: NextApiResponse) => {
   const auth = await serverAuth(req, res, ["admin"])
 
@@ -28,7 +30,7 @@ const updateStore = async (req: NextApiRequest, res: NextApiResponse) => {
       await addVercelSubdomain(req.body.subdomain)
       await addGoDaddyRecord(req.body.subdomain)
     }
-
+    console.log("whatsapp", formatPhone(req.body.whatsapp))
     await prisma.store.update({
       where: {
         id: store.id,
@@ -38,7 +40,9 @@ const updateStore = async (req: NextApiRequest, res: NextApiResponse) => {
         logo: req.body.logo || store.logo,
         cover: req.body.cover || store.cover,
         address: req.body.address || store.address,
-        whatsapp: req.body.whatsapp || store.whatsapp,
+        whatsapp: req.body.whatsapp
+          ? formatPhone(req.body.whatsapp)
+          : store.whatsapp,
         facebook: req.body.facebook || store.facebook,
         instagram: req.body.instagram || store.instagram,
         subdomain: req.body.subdomain || store.subdomain,

@@ -10,10 +10,10 @@ import Brand from "@/components/Brand"
 
 interface SideNavProps {
   isClosed?: boolean
-  onToggle: () => void
+  setIsClosed: (state: boolean) => void
 }
 
-const SideNav = ({ isClosed = false, onToggle }: SideNavProps) => {
+const SideNav = ({ isClosed = false, setIsClosed }: SideNavProps) => {
   const router = useRouter()
 
   return (
@@ -26,12 +26,13 @@ const SideNav = ({ isClosed = false, onToggle }: SideNavProps) => {
       padding={3}
       paddingTop={5}
       backgroundColor="white"
-      shadow="sm"
+      shadow={isClosed ? "sm" : "md"}
       height="100vh"
       transition="0.5s"
       position="relative"
+      onMouseOver={() => setIsClosed(false)}
+      onMouseLeave={() => setIsClosed(true)}
     >
-      <MenuToggleButton onClick={onToggle} />
       <Brand logo="/comet-blue.svg" storeName="Comet" blue />
       <Flex direction="column" flexGrow={1} justifyContent="space-between">
         <Menu>

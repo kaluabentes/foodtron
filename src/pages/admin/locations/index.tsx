@@ -82,8 +82,14 @@ const Locations = () => {
             {locations.map((location: Location) => (
               <Tr key={location.id}>
                 <Td>{location.neighborhood}</Td>
-                <Td>{location.tax}</Td>
-                <Td>{location.estimatedTime}</Td>
+                <Td>
+                  R${" "}
+                  {Number(location.tax).toLocaleString("pt-br", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </Td>
+                <Td>{location.estimatedTime} min.</Td>
                 <Td>
                   <Flex gap={2}>
                     <IconButton

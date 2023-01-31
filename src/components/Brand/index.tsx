@@ -7,7 +7,7 @@ interface BrandProps {
 }
 
 const Brand = ({ logo, storeName, blue = false }: BrandProps) => (
-  <Flex marginBottom={8} overflowX="hidden" alignItems="center">
+  <Flex marginBottom={6} overflowX="hidden" alignItems="center">
     <Image
       src={logo}
       alt={storeName}

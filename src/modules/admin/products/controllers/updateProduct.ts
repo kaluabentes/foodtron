@@ -34,6 +34,11 @@ const updateProduct = async (id: string, data: any, res: NextApiResponse) => {
             id: opt.id,
           })),
         },
+        category: {
+          connect: {
+            id: data.categoryId,
+          },
+        },
       },
     })
 

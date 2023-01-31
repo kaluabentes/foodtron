@@ -11,7 +11,7 @@ const createProduct = async (
   storeId: string
 ) => {
   try {
-    const { price, optionGroups } = req.body
+    const { price, optionGroups, categoryId } = req.body
 
     const product = await prisma.product.create({
       data: {
@@ -22,6 +22,11 @@ const createProduct = async (
         store: {
           connect: {
             id: storeId,
+          },
+        },
+        category: {
+          connect: {
+            id: categoryId,
           },
         },
         optionGroups: {

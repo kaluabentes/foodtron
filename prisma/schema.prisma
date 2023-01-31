@@ -47,10 +47,12 @@ model User {
   onBoardingStep String?
   emailVerified  DateTime?
   image          String?
-  accounts       Account[]
-  sessions       Session[]
   storeId        String?
   store          Store?    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  
+  accounts       Account[]
+  sessions       Session[]
+  orders Order[]
 
   @@index(storeId)
 }
@@ -66,6 +68,7 @@ model VerificationToken {
 model Store {
   id                String   @id @default(cuid())
   name              String?
+  category          String?
   logo              String?
   cover             String?
   address           String?
@@ -84,6 +87,7 @@ model Store {
   products          Product[]
   categories        Category[]
   optionGroups OptionGroup[]
+  orders Order[]
 }
 
 model StoreSchedule {
@@ -177,4 +181,36 @@ model Category {
   products Product[]
 
   @@index(storeId)
+}
+
+model Order {
+  id    String @id @default(cuid())
+  tax Decimal
+  subtotal Decimal
+  paymentMethod String
+  address String
+  status String
+
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  userId String
+  user   User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  orderProducts OrderProduct[]
+
+  @@index(storeId)
+  @@index(userId)
+}
+
+model OrderProduct {
+  id    String @id @default(cuid())
+  title String
+  price Decimal
+  quantity String
+  image String
+
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index(orderId)
 }
