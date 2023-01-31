@@ -1,11 +1,11 @@
 import { NextApiResponse } from "next"
 
 import prisma from "@/lib/infra/prisma"
-import Schedule from "../types/Schedule"
+import { Category } from "@prisma/client"
 
 const updateCategory = async (
   id: string,
-  data: Schedule,
+  data: Category,
   res: NextApiResponse
 ) => {
   try {

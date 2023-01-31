@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 interface EditProductProps {
-  product: Product
+  product: any
 }
 
 const cloudinaryOptions = {
@@ -99,6 +99,7 @@ const EditProduct = ({ product }: EditProductProps) => {
         }
 
         const imagePath = get(result, "info.files[0].uploadInfo.url")
+
         if (imagePath) {
           setValue("image", imagePath)
         }

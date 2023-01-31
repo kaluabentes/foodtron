@@ -3,7 +3,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 import { useState } from "react"
 
-import Schedule from "../types/Schedule"
+import Category from "../types/Category"
 
 const useCreateCategory = () => {
   const toast = useBottomToast()
@@ -11,7 +11,7 @@ const useCreateCategory = () => {
 
   const [isCreating, setIsCreating] = useState(false)
 
-  const createCategory = async (data: Schedule) => {
+  const createCategory = async (data: Category) => {
     try {
       setIsCreating(true)
 

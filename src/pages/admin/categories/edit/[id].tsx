@@ -34,7 +34,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 interface EditCategoryProps {
-  category: Category
+  category: any
 }
 
 const EditCategory = ({ category }: EditCategoryProps) => {

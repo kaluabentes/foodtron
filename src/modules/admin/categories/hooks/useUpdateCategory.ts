@@ -2,7 +2,8 @@ import useBottomToast from "@/lib/hooks/useBottomToast"
 import axios from "axios"
 import { useRouter } from "next/router"
 import { useState } from "react"
-import Schedule from "../types/Schedule"
+
+import Category from "../types/Category"
 
 const useUpdateCategory = (categoryId: string) => {
   const router = useRouter()
@@ -10,7 +11,7 @@ const useUpdateCategory = (categoryId: string) => {
 
   const [isUpdating, setIsUpdating] = useState(false)
 
-  const updateCategory = async (data: Schedule) => {
+  const updateCategory = async (data: Category) => {
     try {
       setIsUpdating(true)
 

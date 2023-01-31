@@ -10,7 +10,7 @@ interface Product {
   optionGroups?: OptionGroup[]
   disconnectOptionGroups?: OptionGroup[]
   categoryId?: String
-  category: Category
+  category?: Category
 }
 
 export default Product
