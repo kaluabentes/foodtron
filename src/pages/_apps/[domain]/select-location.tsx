@@ -85,6 +85,7 @@ const SelectLocation = ({ locations }: SelectLocationProps) => {
       >
         {locations.map((location) => (
           <Box
+            key={location.id}
             onClick={() => handleAddLocation(location)}
             as="button"
             p={5}

@@ -103,6 +103,8 @@
     "maxOption": "Máximo de opções",
     "addOptions": "Adicionar opção",
     "required": "Obrigatório",
-    "category": "Categoria"
+    "category": "Categoria",
+    "street": "Rua",
+    "number": "Número"
   }
 }

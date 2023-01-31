@@ -66,7 +66,9 @@ const Index = ({ store }: IndexProps) => {
   const currentSchedule = store.schedules.find(
     (schedule) => schedule.weekDay === String(currentDay)
   )
-  const currentWeekDay = weekDayMap.get(currentSchedule?.weekDay)
+  const currentWeekDay = String(
+    weekDayMap.get(currentSchedule?.weekDay)
+  ).substring(0, 3)
   const currentScheduleTime = `${currentSchedule?.start} ás ${currentSchedule?.end}`
 
   return (
@@ -79,6 +81,7 @@ const Index = ({ store }: IndexProps) => {
         marginBottom={8}
       >
         <AddressSelectButton
+          onClick={() => router.push("/edit-address")}
           address={(street || number || neighborhood) && address}
         />
         <StoreInfo
