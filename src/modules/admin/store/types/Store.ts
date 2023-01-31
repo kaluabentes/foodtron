@@ -1,3 +1,4 @@
+import Product from "../../products/types/Product"
 import Schedule from "../../schedules/types/Schedule"
 
 interface Store {
@@ -15,6 +16,7 @@ interface Store {
   minimumOrderPrice: Number | null
   isOpen: boolean | null
   schedules: Schedule[]
+  products: Product[]
 }
 
 export default Store

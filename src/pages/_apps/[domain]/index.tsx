@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import { Box } from "@chakra-ui/react"
+import React, { useEffect, useState } from "react"
+import { Box, Heading } from "@chakra-ui/react"
 
 import prisma from "@/lib/infra/prisma"
 import AppLayout from "@/layouts/AppLayout"
@@ -9,6 +9,11 @@ import StoreInfo from "@/modules/app/home/components/StoreInfo"
 import Store from "@/modules/admin/store/types/Store"
 import weekDayMap from "@/modules/admin/schedules/weekDayMap"
 import { useRouter } from "next/router"
+import MenuItem from "@/modules/app/home/components/MenuItem"
+import Category from "@/modules/admin/categories/types/Category"
+import CategoryItem from "@/modules/app/home/components/CategoryItem"
+import OrderModal from "@/modules/app/home/components/OrderModal"
+import Product from "@/modules/admin/products/types/Product"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -24,14 +29,31 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }: any) => {
-  const store = (await prisma.store.findFirst({
+  const store = await prisma.store.findFirst({
     where: {
       subdomain: params.domain,
     },
     include: {
       schedules: true,
     },
-  })) as Store
+  })
+
+  const categories = await prisma.category.findMany({
+    where: {
+      storeId: store?.id,
+    },
+    include: {
+      products: {
+        include: {
+          optionGroups: {
+            include: {
+              options: true,
+            },
+          },
+        },
+      },
+    },
+  })
 
   return {
     props: {
@@ -39,15 +61,30 @@ export const getStaticProps = async ({ params }: any) => {
         ...store,
         minimumOrderPrice: Number(store?.minimumOrderPrice).toFixed(2),
       },
+      categories: categories.map((category) => ({
+        ...category,
+        products: category.products.map((product) => ({
+          ...product,
+          price: product.price.toFixed(2),
+          optionGroups: product.optionGroups.map((optionGroup) => ({
+            ...optionGroup,
+            options: optionGroup.options.map((option) => ({
+              ...option,
+              price: option.price.toFixed(2),
+            })),
+          })),
+        })),
+      })),
     },
   }
 }
 
 interface IndexProps {
   store: Store
+  categories: Category[]
 }
 
-const Index = ({ store }: IndexProps) => {
+const Index = ({ store, categories }: IndexProps) => {
   const router = useRouter()
 
   const {
@@ -71,27 +108,33 @@ const Index = ({ store }: IndexProps) => {
   ).substring(0, 3)
   const currentScheduleTime = `${currentSchedule?.start} ás ${currentSchedule?.end}`
 
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>()
+
   return (
     <AppLayout title="Home">
-      <Box
-        shadow="sm"
-        backgroundColor="white"
-        borderRadius="md"
-        overflow="hidden"
-        marginBottom={8}
-      >
-        <AddressSelectButton
-          onClick={() => router.push("/edit-address")}
-          address={(street || number || neighborhood) && address}
+      <AddressSelectButton
+        onClick={() => router.push("/edit-address")}
+        address={(street || number || neighborhood) && address}
+      />
+      <StoreInfo
+        onSelectLocation={() => router.push("/select-location")}
+        weekDay={currentWeekDay}
+        schedule={currentScheduleTime}
+        store={store}
+        location={location}
+      />
+      {categories.map((category) => (
+        <CategoryItem
+          onMenuItemClick={(product: Product) => setSelectedProduct(product)}
+          category={category}
         />
-        <StoreInfo
-          onSelectLocation={() => router.push("/select-location")}
-          weekDay={currentWeekDay}
-          schedule={currentScheduleTime}
-          store={store}
-          location={location}
-        />
-      </Box>
+      ))}
+      <OrderModal
+        optionGroups={selectedProduct?.optionGroups}
+        product={selectedProduct}
+        isOpen={Boolean(selectedProduct)}
+        onClose={() => setSelectedProduct(undefined)}
+      />
     </AppLayout>
   )
 }

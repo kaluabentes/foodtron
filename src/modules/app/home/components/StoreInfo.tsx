@@ -2,7 +2,7 @@ import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 import StripeSeparator from "@/components/StripeSeparator"
 import Location from "@/modules/admin/locations/types/Location"
 import Store from "@/modules/admin/store/types/Store"
-import { Badge, Flex, Heading, Icon, Text } from "@chakra-ui/react"
+import { Badge, Box, Flex, Heading, Icon, Text } from "@chakra-ui/react"
 import { BiTimeFive } from "react-icons/bi"
 
 interface StoreInfoProps {
@@ -23,7 +23,7 @@ const StoreInfo = ({
   schedule,
   onSelectLocation,
 }: StoreInfoProps) => (
-  <>
+  <Box shadow="sm" backgroundColor="white" overflow="hidden">
     <StoreMidiaUpload
       defaultCover={store.cover!}
       defaultLogo={store.logo!}
@@ -124,7 +124,7 @@ const StoreInfo = ({
             Conversar
           </Button> */}
     </Flex>
-  </>
+  </Box>
 )
 
 export default StoreInfo

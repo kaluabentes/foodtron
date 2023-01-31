@@ -44,6 +44,9 @@ const ShortcutDeck = () => (
     backgroundColor="white"
     position="fixed"
     bottom="0"
+    boxShadow="lg"
+    borderTop="1px solid transparent"
+    borderColor="gray.200"
     width="100%"
   >
     <Shortcut path="/" label="Menu" icon={BiDish} />

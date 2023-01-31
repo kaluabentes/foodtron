@@ -19,7 +19,7 @@ const AppLayout = ({ children, title, rightIcon }: AppLayoutProps) => {
     <>
       <AppBar
         title={
-          <Heading fontSize="md" fontWeight="500">
+          <Heading fontSize="md" textTransform="uppercase">
             {title}
           </Heading>
         }
@@ -29,7 +29,7 @@ const AppLayout = ({ children, title, rightIcon }: AppLayoutProps) => {
         onMenuClick={() => setIsOpen(true)}
         onClose={() => setIsOpen(false)}
       />
-      <Box as="main" marginTop={{ base: "60px", lg: "0" }} marginBottom="72px">
+      <Box as="main" paddingBottom="72px" overflow="auto">
         {children}
       </Box>
       <ShortcutDeck />

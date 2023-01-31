@@ -7,6 +7,7 @@ import "@/styles/fonts"
 import theme from "@/styles/theme"
 import PageLoader from "@/components/PageLoader"
 import { AppContextProvider } from "@/contexts/app"
+import "@/styles/global.css"
 
 initI18n()
 
