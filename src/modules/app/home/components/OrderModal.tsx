@@ -41,7 +41,7 @@ const OrderModal = ({
         <Image
           src={product?.image}
           width="100%"
-          height="265px"
+          height="350px"
           objectFit="cover"
         />
         <IconButton
