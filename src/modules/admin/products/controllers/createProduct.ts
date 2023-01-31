@@ -13,6 +13,20 @@ const createProduct = async (
   try {
     const { price, optionGroups, categoryId } = req.body
 
+    await prisma.productOptionGroup.createMany({
+      data: optionGroups.map((optionGroup: OptionGroup) => ({
+        optionGroupId: optionGroup.id,
+      })),
+    })
+
+    const productOptionGroups = await prisma.productOptionGroup.findMany({
+      where: {
+        optionGroupId: {
+          in: optionGroups.map((optionGroup: OptionGroup) => optionGroup.id),
+        },
+      },
+    })
+
     const product = await prisma.product.create({
       data: {
         title: req.body.title,
@@ -29,9 +43,9 @@ const createProduct = async (
             id: categoryId,
           },
         },
-        optionGroups: {
-          connect: optionGroups.map((opt: OptionGroup) => ({
-            id: opt.id,
+        productOptionGroups: {
+          connect: productOptionGroups.map((productOptionGroup) => ({
+            id: productOptionGroup.id,
           })),
         },
       },

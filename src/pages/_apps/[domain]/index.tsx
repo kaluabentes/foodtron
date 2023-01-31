@@ -45,9 +45,13 @@ export const getStaticProps = async ({ params }: any) => {
     include: {
       products: {
         include: {
-          optionGroups: {
+          productOptionGroups: {
             include: {
-              options: true,
+              optionGroup: {
+                include: {
+                  options: true,
+                },
+              },
             },
           },
         },
@@ -66,13 +70,20 @@ export const getStaticProps = async ({ params }: any) => {
         products: category.products.map((product) => ({
           ...product,
           price: product.price.toFixed(2),
-          optionGroups: product.optionGroups.map((optionGroup) => ({
-            ...optionGroup,
-            options: optionGroup.options.map((option) => ({
-              ...option,
-              price: option.price.toFixed(2),
-            })),
-          })),
+          productOptionGroups: product.productOptionGroups.map(
+            (productOptionGroup) => ({
+              ...productOptionGroup,
+              optionGroup: {
+                ...productOptionGroup.optionGroup,
+                options: productOptionGroup.optionGroup?.options.map(
+                  (option) => ({
+                    ...option,
+                    price: option.price.toFixed(2),
+                  })
+                ),
+              },
+            })
+          ),
         })),
       })),
     },
@@ -128,7 +139,9 @@ const Index = ({ store, categories }: IndexProps) => {
         />
       ))}
       <OrderModal
-        optionGroups={selectedProduct?.optionGroups}
+        optionGroups={selectedProduct?.productOptionGroups?.map(
+          (productOptionGroup) => productOptionGroup.optionGroup
+        )}
         product={selectedProduct}
         isOpen={Boolean(selectedProduct)}
         onClose={() => setSelectedProduct(undefined)}

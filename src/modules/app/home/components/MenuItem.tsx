@@ -1,3 +1,4 @@
+import subWord from "@/lib/helpers/string/subWord"
 import Product from "@/modules/admin/products/types/Product"
 import { Box, Flex, Heading, Image, Text } from "@chakra-ui/react"
 
@@ -22,7 +23,7 @@ const MenuItem = ({ product, onClick }: MenuItemProps) => (
           {product.title}
         </Heading>
         <Text mb={2} color="gray.500" fontSize="sm">
-          {product.description}
+          {product.description && subWord(product.description, 0, 7)}
         </Text>
         <Text fontWeight="500">{product.price}</Text>
       </Box>

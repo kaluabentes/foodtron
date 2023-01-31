@@ -11,6 +11,9 @@ interface Product {
   disconnectOptionGroups?: OptionGroup[]
   categoryId?: String
   category?: Category
+  productOptionGroups?: {
+    optionGroup: OptionGroup
+  }[]
 }
 
 export default Product

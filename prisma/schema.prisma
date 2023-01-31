@@ -49,10 +49,10 @@ model User {
   image          String?
   storeId        String?
   store          Store?    @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  
-  accounts       Account[]
-  sessions       Session[]
-  orders Order[]
+
+  accounts Account[]
+  sessions Session[]
+  orders   Order[]
 
   @@index(storeId)
 }
@@ -86,8 +86,8 @@ model Store {
   paymentMethods    StorePaymentMethod[]
   products          Product[]
   categories        Category[]
-  optionGroups OptionGroup[]
-  orders Order[]
+  optionGroups      OptionGroup[]
+  orders            Order[]
 }
 
 model StoreSchedule {
@@ -133,14 +133,26 @@ model Product {
   image       String
 
   storeId    String
-  store      Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  store      Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
-  optionGroups OptionGroup[]
+  productOptionGroups ProductOptionGroup[]
 
   @@index(storeId)
   @@index(categoryId)
+}
+
+model ProductOptionGroup {
+  id String @id @default(cuid())
+
+  productId     String?
+  product       Product?     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  optionGroupId String?
+  optionGroup   OptionGroup? @relation(fields: [optionGroupId], references: [id], onDelete: Cascade)
+
+  @@index(optionGroupId)
+  @@index(productId)
 }
 
 model OptionGroup {
@@ -149,14 +161,12 @@ model OptionGroup {
   required  Boolean
   maxOption String
 
-  storeId    String
-  store      Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  productId String?
-  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
-  options Option[]
+  options             Option[]
+  productOptionGroups ProductOptionGroup[]
 
-  @@index(productId)
   @@index(storeId)
 }
 
@@ -184,17 +194,17 @@ model Category {
 }
 
 model Order {
-  id    String @id @default(cuid())
-  tax Decimal
-  subtotal Decimal
+  id            String  @id @default(cuid())
+  tax           Decimal
+  subtotal      Decimal
   paymentMethod String
-  address String
-  status String
+  address       String
+  status        String
 
   storeId String
   store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  userId String
-  user   User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   orderProducts OrderProduct[]
 
@@ -203,11 +213,11 @@ model Order {
 }
 
 model OrderProduct {
-  id    String @id @default(cuid())
-  title String
-  price Decimal
+  id       String  @id @default(cuid())
+  title    String
+  price    Decimal
   quantity String
-  image String
+  image    String
 
   orderId String
   order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)

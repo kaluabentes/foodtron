@@ -1,4 +1,4 @@
-import range from "@/lib/helpers/arrays/range"
+import range from "@/lib/helpers/array/range"
 import {
   Box,
   Skeleton,

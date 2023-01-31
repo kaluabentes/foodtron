@@ -7,19 +7,6 @@ import OptionGroup from "../../options/types/OptionGroup"
 
 const updateProduct = async (id: string, data: any, res: NextApiResponse) => {
   try {
-    await prisma.product.update({
-      where: {
-        id: String(id),
-      },
-      data: {
-        optionGroups: {
-          disconnect: data.disconnectOptionGroups?.map((opt: OptionGroup) => ({
-            id: opt.id,
-          })),
-        },
-      },
-    })
-
     const product = await prisma.product.update({
       where: {
         id: String(id),
@@ -29,20 +16,55 @@ const updateProduct = async (id: string, data: any, res: NextApiResponse) => {
         description: data.description,
         image: data.image,
         price: new Prisma.Decimal(data.price.replace(",", ".")),
-        optionGroups: {
-          connect: data.optionGroups?.map((opt: OptionGroup) => ({
-            id: opt.id,
-          })),
-        },
         category: {
           connect: {
             id: data.categoryId,
           },
         },
       },
+      include: {
+        productOptionGroups: true,
+      },
     })
 
-    return res.status(200).send(product)
+    const toDeleteProductOptionGroups = product.productOptionGroups.filter(
+      (productOptGroup) =>
+        data.disconnectOptionGroups.find(
+          (opt: OptionGroup) => opt.id === productOptGroup.optionGroupId
+        )
+    )
+
+    await prisma.productOptionGroup.deleteMany({
+      where: {
+        id: {
+          in: toDeleteProductOptionGroups.map((opt) => opt.id),
+        },
+      },
+    })
+
+    const optionGroupIds = product.productOptionGroups.map(
+      (optGroup) => optGroup.optionGroupId
+    )
+    const toCreateProductOptionGroups = data.optionGroups.filter(
+      (optGroup: OptionGroup) => !optionGroupIds.includes(optGroup.id!)
+    )
+
+    const newProduct = await prisma.product.update({
+      where: {
+        id: String(id),
+      },
+      data: {
+        productOptionGroups: {
+          create: toCreateProductOptionGroups.map(
+            (optionGroup: OptionGroup) => ({
+              optionGroupId: optionGroup.id,
+            })
+          ),
+        },
+      },
+    })
+
+    return res.status(200).send(newProduct)
   } catch (error: any) {
     return res.status(400).send(error.message)
   }

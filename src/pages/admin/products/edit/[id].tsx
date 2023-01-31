@@ -49,7 +49,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         id: String(id),
       },
       include: {
-        optionGroups: true,
+        productOptionGroups: {
+          include: {
+            optionGroup: true,
+          },
+        },
       },
     })
 
@@ -83,7 +87,7 @@ const EditProduct = ({ product }: EditProductProps) => {
   const { categories } = useGetCategories()
 
   const [productOptions, setProductOptions] = useState<OptionGroup[]>(
-    product.optionGroups!
+    product.productOptionGroups?.map((pog) => pog.optionGroup)!
   )
   console.log("product", product)
   const { register, handleSubmit, watch, setValue } = useForm({
