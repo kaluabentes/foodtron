@@ -45,17 +45,6 @@ const StoreInfo = ({
           {schedule || "---"}
         </Text>
       </Flex>
-      <Flex direction="column" alignItems="center" mb={5}>
-        <Text as="span" fontSize="14px">
-          Valor mínimo por pedido
-        </Text>
-        <Text as="span" fontWeight="500">
-          {`R$ ${Number(store.minimumOrderPrice).toLocaleString("pt-BR", {
-            maximumFractionDigits: 2,
-            minimumFractionDigits: 2,
-          })}`}
-        </Text>
-      </Flex>
       <Flex gap={4} alignItems="center">
         <Flex direction="column" alignItems="center">
           <Text as="span" fontSize="14px">
