@@ -101,7 +101,16 @@ const OrderModal = ({
           <Heading fontSize="md" fontWeight="500" mb={3}>
             Alguma observação?
           </Heading>
-          <Textarea placeholder="Maionese a parte..." />
+          <Textarea placeholder="Maionese a parte..." mb={4} />
+          <Flex gap={2}>
+            <QuantitySwitch
+              onChange={(value) => console.log(value)}
+              value={0}
+            />
+            <Button colorScheme="brand" width="full">
+              Confirmar: R$ 0,00
+            </Button>
+          </Flex>
         </Box>
       </ModalContent>
     </Modal>
