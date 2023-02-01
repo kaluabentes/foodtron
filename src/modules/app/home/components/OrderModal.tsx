@@ -54,7 +54,7 @@ const OrderModal = ({
           size="sm"
           onClick={onClose}
         />
-        <Box p={4}>
+        <Box p={4} mb={4}>
           <Heading mb={1} fontSize="lg" fontWeight="500">
             {product?.title}
           </Heading>
