@@ -1,6 +1,5 @@
 import { Theme } from "next-auth"
 import { createTransport } from "nodemailer"
-import logoBase64 from "./logoBase64"
 
 /**
  * Email HTML body
@@ -15,7 +14,7 @@ function html(params: { url: string; host: string; theme: Theme }) {
 
   const escapedHost = host.replace(/\./g, "&#8203;.")
 
-  const brandColor = theme.brandColor || "#346df1"
+  const brandColor = theme.brandColor || "#1C30E3"
   const color = {
     background: "#f9f9f9",
     text: "#444",
@@ -31,13 +30,13 @@ function html(params: { url: string; host: string; theme: Theme }) {
         style="background: ${color.mainBackground}; max-width: 600px; margin: auto; border-radius: 10px;">
         <tr>
           <td align="center" style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-            <img height="50px" src="https://gocomet.app/comet-full.svg" />
+            <img height="50px" src="https://gocomet.app/comet-full.png" />
           </td>
         </tr>
         <tr>
           <td align="center"
             style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-            Entrar em <strong>${escapedHost}</strong>
+            Para entrar no app clique abaixo
           </td>
         </tr>
         <tr>
@@ -54,7 +53,7 @@ function html(params: { url: string; host: string; theme: Theme }) {
         <tr>
           <td align="center"
             style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-            Se você não quis receber este email você pode ignora-lo.
+            Se você não esperava por este email pode ignorá-lo.
           </td>
         </tr>
       </table>
