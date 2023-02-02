@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 import serverAuth from "@/middlewares/serverAuth"
 
 const updateProfile = async (req: NextApiRequest, res: NextApiResponse) => {

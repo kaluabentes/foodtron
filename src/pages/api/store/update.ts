@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 import serverAuth from "@/middlewares/serverAuth"
 import addVercelSubdomain from "@/lib/infra/vercel/addVercelDomain"
 import addGoDaddyRecord from "@/lib/infra/godaddy/addGoDaddyRecord"

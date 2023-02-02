@@ -1,7 +1,7 @@
 import React from "react"
 import { Box, Flex } from "@chakra-ui/react"
 
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
 import AddressSelectButton from "@/modules/app/home/components/AddressSelectButton"
 import { useAppContext } from "@/contexts/app"

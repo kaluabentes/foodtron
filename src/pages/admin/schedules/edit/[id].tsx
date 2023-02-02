@@ -19,7 +19,7 @@ import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import DataField from "@/components/DataField"
 import auth from "@/middlewares/auth"
 import Schedule from "@/modules/admin/schedules/types/Schedule"
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 import useUpdateSchedule from "@/modules/admin/schedules/hooks/useUpdateSchedule"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

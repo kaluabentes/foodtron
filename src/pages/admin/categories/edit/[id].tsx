@@ -9,7 +9,7 @@ import PageHeader from "@/components/PageHeader"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import DataField from "@/components/DataField"
 import auth from "@/middlewares/auth"
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 import Category from "@/modules/admin/categories/types/Category"
 import useUpdateCategory from "@/modules/admin/categories/hooks/useUpdateCategory"
 

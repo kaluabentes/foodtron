@@ -218,9 +218,24 @@ model OrderProduct {
   price    Decimal
   quantity String
   image    String
+  observation String?
 
   orderId String
   order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
+  options OrderProductOption[]
+
   @@index(orderId)
+}
+
+model OrderProductOption {
+  id       String  @id @default(cuid())
+  title String
+  quantity Int
+  price Decimal?
+
+  orderProductId String
+  orderProduct   OrderProduct  @relation(fields: [orderProductId], references: [id], onDelete: Cascade)
+
+  @@index(orderProductId)
 }

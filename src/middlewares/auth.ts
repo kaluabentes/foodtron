@@ -2,13 +2,14 @@ import { GetServerSidePropsContext, PreviewData } from "next"
 import { getSession } from "next-auth/react"
 import { ParsedUrlQuery } from "querystring"
 
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 import { User } from "@prisma/client"
 
 const auth = async (
   context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>,
   permissions = ["user", "admin"],
-  callback?: (user: User) => any
+  callback?: (user: User) => any,
+  redirectPath?: string
 ): Promise<any> => {
   const session = await getSession(context)
 
@@ -48,6 +49,15 @@ const auth = async (
     }
   }
 
+  if (redirectPath) {
+    return {
+      redirect: {
+        destination: redirectPath,
+        permanent: false,
+      },
+    }
+  }
+
   if (typeof callback !== "undefined") {
     return callback(user!)
   }
@@ -56,6 +66,7 @@ const auth = async (
     props: {
       user: {
         ...user,
+        emailVerified: user.emailVerified?.toISOString(),
         store: {
           ...user?.store,
           minimumOrderPrice: user?.store?.minimumOrderPrice?.toFixed(2) || null,

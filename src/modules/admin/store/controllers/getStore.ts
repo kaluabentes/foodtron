@@ -1,6 +1,6 @@
 import { NextApiResponse } from "next"
 
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 
 const getStore = async (res: NextApiResponse, storeId: string) => {
   try {

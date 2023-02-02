@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Box, Heading } from "@chakra-ui/react"
 
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
 import AddressSelectButton from "@/modules/app/home/components/AddressSelectButton"
 import { useAppContext } from "@/contexts/app"
@@ -134,6 +134,7 @@ const Index = ({ store, categories }: IndexProps) => {
       />
       {categories.map((category) => (
         <CategoryItem
+          key={category.id}
           onMenuItemClick={(product: Product) => setSelectedProduct(product)}
           category={category}
         />

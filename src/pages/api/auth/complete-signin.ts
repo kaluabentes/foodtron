@@ -3,7 +3,7 @@ import { Session, unstable_getServerSession } from "next-auth"
 import * as Yup from "yup"
 import { authOptions } from "./[...nextauth]"
 
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 import addGoDaddyRecord from "@/lib/infra/godaddy/addGoDaddyRecord"
 import addVercelSubdomain from "@/lib/infra/vercel/addVercelDomain"
 

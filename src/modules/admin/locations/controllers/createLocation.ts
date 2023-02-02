@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { Prisma } from "@prisma/client"
 
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 
 const createLocation = async (
   req: NextApiRequest,

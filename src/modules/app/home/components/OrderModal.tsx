@@ -1,4 +1,5 @@
 import QuantitySwitch from "@/components/QuantitySwitch"
+import Option from "@/modules/admin/options/types/Option"
 import OptionGroup from "@/modules/admin/options/types/OptionGroup"
 import Product from "@/modules/admin/products/types/Product"
 import {
@@ -19,6 +20,7 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react"
+import { useEffect, useState } from "react"
 import { BiX } from "react-icons/bi"
 
 interface OrderModalProps {
@@ -34,6 +36,87 @@ const OrderModal = ({
   product,
   optionGroups,
 }: OrderModalProps) => {
+  const [optionGroupValues, setOptionGroupValues] = useState<OptionGroup[]>([])
+  const [observation, setObservation] = useState("")
+  const [quantity, setQuantity] = useState(0)
+
+  const getTotal = () => {
+    if (product) {
+      return (Number(product?.price) * quantity).toFixed(2)
+    }
+
+    return "0.00"
+  }
+
+  const getOptionValue = ({
+    optionId,
+    optionGroupId,
+  }: {
+    optionId: string
+    optionGroupId: string
+  }) => {
+    const optionGroup = optionGroupValues.find(
+      (optionGroup) => optionGroup.id === optionGroupId
+    )
+    const option = optionGroup?.options?.find((opt) => opt.id === optionId)
+
+    return Number(option?.value || 0)
+  }
+
+  const handleOptionChange = ({
+    optionId,
+    optionGroupId,
+    value,
+  }: {
+    optionId: string
+    optionGroupId: string
+    value: number
+  }) => {
+    setOptionGroupValues((optionGroups) =>
+      optionGroups.map((optionGroup: OptionGroup) => {
+        if (optionGroupId === optionGroup.id) {
+          return {
+            ...optionGroup,
+            options: optionGroup.options?.map((option) => {
+              if (option.id === optionId) {
+                return {
+                  ...option,
+                  value,
+                }
+              }
+
+              return option
+            }),
+          }
+        }
+
+        return optionGroup
+      })
+    )
+  }
+
+  const handleConfirm = () => {
+    console.log({
+      optionGroupValues,
+      observation,
+      quantity,
+    })
+  }
+
+  useEffect(() => {
+    if (optionGroups?.length) {
+      setOptionGroupValues(
+        optionGroups?.map((optionGroup: OptionGroup) => ({
+          ...optionGroup,
+          options: optionGroup.options?.map((opt: Option) => ({
+            ...opt,
+            value: 0,
+          })),
+        }))
+      )
+    }
+  }, [optionGroups])
+
   return (
     <Modal onClose={onClose} size="full" isOpen={isOpen}>
       <ModalOverlay />
@@ -76,7 +159,7 @@ const OrderModal = ({
               {optionGroup.title}
             </Heading>
             {optionGroup.options?.map((option) => (
-              <>
+              <Box key={option.id}>
                 <Flex
                   p={4}
                   width="full"
@@ -86,14 +169,23 @@ const OrderModal = ({
                 >
                   <Box>{option.title}</Box>
                   <QuantitySwitch
-                    onChange={(value) => console.log(value)}
-                    value={0}
+                    onChange={(value) =>
+                      handleOptionChange({
+                        optionId: option.id!,
+                        optionGroupId: optionGroup.id!,
+                        value,
+                      })
+                    }
+                    value={getOptionValue({
+                      optionId: option.id!,
+                      optionGroupId: optionGroup.id!,
+                    })}
                   />
                 </Flex>
                 <Box pl={4} pr={4}>
                   <Box height="0.8px" width="100%" backgroundColor="gray.200" />
                 </Box>
-              </>
+              </Box>
             ))}
           </Box>
         ))}
@@ -101,14 +193,16 @@ const OrderModal = ({
           <Heading fontSize="md" fontWeight="500" mb={3}>
             Alguma observação?
           </Heading>
-          <Textarea placeholder="Maionese a parte..." mb={4} />
+          <Textarea
+            onChange={(event) => setObservation(event.target.value)}
+            placeholder="Maionese a parte..."
+            mb={4}
+            value={observation}
+          />
           <Flex gap={2}>
-            <QuantitySwitch
-              onChange={(value) => console.log(value)}
-              value={0}
-            />
-            <Button colorScheme="brand" width="full">
-              Confirmar: R$ 0,00
+            <QuantitySwitch onChange={setQuantity} value={quantity} />
+            <Button onClick={handleConfirm} colorScheme="brand" width="full">
+              Confirmar: {getTotal()}
             </Button>
           </Flex>
         </Box>

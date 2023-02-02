@@ -18,7 +18,7 @@ import DataField from "@/components/DataField"
 import useUpdateLocation from "@/modules/admin/locations/hooks/useUpdateLocation"
 import auth from "@/middlewares/auth"
 import Location from "@/modules/admin/locations/types/Location"
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async () => {

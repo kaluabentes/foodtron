@@ -26,7 +26,7 @@ import slugify from "slugify"
 import { Cloudinary } from "@cloudinary/url-gen"
 
 import AuthLayout from "@/layouts/AuthLayout"
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 
 export interface CompleteSignInData {

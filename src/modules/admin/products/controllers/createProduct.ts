@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 import { Prisma } from "@prisma/client"
 
 import OptionGroup from "../../options/types/OptionGroup"

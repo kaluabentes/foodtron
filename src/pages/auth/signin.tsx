@@ -15,14 +15,33 @@ import {
   Text,
 } from "@chakra-ui/react"
 import * as Yup from "yup"
-import { getSession, signIn } from "next-auth/react"
+import { getSession, signIn, useSession } from "next-auth/react"
 import { FcGoogle } from "react-icons/fc"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 
 import AuthLayout from "@/layouts/AuthLayout"
+
+export const getServerSideProps = async (context: any) => {
+  const session = await getSession(context)
+
+  if (session?.user) {
+    return {
+      redirect: {
+        destination: "/admin/store",
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      session,
+    },
+  }
+}
 
 interface SignInData {
   email: string
@@ -31,6 +50,7 @@ interface SignInData {
 const Signin = () => {
   const { t } = useTranslation()
   const router = useRouter()
+
   const [isLoadingEmail, setIsLoadingEmail] = useState(false)
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false)
 
@@ -59,7 +79,7 @@ const Signin = () => {
   return (
     <AuthLayout>
       <Flex justifyContent="center">
-        <Image src="/comet-blue.svg" width="80px" mb={10} />
+        <Image src="/comet-full.svg" height="50px" mb={14} mt={5} />
       </Flex>
       <Heading size="lg" marginBottom={10} fontWeight="semibold">
         {t("signinComet")}

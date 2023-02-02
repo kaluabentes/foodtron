@@ -1,3 +1,4 @@
+import Product from "@/modules/admin/categories/types/Product"
 import Location from "@/modules/admin/locations/types/Location"
 import { merge } from "lodash"
 import { useRouter } from "next/router"
@@ -15,6 +16,9 @@ interface AppState {
     number?: string
     location?: Location
   }
+  order?: {
+    products?: Product[]
+  }
 }
 
 const DEFAULT_VALUE_STATE = {
@@ -27,6 +31,9 @@ const DEFAULT_VALUE_STATE = {
       tax: "",
       estimatedTime: "",
     },
+  },
+  order: {
+    products: [],
   },
 }
 

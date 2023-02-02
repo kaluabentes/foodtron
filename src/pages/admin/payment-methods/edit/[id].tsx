@@ -19,7 +19,7 @@ import DataField from "@/components/DataField"
 import auth from "@/middlewares/auth"
 import { GetServerSideProps } from "next"
 import useCreatePaymentMethod from "@/modules/admin/payment-methods/hooks/useCreatePaymentMethod"
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 import PaymentMethod from "@/modules/admin/payment-methods/types/PaymentMethod"
 import useUpdatePaymentMethod from "@/modules/admin/payment-methods/hooks/useUpdatePaymentMethod"
 

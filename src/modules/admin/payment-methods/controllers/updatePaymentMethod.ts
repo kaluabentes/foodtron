@@ -1,6 +1,6 @@
 import { NextApiResponse } from "next"
 
-import prisma from "@/lib/infra/prisma"
+import prisma from "@/lib/infra/prisma/client"
 import PaymentMethod from "../types/PaymentMethod"
 
 const updatePaymentMethod = async (
