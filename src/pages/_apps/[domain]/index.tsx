@@ -6,14 +6,16 @@ import AppLayout from "@/layouts/AppLayout"
 import AddressSelectButton from "@/modules/app/home/components/AddressSelectButton"
 import { useAppContext } from "@/contexts/app"
 import StoreInfo from "@/modules/app/home/components/StoreInfo"
-import Store from "@/modules/admin/store/types/Store"
-import weekDayMap from "@/modules/admin/schedules/weekDayMap"
+import Store from "@/modules/store/types/Store"
+import weekDayMap from "@/modules/schedules/weekDayMap"
 import { useRouter } from "next/router"
 import MenuItem from "@/modules/app/home/components/MenuItem"
-import Category from "@/modules/admin/categories/types/Category"
+import Category from "@/modules/categories/types/Category"
 import CategoryItem from "@/modules/app/home/components/CategoryItem"
-import OrderModal from "@/modules/app/home/components/OrderModal"
-import Product from "@/modules/admin/products/types/Product"
+import OrderModal, {
+  ConfirmValues,
+} from "@/modules/app/home/components/OrderModal"
+import Product from "@/modules/products/types/Product"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -99,12 +101,14 @@ const Index = ({ store, categories }: IndexProps) => {
   const router = useRouter()
 
   const {
+    setState,
     state: {
       address: {
         street,
         number,
         location: { neighborhood, ...location },
       },
+      order: { products },
     },
   } = useAppContext()
 
@@ -118,6 +122,33 @@ const Index = ({ store, categories }: IndexProps) => {
   const currentScheduleTime = `${currentSchedule?.start} ás ${currentSchedule?.end}`
 
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>()
+
+  const handleOrderConfirm = (values: ConfirmValues) => {
+    const options = values.optionGroupValues
+      .map((opt) => opt.options)
+      .flat()
+      .filter((opt) => Number(opt?.quantity) > 0)
+
+    const productPayload = {
+      title: selectedProduct!.title,
+      price: selectedProduct!.price,
+      image: selectedProduct!.image,
+      quantity: values.quantity,
+      observation: values.observation,
+      options: options.map((opt) => ({
+        title: opt!.title,
+        quantity: Number(opt!.quantity),
+        price: opt!.price,
+      })),
+    }
+
+    setState({
+      order: {
+        products: [...products, productPayload],
+      },
+    })
+    setSelectedProduct(undefined)
+  }
 
   return (
     <AppLayout title="Menu">
@@ -140,6 +171,7 @@ const Index = ({ store, categories }: IndexProps) => {
         />
       ))}
       <OrderModal
+        onConfirm={handleOrderConfirm}
         optionGroups={selectedProduct?.productOptionGroups?.map(
           (productOptionGroup) => productOptionGroup.optionGroup
         )}

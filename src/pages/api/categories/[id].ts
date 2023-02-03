@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import serverAuth from "@/middlewares/serverAuth"
-import deleteCategory from "@/modules/admin/categories/controllers/deleteCategory"
-import updateCategory from "@/modules/admin/categories/controllers/updateCategory"
+import deleteCategory from "@/modules/categories/controllers/deleteCategory"
+import updateCategory from "@/modules/categories/controllers/updateCategory"
 
 const singleScheduleHandler = async (
   req: NextApiRequest,

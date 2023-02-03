@@ -10,8 +10,8 @@ import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import DataField from "@/components/DataField"
 import auth from "@/middlewares/auth"
 import prisma from "@/lib/infra/prisma/client"
-import Category from "@/modules/admin/categories/types/Category"
-import useUpdateCategory from "@/modules/admin/categories/hooks/useUpdateCategory"
+import Category from "@/modules/categories/types/Category"
+import useUpdateCategory from "@/modules/categories/hooks/useUpdateCategory"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async () => {

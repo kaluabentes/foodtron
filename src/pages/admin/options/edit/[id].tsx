@@ -25,13 +25,13 @@ import PageHeader from "@/components/PageHeader"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import DataField from "@/components/DataField"
 import auth from "@/middlewares/auth"
-import useCreateOption from "@/modules/admin/options/hooks/useCreateOption"
+import useCreateOption from "@/modules/options/hooks/useCreateOption"
 import { useState } from "react"
-import Option from "@/modules/admin/options/types/Option"
+import Option from "@/modules/options/types/Option"
 import EmptyState from "@/components/EmptyState"
 import { BiTrash } from "react-icons/bi"
-import OptionGroup from "@/modules/admin/options/types/OptionGroup"
-import useUpdateOption from "@/modules/admin/options/hooks/useUpdateOption"
+import OptionGroup from "@/modules/options/types/OptionGroup"
+import useUpdateOption from "@/modules/options/hooks/useUpdateOption"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async () => {

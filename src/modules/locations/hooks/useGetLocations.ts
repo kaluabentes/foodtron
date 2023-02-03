@@ -10,7 +10,6 @@ const useGetLocations = () => {
       setIsLoading(true)
 
       const response = await axios.get(`/api/locations`)
-      console.log(response.data)
       setLocations(response.data)
 
       return Promise.resolve()

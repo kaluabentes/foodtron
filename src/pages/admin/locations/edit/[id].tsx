@@ -15,9 +15,9 @@ import AdminLayout from "@/layouts/AdminLayout"
 import PageHeader from "@/components/PageHeader"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import DataField from "@/components/DataField"
-import useUpdateLocation from "@/modules/admin/locations/hooks/useUpdateLocation"
+import useUpdateLocation from "@/modules/locations/hooks/useUpdateLocation"
 import auth from "@/middlewares/auth"
-import Location from "@/modules/admin/locations/types/Location"
+import Location from "@/modules/locations/types/Location"
 import prisma from "@/lib/infra/prisma/client"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

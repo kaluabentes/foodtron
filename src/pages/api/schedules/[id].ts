@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import serverAuth from "@/middlewares/serverAuth"
-import deleteSchedule from "@/modules/admin/schedules/controllers/deleteSchedule"
-import updateSchedule from "@/modules/admin/schedules/controllers/updateSchedule"
+import deleteSchedule from "@/modules/schedules/controllers/deleteSchedule"
+import updateSchedule from "@/modules/schedules/controllers/updateSchedule"
 
 const singleScheduleHandler = async (
   req: NextApiRequest,

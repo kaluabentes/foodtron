@@ -24,12 +24,12 @@ import TableSkeleton from "@/components/TableSkeleton"
 import AdminLayout from "@/layouts/AdminLayout"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import auth from "@/middlewares/auth"
-import useGetSchedules from "@/modules/admin/schedules/hooks/useGetSchedules"
-import Schedule from "@/modules/admin/schedules/types/Schedule"
-import useDeleteSchedule from "@/modules/admin/schedules/hooks/useDeleteSchedule"
-import useGetPaymentMethods from "@/modules/admin/payment-methods/hooks/useGetPaymentMethods"
-import PaymentMethod from "@/modules/admin/payment-methods/types/PaymentMethod"
-import useDeletePaymentMethod from "@/modules/admin/payment-methods/hooks/useDeletePaymentMethod"
+import useGetSchedules from "@/modules/schedules/hooks/useGetSchedules"
+import Schedule from "@/modules/schedules/types/Schedule"
+import useDeleteSchedule from "@/modules/schedules/hooks/useDeleteSchedule"
+import useGetPaymentMethods from "@/modules/payment-methods/hooks/useGetPaymentMethods"
+import PaymentMethod from "@/modules/payment-methods/types/PaymentMethod"
+import useDeletePaymentMethod from "@/modules/payment-methods/hooks/useDeletePaymentMethod"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])

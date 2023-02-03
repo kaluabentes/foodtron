@@ -14,10 +14,10 @@ import AppLayout from "@/layouts/AppLayout"
 import AddressSelectButton from "@/modules/app/home/components/AddressSelectButton"
 import { useAppContext } from "@/contexts/app"
 import StoreInfo from "@/modules/app/home/components/StoreInfo"
-import Store from "@/modules/admin/store/types/Store"
-import weekDayMap from "@/modules/admin/schedules/weekDayMap"
+import Store from "@/modules/store/types/Store"
+import weekDayMap from "@/modules/schedules/weekDayMap"
 import { useRouter } from "next/router"
-import Location from "@/modules/admin/locations/types/Location"
+import Location from "@/modules/locations/types/Location"
 import BarIconButton from "@/components/BarIconButton"
 import { BiLeftArrowAlt } from "react-icons/bi"
 import DataField from "@/components/DataField"
@@ -102,7 +102,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
 
   return (
     <AppLayout
-      title="Edite o seu endereço"
+      title="Editar endereço"
       rightIcon={
         <BarIconButton
           label="Voltar"

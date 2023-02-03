@@ -1,4 +1,4 @@
-import Category from "../../categories/types/Category"
+import Category from "./Category"
 import OptionGroup from "../../options/types/OptionGroup"
 
 interface Product {

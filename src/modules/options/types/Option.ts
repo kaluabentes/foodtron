@@ -2,7 +2,7 @@ interface Option {
   id?: string
   title: string
   price: string
-  value?: number
+  quantity?: number
 }
 
 export default Option

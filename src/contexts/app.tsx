@@ -1,5 +1,3 @@
-import Product from "@/modules/admin/categories/types/Product"
-import Location from "@/modules/admin/locations/types/Location"
 import { merge } from "lodash"
 import { useRouter } from "next/router"
 import {
@@ -10,14 +8,21 @@ import {
   useState,
 } from "react"
 
+import Location from "@/modules/locations/types/Location"
+import OrderProduct from "@/modules/orders/types/OrderProduct"
+
 interface AppState {
+  user?: {
+    name?: string
+    phone?: string
+  }
   address?: {
     street?: string
     number?: string
     location?: Location
   }
   order?: {
-    products?: Product[]
+    products?: OrderProduct[]
   }
 }
 
@@ -45,9 +50,10 @@ export const AppValueContext = createContext(DEFAULT_VALUE_STATE)
 export const AppActionContext = createContext(DEFAULT_ACTION_STATE)
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
-  const [state, setState] = useState(DEFAULT_VALUE_STATE)
   const router = useRouter()
   const { domain } = router.query
+
+  const [state, setState] = useState(DEFAULT_VALUE_STATE)
 
   const mutateState = (newState: AppState) => {
     localStorage.setItem(
@@ -59,7 +65,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const localState = localStorage.getItem(`${domain}.gocomet.app`)
-    console.log(localState)
+
     if (localState) {
       setState(JSON.parse(localState))
     }

@@ -22,11 +22,11 @@ import auth from "@/middlewares/auth"
 import { BiEdit, BiTrash } from "react-icons/bi"
 import DeleteAlert from "@/components/DeleteAlert"
 import { useState } from "react"
-import useDeleteLocation from "@/modules/admin/locations/hooks/useDeleteLocation"
-import useGetLocations from "@/modules/admin/locations/hooks/useGetLocations"
+import useDeleteLocation from "@/modules/locations/hooks/useDeleteLocation"
+import useGetLocations from "@/modules/locations/hooks/useGetLocations"
 import EmptyState from "@/components/EmptyState"
 import TableSkeleton from "@/components/TableSkeleton"
-import Location from "@/modules/admin/locations/types/Location"
+import Location from "@/modules/locations/types/Location"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])

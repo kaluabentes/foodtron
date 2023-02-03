@@ -20,7 +20,7 @@ import TruncateText from "@/components/TruncateText"
 import prisma from "@/lib/infra/prisma/client"
 import auth from "@/middlewares/auth"
 import { DataCell, DataHead, DataValue } from "@/components/DataTable"
-import Store from "@/modules/admin/store/types/Store"
+import Store from "@/modules/store/types/Store"
 import { useState } from "react"
 import { User } from "@prisma/client"
 

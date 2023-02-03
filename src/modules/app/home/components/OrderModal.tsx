@@ -1,8 +1,10 @@
 import QuantitySwitch from "@/components/QuantitySwitch"
-import Option from "@/modules/admin/options/types/Option"
-import OptionGroup from "@/modules/admin/options/types/OptionGroup"
-import Product from "@/modules/admin/products/types/Product"
+import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
+import Option from "@/modules/options/types/Option"
+import OptionGroup from "@/modules/options/types/OptionGroup"
+import Product from "@/modules/products/types/Product"
 import {
+  Badge,
   Box,
   Button,
   Flex,
@@ -23,10 +25,17 @@ import {
 import { useEffect, useState } from "react"
 import { BiX } from "react-icons/bi"
 
+export interface ConfirmValues {
+  optionGroupValues: OptionGroup[]
+  observation: string
+  quantity: number
+}
+
 interface OrderModalProps {
   onClose: () => void
   isOpen: boolean
   product?: Product
+  onConfirm: (values: ConfirmValues) => void
   optionGroups?: OptionGroup[]
 }
 
@@ -34,18 +43,53 @@ const OrderModal = ({
   onClose,
   isOpen,
   product,
+  onConfirm,
   optionGroups,
 }: OrderModalProps) => {
   const [optionGroupValues, setOptionGroupValues] = useState<OptionGroup[]>([])
   const [observation, setObservation] = useState("")
-  const [quantity, setQuantity] = useState(0)
+  const [quantity, setQuantity] = useState(1)
 
-  const getTotal = () => {
+  const getIsButtonDisabled = () => {
+    const requiredOptionGroups = optionGroupValues.filter(
+      (optionGroup) => optionGroup.required
+    )
+    const hasOptionGroupsUnselected = requiredOptionGroups.some(
+      (optionGroup) => {
+        const optionsWithQuantity = optionGroup.options!.filter(
+          (option) => option.quantity! > 0
+        )
+
+        return optionsWithQuantity.length === 0
+      }
+    )
+
+    return hasOptionGroupsUnselected
+  }
+
+  const getTotal = (): number => {
+    const optionsTotal = optionGroupValues.reduce((subtotal, optionGroup) => {
+      const totalChild = optionGroup.options!.reduce(
+        (subtotalChild, option: Option) => {
+          if (option.quantity! > 0) {
+            return (
+              Number(option.quantity) * Number(option.price) + subtotalChild
+            )
+          }
+
+          return subtotalChild
+        },
+        0
+      )
+
+      return totalChild + subtotal
+    }, 0)
+
     if (product) {
-      return (Number(product?.price) * quantity).toFixed(2)
+      return Number(product?.price) * quantity + optionsTotal
     }
 
-    return "0.00"
+    return 0
   }
 
   const getOptionValue = ({
@@ -60,17 +104,29 @@ const OrderModal = ({
     )
     const option = optionGroup?.options?.find((opt) => opt.id === optionId)
 
-    return Number(option?.value || 0)
+    return Number(option?.quantity || 0)
+  }
+
+  const getOptionTotalQuantity = (optionGroupId: string) => {
+    const optionGroup = optionGroupValues.find(
+      (optionGroup) => optionGroup.id === optionGroupId
+    )
+    const totalQuantity = optionGroup?.options!.reduce(
+      (total, option) => total + option.quantity!,
+      0
+    )
+
+    return totalQuantity
   }
 
   const handleOptionChange = ({
     optionId,
     optionGroupId,
-    value,
+    quantity,
   }: {
     optionId: string
     optionGroupId: string
-    value: number
+    quantity: number
   }) => {
     setOptionGroupValues((optionGroups) =>
       optionGroups.map((optionGroup: OptionGroup) => {
@@ -81,7 +137,7 @@ const OrderModal = ({
               if (option.id === optionId) {
                 return {
                   ...option,
-                  value,
+                  quantity,
                 }
               }
 
@@ -96,7 +152,7 @@ const OrderModal = ({
   }
 
   const handleConfirm = () => {
-    console.log({
+    onConfirm({
       optionGroupValues,
       observation,
       quantity,
@@ -110,7 +166,7 @@ const OrderModal = ({
           ...optionGroup,
           options: optionGroup.options?.map((opt: Option) => ({
             ...opt,
-            value: 0,
+            quantity: 0,
           })),
         }))
       )
@@ -120,7 +176,7 @@ const OrderModal = ({
   return (
     <Modal onClose={onClose} size="full" isOpen={isOpen}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent paddingBottom="72px" position="relative">
         <Image
           src={product?.image}
           width="100%"
@@ -130,12 +186,13 @@ const OrderModal = ({
         <IconButton
           left={4}
           top={4}
-          position="absolute"
+          position="fixed"
           borderRadius="50%"
           aria-label="Remover localização"
           icon={<BiX size="30px" />}
           size="sm"
           onClick={onClose}
+          shadow="md"
         />
         <Box p={4} mb={4}>
           <Heading mb={1} fontSize="lg" fontWeight="500">
@@ -145,19 +202,41 @@ const OrderModal = ({
             {product?.description}
           </Text>
           <Text fontWeight="500" fontSize="md">
-            {product?.price}
+            {formatToRealCurrency(Number(product?.price))}
           </Text>
         </Box>
-        {optionGroups?.map((optionGroup) => (
+        {optionGroups?.map((optionGroup: OptionGroup) => (
           <Box key={optionGroup.id}>
-            <Heading
+            <Flex
               backgroundColor="gray.100"
               p={4}
-              fontSize="sm"
-              textTransform="uppercase"
+              justifyContent="space-between"
+              alignItems="center"
             >
-              {optionGroup.title}
-            </Heading>
+              <Box>
+                <Heading fontSize="sm" textTransform="uppercase">
+                  {optionGroup.title}
+                </Heading>
+                <Text fontSize="sm" color="gray.500">
+                  {getOptionTotalQuantity(String(optionGroup.id))} de{" "}
+                  {optionGroup.maxOption}
+                </Text>
+              </Box>
+              {optionGroup.required && (
+                <Badge
+                  background="gray.600"
+                  color="white"
+                  fontWeight="500"
+                  pt="2px"
+                  pr="5px"
+                  pl="5px"
+                  pb="2px"
+                  fontSize="10px"
+                >
+                  Obrigatório
+                </Badge>
+              )}
+            </Flex>
             {optionGroup.options?.map((option) => (
               <Box key={option.id}>
                 <Flex
@@ -167,19 +246,27 @@ const OrderModal = ({
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <Box>{option.title}</Box>
+                  <Box>
+                    <Box mb={1}>{option.title}</Box>
+                    <Text fontSize="sm" color="gray.500">
+                      {option.price
+                        ? `+ ${formatToRealCurrency(Number(option.price))}`
+                        : ""}
+                    </Text>
+                  </Box>
                   <QuantitySwitch
-                    onChange={(value) =>
+                    onChange={(quantity) =>
                       handleOptionChange({
                         optionId: option.id!,
                         optionGroupId: optionGroup.id!,
-                        value,
+                        quantity,
                       })
                     }
                     value={getOptionValue({
                       optionId: option.id!,
                       optionGroupId: optionGroup.id!,
                     })}
+                    max={Number(optionGroup.maxOption)}
                   />
                 </Flex>
                 <Box pl={4} pr={4}>
@@ -189,23 +276,37 @@ const OrderModal = ({
             ))}
           </Box>
         ))}
-        <Box p={4} mt={2}>
+        <Box p={4}>
           <Heading fontSize="md" fontWeight="500" mb={3}>
             Alguma observação?
           </Heading>
           <Textarea
             onChange={(event) => setObservation(event.target.value)}
             placeholder="Maionese a parte..."
-            mb={4}
             value={observation}
           />
-          <Flex gap={2}>
-            <QuantitySwitch onChange={setQuantity} value={quantity} />
-            <Button onClick={handleConfirm} colorScheme="brand" width="full">
-              Confirmar: {getTotal()}
-            </Button>
-          </Flex>
         </Box>
+        <Flex
+          gap={2}
+          p={4}
+          position="fixed"
+          bottom="0"
+          width="full"
+          background="white"
+          shadow="md"
+          borderTop="1px solid transparent"
+          borderColor="gray.200"
+        >
+          <QuantitySwitch onChange={setQuantity} value={quantity} min={1} />
+          <Button
+            disabled={getIsButtonDisabled()}
+            onClick={handleConfirm}
+            colorScheme="brand"
+            width="full"
+          >
+            Confirmar: {formatToRealCurrency(getTotal())}
+          </Button>
+        </Flex>
       </ModalContent>
     </Modal>
   )

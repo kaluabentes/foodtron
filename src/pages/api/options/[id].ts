@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import serverAuth from "@/middlewares/serverAuth"
-import deleteOption from "@/modules/admin/options/controllers/deleteOption"
-import updateOption from "@/modules/admin/options/controllers/updateOption"
+import deleteOption from "@/modules/options/controllers/deleteOption"
+import updateOption from "@/modules/options/controllers/updateOption"
 
 const singleOptionHandler = async (
   req: NextApiRequest,

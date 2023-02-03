@@ -18,9 +18,9 @@ import PageHeader from "@/components/PageHeader"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import DataField from "@/components/DataField"
 import auth from "@/middlewares/auth"
-import Schedule from "@/modules/admin/schedules/types/Schedule"
+import Schedule from "@/modules/schedules/types/Schedule"
 import prisma from "@/lib/infra/prisma/client"
-import useUpdateSchedule from "@/modules/admin/schedules/hooks/useUpdateSchedule"
+import useUpdateSchedule from "@/modules/schedules/hooks/useUpdateSchedule"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async () => {

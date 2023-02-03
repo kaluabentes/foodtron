@@ -18,10 +18,10 @@ import { useForm } from "react-hook-form"
 import DataField from "@/components/DataField"
 import auth from "@/middlewares/auth"
 import { GetServerSideProps } from "next"
-import useCreatePaymentMethod from "@/modules/admin/payment-methods/hooks/useCreatePaymentMethod"
+import useCreatePaymentMethod from "@/modules/payment-methods/hooks/useCreatePaymentMethod"
 import prisma from "@/lib/infra/prisma/client"
-import PaymentMethod from "@/modules/admin/payment-methods/types/PaymentMethod"
-import useUpdatePaymentMethod from "@/modules/admin/payment-methods/hooks/useUpdatePaymentMethod"
+import PaymentMethod from "@/modules/payment-methods/types/PaymentMethod"
+import useUpdatePaymentMethod from "@/modules/payment-methods/hooks/useUpdatePaymentMethod"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async () => {

@@ -13,9 +13,11 @@ interface AppBarProps {
   leftIcon?: ReactNode
   onMenuClick: () => void
   onClose: () => void
+  isFixed?: boolean
 }
 
 const AppBar = ({
+  isFixed = false,
   title,
   isOpen,
   rightIcon,
@@ -25,6 +27,7 @@ const AppBar = ({
 }: AppBarProps) => (
   <>
     <Flex
+      position={isFixed ? "fixed" : "static"}
       as="header"
       alignItems="center"
       justifyContent="space-between"

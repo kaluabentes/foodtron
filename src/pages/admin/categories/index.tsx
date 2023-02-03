@@ -24,12 +24,12 @@ import TableSkeleton from "@/components/TableSkeleton"
 import AdminLayout from "@/layouts/AdminLayout"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import auth from "@/middlewares/auth"
-import useGetSchedules from "@/modules/admin/schedules/hooks/useGetSchedules"
-import Schedule from "@/modules/admin/schedules/types/Schedule"
-import useDeleteSchedule from "@/modules/admin/schedules/hooks/useDeleteSchedule"
-import useGetCategories from "@/modules/admin/categories/hooks/useGetCategories"
-import useDeleteCategory from "@/modules/admin/categories/hooks/useDeleteCategory"
-import Category from "@/modules/admin/categories/types/Category"
+import useGetSchedules from "@/modules/schedules/hooks/useGetSchedules"
+import Schedule from "@/modules/schedules/types/Schedule"
+import useDeleteSchedule from "@/modules/schedules/hooks/useDeleteSchedule"
+import useGetCategories from "@/modules/categories/hooks/useGetCategories"
+import useDeleteCategory from "@/modules/categories/hooks/useDeleteCategory"
+import Category from "@/modules/categories/types/Category"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])

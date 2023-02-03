@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import serverAuth from "@/middlewares/serverAuth"
-import createCategory from "@/modules/admin/categories/controllers/createCategory"
-import getCategories from "@/modules/admin/categories/controllers/getCategories"
+import createCategory from "@/modules/categories/controllers/createCategory"
+import getCategories from "@/modules/categories/controllers/getCategories"
 
 const scheduleIndexHandler = async (
   req: NextApiRequest,

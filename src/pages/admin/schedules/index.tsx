@@ -24,10 +24,10 @@ import TableSkeleton from "@/components/TableSkeleton"
 import AdminLayout from "@/layouts/AdminLayout"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import auth from "@/middlewares/auth"
-import useGetSchedules from "@/modules/admin/schedules/hooks/useGetSchedules"
-import Schedule from "@/modules/admin/schedules/types/Schedule"
-import useDeleteSchedule from "@/modules/admin/schedules/hooks/useDeleteSchedule"
-import weekDayMap from "@/modules/admin/schedules/weekDayMap"
+import useGetSchedules from "@/modules/schedules/hooks/useGetSchedules"
+import Schedule from "@/modules/schedules/types/Schedule"
+import useDeleteSchedule from "@/modules/schedules/hooks/useDeleteSchedule"
+import weekDayMap from "@/modules/schedules/weekDayMap"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])

@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import serverAuth from "@/middlewares/serverAuth"
-import createSchedule from "@/modules/admin/schedules/controllers/createSchedule"
-import getSchedules from "@/modules/admin/schedules/controllers/getSchedules"
-import getStore from "@/modules/admin/store/controllers/getStore"
+import createSchedule from "@/modules/schedules/controllers/createSchedule"
+import getSchedules from "@/modules/schedules/controllers/getSchedules"
+import getStore from "@/modules/store/controllers/getStore"
 
 const storeIndexHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const auth = await serverAuth(req, res, ["admin"])
