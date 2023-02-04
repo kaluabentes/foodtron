@@ -53,7 +53,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter()
   const { domain } = router.query
 
-  const [state, setState] = useState(DEFAULT_VALUE_STATE)
+  const [state, setState] = useState<AppState>(DEFAULT_VALUE_STATE)
 
   const mutateState = (newState: AppState) => {
     localStorage.setItem(

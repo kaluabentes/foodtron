@@ -11,13 +11,8 @@ import {
   Heading,
   IconButton,
   Image,
-  Input,
   Modal,
-  ModalBody,
-  ModalCloseButton,
   ModalContent,
-  ModalFooter,
-  ModalHeader,
   ModalOverlay,
   Text,
   Textarea,
@@ -25,27 +20,28 @@ import {
 import { useEffect, useState } from "react"
 import { BiX } from "react-icons/bi"
 
-export interface ConfirmValues {
+export interface OrderProductValues {
+  id?: string
   optionGroupValues: OptionGroup[]
   observation: string
   quantity: number
 }
 
-interface OrderModalProps {
+interface OrderProductModalProps {
   onClose: () => void
   isOpen: boolean
   product?: Product
-  onConfirm: (values: ConfirmValues) => void
+  onConfirm: (values: OrderProductValues) => void
   optionGroups?: OptionGroup[]
 }
 
-const OrderModal = ({
+const OrderProductModal = ({
   onClose,
   isOpen,
   product,
   onConfirm,
   optionGroups,
-}: OrderModalProps) => {
+}: OrderProductModalProps) => {
   const [optionGroupValues, setOptionGroupValues] = useState<OptionGroup[]>([])
   const [observation, setObservation] = useState("")
   const [quantity, setQuantity] = useState(1)
@@ -128,6 +124,21 @@ const OrderModal = ({
     optionGroupId: string
     quantity: number
   }) => {
+    const optionGroup = optionGroupValues.find(
+      (optionGroup) => optionGroup.id === optionGroupId
+    )
+    const option = optionGroup?.options!.find((opt) => opt.id === optionId)
+    const totalQuantity = optionGroup?.options!.reduce(
+      (total, opt) => total + opt.quantity!,
+      0
+    )
+
+    if (
+      totalQuantity! + 1 > Number(optionGroup?.maxOption) &&
+      quantity >= option?.quantity!
+    )
+      return
+
     setOptionGroupValues((optionGroups) =>
       optionGroups.map((optionGroup: OptionGroup) => {
         if (optionGroupId === optionGroup.id) {
@@ -152,6 +163,7 @@ const OrderModal = ({
   }
 
   const handleConfirm = () => {
+    setQuantity(1)
     onConfirm({
       optionGroupValues,
       observation,
@@ -166,7 +178,7 @@ const OrderModal = ({
           ...optionGroup,
           options: optionGroup.options?.map((opt: Option) => ({
             ...opt,
-            quantity: 0,
+            quantity: opt.quantity || 0,
           })),
         }))
       )
@@ -312,4 +324,4 @@ const OrderModal = ({
   )
 }
 
-export default OrderModal
+export default OrderProductModal

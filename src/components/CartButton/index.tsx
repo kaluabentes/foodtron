@@ -4,9 +4,10 @@ import BarIconButton from "../BarIconButton"
 
 interface CartButtonProps {
   quantity: number
+  onClick: () => void
 }
 
-const CartButton = ({ quantity }: CartButtonProps) => (
+const CartButton = ({ quantity, onClick }: CartButtonProps) => (
   <Box position="relative">
     {quantity ? (
       <Box
@@ -28,7 +29,7 @@ const CartButton = ({ quantity }: CartButtonProps) => (
         {quantity}
       </Box>
     ) : null}
-    <BarIconButton label="Carrinho" icon={<BiCart />} />
+    <BarIconButton onClick={onClick} label="Carrinho" icon={<BiCart />} />
   </Box>
 )
 

@@ -7,6 +7,7 @@ import { BiCart, BiChevronDown, BiMap } from "react-icons/bi"
 import BarIconButton from "@/components/BarIconButton"
 import CartButton from "@/components/CartButton"
 import { useAppContext } from "@/contexts/app"
+import { useRouter } from "next/router"
 
 interface AppLayoutProps {
   children: ReactNode
@@ -15,12 +16,14 @@ interface AppLayoutProps {
 }
 
 const AppLayout = ({ children, title, rightIcon }: AppLayoutProps) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
   const {
     state: {
       order: { products },
     },
   } = useAppContext()
+
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
@@ -32,7 +35,12 @@ const AppLayout = ({ children, title, rightIcon }: AppLayoutProps) => {
           </Heading>
         }
         rightIcon={rightIcon}
-        leftIcon={<CartButton quantity={products.length} />}
+        leftIcon={
+          <CartButton
+            onClick={() => router.push("/order")}
+            quantity={products.length}
+          />
+        }
         isOpen={isOpen}
         onMenuClick={() => setIsOpen(true)}
         onClose={() => setIsOpen(false)}

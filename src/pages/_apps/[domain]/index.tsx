@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react"
 import { Box, Heading } from "@chakra-ui/react"
+import { v4 as uuidv4 } from "uuid"
 
 import prisma from "@/lib/infra/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
-import AddressSelectButton from "@/modules/app/home/components/AddressSelectButton"
+import AddressSelectButton from "@/modules/app/components/AddressSelectButton"
 import { useAppContext } from "@/contexts/app"
-import StoreInfo from "@/modules/app/home/components/StoreInfo"
+import StoreInfo from "@/modules/app/components/StoreInfo"
 import Store from "@/modules/store/types/Store"
 import weekDayMap from "@/modules/schedules/weekDayMap"
 import { useRouter } from "next/router"
-import MenuItem from "@/modules/app/home/components/MenuItem"
+import MenuItem from "@/modules/app/components/MenuItem"
 import Category from "@/modules/categories/types/Category"
-import CategoryItem from "@/modules/app/home/components/CategoryItem"
-import OrderModal, {
-  ConfirmValues,
-} from "@/modules/app/home/components/OrderModal"
+import CategoryItem from "@/modules/app/components/CategoryItem"
+import OrderProductModal, {
+  OrderProductValues,
+} from "@/modules/app/components/OrderProductModal"
 import Product from "@/modules/products/types/Product"
 
 export const getStaticPaths = async () => {
@@ -123,19 +124,22 @@ const Index = ({ store, categories }: IndexProps) => {
 
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>()
 
-  const handleOrderConfirm = (values: ConfirmValues) => {
+  const handleOrderConfirm = (values: OrderProductValues) => {
     const options = values.optionGroupValues
       .map((opt) => opt.options)
       .flat()
       .filter((opt) => Number(opt?.quantity) > 0)
 
     const productPayload = {
+      id: uuidv4(),
+      productId: selectedProduct!.id,
       title: selectedProduct!.title,
       price: selectedProduct!.price,
       image: selectedProduct!.image,
       quantity: values.quantity,
       observation: values.observation,
       options: options.map((opt) => ({
+        id: opt?.id,
         title: opt!.title,
         quantity: Number(opt!.quantity),
         price: opt!.price,
@@ -170,7 +174,7 @@ const Index = ({ store, categories }: IndexProps) => {
           category={category}
         />
       ))}
-      <OrderModal
+      <OrderProductModal
         onConfirm={handleOrderConfirm}
         optionGroups={selectedProduct?.productOptionGroups?.map(
           (productOptionGroup) => productOptionGroup.optionGroup

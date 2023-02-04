@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import {
-  Box,
   Button,
   Flex,
   FormControl,
@@ -11,16 +10,11 @@ import {
 
 import prisma from "@/lib/infra/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
-import AddressSelectButton from "@/modules/app/home/components/AddressSelectButton"
 import { useAppContext } from "@/contexts/app"
-import StoreInfo from "@/modules/app/home/components/StoreInfo"
-import Store from "@/modules/store/types/Store"
-import weekDayMap from "@/modules/schedules/weekDayMap"
 import { useRouter } from "next/router"
 import Location from "@/modules/locations/types/Location"
 import BarIconButton from "@/components/BarIconButton"
 import { BiLeftArrowAlt } from "react-icons/bi"
-import DataField from "@/components/DataField"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 

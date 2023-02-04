@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 
-const useGetProducts = () => {
+const useGetProductsByDomain = (domain: string) => {
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -9,7 +9,9 @@ const useGetProducts = () => {
     try {
       setIsLoading(true)
 
-      const response = await axios.get("/api/products")
+      const response = await axios.get(
+        process.env.NEXT_PUBLIC_URL + `/api/products?domain=${domain}`
+      )
 
       setProducts(response.data)
     } catch (error: any) {
@@ -20,10 +22,12 @@ const useGetProducts = () => {
   }
 
   useEffect(() => {
-    getProducts()
-  }, [])
+    if (domain) {
+      getProducts()
+    }
+  }, [domain])
 
   return { products, getProducts, isLoading }
 }
 
-export default useGetProducts
+export default useGetProductsByDomain

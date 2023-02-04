@@ -2,6 +2,7 @@ import OrderProductOption from "./OrderProductOption"
 
 interface OrderProduct {
   id?: string
+  productId?: string
   title: string
   price: string
   quantity: number
