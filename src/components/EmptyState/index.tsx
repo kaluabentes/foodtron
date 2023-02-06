@@ -19,7 +19,7 @@ const EmptyState = ({ message }: EmptyStateProps) => (
     gap={7}
   >
     <Icon as={BiFile} fontSize="140px" color="gray.200" />
-    <Heading fontWeight="400" fontSize="md" color="gray.500">
+    <Heading fontWeight="400" fontSize="md" color="gray.500" textAlign="center">
       {message}
     </Heading>
   </Flex>

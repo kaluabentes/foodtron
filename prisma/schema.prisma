@@ -173,7 +173,7 @@ model OptionGroup {
 model Option {
   id    String  @id @default(cuid())
   title String
-  price Decimal
+  price Decimal?
 
   optionGroupId String
   optionGroup   OptionGroup @relation(fields: [optionGroupId], references: [id], onDelete: Cascade)

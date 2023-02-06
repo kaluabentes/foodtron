@@ -9,10 +9,6 @@ const locationsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const auth = await serverAuth(req, res, ["admin"])
   const storeId = auth.user.store.id
 
-  if (auth.unauthorized) {
-    return auth.response
-  }
-
   if (!["GET", "POST"].includes(req.method!)) {
     return res.status(405).send("Method not allowed")
   }

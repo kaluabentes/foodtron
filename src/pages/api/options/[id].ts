@@ -8,12 +8,9 @@ const singleOptionHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const auth = await serverAuth(req, res, ["admin"])
-  const { id } = req.query
+  await serverAuth(req, res, ["admin"])
 
-  if (auth.unauthorized) {
-    return auth.response
-  }
+  const { id } = req.query
 
   if (!["PATCH", "DELETE"].includes(req.method!)) {
     return res.status(400).send("Method not allowed")

@@ -30,6 +30,7 @@ import { useState } from "react"
 import Option from "@/modules/options/types/Option"
 import EmptyState from "@/components/EmptyState"
 import { BiTrash } from "react-icons/bi"
+import useBottomToast from "@/lib/hooks/useBottomToast"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])
@@ -37,8 +38,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const AddOption = () => {
   const { t } = useTranslation()
+  const toast = useBottomToast()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
+
   const [option, setOption] = useState({
     title: "",
     price: "",
@@ -59,11 +62,24 @@ const AddOption = () => {
     setOptions((prev) => [...prev, option])
   }
 
+  const handleFormSubmit = () => {
+    return handleSubmit((data) => {
+      if (!options.length) {
+        toast({
+          title: "Atenção!",
+          description: "Adicione ao menos uma opção",
+          status: "error",
+        })
+        return
+      }
+
+      createOption({ ...data, options })
+    })
+  }
+
   return (
     <AdminLayout>
-      <form
-        onSubmit={handleSubmit((data) => createOption({ ...data, options }))}
-      >
+      <form onSubmit={handleFormSubmit()}>
         <PageHeader
           title={t("addOptions")}
           actions={
@@ -95,11 +111,13 @@ const AddOption = () => {
           >
             <DataField
               label={t("title")}
-              input={<Input {...register("title")} />}
+              input={<Input {...register("title")} required />}
             />
             <DataField
               label={t("maxOption")}
-              input={<Input {...register("maxOption")} type="number" />}
+              input={
+                <Input {...register("maxOption")} type="number" required />
+              }
             />
             <DataField
               label={t("required")}
@@ -147,7 +165,7 @@ const AddOption = () => {
             </Box>
             <Box p={8} pt={0}>
               {options.length === 0 ? (
-                <EmptyState message="Não opções criadas no momento." />
+                <EmptyState message={t("optionsEmptyState")} />
               ) : (
                 <Table>
                   <Thead>

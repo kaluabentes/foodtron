@@ -23,7 +23,9 @@ const createOption = async (
         options: {
           create: (options || []).map((option: Option) => ({
             ...option,
-            price: new Prisma.Decimal(option.price.replace(",", ".")),
+            price: option.price
+              ? new Prisma.Decimal(option.price.replace(",", "."))
+              : null,
           })),
         },
       },

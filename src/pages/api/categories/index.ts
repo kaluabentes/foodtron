@@ -10,10 +10,6 @@ const scheduleIndexHandler = async (
 ) => {
   const auth = await serverAuth(req, res, ["admin"])
 
-  if (auth.unauthorized) {
-    return auth.response
-  }
-
   if (!["GET", "POST"].includes(req.method!)) {
     return res.status(400).send("Method not allowed")
   }

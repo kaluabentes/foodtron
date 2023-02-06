@@ -98,13 +98,14 @@
     "price": "Preço",
     "image": "Imagem",
     "editProduct": "Editar produto",
-    "optionsEmptyState": "Não opções cadastradas no momento.",
+    "optionsEmptyState": "Não há opções cadastradas no momento.",
     "options": "Opções",
     "maxOption": "Máximo de opções",
     "addOptions": "Adicionar opção",
     "required": "Obrigatório",
     "category": "Categoria",
     "street": "Rua",
-    "number": "Número"
+    "number": "Número",
+    "updateOptions": "Editar opção"
   }
 }

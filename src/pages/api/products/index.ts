@@ -16,19 +16,20 @@ const productIndexHandler = async (
   res: NextApiResponse
 ) => {
   await runMiddleware(req, res, cors)
-  const { domain } = req.query
+
+  if (!["GET", "POST"].includes(req.method!)) {
+    return res.status(400).send("Method not allowed")
+  }
 
   try {
+    const { domain } = req.query
+
     if (domain) {
       const products = await getProductsByDomain(String(domain))
       return res.status(200).send(products)
     }
 
     const auth = await serverAuth(req, res, ["admin"])
-
-    if (!["GET", "POST"].includes(req.method!)) {
-      return res.status(400).send("Method not allowed")
-    }
 
     if (req.method === "POST") {
       return createProduct(req, res, auth.user.store.id)
@@ -42,7 +43,7 @@ const productIndexHandler = async (
       return res.status(401).send("Unauthorized")
     }
 
-    return res.status(400).send(error.message)
+    return res.status(500).send(error.message)
   }
 }
 

@@ -8,22 +8,26 @@ const optionIndexHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const auth = await serverAuth(req, res, ["admin"])
+  try {
+    const auth = await serverAuth(req, res, ["admin"])
 
-  if (auth.unauthorized) {
-    return auth.response
-  }
+    if (!["GET", "POST"].includes(req.method!)) {
+      return res.status(400).send("Method not allowed")
+    }
 
-  if (!["GET", "POST"].includes(req.method!)) {
-    return res.status(400).send("Method not allowed")
-  }
+    if (req.method === "POST") {
+      return createOption(req, res, auth.user.store.id)
+    }
 
-  if (req.method === "POST") {
-    return createOption(req, res, auth.user.store.id)
-  }
+    if (req.method === "GET") {
+      return getOptions(res, auth.user.store.id)
+    }
+  } catch (error: any) {
+    if (error === "401") {
+      return res.status(401).send("Unauthorized")
+    }
 
-  if (req.method === "GET") {
-    return getOptions(res, auth.user.store.id)
+    return res.status(500).send(error.message)
   }
 }
 

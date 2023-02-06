@@ -11,10 +11,6 @@ const singleScheduleHandler = async (
   const auth = await serverAuth(req, res, ["admin"])
   const { id } = req.query
 
-  if (auth.unauthorized) {
-    return auth.response
-  }
-
   if (!["PATCH", "DELETE"].includes(req.method!)) {
     return res.status(400).send("Method not allowed")
   }

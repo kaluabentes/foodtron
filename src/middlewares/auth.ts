@@ -66,7 +66,9 @@ const auth = async (
     props: {
       user: {
         ...user,
-        emailVerified: user.emailVerified?.toISOString(),
+        emailVerified: user.emailVerified
+          ? user.emailVerified?.toISOString()
+          : null,
         store: {
           ...user?.store,
           minimumOrderPrice: user?.store?.minimumOrderPrice?.toFixed(2) || null,

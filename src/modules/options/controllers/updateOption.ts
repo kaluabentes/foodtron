@@ -28,7 +28,9 @@ const updateOption = async (
         options: {
           create: options?.map((optionChild: Option) => ({
             title: optionChild.title,
-            price: new Prisma.Decimal(optionChild.price.replace(",", ".")),
+            price: optionChild.price
+              ? new Prisma.Decimal(optionChild.price.replace(",", "."))
+              : null,
           })),
         },
       },

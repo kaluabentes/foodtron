@@ -32,6 +32,7 @@ import EmptyState from "@/components/EmptyState"
 import { BiTrash } from "react-icons/bi"
 import OptionGroup from "@/modules/options/types/OptionGroup"
 import useUpdateOption from "@/modules/options/hooks/useUpdateOption"
+import useBottomToast from "@/lib/hooks/useBottomToast"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async () => {
@@ -54,7 +55,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           ...option,
           options: option?.options.map((opt) => ({
             ...opt,
-            price: opt.price.toFixed(2),
+            price: opt.price ? opt.price?.toFixed(2) : null,
           })),
         },
       },
@@ -68,6 +69,7 @@ interface EditOptionProps {
 
 const EditOption = ({ option: defaultOption }: EditOptionProps) => {
   const { t } = useTranslation()
+  const toast = useBottomToast()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
   const [option, setOption] = useState({
@@ -86,11 +88,24 @@ const EditOption = ({ option: defaultOption }: EditOptionProps) => {
     setOptions((prev) => [...prev, option])
   }
 
+  const handleFormSubmit = () => {
+    return handleSubmit((data) => {
+      if (!options.length) {
+        toast({
+          title: "Atenção!",
+          description: "Adicione ao menos uma opção",
+          status: "error",
+        })
+        return
+      }
+
+      updateOption({ ...data, options })
+    })
+  }
+
   return (
     <AdminLayout>
-      <form
-        onSubmit={handleSubmit((data) => updateOption({ ...data, options }))}
-      >
+      <form onSubmit={handleFormSubmit()}>
         <PageHeader
           title={t("updateOptions")}
           actions={
@@ -122,11 +137,13 @@ const EditOption = ({ option: defaultOption }: EditOptionProps) => {
           >
             <DataField
               label={t("title")}
-              input={<Input {...register("title")} />}
+              input={<Input {...register("title")} required />}
             />
             <DataField
               label={t("maxOption")}
-              input={<Input {...register("maxOption")} type="number" />}
+              input={
+                <Input {...register("maxOption")} type="number" required />
+              }
             />
             <DataField
               label={t("required")}
@@ -174,7 +191,7 @@ const EditOption = ({ option: defaultOption }: EditOptionProps) => {
             </Box>
             <Box p={8} pt={0}>
               {options.length === 0 ? (
-                <EmptyState message="Não opções criadas no momento." />
+                <EmptyState message={t("optionsEmptyState")} />
               ) : (
                 <Table>
                   <Thead>

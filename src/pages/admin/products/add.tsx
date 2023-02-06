@@ -185,7 +185,7 @@ const AddProduct = () => {
             </Box>
             <Box p={8} pt={0} overflow="auto">
               {productOptions.length === 0 ? (
-                <EmptyState message="Não opções criadas no momento." />
+                <EmptyState message={t("optionsEmptyState")} />
               ) : (
                 <Table>
                   <Thead>
