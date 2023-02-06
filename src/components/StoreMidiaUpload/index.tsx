@@ -52,7 +52,7 @@ const StoreMidiaUpload = ({
         const coverUrl = get(result, "info.files[0].uploadInfo.url")
 
         if (onCoverChange && coverUrl) {
-          onCoverChange(coverUrl)
+          onCoverChange(coverUrl.replace("http://", "https://"))
         }
 
         if (coverUrl) {

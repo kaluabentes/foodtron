@@ -104,7 +104,6 @@ interface IndexProps {
 const Index = ({ store, categories }: IndexProps) => {
   const router = useRouter()
   const toast = useBottomToast()
-  const isPageLoaded = useIsPageLoaded()
   const { store: storeRealTime } = useGetStore(String(store.subdomain))
 
   const {
@@ -171,10 +170,6 @@ const Index = ({ store, categories }: IndexProps) => {
     }
 
     setSelectedProduct(product)
-  }
-
-  if (!isPageLoaded) {
-    return null
   }
 
   return (

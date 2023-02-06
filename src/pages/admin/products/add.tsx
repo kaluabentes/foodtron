@@ -78,7 +78,7 @@ const AddProduct = () => {
 
         const imagePath = get(result, "info.files[0].uploadInfo.url")
         if (imagePath) {
-          setValue("image", imagePath)
+          setValue("image", imagePath.replace("http://", "https://"))
         }
       }
     )!
