@@ -16,12 +16,12 @@ const useUpdateStore = () => {
     setIsSaving(true)
 
     try {
-      await axios.patch("/api/store/update", data)
+      await axios.patch("/api/stores/update", data)
       toast({
         title: "Feito!",
         description: "Informações atualizados com sucesso",
       })
-      router.push("/admin/store")
+      return Promise.resolve()
     } catch (error: any) {
       toast({
         title: "Não deu boa!",

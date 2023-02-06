@@ -22,10 +22,7 @@ const serverAuth = async (
   )) as Session
 
   if (!session) {
-    return {
-      unauthorized: true,
-      response: res.status(401).send("Unauthorized"),
-    }
+    throw new Error("401")
   }
 
   const user = await prisma.user.findFirst({
@@ -38,10 +35,7 @@ const serverAuth = async (
   })
 
   if (!permissions.includes(user?.role!)) {
-    return {
-      unauthorized: true,
-      response: res.status(401).send("Unauthorized"),
-    }
+    throw new Error("401")
   }
 
   return {

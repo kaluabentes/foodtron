@@ -24,13 +24,16 @@ const updateStore = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const store = auth.user.store
 
-    if (req.body.subdomain !== store.subdomain) {
+    if (
+      typeof req.body.subdomain !== "undefined" &&
+      req.body.subdomain !== store.subdomain
+    ) {
       await deleteGoDaddyRecord(store.subdomain)
       await deleteVercelSubdomain(store.subdomain)
       await addVercelSubdomain(req.body.subdomain)
       await addGoDaddyRecord(req.body.subdomain)
     }
-    console.log("whatsapp", formatPhone(req.body.whatsapp))
+
     await prisma.store.update({
       where: {
         id: store.id,

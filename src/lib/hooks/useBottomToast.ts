@@ -3,16 +3,21 @@ import { useToast } from "@chakra-ui/react"
 interface ExecuteProps {
   title: string
   description: string
+  status?: "success" | "info" | "warning" | "error" | "loading"
 }
 
 const useBottomToast = () => {
   const toast = useToast()
 
-  const execute = ({ title, description }: ExecuteProps) => {
+  const execute = ({
+    title,
+    description,
+    status = "success",
+  }: ExecuteProps) => {
     toast({
       title,
       description,
-      status: "success",
+      status,
       duration: 9000,
       isClosable: true,
       position: "bottom-right",

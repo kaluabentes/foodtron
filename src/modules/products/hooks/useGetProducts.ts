@@ -1,16 +1,29 @@
+import createQuery from "@/lib/helpers/http/createQuery"
 import axios from "axios"
 import { useEffect, useState } from "react"
 
-const useGetProductsByDomain = (domain: string) => {
+interface Query {
+  domain?: string
+}
+
+const useGetProductsByDomain = (domain?: string) => {
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
   const getProducts = async () => {
     try {
+      let response
+
       setIsLoading(true)
 
-      const response = await axios.get(
-        process.env.NEXT_PUBLIC_URL + `/api/products?domain=${domain}`
+      const query: Query = {}
+
+      if (domain) {
+        query.domain = domain
+      }
+
+      response = await axios.get(
+        process.env.NEXT_PUBLIC_URL + `/api/products${createQuery(query)}`
       )
 
       setProducts(response.data)

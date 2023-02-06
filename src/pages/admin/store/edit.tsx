@@ -22,8 +22,8 @@ import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 import prisma from "@/lib/infra/prisma/client"
 import auth from "@/middlewares/auth"
 import { DataCell, DataHead, DataValue } from "@/components/DataTable"
-import Store from "@/modules/store/types/Store"
-import useUpdateStore from "@/modules/store/hooks/useUpdateStore"
+import Store from "@/modules/stores/types/Store"
+import useUpdateStore from "@/modules/stores/hooks/useUpdateStore"
 import { User } from "@prisma/client"
 
 const MaskedWhatsappInput = IMaskMixin(({ inputRef, ...props }: any) => (
@@ -64,9 +64,14 @@ const EditStore = ({ store }: StorePageProps) => {
     defaultValues: store,
   })
 
+  const handleUpdate = async (values: Store) => {
+    await updateStore(values)
+    router.push("/admin/store")
+  }
+
   return (
     <AdminLayout>
-      <form onSubmit={handleSubmit(updateStore)}>
+      <form onSubmit={handleSubmit(handleUpdate)}>
         <PageHeader
           title={t("editStore")}
           actions={

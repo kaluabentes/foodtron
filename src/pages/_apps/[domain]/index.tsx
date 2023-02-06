@@ -7,7 +7,7 @@ import AppLayout from "@/layouts/AppLayout"
 import AddressSelectButton from "@/modules/app/components/AddressSelectButton"
 import { useAppContext } from "@/contexts/app"
 import StoreInfo from "@/modules/app/components/StoreInfo"
-import Store from "@/modules/store/types/Store"
+import Store from "@/modules/stores/types/Store"
 import weekDayMap from "@/modules/schedules/weekDayMap"
 import { useRouter } from "next/router"
 import MenuItem from "@/modules/app/components/MenuItem"
@@ -17,6 +17,8 @@ import OrderProductModal, {
   OrderProductValues,
 } from "@/modules/app/components/OrderProductModal"
 import Product from "@/modules/products/types/Product"
+import useBottomToast from "@/lib/hooks/useBottomToast"
+import useGetStore from "@/modules/stores/hooks/useGetStore"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -100,6 +102,8 @@ interface IndexProps {
 
 const Index = ({ store, categories }: IndexProps) => {
   const router = useRouter()
+  const toast = useBottomToast()
+  const { store: storeRealTime } = useGetStore(String(store.subdomain))
 
   const {
     setState,
@@ -116,7 +120,7 @@ const Index = ({ store, categories }: IndexProps) => {
   const address = `${street || "---"}, ${number || "---"}, ${neighborhood}`
 
   const currentDay = new Date().getDay()
-  const currentSchedule = store.schedules.find(
+  const currentSchedule = store!.schedules!.find(
     (schedule) => schedule.weekDay === String(currentDay)
   )
   const currentWeekDay = String(weekDayMap.get(currentSchedule?.weekDay))
@@ -154,6 +158,19 @@ const Index = ({ store, categories }: IndexProps) => {
     setSelectedProduct(undefined)
   }
 
+  const handleMenuItemClick = (product: Product) => {
+    if (!storeRealTime.isOpen) {
+      toast({
+        title: "Atenção",
+        description: "O restaurante está fechado no momento",
+        status: "error",
+      })
+      return
+    }
+
+    setSelectedProduct(product)
+  }
+
   return (
     <AppLayout title="Menu">
       <AddressSelectButton
@@ -164,13 +181,13 @@ const Index = ({ store, categories }: IndexProps) => {
         onSelectLocation={() => router.push("/select-location")}
         weekDay={currentWeekDay}
         schedule={currentScheduleTime}
-        store={store}
+        store={storeRealTime || store}
         location={location}
       />
       {categories.map((category) => (
         <CategoryItem
           key={category.id}
-          onMenuItemClick={(product: Product) => setSelectedProduct(product)}
+          onMenuItemClick={handleMenuItemClick}
           category={category}
         />
       ))}

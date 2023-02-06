@@ -38,6 +38,10 @@ const productIndexHandler = async (
       return getProducts(res, auth.user.store.id)
     }
   } catch (error: any) {
+    if (error.message === "401") {
+      return res.status(401).send("Unauthorized")
+    }
+
     return res.status(400).send(error.message)
   }
 }

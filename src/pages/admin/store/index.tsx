@@ -20,9 +20,10 @@ import TruncateText from "@/components/TruncateText"
 import prisma from "@/lib/infra/prisma/client"
 import auth from "@/middlewares/auth"
 import { DataCell, DataHead, DataValue } from "@/components/DataTable"
-import Store from "@/modules/store/types/Store"
-import { useState } from "react"
+import Store from "@/modules/stores/types/Store"
+import { useEffect, useState } from "react"
 import { User } from "@prisma/client"
+import useUpdateStore from "@/modules/stores/hooks/useUpdateStore"
 
 interface StorePageProps {
   store: Store
@@ -51,11 +52,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   })
 }
 
+let typingTimeout: any
+
 const Store = ({ store }: StorePageProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
+
   const [isOpen, setIsOpen] = useState(store.isOpen!)
+  const { updateStore } = useUpdateStore()
+
+  const handleToggleIsOpen = () => {
+    setIsOpen((prev) => {
+      updateStore({ isOpen: !prev })
+      return !prev
+    })
+  }
 
   return (
     <AdminLayout>
@@ -68,7 +80,7 @@ const Store = ({ store }: StorePageProps) => {
             ) : (
               <Badge colorScheme="red">Fechado</Badge>
             )}
-            <Switch isChecked={isOpen} />
+            <Switch isChecked={isOpen} onChange={handleToggleIsOpen} />
             <Button
               colorScheme="brand"
               onClick={() => router.push("/admin/store/edit")}

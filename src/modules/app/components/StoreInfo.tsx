@@ -1,7 +1,7 @@
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 import StripeSeparator from "@/components/StripeSeparator"
 import Location from "@/modules/locations/types/Location"
-import Store from "@/modules/store/types/Store"
+import Store from "@/modules/stores/types/Store"
 import { Badge, Box, Flex, Heading, Icon, Text } from "@chakra-ui/react"
 import { BiTimeFive } from "react-icons/bi"
 

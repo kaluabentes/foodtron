@@ -28,6 +28,7 @@ import Product from "@/modules/products/types/Product"
 import OptionGroup from "@/modules/options/types/OptionGroup"
 import { ProductOptionGroup } from "@prisma/client"
 import Option from "@/modules/options/types/Option"
+import useBottomToast from "@/lib/hooks/useBottomToast"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -53,11 +54,15 @@ export const getStaticProps = async ({ params }: any) => {
 const Order = () => {
   const router = useRouter()
   const { domain } = router.query
+  const toast = useBottomToast()
+
   const {
     setState,
     state: {
       order: { products: orderProducts },
       address: {
+        street,
+        number,
         location: { tax },
       },
     },
@@ -121,6 +126,17 @@ const Order = () => {
     setSelectedProduct(undefined)
   }
 
+  const handleAdvance = () => {
+    if (!tax || !street || !number) {
+      toast({
+        title: "Atenção",
+        description: "Complete o seu endereço",
+        status: "error",
+      })
+      return
+    }
+  }
+
   const handleEditProduct = (id: string, productId: string) => {
     const orderProduct = orderProducts.find(
       (product: OrderProduct) => product.id === id
@@ -144,6 +160,8 @@ const Order = () => {
 
       return 0
     }
+
+    console.log("products", products)
 
     setOrderProductId(orderProduct.id)
     setOptionGroups(
@@ -247,7 +265,9 @@ const Order = () => {
                   ) : (
                     <Text
                       as="button"
-                      onClick={() => router.push("/edit-address")}
+                      onClick={() =>
+                        router.push("/edit-address?redirect=/order")
+                      }
                       fontWeight="500"
                       fontSize="sm"
                       color="brand.500"
@@ -272,7 +292,7 @@ const Order = () => {
             </Tr>
           </Tbody>
         </Table>
-        <Button mb={5} colorScheme="brand">
+        <Button mb={5} colorScheme="brand" onClick={handleAdvance}>
           Forma de pagamento
         </Button>
       </Flex>
