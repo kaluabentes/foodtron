@@ -161,8 +161,6 @@ const Order = () => {
       return 0
     }
 
-    console.log("products", products)
-
     setOrderProductId(orderProduct.id)
     setOptionGroups(
       orderOptionGroups.map((orderOptionGroup: OptionGroup) => ({

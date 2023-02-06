@@ -19,6 +19,7 @@ import OrderProductModal, {
 import Product from "@/modules/products/types/Product"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import useGetStore from "@/modules/stores/hooks/useGetStore"
+import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -103,6 +104,7 @@ interface IndexProps {
 const Index = ({ store, categories }: IndexProps) => {
   const router = useRouter()
   const toast = useBottomToast()
+  const isPageLoaded = useIsPageLoaded()
   const { store: storeRealTime } = useGetStore(String(store.subdomain))
 
   const {
@@ -169,6 +171,10 @@ const Index = ({ store, categories }: IndexProps) => {
     }
 
     setSelectedProduct(product)
+  }
+
+  if (!isPageLoaded) {
+    return null
   }
 
   return (

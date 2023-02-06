@@ -20,7 +20,6 @@ const storeIndexHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const store = await getStore({ domain: String(domain) })
-    console.log(store)
     return res.status(200).send(store)
   } catch (error: any) {
     return res.status(500).send(error.message)
