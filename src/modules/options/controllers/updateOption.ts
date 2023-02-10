@@ -38,7 +38,7 @@ const updateOption = async (
             price: optionChild.price
               ? new Prisma.Decimal(optionChild.price.replace(",", "."))
               : null,
-          })),
+          })) as any,
         },
       },
     })
