@@ -90,12 +90,12 @@ const EditPaymentMethod = ({ paymentMethod }: EditPaymentMethodProps) => {
           >
             <DataField
               label={t("description")}
-              input={<Input {...register("description")} />}
+              input={<Input {...register("description")} required />}
             />
             <DataField
               label={t("type")}
               input={
-                <Select {...register("type")} placeholder="Selecione">
+                <Select {...register("type")} placeholder="Selecione" required>
                   <option value="creditCard">Cartão de Crédito</option>
                   <option value="cash">Dinheiro</option>
                 </Select>

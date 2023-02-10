@@ -52,7 +52,11 @@ const AdminLayout = ({
       {renderNavigation}
       <Box height={{ base: "none", md: "100vh" }} overflow="auto" width="100%">
         <Container
-          maxWidth={{ base: "100%", md: isFullWidth ? "100%" : "container.lg" }}
+          maxWidth={{
+            base: "100%",
+            md: isFullWidth ? "100%" : "container.lg",
+            lg: isFullWidth ? "100%" : "container.xl",
+          }}
           padding={hasPadding ? undefined : 0}
           as="main"
         >

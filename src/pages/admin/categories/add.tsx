@@ -61,7 +61,7 @@ const AddCategory = () => {
           >
             <DataField
               label={t("title")}
-              input={<Input {...register("title")} />}
+              input={<Input {...register("title")} required />}
             />
           </Box>
         )}

@@ -44,14 +44,18 @@ const ShortcutDeck = () => (
     backgroundColor="white"
     position="fixed"
     bottom="0"
-    boxShadow="lg"
-    borderTop="1px solid transparent"
-    borderColor="gray.200"
+    boxShadow="0 -1px 2px 0 rgba(0, 0, 0, 0.05);"
     width="100%"
   >
-    <Shortcut path="/" label="Menu" icon={BiDish} />
-    <Shortcut path="/orders" label="Pedidos" icon={BiTask} />
-    <Shortcut path="/profile" label="Perfil" icon={BiUser} />
+    <Flex
+      maxWidth={{ base: "100%", md: "container.md" }}
+      width="100%"
+      margin="0 auto"
+    >
+      <Shortcut path="/" label="Menu" icon={BiDish} />
+      <Shortcut path="/orders" label="Pedidos" icon={BiTask} />
+      <Shortcut path="/profile" label="Perfil" icon={BiUser} />
+    </Flex>
   </Flex>
 )
 

@@ -57,7 +57,12 @@ const MenuItem = ({
           <Flex alignItems="center" padding={3}>
             <Icon fontSize="20px" as={icon} />
           </Flex>
-          <Text fontSize="sm" padding={2} margin={0} fontWeight="400">
+          <Text
+            fontSize="sm"
+            padding={2}
+            margin={0}
+            fontWeight={isActive ? "500" : "400"}
+          >
             {children}
           </Text>
         </Flex>

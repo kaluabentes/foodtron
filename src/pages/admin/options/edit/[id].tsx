@@ -185,7 +185,11 @@ const EditOption = ({ option: defaultOption }: EditOptionProps) => {
               </Flex>
             </Box>
             <Box pb={8} pl={8} pr={8}>
-              <Button colorScheme="brand" onClick={handleAddOption}>
+              <Button
+                colorScheme="brand"
+                onClick={handleAddOption}
+                disabled={!option.title || !option.price}
+              >
                 Adicionar opção
               </Button>
             </Box>

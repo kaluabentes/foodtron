@@ -91,7 +91,11 @@ const EditSchedule = ({ schedule }: EditScheduleProps) => {
             <DataField
               label={t("weekDay")}
               input={
-                <Select {...register("weekDay")} placeholder="Selecione">
+                <Select
+                  {...register("weekDay")}
+                  placeholder="Selecione"
+                  required
+                >
                   <option value="0">Domingo</option>
                   <option value="1">Segunda</option>
                   <option value="2">Terça</option>
@@ -104,11 +108,11 @@ const EditSchedule = ({ schedule }: EditScheduleProps) => {
             />
             <DataField
               label={t("start")}
-              input={<Input {...register("start")} type="time" />}
+              input={<Input {...register("start")} type="time" required />}
             />
             <DataField
               label={t("end")}
-              input={<Input {...register("end")} type="time" />}
+              input={<Input {...register("end")} type="time" required />}
             />
             <DataField
               label={t("isScheduledClosing")}

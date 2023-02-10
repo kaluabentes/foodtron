@@ -159,7 +159,7 @@ const EditProduct = ({ product }: EditProductProps) => {
           >
             <DataField
               label={t("title")}
-              input={<Input {...register("title")} />}
+              input={<Input {...register("title")} required />}
             />
             <DataField
               label={t("category")}
@@ -184,7 +184,7 @@ const EditProduct = ({ product }: EditProductProps) => {
             />
             <DataField
               label={t("price")}
-              input={<Input {...register("price")} />}
+              input={<Input {...register("price")} required />}
             />
             <DataField
               label={t("image")}
@@ -194,7 +194,11 @@ const EditProduct = ({ product }: EditProductProps) => {
                     <Button onClick={handleImageUpload} mb={2}>
                       Fazer upload
                     </Button>
-                    <Image width="600px" src={watch("image")} />
+                    <Image
+                      height={{ base: "initial", md: "300px" }}
+                      width={{ base: "100%", md: "initial" }}
+                      src={watch("image")}
+                    />
                   </>
                 ) : (
                   <Button onClick={handleImageUpload}>Fazer upload</Button>

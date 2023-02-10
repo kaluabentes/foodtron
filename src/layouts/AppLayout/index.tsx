@@ -45,7 +45,14 @@ const AppLayout = ({ children, title, rightIcon }: AppLayoutProps) => {
         onMenuClick={() => setIsOpen(true)}
         onClose={() => setIsOpen(false)}
       />
-      <Box as="main" paddingBottom="72px" overflow="auto" paddingTop="60px">
+      <Box
+        as="main"
+        paddingBottom="88px"
+        overflow="auto"
+        paddingTop={{ base: "60px", md: "76px" }}
+        maxWidth={{ base: "100%", md: "container.md" }}
+        margin="0 auto"
+      >
         {children}
       </Box>
       <ShortcutDeck />

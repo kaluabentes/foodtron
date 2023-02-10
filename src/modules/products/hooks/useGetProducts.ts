@@ -35,9 +35,7 @@ const useGetProductsByDomain = (domain?: string) => {
   }
 
   useEffect(() => {
-    if (domain) {
-      getProducts()
-    }
+    getProducts()
   }, [domain])
 
   return { products, getProducts, isLoading }

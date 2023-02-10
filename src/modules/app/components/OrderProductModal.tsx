@@ -16,6 +16,7 @@ import {
   ModalOverlay,
   Text,
   Textarea,
+  useBreakpointValue,
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { BiX } from "react-icons/bi"
@@ -186,122 +187,142 @@ const OrderProductModal = ({
   }, [optionGroups])
 
   return (
-    <Modal onClose={onClose} size="full" isOpen={isOpen}>
+    <Modal
+      onClose={onClose}
+      size={{ base: "full", md: "lg" }}
+      isOpen={isOpen}
+      motionPreset="slideInBottom"
+    >
       <ModalOverlay />
-      <ModalContent paddingBottom="72px" position="relative">
-        <Image
-          src={product?.image}
-          width="100%"
-          height="350px"
-          objectFit="cover"
-        />
-        <IconButton
-          left={4}
-          top={4}
-          position="fixed"
-          borderRadius="50%"
-          aria-label="Remover localização"
-          icon={<BiX size="30px" />}
-          size="sm"
-          onClick={onClose}
-          shadow="md"
-        />
-        <Box p={4} mb={4}>
-          <Heading mb={1} fontSize="lg" fontWeight="500">
-            {product?.title}
-          </Heading>
-          <Text mb={2} color="gray.500" fontSize="sm">
-            {product?.description}
-          </Text>
-          <Text fontWeight="500" fontSize="md">
-            {formatToRealCurrency(Number(product?.price))}
-          </Text>
-        </Box>
-        {optionGroups?.map((optionGroup: OptionGroup) => (
-          <Box key={optionGroup.id}>
-            <Flex
-              backgroundColor="gray.100"
-              p={4}
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Box>
-                <Heading fontSize="sm" textTransform="uppercase">
-                  {optionGroup.title}
-                </Heading>
-                <Text fontSize="sm" color="gray.500">
-                  {getOptionTotalQuantity(String(optionGroup.id))} de{" "}
-                  {optionGroup.maxOption}
-                </Text>
-              </Box>
-              {optionGroup.required && (
-                <Badge
-                  background="gray.600"
-                  color="white"
-                  fontWeight="500"
-                  pt="2px"
-                  pr="5px"
-                  pl="5px"
-                  pb="2px"
-                  fontSize="10px"
-                >
-                  Obrigatório
-                </Badge>
-              )}
-            </Flex>
-            {optionGroup.options?.map((option) => (
-              <Box key={option.id}>
-                <Flex
-                  p={4}
-                  width="full"
-                  textAlign="left"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Box>
-                    <Box mb={1}>{option.title}</Box>
-                    <Text fontSize="sm" color="gray.500">
-                      {option.price
-                        ? `+ ${formatToRealCurrency(Number(option.price))}`
-                        : ""}
-                    </Text>
-                  </Box>
-                  <QuantitySwitch
-                    onChange={(quantity) =>
-                      handleOptionChange({
+      <ModalContent
+        paddingBottom="72px"
+        position="relative"
+        height={{ base: "100vh", md: "85%" }}
+        borderRadius={useBreakpointValue({ base: "0", md: "md" })}
+        overflow="hidden"
+      >
+        <Box
+          height={{ base: "calc(100vh - 73px)", md: "auto" }}
+          overflow="auto"
+        >
+          <Image
+            src={product?.image ? product?.image : "/placeholder.png"}
+            width="100%"
+            height="350px"
+            objectFit="cover"
+          />
+          <IconButton
+            left={4}
+            top={4}
+            position="fixed"
+            borderRadius="50%"
+            aria-label="Remover localização"
+            icon={<BiX size="30px" />}
+            size="sm"
+            onClick={onClose}
+            shadow="md"
+          />
+          <Box p={4} mb={4}>
+            <Heading mb={1} fontSize="lg" fontWeight="500">
+              {product?.title}
+            </Heading>
+            <Text mb={2} color="gray.500" fontSize="sm">
+              {product?.description}
+            </Text>
+            <Text fontWeight="500" fontSize="md">
+              {formatToRealCurrency(Number(product?.price))}
+            </Text>
+          </Box>
+          {optionGroups?.map((optionGroup: OptionGroup) => (
+            <Box key={optionGroup.id}>
+              <Flex
+                backgroundColor="gray.100"
+                p={4}
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box>
+                  <Heading fontSize="sm" textTransform="uppercase">
+                    {optionGroup.title}
+                  </Heading>
+                  <Text fontSize="sm" color="gray.500">
+                    {getOptionTotalQuantity(String(optionGroup.id))} de{" "}
+                    {optionGroup.maxOption}
+                  </Text>
+                </Box>
+                {optionGroup.required && (
+                  <Badge
+                    background="gray.600"
+                    color="white"
+                    fontWeight="500"
+                    pt="2px"
+                    pr="5px"
+                    pl="5px"
+                    pb="2px"
+                    fontSize="10px"
+                  >
+                    Obrigatório
+                  </Badge>
+                )}
+              </Flex>
+              {optionGroup.options?.map((option) => (
+                <Box key={option.id}>
+                  <Flex
+                    p={4}
+                    width="full"
+                    textAlign="left"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Box>
+                      <Box mb={1}>{option.title}</Box>
+                      <Text fontSize="sm" color="gray.500">
+                        {option.price
+                          ? `+ ${formatToRealCurrency(Number(option.price))}`
+                          : ""}
+                      </Text>
+                    </Box>
+                    <QuantitySwitch
+                      onChange={(quantity) =>
+                        handleOptionChange({
+                          optionId: option.id!,
+                          optionGroupId: optionGroup.id!,
+                          quantity,
+                        })
+                      }
+                      value={getOptionValue({
                         optionId: option.id!,
                         optionGroupId: optionGroup.id!,
-                        quantity,
-                      })
-                    }
-                    value={getOptionValue({
-                      optionId: option.id!,
-                      optionGroupId: optionGroup.id!,
-                    })}
-                    max={Number(optionGroup.maxOption)}
-                  />
-                </Flex>
-                <Box pl={4} pr={4}>
-                  <Box height="0.8px" width="100%" backgroundColor="gray.200" />
+                      })}
+                      max={Number(optionGroup.maxOption)}
+                    />
+                  </Flex>
+                  <Box pl={4} pr={4}>
+                    <Box
+                      height="0.8px"
+                      width="100%"
+                      backgroundColor="gray.200"
+                    />
+                  </Box>
                 </Box>
-              </Box>
-            ))}
+              ))}
+            </Box>
+          ))}
+          <Box p={4}>
+            <Heading fontSize="md" fontWeight="500" mb={3}>
+              Alguma observação?
+            </Heading>
+            <Textarea
+              onChange={(event) => setObservation(event.target.value)}
+              placeholder="Maionese a parte..."
+              value={observation}
+            />
           </Box>
-        ))}
-        <Box p={4}>
-          <Heading fontSize="md" fontWeight="500" mb={3}>
-            Alguma observação?
-          </Heading>
-          <Textarea
-            onChange={(event) => setObservation(event.target.value)}
-            placeholder="Maionese a parte..."
-            value={observation}
-          />
         </Box>
         <Flex
           gap={2}
           p={4}
-          position="fixed"
+          position="absolute"
           bottom="0"
           width="full"
           background="white"

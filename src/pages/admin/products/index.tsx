@@ -85,7 +85,7 @@ const Products = () => {
                 <Td>
                   <Image
                     borderRadius="4px"
-                    src={product.image}
+                    src={product.image ? product.image : "/placeholder.png"}
                     height="40px"
                     width="40px"
                     objectFit="cover"

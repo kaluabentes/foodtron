@@ -62,7 +62,7 @@ const AddProduct = () => {
     defaultValues: {
       title: "",
       description: "",
-      price: 0,
+      price: "",
       image: "",
       categoryId: "",
     },
@@ -123,7 +123,7 @@ const AddProduct = () => {
           >
             <DataField
               label={t("title")}
-              input={<Input {...register("title")} />}
+              input={<Input {...register("title")} required />}
             />
             <DataField
               label={t("category")}
@@ -144,7 +144,7 @@ const AddProduct = () => {
             />
             <DataField
               label={t("price")}
-              input={<Input {...register("price")} />}
+              input={<Input {...register("price")} required />}
             />
             <DataField
               label={t("image")}

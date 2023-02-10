@@ -84,7 +84,7 @@ export const getStaticProps = async ({ params }: any) => {
                 options: productOptionGroup.optionGroup?.options.map(
                   (option) => ({
                     ...option,
-                    price: option.price.toFixed(2),
+                    price: option.price ? option.price.toFixed(2) : null,
                   })
                 ),
               },
@@ -114,7 +114,7 @@ const Index = ({ store, categories }: IndexProps) => {
         number,
         location: { neighborhood, ...location },
       },
-      order: { products },
+      order: { products: orderProducts },
     },
   } = useAppContext()
 
@@ -130,13 +130,16 @@ const Index = ({ store, categories }: IndexProps) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>()
 
   const handleOrderConfirm = (values: OrderProductValues) => {
+    const id = uuidv4()
     const options = values.optionGroupValues
       .map((opt) => opt.options)
       .flat()
       .filter((opt) => Number(opt?.quantity) > 0)
 
+    console.log("id", id)
+
     const productPayload = {
-      id: uuidv4(),
+      id,
       productId: selectedProduct!.id,
       title: selectedProduct!.title,
       price: selectedProduct!.price,
@@ -153,7 +156,7 @@ const Index = ({ store, categories }: IndexProps) => {
 
     setState({
       order: {
-        products: [...products, productPayload],
+        products: [...orderProducts, productPayload],
       },
     })
     setSelectedProduct(undefined)
@@ -174,17 +177,19 @@ const Index = ({ store, categories }: IndexProps) => {
 
   return (
     <AppLayout title="Menu">
-      <AddressSelectButton
-        onClick={() => router.push("/edit-address")}
-        address={(street || number || neighborhood) && address}
-      />
-      <StoreInfo
-        onSelectLocation={() => router.push("/select-location")}
-        weekDay={currentWeekDay}
-        schedule={currentScheduleTime}
-        store={storeRealTime || store}
-        location={location}
-      />
+      <Box borderRadius="md" overflow="hidden" boxShadow="sm">
+        <AddressSelectButton
+          onClick={() => router.push("/edit-address")}
+          address={(street || number || neighborhood) && address}
+        />
+        <StoreInfo
+          onSelectLocation={() => router.push("/select-location")}
+          weekDay={currentWeekDay}
+          schedule={currentScheduleTime}
+          store={storeRealTime || store}
+          location={location}
+        />
+      </Box>
       {categories.map((category) => (
         <CategoryItem
           key={category.id}

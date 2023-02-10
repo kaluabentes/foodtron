@@ -9,7 +9,7 @@ interface CategoryItemProps {
 }
 
 const CategoryItem = ({ category, onMenuItemClick }: CategoryItemProps) => (
-  <Box marginTop={4}>
+  <Box marginTop={4} borderRadius="md" overflow="hidden" boxShadow="sm">
     <Heading
       backgroundColor="white"
       p={4}

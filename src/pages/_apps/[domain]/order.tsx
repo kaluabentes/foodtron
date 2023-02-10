@@ -20,7 +20,7 @@ import { BiLeftArrowAlt } from "react-icons/bi"
 import OrderProduct from "@/modules/orders/types/OrderProduct"
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import prisma from "@/lib/infra/prisma/client"
-import OrderModal, {
+import OrderProductModal, {
   OrderProductValues,
 } from "@/modules/app/components/OrderProductModal"
 import useGetProducts from "@/modules/products/hooks/useGetProducts"
@@ -29,6 +29,7 @@ import OptionGroup from "@/modules/options/types/OptionGroup"
 import { ProductOptionGroup } from "@prisma/client"
 import Option from "@/modules/options/types/Option"
 import useBottomToast from "@/lib/hooks/useBottomToast"
+import OrderOptionsModal from "@/modules/app/components/OrderOptionsModal"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -56,22 +57,19 @@ const Order = () => {
   const { domain } = router.query
   const toast = useBottomToast()
 
+  const { setState, resetState, state } = useAppContext()
   const {
-    setState,
-    state: {
-      order: { products: orderProducts },
-      address: {
-        street,
-        number,
-        location: { tax },
-      },
+    order: { products: orderProducts },
+    address: {
+      location: { tax },
     },
-  } = useAppContext()
+  } = state
 
   const { products } = useGetProducts(String(domain))
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>()
   const [optionGroups, setOptionGroups] = useState<OptionGroup[]>([])
   const [orderProductId, setOrderProductId] = useState("")
+  const [productId, setProductId] = useState("")
 
   const getSubtotal = () => {
     return orderProducts.reduce(
@@ -90,13 +88,25 @@ const Order = () => {
     )
   }
 
-  const handleOrderConfirm = (values: OrderProductValues) => {
+  const removeOrderProduct = (orderProductId: string) => {
+    console.log("orderProductId", orderProducts)
+    resetState({
+      ...state,
+      order: {
+        products: orderProducts!.filter(
+          (orderProduct: OrderProduct) => orderProduct.id !== orderProductId
+        ),
+      },
+    })
+  }
+
+  const handleEditOrderConfirm = (values: OrderProductValues) => {
     const options = values.optionGroupValues
       .map((opt) => opt.options)
       .flat()
       .filter((opt) => Number(opt?.quantity) > 0)
 
-    const productPayload = {
+    const orderProductData = {
       id: orderProductId,
       productId: selectedProduct!.id,
       title: selectedProduct!.title,
@@ -116,7 +126,7 @@ const Order = () => {
       order: {
         products: orderProducts!.map((orderProduct: OrderProduct) => {
           if (orderProduct.id === orderProductId) {
-            return productPayload
+            return orderProductData
           }
 
           return orderProduct
@@ -124,22 +134,18 @@ const Order = () => {
       },
     })
     setSelectedProduct(undefined)
+    setProductId("")
+    setOrderProductId("")
   }
 
-  const handleAdvance = () => {
-    if (!tax || !street || !number) {
-      toast({
-        title: "Atenção",
-        description: "Complete o seu endereço",
-        status: "error",
-      })
-      return
-    }
+  const handleEditProduct = (orderProductId: string, productId: string) => {
+    setOrderProductId(orderProductId)
+    setProductId(productId)
   }
 
-  const handleEditProduct = (id: string, productId: string) => {
+  const editProduct = (orderProductId: string, productId: string) => {
     const orderProduct = orderProducts.find(
-      (product: OrderProduct) => product.id === id
+      (product: OrderProduct) => product.id === orderProductId
     ) as any
     const orderSelectedOptions = orderProduct.options
     const product = products.find(
@@ -270,7 +276,7 @@ const Order = () => {
                       fontSize="sm"
                       color="brand.500"
                     >
-                      Selecionar
+                      Adicione um endereço
                     </Text>
                   )}
                 </Text>
@@ -290,16 +296,41 @@ const Order = () => {
             </Tr>
           </Tbody>
         </Table>
-        <Button mb={5} colorScheme="brand" onClick={handleAdvance}>
-          Forma de pagamento
+        <Button
+          mb={5}
+          colorScheme="brand"
+          onClick={() =>
+            tax
+              ? router.push("/payment")
+              : router.push("/edit-address?redirect=/payment")
+          }
+        >
+          {tax ? "Forma de pagamento" : "Adicionar endereço"}
         </Button>
       </Flex>
-      <OrderModal
-        onConfirm={handleOrderConfirm}
+      <OrderProductModal
+        onConfirm={handleEditOrderConfirm}
         optionGroups={optionGroups}
         product={selectedProduct}
         isOpen={Boolean(selectedProduct)}
-        onClose={() => setSelectedProduct(undefined)}
+        onClose={() => {
+          setSelectedProduct(undefined)
+          setProductId("")
+          setOrderProductId("")
+        }}
+      />
+      <OrderOptionsModal
+        onRemove={() => {
+          removeOrderProduct(orderProductId)
+          setProductId("")
+          setOrderProductId("")
+        }}
+        onClose={() => {
+          setProductId("")
+          setOrderProductId("")
+        }}
+        onEdit={() => editProduct(orderProductId, productId)}
+        isOpen={Boolean(orderProductId)}
       />
     </AppLayout>
   )
