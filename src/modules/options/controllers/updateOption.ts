@@ -2,8 +2,7 @@ import { NextApiResponse } from "next"
 
 import prisma from "@/lib/infra/prisma/client"
 import OptionGroup from "../types/OptionGroup"
-import Option from "../types/Option"
-import { Prisma } from "@prisma/client"
+import { Option, Prisma } from "@prisma/client"
 
 const updateOption = async (
   id: string,
@@ -26,7 +25,7 @@ const updateOption = async (
       data: {
         ...data,
         options: {
-          create: options?.map((optionChild: Option) => ({
+          create: options?.map((optionChild: any) => ({
             title: optionChild.title,
             price: optionChild.price
               ? new Prisma.Decimal(optionChild.price.replace(",", "."))
