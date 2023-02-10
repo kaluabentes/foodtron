@@ -1,12 +1,20 @@
 import { NextApiResponse } from "next"
 
 import prisma from "@/lib/infra/prisma/client"
-import OptionGroup from "../types/OptionGroup"
-import { Option, Prisma } from "@prisma/client"
+import { OptionGroup, Prisma } from "@prisma/client"
+
+interface Option {
+  title: string
+  price: string
+}
+
+interface OptionGroupData extends OptionGroup {
+  options: Option[]
+}
 
 const updateOption = async (
   id: string,
-  data: OptionGroup,
+  data: OptionGroupData,
   res: NextApiResponse
 ) => {
   try {
@@ -25,12 +33,12 @@ const updateOption = async (
       data: {
         ...data,
         options: {
-          create: options?.map((optionChild: any) => ({
+          create: options.map((optionChild: Option) => ({
             title: optionChild.title,
             price: optionChild.price
               ? new Prisma.Decimal(optionChild.price.replace(",", "."))
               : null,
-          })) as any[],
+          })),
         },
       },
     })
