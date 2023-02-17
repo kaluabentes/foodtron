@@ -30,7 +30,7 @@ const AppLayout = ({ children, title, rightIcon }: AppLayoutProps) => {
       <AppBar
         isFixed
         title={
-          <Heading fontSize="md" textTransform="uppercase">
+          <Heading fontSize="md" fontWeight="500">
             {title}
           </Heading>
         }

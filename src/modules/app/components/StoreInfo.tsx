@@ -36,7 +36,7 @@ const StoreInfo = ({
       <Text textAlign="center" color="gray.500" fontSize="sm" mb={5}>
         {store.category}
       </Text>
-      <Flex alignItems="center" gap={2} mb={5}>
+      <Flex alignItems="center" gap={1.5} mb={8}>
         <Icon as={BiTimeFive} />
         <Text as="span" fontWeight="500" lineHeight="0px">
           {weekDay || "---"}

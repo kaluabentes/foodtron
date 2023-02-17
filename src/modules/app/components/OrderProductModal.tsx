@@ -242,7 +242,7 @@ const OrderProductModal = ({
                 alignItems="center"
               >
                 <Box>
-                  <Heading fontSize="sm" textTransform="uppercase">
+                  <Heading fontSize="md" fontWeight="500">
                     {optionGroup.title}
                   </Heading>
                   <Text fontSize="sm" color="gray.500">
@@ -275,7 +275,9 @@ const OrderProductModal = ({
                     alignItems="center"
                   >
                     <Box>
-                      <Box mb={1}>{option.title}</Box>
+                      <Box mb={1} fontSize="sm">
+                        {option.title}
+                      </Box>
                       <Text fontSize="sm" color="gray.500">
                         {option.price
                           ? `+ ${formatToRealCurrency(Number(option.price))}`
