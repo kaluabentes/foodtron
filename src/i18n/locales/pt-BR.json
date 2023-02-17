@@ -106,6 +106,7 @@
     "category": "Categoria",
     "street": "Rua",
     "number": "Número",
-    "updateOptions": "Editar opção"
+    "updateOptions": "Editar opção",
+    "productOptionsEmptyState": "Nenhuma opção foi adicionada ainda."
   }
 }

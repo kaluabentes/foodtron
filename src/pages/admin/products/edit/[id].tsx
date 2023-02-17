@@ -89,10 +89,18 @@ const EditProduct = ({ product }: EditProductProps) => {
   const [productOptions, setProductOptions] = useState<OptionGroup[]>(
     product.productOptionGroups?.map((pog) => pog.optionGroup)!
   )
-  console.log("product", product)
+
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: product,
   })
+
+  const getOptions = () =>
+    options.filter(
+      (optionGroup: OptionGroup) =>
+        !productOptions.find(
+          (productOption) => productOption.id === optionGroup.id
+        )
+    )
 
   const handleImageUpload = () => {
     window.cloudinary.openUploadWidget(
@@ -210,26 +218,19 @@ const EditProduct = ({ product }: EditProductProps) => {
                 Opções
               </Heading>
               <Flex gap={2}>
-                {options
-                  .filter(
-                    (opt: OptionGroup) =>
-                      !productOptions.find((childOpt) => childOpt.id === opt.id)
-                  )
-                  .map((opt: OptionGroup) => (
-                    <Button
-                      key={opt.id}
-                      onClick={() =>
-                        setProductOptions((prev) => [...prev, opt])
-                      }
-                    >
-                      {opt.title}
-                    </Button>
-                  ))}
+                {getOptions().map((opt: OptionGroup) => (
+                  <Button
+                    key={opt.id}
+                    onClick={() => setProductOptions((prev) => [...prev, opt])}
+                  >
+                    {opt.title}
+                  </Button>
+                ))}
               </Flex>
             </Box>
             <Box p={8} pt={0} overflow="auto">
               {productOptions.length === 0 ? (
-                <EmptyState message={t("optionsEmptyState")} />
+                <EmptyState isGray message={t("productOptionsEmptyState")} />
               ) : (
                 <Table>
                   <Thead>

@@ -3,15 +3,16 @@ import { BiFile } from "react-icons/bi"
 
 interface EmptyStateProps {
   message: string
+  isGray?: boolean
 }
 
-const EmptyState = ({ message }: EmptyStateProps) => (
+const EmptyState = ({ message, isGray }: EmptyStateProps) => (
   <Flex
     direction="column"
     alignItems="center"
     justifyContent="center"
     shadow="sm"
-    backgroundColor="white"
+    backgroundColor={isGray ? "gray.50" : "white"}
     borderRadius="md"
     overflow="auto"
     marginBottom={8}
