@@ -84,20 +84,6 @@ const Signin = () => {
       <Heading size="lg" marginBottom={10} fontWeight="semibold">
         {t("signinComet")}
       </Heading>
-      {router.query.error === "OAuthCallback" ||
-        (router.query.error === "OAuthAccountNotLinked" && (
-          <Alert
-            status="error"
-            borderRadius="md"
-            marginBottom={5}
-            alignItems="start"
-          >
-            <AlertIcon />
-            <AlertDescription>
-              Para logar entre com o seu email abaixo.
-            </AlertDescription>
-          </Alert>
-        ))}
       <form onSubmit={handleSubmit(handleSubmitCallback)}>
         <FormControl
           isInvalid={Boolean(errors.email?.message)}
@@ -112,30 +98,12 @@ const Signin = () => {
         <Button
           isLoading={isLoadingEmail}
           width="full"
-          marginBottom={7}
           type="submit"
           colorScheme="brand"
         >
           {`${t("signin")} `}
         </Button>
       </form>
-      <Flex align="center" gap="20px" marginBottom={7}>
-        <Box flex="1" height="0.5px" background="gray.300" />
-        <Text color="gray.300">or</Text>
-        <Box flex="1" height="0.5px" background="gray.300" />
-      </Flex>
-      <Button
-        variant="outline"
-        leftIcon={<FcGoogle />}
-        width="full"
-        isLoading={isLoadingGoogle}
-        onClick={() => {
-          setIsLoadingGoogle(true)
-          signIn("google", { callbackUrl: "/auth/complete-signin" })
-        }}
-      >
-        {`${t("signinGoogle")} `}
-      </Button>
     </AuthLayout>
   )
 }

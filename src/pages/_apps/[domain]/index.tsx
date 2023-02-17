@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"
-import { Box, Heading } from "@chakra-ui/react"
+import React, { useState } from "react"
+import { Box } from "@chakra-ui/react"
 import { v4 as uuidv4 } from "uuid"
 
 import prisma from "@/lib/infra/prisma/client"
@@ -10,7 +10,6 @@ import StoreInfo from "@/modules/app/components/StoreInfo"
 import Store from "@/modules/stores/types/Store"
 import weekDayMap from "@/modules/schedules/weekDayMap"
 import { useRouter } from "next/router"
-import MenuItem from "@/modules/app/components/MenuItem"
 import Category from "@/modules/categories/types/Category"
 import CategoryItem from "@/modules/app/components/CategoryItem"
 import OrderProductModal, {
@@ -19,7 +18,6 @@ import OrderProductModal, {
 import Product from "@/modules/products/types/Product"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import useGetStore from "@/modules/stores/hooks/useGetStore"
-import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
