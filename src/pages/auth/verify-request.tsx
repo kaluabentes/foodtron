@@ -23,7 +23,7 @@ const VerifyRequest = () => {
         Link mágico enviado
       </Heading>
       <Text></Text>
-      <Alert status="error" borderRadius="md" alignItems="start">
+      <Alert status="success" borderRadius="md" alignItems="start">
         <AlertIcon />
         <AlertDescription>
           Verifique seu email enviamos um link mágico, use-o para conectar a sua
