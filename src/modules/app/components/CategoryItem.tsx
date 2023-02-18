@@ -13,7 +13,7 @@ const CategoryItem = ({ category, onMenuItemClick }: CategoryItemProps) => (
     <Heading
       backgroundColor="white"
       p={4}
-      fontSize="md"
+      fontSize="lg"
       fontWeight="500"
       borderBottom="1px solid transparent"
       borderColor="gray.100"
