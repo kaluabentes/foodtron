@@ -26,13 +26,13 @@ const MenuItem = ({ product, onClick }: MenuItemProps) => (
     >
       <Flex>
         <Box flex={1} marginRight={2}>
-          <Heading mb={1} fontSize="lg" fontWeight="500">
+          <Heading mb={2} fontSize="sm" fontWeight="500">
             {product.title}
           </Heading>
           <Text mb={2} color="gray.500" fontSize="sm">
             {product.description && subWord(product.description, 0, 7)}
           </Text>
-          <Text fontWeight="500">
+          <Text fontWeight="500" fontSize="sm">
             {formatToRealCurrency(Number(product.price))}
           </Text>
         </Box>
