@@ -161,6 +161,7 @@ model OptionGroup {
   title     String
   required  Boolean
   maxOption String
+  maxOptionRequired Boolean @default(false)
 
   storeId String
   store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)

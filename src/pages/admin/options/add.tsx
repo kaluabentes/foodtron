@@ -55,6 +55,7 @@ const AddOption = () => {
       title: "",
       maxOption: "",
       required: false,
+      maxOptionRequired: false,
     },
   })
 
@@ -120,6 +121,10 @@ const AddOption = () => {
               }
             />
             <DataField
+              label={t("maxOptionRequired")}
+              input={<Switch {...register("maxOptionRequired")} />}
+            />
+            <DataField
               label={t("required")}
               input={<Switch {...register("required")} />}
             />
@@ -169,7 +174,7 @@ const AddOption = () => {
             </Box>
             <Box p={8} pt={0}>
               {options.length === 0 ? (
-                <EmptyState message={t("optionsEmptyState")} />
+                <EmptyState isGray message={t("optionsEmptyState")} />
               ) : (
                 <Table>
                   <Thead>

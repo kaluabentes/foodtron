@@ -52,17 +52,24 @@ const OrderProductModal = ({
       (optionGroup) => optionGroup.required
     )
 
-    const hasOptionGroupsUnselected = requiredOptionGroups.some(
-      (optionGroup) => {
-        const optionsWithQuantity = optionGroup.options!.filter(
-          (option) => option.quantity! > 0
+    const isButtonDisabled = requiredOptionGroups.some((optionGroup) => {
+      const optionsWithQuantity = optionGroup.options!.filter(
+        (option) => option.quantity! > 0
+      )
+
+      if (optionGroup.maxOptionRequired) {
+        const maxQuantity = optionsWithQuantity.reduce(
+          (prev, curr) => prev + curr.quantity!,
+          0
         )
 
-        return optionsWithQuantity.length === 0
+        return maxQuantity !== Number(optionGroup.maxOption)
       }
-    )
 
-    return hasOptionGroupsUnselected
+      return optionsWithQuantity.length === 0
+    })
+
+    return isButtonDisabled
   }
 
   const getTotal = (): number => {

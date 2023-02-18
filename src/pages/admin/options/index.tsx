@@ -72,6 +72,7 @@ const Options = () => {
           <Thead>
             <Th>{t("title")}</Th>
             <Th>{t("maxOption")}</Th>
+            <Th>{t("maxOptionRequired")}</Th>
             <Th>{t("required")}</Th>
             <Th>{t("actions")}</Th>
           </Thead>
@@ -80,6 +81,7 @@ const Options = () => {
               <Tr key={option.id}>
                 <Td>{option.title}</Td>
                 <Td>{option.maxOption}</Td>
+                <Td>{option.maxOptionRequired ? "Sim" : "Não"}</Td>
                 <Td>{option.required ? "Sim" : "Não"}</Td>
                 <Td>
                   <Flex gap={2}>

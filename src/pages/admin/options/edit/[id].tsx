@@ -146,6 +146,10 @@ const EditOption = ({ option: defaultOption }: EditOptionProps) => {
               }
             />
             <DataField
+              label={t("maxOptionRequired")}
+              input={<Switch {...register("maxOptionRequired")} />}
+            />
+            <DataField
               label={t("required")}
               input={<Switch {...register("required")} />}
             />
@@ -195,7 +199,7 @@ const EditOption = ({ option: defaultOption }: EditOptionProps) => {
             </Box>
             <Box p={8} pt={0}>
               {options.length === 0 ? (
-                <EmptyState message={t("optionsEmptyState")} />
+                <EmptyState isGray message={t("optionsEmptyState")} />
               ) : (
                 <Table>
                   <Thead>

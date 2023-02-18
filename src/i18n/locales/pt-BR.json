@@ -107,6 +107,7 @@
     "street": "Rua",
     "number": "Número",
     "updateOptions": "Editar opção",
-    "productOptionsEmptyState": "Nenhuma opção foi adicionada ainda."
+    "productOptionsEmptyState": "Nenhuma opção foi adicionada ainda.",
+    "maxOptionRequired": "Máximo de opções obrigatórias"
   }
 }
