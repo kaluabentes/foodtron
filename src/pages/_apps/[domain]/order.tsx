@@ -198,8 +198,8 @@ const Order = () => {
         borderRadius="md"
         overflow="hidden"
         marginBottom={8}
-        pl={5}
-        pr={5}
+        pl={4}
+        pr={4}
       >
         <Table>
           <Tbody>
@@ -210,7 +210,7 @@ const Order = () => {
                   handleEditProduct(product.id!, product.productId!)
                 }
               >
-                <Td p={5} pr={0} pl={0} verticalAlign="top">
+                <Td p={4} pr={0} pl={0} verticalAlign="top">
                   <Heading fontSize="md" fontWeight="500" mb={1}>
                     {product.quantity} {product.title}
                   </Heading>
@@ -230,7 +230,7 @@ const Order = () => {
                     </Text>
                   )}
                 </Td>
-                <Td p={5} pr={0} pl={0} verticalAlign="top">
+                <Td p={4} pr={0} pl={0} verticalAlign="top">
                   <Text textAlign="right" fontWeight="500" mb={1}>
                     {formatToRealCurrency(getProductTotal(product))}
                   </Text>
@@ -249,20 +249,20 @@ const Order = () => {
               </Tr>
             ))}
             <Tr>
-              <Td p={5} pr={0} pl={0}>
+              <Td p={4} pr={0} pl={0}>
                 <Text>Subtotal</Text>
               </Td>
-              <Td p={5} pr={0} pl={0}>
+              <Td p={4} pr={0} pl={0}>
                 <Text fontSize="md" fontWeight="500" mb={1} textAlign="right">
                   {formatToRealCurrency(getSubtotal())}
                 </Text>
               </Td>
             </Tr>
             <Tr>
-              <Td p={5} pr={0} pl={0}>
+              <Td p={4} pr={0} pl={0}>
                 <Text>Taxa de entrega</Text>
               </Td>
-              <Td p={5} pr={0} pl={0}>
+              <Td p={4} pr={0} pl={0}>
                 <Text fontSize="md" fontWeight="500" mb={1} textAlign="right">
                   {tax ? (
                     formatToRealCurrency(Number(tax))
@@ -283,10 +283,10 @@ const Order = () => {
               </Td>
             </Tr>
             <Tr>
-              <Td p={5} pr={0} pl={0}>
+              <Td p={4} pr={0} pl={0}>
                 <Text fontWeight="500">Total</Text>
               </Td>
-              <Td p={5} pr={0} pl={0}>
+              <Td p={4} pr={0} pl={0}>
                 <Text fontSize="md" fontWeight="500" mb={1} textAlign="right">
                   {formatToRealCurrency(
                     tax ? getSubtotal() + Number(tax) : getSubtotal()
@@ -297,7 +297,7 @@ const Order = () => {
           </Tbody>
         </Table>
         <Button
-          mb={5}
+          mb={4}
           colorScheme="brand"
           onClick={() =>
             tax

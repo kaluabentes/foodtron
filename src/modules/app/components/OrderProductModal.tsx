@@ -51,6 +51,7 @@ const OrderProductModal = ({
     const requiredOptionGroups = optionGroupValues.filter(
       (optionGroup) => optionGroup.required
     )
+
     const hasOptionGroupsUnselected = requiredOptionGroups.some(
       (optionGroup) => {
         const optionsWithQuantity = optionGroup.options!.filter(
