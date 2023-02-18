@@ -164,8 +164,19 @@ const OrderProductModal = ({
     )
   }
 
-  const handleConfirm = () => {
+  const clear = () => {
+    setObservation("")
+    setOptionGroupValues([])
     setQuantity(1)
+  }
+
+  const handleClose = () => {
+    clear()
+    onClose()
+  }
+
+  const handleConfirm = () => {
+    clear()
     onConfirm({
       optionGroupValues,
       observation,
@@ -189,7 +200,7 @@ const OrderProductModal = ({
 
   return (
     <Modal
-      onClose={onClose}
+      onClose={handleClose}
       size={{ base: "full", md: "lg" }}
       isOpen={isOpen}
       motionPreset="slideInBottom"
@@ -217,7 +228,7 @@ const OrderProductModal = ({
             aria-label="Remover localização"
             icon={<BiX size="30px" />}
             size="sm"
-            onClick={onClose}
+            onClick={handleClose}
             shadow="md"
           />
           <Box p={4} mb={4}>
