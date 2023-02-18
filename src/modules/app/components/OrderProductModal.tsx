@@ -195,16 +195,13 @@ const OrderProductModal = ({
     >
       <ModalOverlay />
       <ModalContent
-        paddingBottom="72px"
+        paddingBottom="73px"
         position="relative"
         height={{ base: "100vh", md: "85%" }}
         borderRadius={useBreakpointValue({ base: "0", md: "md" })}
         overflow="hidden"
       >
-        <Box
-          height={{ base: "calc(100vh - 73px)", md: "auto" }}
-          overflow="auto"
-        >
+        <Box overflow="auto">
           <Image
             src={product?.image ? product?.image : "/placeholder.png"}
             width="100%"
