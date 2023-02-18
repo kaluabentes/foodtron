@@ -25,6 +25,7 @@ const CartButton = ({ quantity, onClick }: CartButtonProps) => (
         right="-1px"
         top="-1px"
         fontWeight="500"
+        lineHeight="0px"
       >
         {quantity}
       </Box>
