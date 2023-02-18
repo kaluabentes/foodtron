@@ -197,7 +197,7 @@ const OrderProductModal = ({
       <ModalContent
         paddingBottom="73px"
         position="relative"
-        height={{ base: "100vh", md: "85%" }}
+        height={{ base: "100%", md: "85%" }}
         borderRadius={useBreakpointValue({ base: "0", md: "md" })}
         overflow="hidden"
       >
@@ -211,7 +211,7 @@ const OrderProductModal = ({
           <IconButton
             left={4}
             top={4}
-            position="fixed"
+            position="absolute"
             borderRadius="50%"
             aria-label="Remover localização"
             icon={<BiX size="30px" />}
