@@ -10,7 +10,7 @@ import Brand from "@/components/Brand"
 
 interface SideNavProps {
   isClosed?: boolean
-  setIsClosed?: (state: boolean) => void
+  setIsClosed: (state: boolean) => void
 }
 
 const SideNav = ({ isClosed = false, setIsClosed }: SideNavProps) => {

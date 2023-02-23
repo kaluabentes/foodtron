@@ -8,6 +8,7 @@ import BarIconButton from "@/components/BarIconButton"
 import CartButton from "@/components/CartButton"
 import { useAppContext } from "@/contexts/app"
 import { useRouter } from "next/router"
+import useBottomToast from "@/lib/hooks/useBottomToast"
 
 interface AppLayoutProps {
   children: ReactNode
@@ -22,24 +23,35 @@ const AppLayout = ({ children, title, rightIcon }: AppLayoutProps) => {
       order: { products },
     },
   } = useAppContext()
+  const toast = useBottomToast()
 
   const [isOpen, setIsOpen] = useState(false)
+
+  const handleCartClick = () => {
+    if (!products.length) {
+      toast({
+        title: "Atenção",
+        description: "Adicione um produto",
+        status: "error",
+      })
+      return
+    }
+
+    router.push("/order")
+  }
 
   return (
     <>
       <AppBar
         isFixed
         title={
-          <Heading fontSize="md" fontWeight="500">
+          <Heading fontSize="sm" fontWeight="500" textTransform="uppercase">
             {title}
           </Heading>
         }
         rightIcon={rightIcon}
         leftIcon={
-          <CartButton
-            onClick={() => router.push("/order")}
-            quantity={products.length}
-          />
+          <CartButton onClick={handleCartClick} quantity={products.length} />
         }
         isOpen={isOpen}
         onMenuClick={() => setIsOpen(true)}

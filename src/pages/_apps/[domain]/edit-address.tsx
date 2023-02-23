@@ -147,7 +147,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
             colorScheme="brand"
             isLoading={isLoading}
           >
-            Salvar
+            {redirect === "/payment" ? "Forma de pagamento" : "Salvar"}
           </Button>
         </form>
       </Flex>

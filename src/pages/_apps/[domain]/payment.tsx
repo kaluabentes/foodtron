@@ -1,5 +1,14 @@
-import React from "react"
-import { Box, Flex } from "@chakra-ui/react"
+import React, { useState } from "react"
+import {
+  Box,
+  Flex,
+  Heading,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from "@chakra-ui/react"
 
 import prisma from "@/lib/infra/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
@@ -8,54 +17,42 @@ import { useRouter } from "next/router"
 import Location from "@/modules/locations/types/Location"
 import BarIconButton from "@/components/BarIconButton"
 import { BiLeftArrowAlt } from "react-icons/bi"
-import PaymentMethod from "@/modules/payment-methods/types/PaymentMethod"
+import ChangeModal from "@/modules/app/components/ChangeModal"
+import paymentMethods, { PaymentMethod } from "@/config/paymentMethods"
 
-export const getStaticPaths = async () => {
-  const stores = await prisma.store.findMany()
-
-  return {
-    paths: stores.map((store) => ({
-      params: {
-        domain: store.subdomain,
-      },
-    })),
-    fallback: true,
-  }
-}
-
-export const getStaticProps = async ({ params }: any) => {
-  const store = await prisma.store.findFirst({
-    where: {
-      subdomain: params.domain,
-    },
-    include: {
-      paymentMethods: true,
-    },
-  })
-
-  return {
-    props: {
-      paymentMethods: store?.paymentMethods,
-    },
-  }
-}
-
-interface SelectLocationProps {
-  paymentMethods: PaymentMethod[]
-}
-
-const SelectLocation = ({ paymentMethods }: SelectLocationProps) => {
+const Payment = () => {
   const router = useRouter()
-
   const { setState } = useAppContext()
 
-  const handleAddLocation = (location: Location) => {
+  const [isChangeModalOpen, setIsChangeModalOpen] = useState(false)
+
+  const addPaymentMethod = (name: string, change?: string) => {
     setState({
-      address: {
-        location,
+      order: {
+        paymentMethod: {
+          name,
+          change,
+        },
       },
     })
-    router.push("/")
+    router.push("/order-confirm")
+  }
+
+  const handleChangeConfirm = (change: string) => {
+    setIsChangeModalOpen(false)
+    addPaymentMethod(
+      paymentMethods.find((p) => p.type === "cash")?.name!,
+      change
+    )
+  }
+
+  const handlePaymentClick = (paymentMethod: PaymentMethod) => {
+    if (paymentMethod.type === "cash") {
+      setIsChangeModalOpen(true)
+      return
+    }
+
+    addPaymentMethod(paymentMethod.name)
   }
 
   return (
@@ -69,30 +66,46 @@ const SelectLocation = ({ paymentMethods }: SelectLocationProps) => {
         />
       }
     >
-      <Flex
-        direction="column"
-        shadow="sm"
-        backgroundColor="white"
-        borderRadius="md"
-        overflow="hidden"
-        marginBottom={8}
-      >
-        {paymentMethods.map((paymentMethod) => (
-          <Box
-            key={paymentMethod.id}
-            onClick={() => console.log(paymentMethod)}
-            as="button"
-            p={5}
-            borderBottom="1px solid transparent"
-            borderColor="gray.200"
-            textAlign="left"
-          >
-            {paymentMethod.description}
-          </Box>
-        ))}
-      </Flex>
+      <Tabs>
+        <TabList background="white">
+          <Tab>Pagar na entrega</Tab>
+        </TabList>
+
+        <TabPanels>
+          <TabPanel p={0}>
+            <Flex
+              direction="column"
+              shadow="sm"
+              backgroundColor="white"
+              borderRadius="md"
+              overflow="hidden"
+            >
+              {paymentMethods.map((paymentMethod) => (
+                <Box
+                  key={paymentMethod.type}
+                  onClick={() => handlePaymentClick(paymentMethod)}
+                  as="button"
+                  p={4}
+                  borderBottom="1px solid transparent"
+                  borderColor="gray.200"
+                  textAlign="left"
+                  fontSize="md"
+                >
+                  {paymentMethod.name}
+                </Box>
+              ))}
+            </Flex>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+
+      <ChangeModal
+        isOpen={isChangeModalOpen}
+        onConfirm={handleChangeConfirm}
+        onClose={() => setIsChangeModalOpen(false)}
+      />
     </AppLayout>
   )
 }
 
-export default SelectLocation
+export default Payment

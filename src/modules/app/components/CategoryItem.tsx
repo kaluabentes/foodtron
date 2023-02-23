@@ -1,3 +1,4 @@
+import SectionTitle from "@/components/SectionTitle"
 import Category from "@/modules/categories/types/Category"
 import Product from "@/modules/products/types/Product"
 import { Box, Heading } from "@chakra-ui/react"
@@ -10,17 +11,7 @@ interface CategoryItemProps {
 
 const CategoryItem = ({ category, onMenuItemClick }: CategoryItemProps) => (
   <Box marginTop={4} borderRadius="md" overflow="hidden" boxShadow="sm">
-    <Heading
-      backgroundColor="white"
-      p={4}
-      fontSize="lg"
-      fontWeight="500"
-      borderBottom="1px solid transparent"
-      borderColor="gray.100"
-      background="gray.50"
-    >
-      {category.title}
-    </Heading>
+    <SectionTitle>{category.title}</SectionTitle>
     {category?.products?.map((product: Product) => (
       <MenuItem onClick={onMenuItemClick} key={product.id} product={product} />
     ))}

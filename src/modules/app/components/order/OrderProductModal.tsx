@@ -32,6 +32,7 @@ interface OrderProductModalProps {
   onClose: () => void
   isOpen: boolean
   product?: Product
+  defaultQuantity?: number
   onConfirm: (values: OrderProductValues) => void
   optionGroups?: OptionGroup[]
 }
@@ -41,11 +42,12 @@ const OrderProductModal = ({
   isOpen,
   product,
   onConfirm,
+  defaultQuantity = 1,
   optionGroups,
 }: OrderProductModalProps) => {
   const [optionGroupValues, setOptionGroupValues] = useState<OptionGroup[]>([])
   const [observation, setObservation] = useState("")
-  const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(defaultQuantity)
 
   const getIsButtonDisabled = () => {
     const requiredOptionGroups = optionGroupValues.filter(
@@ -205,6 +207,10 @@ const OrderProductModal = ({
     }
   }, [optionGroups])
 
+  useEffect(() => {
+    setQuantity(defaultQuantity)
+  }, [defaultQuantity])
+
   return (
     <Modal
       onClose={handleClose}
@@ -249,83 +255,89 @@ const OrderProductModal = ({
               {formatToRealCurrency(Number(product?.price))}
             </Text>
           </Box>
-          {optionGroups?.map((optionGroup: OptionGroup) => (
-            <Box key={optionGroup.id}>
-              <Flex
-                backgroundColor="gray.100"
-                p={4}
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Box>
-                  <Heading fontSize="md" fontWeight="500">
-                    {optionGroup.title}
-                  </Heading>
-                  <Text fontSize="sm" color="gray.500">
-                    {getOptionTotalQuantity(String(optionGroup.id))} de{" "}
-                    {optionGroup.maxOption}
-                  </Text>
-                </Box>
-                {optionGroup.required && (
-                  <Badge
-                    background="gray.600"
-                    color="white"
-                    fontWeight="500"
-                    pt="2px"
-                    pr="5px"
-                    pl="5px"
-                    pb="2px"
-                    fontSize="10px"
-                  >
-                    Obrigatório
-                  </Badge>
-                )}
-              </Flex>
-              {optionGroup.options?.map((option) => (
-                <Box key={option.id}>
-                  <Flex
-                    p={4}
-                    width="full"
-                    textAlign="left"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Box>
-                      <Box mb={1} fontSize="sm">
-                        {option.title}
+          <Box mb={4}>
+            {optionGroups?.map((optionGroup: OptionGroup) => (
+              <Box key={optionGroup.id}>
+                <Flex
+                  backgroundColor="gray.100"
+                  p={4}
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Box>
+                    <Heading
+                      fontSize="sm"
+                      fontWeight="500"
+                      textTransform="uppercase"
+                    >
+                      {optionGroup.title}
+                    </Heading>
+                    <Text fontSize="sm" color="gray.500">
+                      {getOptionTotalQuantity(String(optionGroup.id))} de{" "}
+                      {optionGroup.maxOption}
+                    </Text>
+                  </Box>
+                  {optionGroup.required && (
+                    <Badge
+                      background="gray.600"
+                      color="white"
+                      fontWeight="500"
+                      pt="2px"
+                      pr="5px"
+                      pl="5px"
+                      pb="2px"
+                      fontSize="10px"
+                    >
+                      Obrigatório
+                    </Badge>
+                  )}
+                </Flex>
+                {optionGroup.options?.map((option) => (
+                  <Box key={option.id}>
+                    <Flex
+                      p={4}
+                      width="full"
+                      textAlign="left"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <Box>
+                        <Box mb={1} fontSize="sm">
+                          {option.title}
+                        </Box>
+                        <Text fontSize="sm" color="gray.500">
+                          {option.price
+                            ? `+ ${formatToRealCurrency(Number(option.price))}`
+                            : ""}
+                        </Text>
                       </Box>
-                      <Text fontSize="sm" color="gray.500">
-                        {option.price
-                          ? `+ ${formatToRealCurrency(Number(option.price))}`
-                          : ""}
-                      </Text>
-                    </Box>
-                    <QuantitySwitch
-                      onChange={(quantity) =>
-                        handleOptionChange({
+                      <QuantitySwitch
+                        onChange={(quantity) =>
+                          handleOptionChange({
+                            optionId: option.id!,
+                            optionGroupId: optionGroup.id!,
+                            quantity,
+                          })
+                        }
+                        value={getOptionValue({
                           optionId: option.id!,
                           optionGroupId: optionGroup.id!,
-                          quantity,
-                        })
-                      }
-                      value={getOptionValue({
-                        optionId: option.id!,
-                        optionGroupId: optionGroup.id!,
-                      })}
-                      max={Number(optionGroup.maxOption)}
-                    />
-                  </Flex>
-                  <Box pl={4} pr={4}>
-                    <Box
-                      height="0.8px"
-                      width="100%"
-                      backgroundColor="gray.200"
-                    />
+                        })}
+                        max={Number(optionGroup.maxOption)}
+                      />
+                    </Flex>
+                    <Box pl={4} pr={4}>
+                      <Box
+                        height="0.8px"
+                        width="100%"
+                        backgroundColor="gray.200"
+                      />
+                    </Box>
                   </Box>
-                </Box>
-              ))}
-            </Box>
-          ))}
+                ))}
+              </Box>
+            ))}
+          </Box>
           <Box p={4}>
             <Heading fontSize="md" fontWeight="500" mb={3}>
               Alguma observação?

@@ -14,7 +14,7 @@ import Category from "@/modules/categories/types/Category"
 import CategoryItem from "@/modules/app/components/CategoryItem"
 import OrderProductModal, {
   OrderProductValues,
-} from "@/modules/app/components/OrderProductModal"
+} from "@/modules/app/components/order/OrderProductModal"
 import Product from "@/modules/products/types/Product"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import useGetStore from "@/modules/stores/hooks/useGetStore"
@@ -91,7 +91,7 @@ export const getStaticProps = async ({ params }: any) => {
         })),
       })),
     },
-    revalidate: 5,
+    revalidate: 2,
   }
 }
 

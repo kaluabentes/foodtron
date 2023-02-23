@@ -1,9 +1,13 @@
 import { Box } from "@chakra-ui/react"
 
-const StripeSeparator = () => (
+interface StripeSeparatorProps {
+  vertical?: boolean
+}
+
+const StripeSeparator = ({ vertical }: StripeSeparatorProps) => (
   <Box
-    width="1px"
-    height="30px"
+    width={vertical ? "100%" : "1px"}
+    height={vertical ? "1px" : "30px"}
     borderRadius="50px"
     backgroundColor="gray.200"
   />

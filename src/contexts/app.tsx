@@ -11,18 +11,24 @@ import {
 import Location from "@/modules/locations/types/Location"
 import OrderProduct from "@/modules/orders/types/OrderProduct"
 
+export interface Address {
+  street?: string
+  number?: string
+  location: Location
+}
+
 interface AppState {
   user?: {
     name?: string
     phone?: string
   }
-  address: {
-    street?: string
-    number?: string
-    location: Location
-  }
+  address: Address
   order: {
     products: OrderProduct[]
+    paymentMethod: {
+      name: string
+      change: string
+    }
   }
 }
 
@@ -38,6 +44,10 @@ interface AppStateParam {
   }
   order?: {
     products?: OrderProduct[]
+    paymentMethod?: {
+      name?: string
+      change?: string
+    }
   }
 }
 
@@ -54,6 +64,10 @@ const DEFAULT_VALUE_STATE = {
   },
   order: {
     products: [],
+    paymentMethod: {
+      name: "",
+      change: "",
+    },
   },
 }
 

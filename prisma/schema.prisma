@@ -200,6 +200,7 @@ model Order {
   tax           Decimal
   subtotal      Decimal
   paymentMethod String
+  change        Decimal
   address       String
   status        String
 

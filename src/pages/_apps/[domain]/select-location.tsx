@@ -84,7 +84,7 @@ const SelectLocation = ({ locations }: SelectLocationProps) => {
             key={location.id}
             onClick={() => handleAddLocation(location)}
             as="button"
-            p={5}
+            p={4}
             borderBottom="1px solid transparent"
             borderColor="gray.200"
             textAlign="left"
