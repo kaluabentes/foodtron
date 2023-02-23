@@ -29,6 +29,8 @@ import AuthLayout from "@/layouts/AuthLayout"
 import prisma from "@/lib/infra/prisma/client"
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 
+const DESTINATION = "/admin/store"
+
 export interface CompleteSignInData {
   storeName: string
   userName: string
@@ -47,7 +49,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (user?.storeId) {
     return {
       redirect: {
-        destination: "/admin/profile",
+        destination: DESTINATION,
         permanent: false,
       },
     }
@@ -110,7 +112,7 @@ const CompleteSignin = () => {
         position: "bottom-right",
       })
 
-      router.push("/admin/store")
+      router.push(DESTINATION)
     } catch (error: any) {
       if (error?.response?.data?.error?.domain) {
         setError("subdomain", {

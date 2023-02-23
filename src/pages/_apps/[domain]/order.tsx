@@ -51,7 +51,7 @@ const Order = () => {
       rightIcon={
         <BarIconButton
           label="Voltar"
-          onClick={() => router.push("/payment")}
+          onClick={() => router.push("/")}
           icon={<BiLeftArrowAlt />}
         />
       }
@@ -71,11 +71,17 @@ const Order = () => {
           colorScheme="brand"
           onClick={() =>
             tax
-              ? router.push("/payment")
+              ? !paymentMethod.name
+                ? router.push("/payment")
+                : router.push("/order-confirm")
               : router.push("/edit-address?redirect=/order")
           }
         >
-          {tax ? "Forma de pagamento" : "Adicionar endereço"}
+          {tax
+            ? !paymentMethod.name
+              ? "Forma de pagamento"
+              : "Confirmar pedido"
+            : "Adicionar endereço"}
         </Button>
       </Box>
     </AppLayout>
