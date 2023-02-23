@@ -66,7 +66,7 @@ const Payment = () => {
         />
       }
     >
-      <Tabs>
+      <Tabs colorScheme="brand">
         <TabList background="white">
           <Tab>Pagar na entrega</Tab>
         </TabList>
