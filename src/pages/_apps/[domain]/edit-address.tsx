@@ -128,7 +128,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
           </FormControl>
           <FormControl mb={5}>
             <FormLabel>{t("number")}</FormLabel>
-            <Input {...register("number")} />
+            <Input {...register("number")} type="tel" />
           </FormControl>
           <FormControl>
             <FormLabel>{t("district")}</FormLabel>
