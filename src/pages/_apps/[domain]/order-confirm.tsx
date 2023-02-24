@@ -70,52 +70,54 @@ const OrderConfirm = () => {
         <SectionTitle>Pedido</SectionTitle>
         <OrderItemsSummary />
       </Box>
-      <Box
-        background="white"
-        overflow="hidden"
-        borderRadius={{ base: undefined, lg: "md" }}
-        shadow="sm"
-        mb={4}
-      >
-        <SectionTitle>Pagamento</SectionTitle>
-        <Flex p={4} gap={4} direction="column">
-          <Box position="relative">
-            <Flex
-              as="button"
-              color="gray.500"
-              shadow="md"
-              width="22px"
-              height="22px"
-              borderRadius="50%"
-              justifyContent="center"
-              alignItems="center"
-              position="absolute"
-              top={0}
-              right={0}
-              onClick={() => router.push("/payment")}
-            >
-              <BiEdit />
-            </Flex>
-            <Heading size="xs" mb={2} fontWeight="500">
-              Tipo
-            </Heading>
-            {paymentMethod.name}
-          </Box>
-          {paymentMethod.name === "Dinheiro" ? (
-            <>
-              <StripeSeparator vertical />
-              <Box>
-                <Heading size="xs" mb={2} fontWeight="500">
-                  Troco pra quanto?
-                </Heading>
-                <Box as="span" fontWeight="500" color="brand.500">
-                  {formatToRealCurrency(Number(paymentMethod.change))}
+      {paymentMethod.name && (
+        <Box
+          background="white"
+          overflow="hidden"
+          borderRadius={{ base: undefined, lg: "md" }}
+          shadow="sm"
+          mb={4}
+        >
+          <SectionTitle>Pagamento</SectionTitle>
+          <Flex p={4} gap={4} direction="column">
+            <Box position="relative">
+              <Flex
+                as="button"
+                color="gray.500"
+                shadow="md"
+                width="22px"
+                height="22px"
+                borderRadius="50%"
+                justifyContent="center"
+                alignItems="center"
+                position="absolute"
+                top={0}
+                right={0}
+                onClick={() => router.push("/payment")}
+              >
+                <BiEdit />
+              </Flex>
+              <Heading size="xs" mb={2} fontWeight="500">
+                Tipo
+              </Heading>
+              {paymentMethod.name}
+            </Box>
+            {paymentMethod.name === "Dinheiro" ? (
+              <>
+                <StripeSeparator vertical />
+                <Box>
+                  <Heading size="xs" mb={2} fontWeight="500">
+                    Troco pra quanto?
+                  </Heading>
+                  <Box as="span" fontWeight="500" color="brand.500">
+                    {formatToRealCurrency(Number(paymentMethod.change))}
+                  </Box>
                 </Box>
-              </Box>
-            </>
-          ) : null}
-        </Flex>
-      </Box>
+              </>
+            ) : null}
+          </Flex>
+        </Box>
+      )}
       <Box
         background="white"
         overflow="hidden"
