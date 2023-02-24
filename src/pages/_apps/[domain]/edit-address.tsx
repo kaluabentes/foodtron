@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import {
+  Box,
   Button,
   Flex,
   FormControl,
@@ -118,8 +119,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
         backgroundColor="white"
         borderRadius="md"
         overflow="hidden"
-        marginBottom={8}
-        p={5}
+        p={4}
       >
         <form onSubmit={handleSubmit(handleEditAddress)}>
           <FormControl mb={5}>
@@ -130,7 +130,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
             <FormLabel>{t("number")}</FormLabel>
             <Input {...register("number")} />
           </FormControl>
-          <FormControl mb={5}>
+          <FormControl>
             <FormLabel>{t("district")}</FormLabel>
             <Select {...register("location")}>
               <option value="">Selecione</option>
@@ -141,16 +141,19 @@ const EditAddress = ({ locations }: EditAddressProps) => {
               ))}
             </Select>
           </FormControl>
-          <Button
-            type="submit"
-            width="full"
-            colorScheme="brand"
-            isLoading={isLoading}
-          >
-            {redirect === "/payment" ? "Forma de pagamento" : "Salvar"}
-          </Button>
         </form>
       </Flex>
+
+      <Box p={4}>
+        <Button
+          type="submit"
+          width="full"
+          colorScheme="brand"
+          isLoading={isLoading}
+        >
+          {redirect === "/payment" ? "Forma de pagamento" : "Salvar"}
+        </Button>
+      </Box>
     </AppLayout>
   )
 }

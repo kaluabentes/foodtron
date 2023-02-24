@@ -230,7 +230,7 @@ const OrderProductModal = ({
           <Image
             src={product?.image ? product?.image : "/placeholder.png"}
             width="100%"
-            height="350px"
+            height="300px"
             objectFit="cover"
           />
           <IconButton

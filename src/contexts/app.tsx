@@ -52,6 +52,10 @@ interface AppStateParam {
 }
 
 const DEFAULT_VALUE_STATE = {
+  user: {
+    name: "",
+    phone: "",
+  },
   address: {
     street: "",
     number: "",
