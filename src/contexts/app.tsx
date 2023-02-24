@@ -18,9 +18,9 @@ export interface Address {
 }
 
 interface AppState {
-  user?: {
-    name?: string
-    phone?: string
+  user: {
+    name: string
+    phone: string
   }
   address: Address
   order: {

@@ -8,6 +8,10 @@ import {
   Input,
   Select,
 } from "@chakra-ui/react"
+import { BiLeftArrowAlt } from "react-icons/bi"
+import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
+import { IMaskMixin } from "react-imask"
 
 import prisma from "@/lib/infra/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
@@ -15,9 +19,10 @@ import { useAppContext } from "@/contexts/app"
 import { useRouter } from "next/router"
 import Location from "@/modules/locations/types/Location"
 import BarIconButton from "@/components/BarIconButton"
-import { BiLeftArrowAlt } from "react-icons/bi"
-import { useForm } from "react-hook-form"
-import { useTranslation } from "react-i18next"
+
+const MaskedWhatsappInput = IMaskMixin(({ inputRef, ...props }: any) => (
+  <Input {...props} ref={inputRef} />
+))
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -33,30 +38,14 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }: any) => {
-  const store = await prisma.store.findFirst({
-    where: {
-      subdomain: params.domain,
-    },
-    include: {
-      deliveryLocations: true,
-    },
-  })
-
   return {
     props: {
-      locations: store?.deliveryLocations.map((location) => ({
-        ...location,
-        tax: location.tax.toFixed(2),
-      })),
+      domain: params.domain,
     },
   }
 }
 
-interface EditAddressProps {
-  locations: Location[]
-}
-
-const EditAddress = ({ locations }: EditAddressProps) => {
+const EditUser = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const { redirect } = router.query
@@ -64,27 +53,25 @@ const EditAddress = ({ locations }: EditAddressProps) => {
   const {
     setState,
     state: {
-      address: { street, number, location },
+      user: { name, phone },
     },
   } = useAppContext()
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
-      street: street,
-      number: number,
-      location: location.id,
+      name,
+      phone,
     },
   })
 
-  const handleEditAddress = (data: any) => {
+  const handleEditUser = (data: any) => {
     setIsLoading(true)
     setState({
-      address: {
-        street: data.street,
-        number: data.number,
-        location: locations.find((location) => location.id === data.location),
+      user: {
+        name: data.name,
+        phone: data.phone,
       },
     })
 
@@ -93,18 +80,12 @@ const EditAddress = ({ locations }: EditAddressProps) => {
       return
     }
 
-    router.push("/")
+    router.push("/order")
   }
-
-  useEffect(() => {
-    if (location.neighborhood) {
-      setValue("location", location.id)
-    }
-  }, [location])
 
   return (
     <AppLayout
-      title="Editar endereço"
+      title="Informações de contato"
       rightIcon={
         <BarIconButton
           label="Voltar"
@@ -113,7 +94,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
         />
       }
     >
-      <form onSubmit={handleSubmit(handleEditAddress)}>
+      <form onSubmit={handleSubmit(handleEditUser)}>
         <Flex
           direction="column"
           shadow="sm"
@@ -123,23 +104,18 @@ const EditAddress = ({ locations }: EditAddressProps) => {
           p={4}
         >
           <FormControl mb={5}>
-            <FormLabel>{t("street")}</FormLabel>
-            <Input {...register("street")} />
+            <FormLabel>{t("name")}</FormLabel>
+            <Input {...register("name")} required />
           </FormControl>
           <FormControl mb={5}>
-            <FormLabel>{t("number")}</FormLabel>
-            <Input {...register("number")} />
-          </FormControl>
-          <FormControl>
-            <FormLabel>{t("district")}</FormLabel>
-            <Select {...register("location")}>
-              <option value="">Selecione</option>
-              {locations.map((location) => (
-                <option key={location.id} value={location.id}>
-                  {location.neighborhood}
-                </option>
-              ))}
-            </Select>
+            <FormLabel>{t("phone")}</FormLabel>
+            <MaskedWhatsappInput
+              value={String(watch("phone"))}
+              mask="(00) 0 0000 0000"
+              placeholder="(00) 0 0000 0000"
+              onAccept={(value: string) => setValue("phone", value)}
+              required
+            />
           </FormControl>
         </Flex>
         <Box p={4}>
@@ -157,4 +133,4 @@ const EditAddress = ({ locations }: EditAddressProps) => {
   )
 }
 
-export default EditAddress
+export default EditUser

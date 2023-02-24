@@ -108,6 +108,7 @@
     "number": "Número",
     "updateOptions": "Editar opção",
     "productOptionsEmptyState": "Nenhuma opção foi adicionada ainda.",
-    "maxOptionRequired": "Máximo de opções obrigatórias"
+    "maxOptionRequired": "Máximo de opções obrigatórias",
+    "phone": "Telefone"
   }
 }

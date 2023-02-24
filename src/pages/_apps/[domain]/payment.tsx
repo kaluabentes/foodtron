@@ -23,6 +23,7 @@ import paymentMethods, { PaymentMethod } from "@/config/paymentMethods"
 const Payment = () => {
   const router = useRouter()
   const { setState } = useAppContext()
+  const { redirect } = router.query
 
   const [isChangeModalOpen, setIsChangeModalOpen] = useState(false)
 
@@ -35,7 +36,7 @@ const Payment = () => {
         },
       },
     })
-    router.push("/order-confirm")
+    router.push(String(redirect) || "/order")
   }
 
   const handleChangeConfirm = (change: string) => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Button, Flex, Heading } from "@chakra-ui/react"
+import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react"
 
 import AppLayout from "@/layouts/AppLayout"
 import { useAppContext } from "@/contexts/app"
@@ -13,6 +13,7 @@ import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import StripeSeparator from "@/components/StripeSeparator"
 import OrderOptionsModal from "@/modules/app/components/order/OrderOptionsModal"
 import OrderConfirmModal from "@/modules/app/components/order/OrderConfirmModal"
+import EditableDataItem from "@/components/EditableDataItem"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -41,6 +42,7 @@ const OrderConfirm = () => {
   const { state } = useAppContext()
   const { address } = state
   const {
+    user,
     address: {
       location: { tax },
     },
@@ -79,39 +81,18 @@ const OrderConfirm = () => {
       >
         <SectionTitle>Pagamento</SectionTitle>
         <Flex p={4} gap={4} direction="column">
-          <Box position="relative">
-            <Flex
-              as="button"
-              color="gray.500"
-              shadow="md"
-              width="22px"
-              height="22px"
-              borderRadius="50%"
-              justifyContent="center"
-              alignItems="center"
-              position="absolute"
-              top={0}
-              right={0}
-              onClick={() => router.push("/payment")}
-            >
-              <BiEdit />
-            </Flex>
-            <Heading size="xs" mb={2} fontWeight="500">
-              Tipo
-            </Heading>
-            {paymentMethod.name}
-          </Box>
+          <EditableDataItem
+            field="Tipo"
+            value={paymentMethod.name}
+            onEdit={() => router.push("/payment?redirect=order-confirm")}
+          />
           {paymentMethod.name === "Dinheiro" ? (
             <>
               <StripeSeparator vertical />
-              <Box>
-                <Heading size="xs" mb={2} fontWeight="500">
-                  Troco pra quanto?
-                </Heading>
-                <Box as="span" fontWeight="500" color="brand.500">
-                  {formatToRealCurrency(Number(paymentMethod.change))}
-                </Box>
-              </Box>
+              <EditableDataItem
+                field="Troco pra quanto?"
+                value={formatToRealCurrency(Number(paymentMethod.change))}
+              />
             </>
           ) : null}
         </Flex>
@@ -121,49 +102,42 @@ const OrderConfirm = () => {
         overflow="hidden"
         borderRadius={{ base: undefined, lg: "md" }}
         shadow="sm"
+        mb={4}
       >
         <SectionTitle>Entrega</SectionTitle>
         <Flex p={4} gap={4} direction="column">
-          <Box position="relative">
-            <Flex
-              as="button"
-              color="gray.500"
-              shadow="md"
-              width="22px"
-              height="22px"
-              borderRadius="50%"
-              justifyContent="center"
-              alignItems="center"
-              position="absolute"
-              top={0}
-              right={0}
-              onClick={() =>
-                router.push("/edit-address?redirect=order-confirm")
-              }
-            >
-              <BiEdit />
-            </Flex>
-            <Heading size="xs" mb={2} fontWeight="500">
-              Endereço
-            </Heading>
-            {address.street}, {address.number}, {address.location.neighborhood}
-          </Box>
+          <EditableDataItem
+            field="Endereço"
+            value={`${address.street}, ${address.number}, ${address.location.neighborhood}`}
+            onEdit={() => router.push("/edit-address?redirect=order-confirm")}
+          />
           <StripeSeparator vertical />
-          <Box>
-            <Heading size="xs" mb={2} fontWeight="500">
-              Taxa
-            </Heading>
-            <Box as="span" fontWeight="500" color="brand.500">
-              {formatToRealCurrency(Number(tax))}
-            </Box>
-          </Box>
+          <EditableDataItem
+            field="Taxa"
+            value={formatToRealCurrency(Number(tax))}
+          />
           <StripeSeparator vertical />
-          <Box>
-            <Heading size="xs" mb={2} fontWeight="500">
-              Tempo estimado
-            </Heading>
-            {address.location.estimatedTime} min.
-          </Box>
+          <EditableDataItem
+            field="Tempo estimado"
+            value={`${address.location.estimatedTime} min.`}
+          />
+        </Flex>
+      </Box>
+      <Box
+        background="white"
+        overflow="hidden"
+        borderRadius={{ base: undefined, lg: "md" }}
+        shadow="sm"
+      >
+        <SectionTitle>Informações de contato</SectionTitle>
+        <Flex p={4} gap={4} direction="column">
+          <EditableDataItem
+            field="Nome"
+            value={user.name}
+            onEdit={() => router.push("/edit-user?redirect=order-confirm")}
+          />
+          <StripeSeparator vertical />
+          <EditableDataItem field="Phone" value={user.phone} />
         </Flex>
       </Box>
       <Box p={4} pl={{ base: 4, lg: 0 }} pr={{ base: 4, lg: 0 }}>
