@@ -36,7 +36,12 @@ const Payment = () => {
         },
       },
     })
-    router.push(String(redirect) || "/order")
+
+    if (redirect) {
+      router.push(String(redirect))
+    }
+
+    router.push("/order")
   }
 
   const handleChangeConfirm = (change: string) => {
