@@ -114,6 +114,7 @@ const EditUser = () => {
               mask="(00) 0 0000 0000"
               placeholder="(00) 0 0000 0000"
               onAccept={(value: string) => setValue("phone", value)}
+              type="tel"
               required
             />
           </FormControl>
