@@ -78,6 +78,7 @@ const OrderItemsSummary = () => {
     resetState({
       ...state,
       order: {
+        ...state.order,
         products: orderProducts!.filter(
           (orderProduct: OrderProduct) => orderProduct.id !== orderProductId
         ),
