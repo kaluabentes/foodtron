@@ -83,9 +83,19 @@ const EditUser = () => {
     router.push("/order")
   }
 
+  useEffect(() => {
+    if (name) {
+      setValue("name", name)
+    }
+
+    if (phone) {
+      setValue("phone", phone)
+    }
+  }, [name, phone])
+
   return (
     <AppLayout
-      title="Informações de contato"
+      title="Contato"
       rightIcon={
         <BarIconButton
           label="Voltar"

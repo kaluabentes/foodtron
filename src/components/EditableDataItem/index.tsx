@@ -8,10 +8,9 @@ interface EditableDataItemProps {
 }
 
 const EditableDataItem = ({ field, value, onEdit }: EditableDataItemProps) => (
-  <Box position="relative">
+  <Box as="button" textAlign="left" position="relative" onClick={onEdit}>
     {onEdit && (
       <Flex
-        as="button"
         color="gray.500"
         shadow="md"
         width="22px"
@@ -22,7 +21,6 @@ const EditableDataItem = ({ field, value, onEdit }: EditableDataItemProps) => (
         position="absolute"
         top={0}
         right={0}
-        onClick={onEdit}
       >
         <BiEdit />
       </Flex>

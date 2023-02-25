@@ -198,16 +198,17 @@ model Category {
 model Order {
   id            String  @id @default(cuid())
   tax           Decimal
-  subtotal      Decimal
   paymentMethod String
   change        Decimal
   address       String
   status        String
+  username      String
+  phone         String
 
   storeId String
   store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  userId  String
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String?
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   orderProducts OrderProduct[]
 

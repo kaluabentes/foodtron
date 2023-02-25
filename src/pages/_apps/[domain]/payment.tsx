@@ -27,6 +27,15 @@ const Payment = () => {
 
   const [isChangeModalOpen, setIsChangeModalOpen] = useState(false)
 
+  const handleRedirect = () => {
+    if (redirect) {
+      router.push(String(redirect))
+      return
+    }
+
+    router.push("/order")
+  }
+
   const addPaymentMethod = (name: string, change?: string) => {
     setState({
       order: {
@@ -37,11 +46,7 @@ const Payment = () => {
       },
     })
 
-    if (redirect) {
-      router.push(String(redirect))
-    }
-
-    router.push("/order")
+    handleRedirect()
   }
 
   const handleChangeConfirm = (change: string) => {
@@ -67,7 +72,7 @@ const Payment = () => {
       rightIcon={
         <BarIconButton
           label="Voltar"
-          onClick={() => router.push("/order")}
+          onClick={handleRedirect}
           icon={<BiLeftArrowAlt />}
         />
       }

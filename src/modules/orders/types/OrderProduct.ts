@@ -5,7 +5,7 @@ interface OrderProduct {
   productId?: string
   title: string
   price: string
-  quantity: number
+  quantity: string
   image: string
   observation: string
   orderId?: string

@@ -14,6 +14,8 @@ import StripeSeparator from "@/components/StripeSeparator"
 import OrderOptionsModal from "@/modules/app/components/order/OrderOptionsModal"
 import OrderConfirmModal from "@/modules/app/components/order/OrderConfirmModal"
 import EditableDataItem from "@/components/EditableDataItem"
+import useCreateOrder from "@/modules/orders/hooks/useCreateOrder"
+import useBottomToast from "@/lib/hooks/useBottomToast"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -29,15 +31,26 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }: any) => {
+  const store = await prisma.store.findFirst({
+    where: {
+      subdomain: params.domain,
+    },
+  })
+
   return {
     props: {
-      domain: params.domain,
+      storeId: store?.id,
     },
   }
 }
 
-const OrderConfirm = () => {
+interface OrderConfirmProps {
+  storeId: string
+}
+
+const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
   const router = useRouter()
+  const toast = useBottomToast()
 
   const { state } = useAppContext()
   const { address } = state
@@ -46,10 +59,55 @@ const OrderConfirm = () => {
     address: {
       location: { tax },
     },
-    order: { paymentMethod },
+    order: { paymentMethod, products },
   } = state
+  const assembledAddress = `${address.street}, ${address.number}, ${address.location.neighborhood}`
 
   const [isOrderConfirmModalOpen, setIsOrderConfirmModalOpen] = useState(false)
+  const { createOrder, isCreating } = useCreateOrder()
+
+  const handleOrderConfirm = () => {
+    if (!address.location.neighborhood || !address.street || !address.number) {
+      setIsOrderConfirmModalOpen(false)
+      toast({
+        title: "Atenção",
+        description: "Complete os dados de entrega",
+        status: "error",
+      })
+      return
+    }
+
+    if (!paymentMethod.name) {
+      setIsOrderConfirmModalOpen(false)
+      toast({
+        title: "Atenção",
+        description: "Complete os dados de pagamento",
+        status: "error",
+      })
+      return
+    }
+
+    if (!user.name) {
+      setIsOrderConfirmModalOpen(false)
+      toast({
+        title: "Atenção",
+        description: "Complete os dados de contato",
+        status: "error",
+      })
+      return
+    }
+
+    createOrder({
+      tax,
+      paymentMethod: paymentMethod.name,
+      change: paymentMethod.change,
+      address: assembledAddress,
+      storeId,
+      username: user.name,
+      phone: user.phone,
+      orderProducts: products,
+    })
+  }
 
   return (
     <AppLayout
@@ -84,7 +142,7 @@ const OrderConfirm = () => {
           <EditableDataItem
             field="Tipo"
             value={paymentMethod.name}
-            onEdit={() => router.push("/payment?redirect=order-confirm")}
+            onEdit={() => router.push("/payment?redirect=/order-confirm")}
           />
           {paymentMethod.name === "Dinheiro" ? (
             <>
@@ -108,8 +166,8 @@ const OrderConfirm = () => {
         <Flex p={4} gap={4} direction="column">
           <EditableDataItem
             field="Endereço"
-            value={`${address.street}, ${address.number}, ${address.location.neighborhood}`}
-            onEdit={() => router.push("/edit-address?redirect=order-confirm")}
+            value={assembledAddress}
+            onEdit={() => router.push("/edit-address?redirect=/order-confirm")}
           />
           <StripeSeparator vertical />
           <EditableDataItem
@@ -129,12 +187,12 @@ const OrderConfirm = () => {
         borderRadius={{ base: undefined, lg: "md" }}
         shadow="sm"
       >
-        <SectionTitle>Informações de contato</SectionTitle>
+        <SectionTitle>Contato</SectionTitle>
         <Flex p={4} gap={4} direction="column">
           <EditableDataItem
             field="Nome"
             value={user.name}
-            onEdit={() => router.push("/edit-user?redirect=order-confirm")}
+            onEdit={() => router.push("/edit-user?redirect=/order-confirm")}
           />
           <StripeSeparator vertical />
           <EditableDataItem field="Phone" value={user.phone} />
@@ -155,7 +213,7 @@ const OrderConfirm = () => {
         onClose={() => setIsOrderConfirmModalOpen(false)}
         address={address}
         isOpen={isOrderConfirmModalOpen}
-        onConfirm={() => alert("confirm")}
+        onConfirm={handleOrderConfirm}
       />
     </AppLayout>
   )
