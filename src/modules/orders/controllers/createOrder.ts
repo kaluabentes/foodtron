@@ -33,7 +33,7 @@ const createOrder = (order: Order) => {
         create: order.orderProducts.map((orderProduct) => ({
           title: orderProduct.title,
           price: createDecimal(orderProduct.price),
-          quantity: orderProduct.quantity,
+          quantity: String(orderProduct.quantity),
           image: orderProduct.image,
           observation: orderProduct.observation,
           options: {
