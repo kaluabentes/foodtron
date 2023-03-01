@@ -199,7 +199,7 @@ model Order {
   id            String  @id @default(cuid())
   tax           Decimal
   paymentMethod String
-  change        Decimal
+  change        Decimal?
   address       String
   status        String
   username      String

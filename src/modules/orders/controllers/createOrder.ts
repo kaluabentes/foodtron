@@ -19,7 +19,7 @@ const createOrder = (order: Order) => {
     data: {
       tax: createDecimal(order.tax),
       paymentMethod: order.paymentMethod,
-      change: order.change,
+      change: order.change ? createDecimal(order.change) : null,
       address: order.address,
       status: ORDER_STATUS.PENDING,
       username: order.username,
@@ -44,6 +44,13 @@ const createOrder = (order: Order) => {
             })),
           },
         })),
+      },
+    },
+    include: {
+      orderProducts: {
+        include: {
+          options: true,
+        },
       },
     },
   })

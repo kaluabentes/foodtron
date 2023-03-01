@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import Cors from "cors"
+import NextCors from "nextjs-cors"
 
 import createOrder from "@/modules/orders/controllers/createOrder"
 import runMiddleware from "@/lib/infra/next/runMiddleware"
@@ -9,7 +10,12 @@ const cors = Cors({
 })
 
 const indexOrderHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-  await runMiddleware(req, res, cors)
+  await NextCors(req, res, {
+    // Options
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200,
+  })
 
   if (!["POST"].includes(req.method!)) {
     return res.status(400).send("Method not allowed")
