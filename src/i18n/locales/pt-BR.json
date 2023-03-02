@@ -80,7 +80,7 @@
     "weekDay": "Dia da semana",
     "start": "Hora de abertura",
     "end": "Hora do fechamento",
-    "isScheduledClosing": "É fechamento programado?",
+    "isScheduledClosing": "Fechamento programado",
     "schedulesEmptyState": "Não há horários cadastrados no momento.",
     "schedules": "Horários",
     "addPayment": "Adicionar pagamento",
@@ -109,6 +109,7 @@
     "updateOptions": "Editar opção",
     "productOptionsEmptyState": "Nenhuma opção foi adicionada ainda.",
     "maxOptionRequired": "Máximo de opções obrigatórias",
-    "phone": "Telefone"
+    "phone": "Telefone",
+    "isEnabled": "Ativo"
   }
 }

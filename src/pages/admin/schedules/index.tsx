@@ -42,10 +42,10 @@ const Schedules = () => {
   const { updateSchedule } = useUpdateSchedule()
   const [schedulesSwitchState, setSchedulesSwitchState] = useState<any[]>([])
 
-  const getSwitchState = (id: string) =>
+  const getIsEnabledState = (id: string) =>
     schedulesSwitchState.find((schedule) => schedule.id === id)?.isEnabled
 
-  const handleSwitchChange = async (id: string) => {
+  const handleIsEnabledChange = async (id: string) => {
     setSchedulesSwitchState((prev) => {
       return prev.map((sched) => {
         if (sched.id === id) {
@@ -62,12 +62,34 @@ const Schedules = () => {
     })
   }
 
+  const getIsScheduledClosingState = (id: string) =>
+    schedulesSwitchState.find((schedule) => schedule.id === id)
+      ?.isScheduledClosing
+
+  const handleIsScheduledClosingChange = async (id: string) => {
+    setSchedulesSwitchState((prev) => {
+      return prev.map((sched) => {
+        if (sched.id === id) {
+          updateSchedule(id, { isScheduledClosing: !sched.isScheduledClosing })
+
+          return {
+            ...sched,
+            isScheduledClosing: !sched.isScheduledClosing,
+          }
+        }
+
+        return sched
+      })
+    })
+  }
+
   useEffect(() => {
     if (schedules.length > 0) {
       setSchedulesSwitchState(
         schedules.map((schedule: Schedule) => ({
           id: schedule.id,
           isEnabled: schedule.isEnabled,
+          isScheduledClosing: schedule.isScheduledClosing,
         }))
       )
     }
@@ -104,20 +126,25 @@ const Schedules = () => {
               <Tr
                 key={schedule.id}
                 background={
-                  !getSwitchState(schedule.id) ? "gray.50" : undefined
+                  !getIsEnabledState(schedule.id) ? "gray.50" : undefined
                 }
-                color={!getSwitchState(schedule.id) ? "gray.400" : undefined}
+                color={!getIsEnabledState(schedule.id) ? "gray.400" : undefined}
               >
                 <Td>
                   <Switch
-                    isChecked={getSwitchState(schedule.id)}
-                    onChange={() => handleSwitchChange(schedule.id)}
+                    isChecked={getIsEnabledState(schedule.id)}
+                    onChange={() => handleIsEnabledChange(schedule.id)}
                   />
                 </Td>
                 <Td>{weekDayMap.get(schedule.weekDay)}</Td>
                 <Td>{schedule.start}</Td>
                 <Td>{schedule.end}</Td>
-                <Td>{schedule.isScheduledClosing ? t("yes") : t("no")}</Td>
+                <Td>
+                  <Switch
+                    isChecked={getIsScheduledClosingState(schedule.id)}
+                    onChange={() => handleIsScheduledClosingChange(schedule.id)}
+                  />
+                </Td>
                 <Td>
                   <Flex gap={2}>
                     <IconButton
