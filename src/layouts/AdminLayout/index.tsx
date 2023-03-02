@@ -54,8 +54,8 @@ const AdminLayout = ({
         <Container
           maxWidth={{
             base: "100%",
-            md: isFullWidth ? "100%" : "container.lg",
-            lg: isFullWidth ? "100%" : "container.xl",
+            md: isFullWidth ? "100%" : "container.md",
+            lg: isFullWidth ? "100%" : "container.lg",
           }}
           padding={hasPadding ? undefined : 0}
           as="main"

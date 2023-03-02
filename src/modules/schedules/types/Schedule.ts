@@ -1,9 +1,10 @@
 interface Schedule {
-  id?: string
+  id: string
   weekDay: string
   start: string
   end: string
-  isScheduledClosing: boolean
+  isScheduledClosing?: boolean
+  isEnabled?: boolean
 }
 
 export default Schedule

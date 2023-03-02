@@ -4,6 +4,8 @@ import NextCors from "nextjs-cors"
 
 import createOrder from "@/modules/orders/controllers/createOrder"
 import runMiddleware from "@/lib/infra/next/runMiddleware"
+import serverAuth from "@/middlewares/serverAuth"
+import getOrders from "@/modules/orders/controllers/getOrders"
 
 const cors = Cors({
   methods: ["POST", "GET", "HEAD"],
@@ -17,7 +19,7 @@ const indexOrderHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     optionsSuccessStatus: 200,
   })
 
-  if (!["POST"].includes(req.method!)) {
+  if (!["POST", "GET"].includes(req.method!)) {
     return res.status(400).send("Method not allowed")
   }
 
@@ -25,6 +27,13 @@ const indexOrderHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
       const order = await createOrder(req.body)
       return res.status(200).send(order)
+    }
+
+    if (req.method === "GET") {
+      const auth = await serverAuth(req, res, ["admin"])
+      const storeId = auth.user.store.id
+      const orders = await getOrders(storeId)
+      return res.status(200).send(orders)
     }
   } catch (error: any) {
     return res.status(500).send(error.message)

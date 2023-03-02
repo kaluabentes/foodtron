@@ -144,6 +144,7 @@ const CompleteSignin = () => {
         )
       }
     })
+
     return () => subscription.unsubscribe()
   }, [watch])
 
@@ -162,11 +163,7 @@ const CompleteSignin = () => {
           marginBottom={10}
         >
           <FormLabel htmlFor="userName">{t("userName")}</FormLabel>
-          <Input
-            id="userName"
-            placeholder="Seu José"
-            {...register("userName")}
-          />
+          <Input id="userName" {...register("userName")} />
           <FormErrorMessage fontSize="xs">
             {errors.userName?.message}
           </FormErrorMessage>
@@ -178,7 +175,6 @@ const CompleteSignin = () => {
           borderColor="blackAlpha.200"
           borderWidth="1px"
           borderStyle="solid"
-          boxShadow="md"
           borderRadius="md"
           marginBottom={5}
           overflow="hidden"
@@ -190,11 +186,7 @@ const CompleteSignin = () => {
               marginBottom={4}
             >
               <FormLabel htmlFor="storeName">{t("storeName")}</FormLabel>
-              <Input
-                id="storeName"
-                placeholder="Padaria do Seu José"
-                {...register("storeName")}
-              />
+              <Input id="storeName" placeholder="" {...register("storeName")} />
               <FormErrorMessage fontSize="xs">
                 {errors.storeName?.message}
               </FormErrorMessage>
@@ -204,7 +196,7 @@ const CompleteSignin = () => {
               <InputGroup>
                 <Input
                   id="subdomain"
-                  placeholder="seujose"
+                  placeholder=""
                   {...register("subdomain")}
                 />
                 <InputRightAddon

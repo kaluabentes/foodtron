@@ -97,6 +97,7 @@ model StoreSchedule {
   start              String
   end                String
   isScheduledClosing Boolean
+  isEnabled          Boolean
   storeId            String
   store              Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
@@ -204,6 +205,8 @@ model Order {
   status        String
   username      String
   phone         String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   storeId String
   store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)

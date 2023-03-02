@@ -1,10 +1,7 @@
 import prisma from "@/lib/infra/prisma/client"
 import createDecimal from "@/lib/infra/prisma/createDecimal"
+import { ORDER_STATUS } from "../constants"
 import Order from "../types/Order"
-
-export const ORDER_STATUS = {
-  PENDING: "pending",
-}
 
 const createOrder = (order: Order) => {
   if (!order.storeId) {

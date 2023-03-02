@@ -8,7 +8,7 @@ const useCreateOrder = () => {
   const createOrder = async (order: Order) => {
     try {
       setIsCreating(true)
-      const response = await api.post("/api/orders", order)
+      const response = await api.get("/api/orders")
       const orderResponse = response.data
       console.log("orderResponse", orderResponse)
     } catch (error: any) {

@@ -50,15 +50,20 @@ const EditSchedule = ({ schedule }: EditScheduleProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
-  const { updateSchedule, isUpdating } = useUpdateSchedule(schedule.id!)
+  const { updateSchedule, isUpdating } = useUpdateSchedule()
 
   const { register, handleSubmit } = useForm({
     defaultValues: schedule,
   })
 
+  const handleFormSubmit = async (data: Schedule) => {
+    await updateSchedule(schedule.id!, data)
+    router.push("/admin/schedules")
+  }
+
   return (
     <AdminLayout>
-      <form onSubmit={handleSubmit(updateSchedule)}>
+      <form onSubmit={handleSubmit(handleFormSubmit)}>
         <PageHeader
           title={t("addSchedule")}
           actions={
@@ -95,6 +100,7 @@ const EditSchedule = ({ schedule }: EditScheduleProps) => {
                   {...register("weekDay")}
                   placeholder="Selecione"
                   required
+                  disabled
                 >
                   <option value="0">Domingo</option>
                   <option value="1">Segunda</option>

@@ -30,12 +30,25 @@ const completeSignin = async (req: NextApiRequest, res: NextApiResponse) => {
     await addVercelSubdomain(req.body.subdomain)
     await addGoDaddyRecord(req.body.subdomain)
 
+    const schedules = Array(7)
+      .fill(null)
+      .map((_, index) => ({
+        weekDay: String(index),
+        start: "08:00",
+        end: "23:00",
+        isScheduledClosing: false,
+        isEnabled: true,
+      }))
+
     const store = await prisma.store.create({
       data: {
         name: req.body.storeName,
         subdomain: req.body.subdomain,
         logo: req.body.logo,
         cover: req.body.cover,
+        schedules: {
+          create: schedules,
+        },
       },
     })
 
@@ -58,11 +71,7 @@ const completeSignin = async (req: NextApiRequest, res: NextApiResponse) => {
       status: "ok",
     })
   } catch (error: any) {
-    if (error.response) {
-      return res.status(400).send(error.response.data)
-    }
-
-    return res.status(400).send(error)
+    return res.status(400).send(error.message)
   }
 }
 
