@@ -141,7 +141,12 @@ const Schedules = () => {
                 <Td>{schedule.end}</Td>
                 <Td>
                   <Switch
-                    isChecked={getIsScheduledClosingState(schedule.id)}
+                    disabled={!getIsEnabledState(schedule.id)}
+                    isChecked={
+                      getIsEnabledState(schedule.id)
+                        ? getIsScheduledClosingState(schedule.id)
+                        : false
+                    }
                     onChange={() => handleIsScheduledClosingChange(schedule.id)}
                   />
                 </Td>
@@ -167,17 +172,7 @@ const Schedules = () => {
 
   return (
     <AdminLayout>
-      <PageHeader
-        title={t("schedules")}
-        actions={
-          <Button
-            colorScheme="brand"
-            onClick={() => router.push("/admin/schedules/add")}
-          >
-            Adicionar
-          </Button>
-        }
-      />
+      <PageHeader title={t("schedules")} />
       {!isPageLoaded && (
         <Flex padding={10} align="center" justifyContent="center">
           <Spinner colorScheme="brand" />
