@@ -19,11 +19,11 @@ const BaseOrderItem = ({
           display: "none",
         },
       }}
-      as="button"
+      as={onClick && "button"}
       textAlign="left"
       onClick={onClick}
     >
-      <Flex p={4}>
+      <Flex p={4} alignItems="center">
         <Box flex={1}>{leftSlot}</Box>
         <Box flex={1} textAlign="right">
           {rightSlot}

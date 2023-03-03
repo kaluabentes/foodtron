@@ -1,14 +1,22 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react"
+import { ReactNode } from "react"
 import { BiEdit } from "react-icons/bi"
 
 interface EditableDataItemProps {
   field: string
-  value: string
+  value: string | ReactNode
   onEdit?: () => void
 }
 
 const EditableDataItem = ({ field, value, onEdit }: EditableDataItemProps) => (
-  <Box as="button" textAlign="left" position="relative" onClick={onEdit}>
+  <Box
+    as={onEdit && "button"}
+    textAlign="left"
+    position="relative"
+    onClick={onEdit}
+    display="block"
+    width="100%"
+  >
     {onEdit && (
       <Flex
         color="gray.500"

@@ -1,5 +1,5 @@
 import { Flex, Icon, Text } from "@chakra-ui/react"
-import { BiChevronDown, BiMap } from "react-icons/bi"
+import { BiChevronDown, BiEdit, BiMap } from "react-icons/bi"
 
 const AddressSelectButton = ({
   address,
@@ -12,7 +12,7 @@ const AddressSelectButton = ({
     as="button"
     alignItems="center"
     gap={2}
-    p={3}
+    p={4}
     width="100%"
     onClick={onClick}
     backgroundColor="white"
@@ -30,12 +30,7 @@ const AddressSelectButton = ({
         </Text>
       )}
     </Flex>
-    <Icon
-      as={BiChevronDown}
-      fontSize="22px"
-      justifySelf="flex-end"
-      color="gray.500"
-    />
+    <Icon as={BiEdit} fontSize="22px" justifySelf="flex-end" color="gray.400" />
   </Flex>
 )
 

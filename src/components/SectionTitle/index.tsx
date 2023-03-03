@@ -10,7 +10,7 @@ const SectionTitle = ({ children }: SectionTitleProps) => (
     backgroundColor="white"
     p={4}
     fontSize="sm"
-    fontWeight="500"
+    fontWeight="700"
     textTransform="uppercase"
     borderBottom="1px solid transparent"
     borderColor="gray.100"

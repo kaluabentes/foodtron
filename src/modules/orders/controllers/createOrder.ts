@@ -1,3 +1,4 @@
+import formatPhone from "@/lib/helpers/string/formatPhone"
 import prisma from "@/lib/infra/prisma/client"
 import createDecimal from "@/lib/infra/prisma/createDecimal"
 import { ORDER_STATUS } from "../constants"
@@ -20,7 +21,7 @@ const createOrder = (order: Order) => {
       address: order.address,
       status: ORDER_STATUS.PENDING,
       username: order.username,
-      phone: order.phone,
+      phone: formatPhone(order.phone),
       store: {
         connect: {
           id: order.storeId,

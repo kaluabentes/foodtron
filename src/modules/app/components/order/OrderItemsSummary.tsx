@@ -37,6 +37,8 @@ import useBottomToast from "@/lib/hooks/useBottomToast"
 import OrderOptionsModal from "@/modules/app/components/order/OrderOptionsModal"
 import OrderProductItem from "@/modules/app/components/order/OrderProductItem"
 import BaseOrderItem from "@/modules/app/components/order/BaseOrderItem"
+import sumProductTotal from "@/modules/orders/lib/sumProductTotal"
+import sumOrderSubtotal from "@/modules/orders/lib/sumOrderSubtotal"
 
 const OrderItemsSummary = () => {
   const router = useRouter()
@@ -56,23 +58,6 @@ const OrderItemsSummary = () => {
   const [orderProductId, setOrderProductId] = useState("")
   const [productId, setProductId] = useState("")
   const [quantity, setQuantity] = useState(1)
-
-  const getSubtotal = () => {
-    return orderProducts.reduce(
-      (total, product) => total + getProductTotal(product),
-      0
-    )
-  }
-
-  const getProductTotal = (product: OrderProduct) => {
-    return (
-      Number(product.price) * product.quantity +
-      product.options!.reduce(
-        (total, opt) => total + opt.quantity * Number(opt.price),
-        0
-      )
-    )
-  }
 
   const removeOrderProduct = (orderProductId: string) => {
     resetState({
@@ -180,7 +165,7 @@ const OrderItemsSummary = () => {
           <OrderProductItem
             key={product.id}
             product={product}
-            productTotal={formatToRealCurrency(getProductTotal(product))}
+            productTotal={formatToRealCurrency(sumProductTotal(product))}
             onClick={() => handleEditProduct(product.id!, product.productId!)}
           />
         ))}
@@ -188,7 +173,7 @@ const OrderItemsSummary = () => {
           leftSlot={<Text>Subtotal</Text>}
           rightSlot={
             <Text fontSize="md" fontWeight="500" mb={1} textAlign="right">
-              {formatToRealCurrency(getSubtotal())}
+              {formatToRealCurrency(sumOrderSubtotal(orderProducts))}
             </Text>
           }
         />
@@ -211,7 +196,9 @@ const OrderItemsSummary = () => {
               color="brand.500"
             >
               {formatToRealCurrency(
-                tax ? getSubtotal() + Number(tax) : getSubtotal()
+                tax
+                  ? sumOrderSubtotal(orderProducts) + Number(tax)
+                  : sumOrderSubtotal(orderProducts)
               )}
             </Text>
           }

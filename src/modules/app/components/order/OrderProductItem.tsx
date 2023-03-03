@@ -7,7 +7,7 @@ import BaseOrderItem from "./BaseOrderItem"
 interface OrderProductItemProps {
   product: OrderProduct
   productTotal: string
-  onClick: () => void
+  onClick?: () => void
 }
 
 const OrderProductItem = ({
@@ -19,12 +19,12 @@ const OrderProductItem = ({
     <BaseOrderItem
       onClick={onClick}
       leftSlot={
-        <>
-          <Heading fontSize="md" fontWeight="500" mb={1}>
+        <Flex direction="column" gap={1}>
+          <Heading fontSize="md" fontWeight="500">
             {product.quantity} {product.title}
           </Heading>
           {product.options!.map((opt, index) => (
-            <Text key={String(index + 1)} fontSize="sm" color="gray.500" mb={1}>
+            <Text key={String(index + 1)} fontSize="sm" color="gray.500">
               {opt.quantity} {opt.title}
             </Text>
           ))}
@@ -33,19 +33,21 @@ const OrderProductItem = ({
               Obs.: {product.observation}
             </Text>
           )}
-          <Flex
-            color="gray.500"
-            mt={2}
-            shadow="md"
-            width="22px"
-            height="22px"
-            borderRadius="50%"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <BiEdit />
-          </Flex>
-        </>
+          {onClick && (
+            <Flex
+              color="gray.500"
+              mt={2}
+              shadow="md"
+              width="22px"
+              height="22px"
+              borderRadius="50%"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <BiEdit />
+            </Flex>
+          )}
+        </Flex>
       }
       rightSlot={
         <>
