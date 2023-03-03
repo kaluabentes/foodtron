@@ -46,7 +46,7 @@ const OrderCard = ({ order, isActive, onClick }: OrderCardProps) => (
     </Flex>
     <Flex justifyContent="space-between" alignItems="start" mb={4}>
       <Box>
-        <Heading fontSize="lg" fontWeight="500" mb={1}>
+        <Heading fontSize="lg" fontWeight="700" mb={1}>
           {order.username}
         </Heading>
         <Text fontSize="xs" color="gray.500" mb={4}>
@@ -61,7 +61,7 @@ const OrderCard = ({ order, isActive, onClick }: OrderCardProps) => (
       </Flex>
     </Flex>
     <Flex justifyContent="space-between" alignItems="end">
-      <Text fontSize="xl" fontWeight="700">
+      <Text fontSize="xl" fontWeight="500">
         {formatToRealCurrency(
           sumOrderSubtotal(order.orderProducts) + Number(order.tax)
         )}

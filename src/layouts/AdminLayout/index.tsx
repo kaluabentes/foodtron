@@ -48,7 +48,7 @@ const AdminLayout = ({
   })
 
   return (
-    <Flex direction={{ base: "column", md: "row" }}>
+    <Flex direction={{ base: "column", lg: "row" }}>
       {renderNavigation}
       <Box height={{ base: "none", md: "100vh" }} overflow="auto" width="100%">
         <Container

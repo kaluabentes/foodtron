@@ -13,6 +13,7 @@ import {
   TabPanels,
   Tabs,
   Text,
+  useBreakpointValue,
 } from "@chakra-ui/react"
 import { GetServerSideProps } from "next"
 import { configureAbly, useChannel } from "@ably-labs/react-hooks"
@@ -38,6 +39,8 @@ import OrderProductItem from "@/modules/app/components/order/OrderProductItem"
 import sumProductTotal from "@/modules/orders/lib/sumProductTotal"
 import BaseOrderItem from "@/modules/app/components/order/BaseOrderItem"
 import sumOrderSubtotal from "@/modules/orders/lib/sumOrderSubtotal"
+import OrderDetails from "@/modules/orders/components/OrderDetails"
+import OrderDetailsModal from "@/modules/orders/components/OrderDetailsModal"
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   return auth(context, ["admin"])
@@ -58,6 +61,11 @@ const Orders = ({ user }: OrdersProps) => {
 
   const { orders, getOrders } = useGetOrders()
   const [selectedOrder, setSelectedOrder] = useState<Order | undefined>()
+
+  const getFilteredOrders = (orders: Order[] = [], status: string) =>
+    orders.filter((order: Order) => order.status === status)
+
+  const pendingOrders = getFilteredOrders(orders, "pending")
 
   const playNotificationSound = async () => {
     const audio = new Audio("/notification.mp3")
@@ -95,9 +103,7 @@ const Orders = ({ user }: OrdersProps) => {
       return renderSkeleton()
     }
 
-    const filteredOrders = orders.filter(
-      (order: Order) => order.status === status
-    )
+    const filteredOrders = getFilteredOrders(orders, status)
 
     if (!filteredOrders.length) {
       return (
@@ -118,6 +124,48 @@ const Orders = ({ user }: OrdersProps) => {
       ))
   }
 
+  const renderOrderDetailsModal = useBreakpointValue({
+    base: selectedOrder ? (
+      <OrderDetailsModal
+        isOpen={Boolean(selectedOrder)}
+        order={selectedOrder}
+        onClose={() => setSelectedOrder(undefined)}
+      />
+    ) : null,
+    lg: null,
+  })
+
+  const renderOrderDetails = useBreakpointValue({
+    base: null,
+    lg: selectedOrder ? (
+      <Box width="100%" height="100vh" overflow="auto" p={4}>
+        <Box
+          margin="40px auto"
+          width="100%"
+          maxWidth="container.md"
+          display="flex"
+          flexDirection="column"
+          borderRadius="md"
+          overflow="hidden"
+          shadow="sm"
+        >
+          <OrderDetails order={selectedOrder} />
+        </Box>
+      </Box>
+    ) : (
+      <Box
+        margin="40px auto"
+        width="100%"
+        maxWidth="container.md"
+        background="white"
+        shadow="sm"
+        borderRadius="md"
+      >
+        <EmptyState message="Nenhum pedido selecionado" />
+      </Box>
+    ),
+  })
+
   return (
     <AdminLayout isFullWidth hasPadding={false}>
       <Flex alignItems="start">
@@ -126,7 +174,7 @@ const Orders = ({ user }: OrdersProps) => {
           borderRadius="md"
           shadow="md"
           height="100vh"
-          maxWidth="500px"
+          maxWidth={{ base: undefined, lg: "400px" }}
           width="100%"
           overflowY="auto"
         >
@@ -146,7 +194,17 @@ const Orders = ({ user }: OrdersProps) => {
               borderBottomWidth="1px"
             >
               <Tab flex={1} fontWeight="500" fontSize="sm">
-                Aguardando
+                Aguardando{" "}
+                {pendingOrders.length && (
+                  <Badge
+                    colorScheme="brand"
+                    variant="solid"
+                    borderRadius="md"
+                    ml={2}
+                  >
+                    {pendingOrders.length}
+                  </Badge>
+                )}
               </Tab>
               <Tab flex={1} fontWeight="500" fontSize="sm">
                 Fazendo
@@ -169,171 +227,8 @@ const Orders = ({ user }: OrdersProps) => {
             </TabPanels>
           </Tabs>
         </Box>
-        {selectedOrder ? (
-          <Box width="100%" height="100vh" overflow="auto">
-            <Box
-              margin="40px auto"
-              width="100%"
-              maxWidth="container.md"
-              display="flex"
-              flexDirection="column"
-              borderRadius="md"
-              overflow="hidden"
-              shadow="sm"
-            >
-              <Flex
-                alignItems="start"
-                justifyContent="space-between"
-                background="white"
-                p={{ base: 4, md: 6 }}
-              >
-                <Box>
-                  <Text fontWeight="500" fontSize="sm" mb={2}>
-                    Nome
-                  </Text>
-                  <Heading fontSize="2xl">{selectedOrder.username}</Heading>
-                </Box>
-                <Box textAlign="right">
-                  <Text mb={2} fontSize="sm" color="gray.400">
-                    Código de identificação
-                  </Text>
-                  <Badge fontSize="sm">{selectedOrder.id}</Badge>
-                </Box>
-              </Flex>
-              <Box
-                background="white"
-                overflow="hidden"
-                borderTop="1px solid transparent"
-                borderColor="gray.100"
-              >
-                <SectionTitle>Detalhes</SectionTitle>
-                <Box
-                  p={{ base: 4, md: 6 }}
-                  display="flex"
-                  flexDirection="column"
-                  gap={4}
-                >
-                  <EditableDataItem
-                    field="Status"
-                    value={selectedOrder.status}
-                  />
-                  <StripeSeparator horizontal />
-                  <EditableDataItem
-                    field="Data de criação"
-                    value={formatDate(String(selectedOrder.createdAt))}
-                  />
-                  <StripeSeparator horizontal />
-                  <EditableDataItem
-                    field="Telefone"
-                    value={selectedOrder.phone}
-                  />
-                  <StripeSeparator horizontal />
-                  <EditableDataItem
-                    field="Endereço"
-                    value={selectedOrder.address}
-                  />
-                  <StripeSeparator horizontal />
-                  <EditableDataItem
-                    field="Pagamento"
-                    value={selectedOrder.paymentMethod}
-                  />
-                  <StripeSeparator horizontal />
-                  {selectedOrder.paymentMethod === "Dinheiro" && (
-                    <EditableDataItem
-                      field="Troco pra quanto?"
-                      value={formatToRealCurrency(Number(selectedOrder.change))}
-                    />
-                  )}
-                  <StripeSeparator horizontal />
-                  {selectedOrder.paymentMethod === "Dinheiro" && (
-                    <EditableDataItem
-                      field="Taxa de entrega"
-                      value={formatToRealCurrency(Number(selectedOrder.tax))}
-                    />
-                  )}
-                </Box>
-              </Box>
-
-              <Box
-                background="white"
-                overflow="hidden"
-                borderTop="1px solid transparent"
-                borderColor="gray.100"
-              >
-                <SectionTitle>Produtos</SectionTitle>
-                {selectedOrder.orderProducts.map((orderProduct) => (
-                  <OrderProductItem
-                    key={orderProduct.id}
-                    product={orderProduct}
-                    productTotal={formatToRealCurrency(
-                      sumProductTotal(orderProduct)
-                    )}
-                  />
-                ))}
-                <BaseOrderItem
-                  leftSlot={<Text>Subtotal</Text>}
-                  rightSlot={
-                    <Text
-                      fontSize="md"
-                      fontWeight="500"
-                      mb={1}
-                      textAlign="right"
-                    >
-                      {formatToRealCurrency(
-                        sumOrderSubtotal(selectedOrder.orderProducts)
-                      )}
-                    </Text>
-                  }
-                />
-                <BaseOrderItem
-                  leftSlot={<Text>Taxa de entrega</Text>}
-                  rightSlot={
-                    <Text
-                      fontSize="md"
-                      fontWeight="500"
-                      mb={1}
-                      textAlign="right"
-                    >
-                      {selectedOrder.tax
-                        ? formatToRealCurrency(Number(selectedOrder.tax))
-                        : "---"}
-                    </Text>
-                  }
-                />
-                <BaseOrderItem
-                  leftSlot={<Text fontWeight="500">Total</Text>}
-                  rightSlot={
-                    <Text
-                      fontSize="xl"
-                      fontWeight="700"
-                      mb={1}
-                      textAlign="right"
-                      color="brand.500"
-                    >
-                      {formatToRealCurrency(
-                        selectedOrder.tax
-                          ? sumOrderSubtotal(selectedOrder.orderProducts) +
-                              Number(selectedOrder.tax)
-                          : sumOrderSubtotal(selectedOrder.orderProducts)
-                      )}
-                    </Text>
-                  }
-                />
-              </Box>
-            </Box>
-          </Box>
-        ) : (
-          <Box
-            margin="40px auto"
-            width="100%"
-            maxWidth="container.md"
-            background="white"
-            shadow="sm"
-            borderRadius="md"
-          >
-            <EmptyState message="Nenhum pedido selecionado" />
-          </Box>
-        )}
+        {renderOrderDetails}
+        {renderOrderDetailsModal}
       </Flex>
     </AdminLayout>
   )
