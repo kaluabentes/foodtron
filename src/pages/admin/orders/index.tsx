@@ -181,13 +181,25 @@ const Orders = ({ user }: OrdersProps) => {
               overflow="hidden"
               shadow="sm"
             >
-              <Box background="white" p={{ base: 4, md: 6 }}>
-                <Badge mb={4}>ID: {selectedOrder.id}</Badge>
-                <Text fontWeight="500" fontSize="sm" mb={2}>
-                  Nome
-                </Text>
-                <Heading fontSize="2xl">{selectedOrder.username}</Heading>
-              </Box>
+              <Flex
+                alignItems="start"
+                justifyContent="space-between"
+                background="white"
+                p={{ base: 4, md: 6 }}
+              >
+                <Box>
+                  <Text fontWeight="500" fontSize="sm" mb={2}>
+                    Nome
+                  </Text>
+                  <Heading fontSize="2xl">{selectedOrder.username}</Heading>
+                </Box>
+                <Box textAlign="right">
+                  <Text mb={2} fontSize="sm" color="gray.400">
+                    Código de identificação
+                  </Text>
+                  <Badge fontSize="sm">{selectedOrder.id}</Badge>
+                </Box>
+              </Flex>
               <Box
                 background="white"
                 overflow="hidden"
@@ -202,9 +214,15 @@ const Orders = ({ user }: OrdersProps) => {
                   gap={4}
                 >
                   <EditableDataItem
+                    field="Status"
+                    value={selectedOrder.status}
+                  />
+                  <StripeSeparator horizontal />
+                  <EditableDataItem
                     field="Data de criação"
                     value={formatDate(String(selectedOrder.createdAt))}
                   />
+                  <StripeSeparator horizontal />
                   <EditableDataItem
                     field="Telefone"
                     value={selectedOrder.phone}
@@ -226,8 +244,6 @@ const Orders = ({ user }: OrdersProps) => {
                       value={formatToRealCurrency(Number(selectedOrder.change))}
                     />
                   )}
-                  <StripeSeparator horizontal />
-
                   <StripeSeparator horizontal />
                   {selectedOrder.paymentMethod === "Dinheiro" && (
                     <EditableDataItem
