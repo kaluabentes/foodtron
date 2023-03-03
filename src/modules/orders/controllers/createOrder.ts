@@ -44,6 +44,7 @@ const createOrder = (order: Order) => {
       },
     },
     include: {
+      store: true,
       orderProducts: {
         include: {
           options: true,

@@ -42,11 +42,6 @@ export const topMenu: RouteItem[] = [
     path: "/admin/categories",
   },
   {
-    icon: BiMoney,
-    label: "Pagamentos",
-    path: "/admin/payment-methods",
-  },
-  {
     icon: BiMap,
     label: "Locais",
     path: "/admin/locations",

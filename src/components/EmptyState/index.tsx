@@ -14,8 +14,9 @@ const EmptyState = ({ message, isGray }: EmptyStateProps) => (
     shadow="sm"
     backgroundColor={isGray ? "gray.50" : "white"}
     borderRadius="md"
+    border="1px solid transparent"
+    borderColor={isGray ? "gray.100" : "transparent"}
     overflow="auto"
-    marginBottom={8}
     p={10}
     gap={7}
   >

@@ -146,7 +146,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
           />
           {paymentMethod.name === "Dinheiro" ? (
             <>
-              <StripeSeparator vertical />
+              <StripeSeparator horizontal />
               <EditableDataItem
                 field="Troco pra quanto?"
                 value={formatToRealCurrency(Number(paymentMethod.change))}
@@ -169,12 +169,12 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
             value={assembledAddress}
             onEdit={() => router.push("/edit-address?redirect=/order-confirm")}
           />
-          <StripeSeparator vertical />
+          <StripeSeparator horizontal />
           <EditableDataItem
             field="Taxa"
             value={formatToRealCurrency(Number(tax))}
           />
-          <StripeSeparator vertical />
+          <StripeSeparator horizontal />
           <EditableDataItem
             field="Tempo estimado"
             value={`${address.location.estimatedTime} min.`}
@@ -194,7 +194,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
             value={user.name}
             onEdit={() => router.push("/edit-user?redirect=/order-confirm")}
           />
-          <StripeSeparator vertical />
+          <StripeSeparator horizontal />
           <EditableDataItem field="Phone" value={user.phone} />
         </Flex>
       </Box>

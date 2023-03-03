@@ -6,6 +6,8 @@ import createOrder from "@/modules/orders/controllers/createOrder"
 import runMiddleware from "@/lib/infra/next/runMiddleware"
 import serverAuth from "@/middlewares/serverAuth"
 import getOrders from "@/modules/orders/controllers/getOrders"
+import prisma from "@/lib/infra/prisma/client"
+import createChannel from "@/lib/infra/ably/createChannel"
 
 const cors = Cors({
   methods: ["POST", "GET", "HEAD"],
@@ -26,6 +28,10 @@ const indexOrderHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     if (req.method === "POST") {
       const order = await createOrder(req.body)
+
+      const channel = await createChannel(order.store.subdomain!, "server")
+      await channel.publish("newOrder", order)
+
       return res.status(200).send(order)
     }
 

@@ -10,6 +10,8 @@ interface Order {
   status: string
   username: string
   phone: string
+  createdAt: String
+  updatedAt: String
   orderProducts: OrderProduct[]
 }
 

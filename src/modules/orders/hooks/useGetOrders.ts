@@ -1,29 +1,29 @@
-import { useEffect } from "react"
-import useSWR from "swr"
+import { useEffect, useState } from "react"
 
-import useBottomToast from "@/lib/hooks/useBottomToast"
 import api from "@/lib/infra/axios/api"
-
-const fetcher = (url: string) => api.get(url).then((res) => res.data)
+import Order from "../types/Order"
 
 const useGetOrders = () => {
-  const toast = useBottomToast()
+  const [orders, setOrders] = useState<Order[] | undefined>()
 
-  const { data: orders, error, isLoading } = useSWR(`/api/orders`, fetcher)
+  const getOrders = async () => {
+    try {
+      const response = await api.get("/api/orders")
+      setOrders(response.data)
+      return Promise.resolve()
+    } catch (error: any) {
+      console.log(error.message)
+    }
+  }
 
   useEffect(() => {
-    if (error) {
-      toast({
-        title: "Atenção",
-        description: error.message,
-        status: "error",
-      })
-    }
-  }, [error])
+    getOrders()
+  }, [])
 
   return {
     orders,
-    isLoading,
+    setOrders,
+    getOrders,
   }
 }
 
