@@ -21,7 +21,7 @@ const MenuItem = ({ product, onClick }: MenuItemProps) => (
       as="button"
       width="full"
       textAlign="left"
-      p={4}
+      p={{ base: 4, md: 6 }}
       backgroundColor="white"
     >
       <Flex>

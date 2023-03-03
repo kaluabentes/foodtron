@@ -181,7 +181,7 @@ const Orders = ({ user }: OrdersProps) => {
               overflow="hidden"
               shadow="sm"
             >
-              <Box background="white" p={4}>
+              <Box background="white" p={{ base: 4, md: 6 }}>
                 <Badge mb={4}>ID: {selectedOrder.id}</Badge>
                 <Text fontWeight="500" fontSize="sm" mb={2}>
                   Nome
@@ -195,7 +195,12 @@ const Orders = ({ user }: OrdersProps) => {
                 borderColor="gray.100"
               >
                 <SectionTitle>Detalhes</SectionTitle>
-                <Box p={4} display="flex" flexDirection="column" gap={4}>
+                <Box
+                  p={{ base: 4, md: 6 }}
+                  display="flex"
+                  flexDirection="column"
+                  gap={4}
+                >
                   <EditableDataItem
                     field="Data de criação"
                     value={formatDate(String(selectedOrder.createdAt))}

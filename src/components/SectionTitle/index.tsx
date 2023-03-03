@@ -8,7 +8,9 @@ interface SectionTitleProps {
 const SectionTitle = ({ children }: SectionTitleProps) => (
   <Heading
     backgroundColor="white"
-    p={4}
+    p={{ base: 4, md: 6 }}
+    pt={{ base: 4, md: 4 }}
+    pb={{ base: 4, md: 4 }}
     fontSize="sm"
     fontWeight="700"
     textTransform="uppercase"

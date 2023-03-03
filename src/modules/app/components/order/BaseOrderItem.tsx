@@ -23,7 +23,7 @@ const BaseOrderItem = ({
       textAlign="left"
       onClick={onClick}
     >
-      <Flex p={4} alignItems="center">
+      <Flex p={{ base: 4, md: 6 }} alignItems="center">
         <Box flex={1}>{leftSlot}</Box>
         <Box flex={1} textAlign="right">
           {rightSlot}
