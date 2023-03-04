@@ -11,12 +11,23 @@ import OrderProductItem from "@/modules/app/components/order/OrderProductItem"
 import sumOrderSubtotal from "../lib/sumOrderSubtotal"
 import sumProductTotal from "../lib/sumProductTotal"
 import Order from "../types/Order"
+import {
+  ORDER_STATUS,
+  ORDER_STATUS_COLOR_SCHEME,
+  ORDER_STATUS_TEXT,
+} from "../constants"
 
 interface OrderDetailsProps {
   order: Order
+  isConfirming?: boolean
+  onConfirm?: () => void
 }
 
-const OrderDetails = ({ order }: OrderDetailsProps) => (
+const OrderDetails = ({
+  order,
+  onConfirm,
+  isConfirming,
+}: OrderDetailsProps) => (
   <>
     <Flex
       alignItems="start"
@@ -48,7 +59,14 @@ const OrderDetails = ({ order }: OrderDetailsProps) => (
     >
       <SectionTitle>Detalhes</SectionTitle>
       <Box p={{ base: 4, md: 6 }} display="flex" flexDirection="column" gap={4}>
-        <EditableDataItem field="Status" value={order.status} />
+        <EditableDataItem
+          field="Status"
+          value={
+            <Badge colorScheme={ORDER_STATUS_COLOR_SCHEME[order.status]}>
+              {ORDER_STATUS_TEXT[order.status]}
+            </Badge>
+          }
+        />
         <StripeSeparator horizontal />
         <EditableDataItem
           field="Data de criação"
@@ -136,9 +154,19 @@ const OrderDetails = ({ order }: OrderDetailsProps) => (
           </Text>
         }
       />
-      <Flex background="white" p={{ base: 4, md: 6 }} justifyContent="end">
-        <Button colorScheme="brand">Confirmar</Button>
-      </Flex>
+      {onConfirm && (
+        <Flex background="white" p={{ base: 4, md: 6 }} justifyContent="end">
+          <Button
+            colorScheme="brand"
+            onClick={onConfirm}
+            isLoading={isConfirming}
+          >
+            {order.status === ORDER_STATUS.PENDING && "Confirmar"}
+            {order.status === ORDER_STATUS.DOING && "Despachar"}
+            {order.status === ORDER_STATUS.DELIVERY && "Confirmar entrega"}
+          </Button>
+        </Flex>
+      )}
     </Box>
   </>
 )

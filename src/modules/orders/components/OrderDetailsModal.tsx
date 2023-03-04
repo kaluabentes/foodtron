@@ -13,10 +13,18 @@ import OrderDetails from "./OrderDetails"
 interface OrderDetailsModal {
   order: Order
   onClose: () => void
+  onConfirm?: () => void
   isOpen: boolean
+  isConfirming?: boolean
 }
 
-const OrderDetailsModal = ({ order, onClose, isOpen }: OrderDetailsModal) => (
+const OrderDetailsModal = ({
+  order,
+  isOpen,
+  onClose,
+  onConfirm,
+  isConfirming,
+}: OrderDetailsModal) => (
   <Modal
     onClose={onClose}
     size={{ base: "full", md: "lg" }}
@@ -34,7 +42,11 @@ const OrderDetailsModal = ({ order, onClose, isOpen }: OrderDetailsModal) => (
         <Heading fontSize="lg">Detalhes do pedido</Heading>
         <CloseButton onClick={onClose} />
       </Flex>
-      <OrderDetails order={order} />
+      <OrderDetails
+        isConfirming={isConfirming}
+        onConfirm={onConfirm}
+        order={order}
+      />
     </ModalContent>
   </Modal>
 )

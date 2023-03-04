@@ -2,7 +2,7 @@ import { Box, Flex, Heading } from "@chakra-ui/react"
 import { ReactNode } from "react"
 
 interface PageHeaderProps {
-  title: string
+  title: string | ReactNode
   actions?: ReactNode
 }
 

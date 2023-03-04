@@ -3,21 +3,25 @@ import { useEffect, useState } from "react"
 import api from "@/lib/infra/axios/api"
 import Order from "../types/Order"
 
-const useGetOrders = () => {
+const useGetOrders = (initialFetch = true) => {
   const [orders, setOrders] = useState<Order[] | undefined>()
 
-  const getOrders = async () => {
+  const getOrders = async (isArchive = false) => {
     try {
-      const response = await api.get("/api/orders")
+      const response = await api.get(
+        isArchive ? "/api/orders?isArchive=true" : "/api/orders"
+      )
       setOrders(response.data)
-      return Promise.resolve()
+      return response.data
     } catch (error: any) {
       console.log(error.message)
     }
   }
 
   useEffect(() => {
-    getOrders()
+    if (initialFetch) {
+      getOrders()
+    }
   }, [])
 
   return {

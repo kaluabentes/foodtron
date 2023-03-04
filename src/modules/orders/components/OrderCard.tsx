@@ -11,13 +11,16 @@ import {
   Text,
 } from "@chakra-ui/react"
 import { BiMap } from "react-icons/bi"
+import { ORDER_STATUS } from "../constants"
 import sumOrderSubtotal from "../lib/sumOrderSubtotal"
 import Order from "../types/Order"
 
 interface OrderCardProps {
   order: Order
   isActive: boolean
+  isConfirming?: boolean
   onClick: () => void
+  onConfirm?: () => void
 }
 
 const getNeighborhood = (address: string) => {
@@ -25,7 +28,13 @@ const getNeighborhood = (address: string) => {
   return addressParts[addressParts.length - 1]
 }
 
-const OrderCard = ({ order, isActive, onClick }: OrderCardProps) => (
+const OrderCard = ({
+  order,
+  isActive,
+  isConfirming,
+  onClick,
+  onConfirm,
+}: OrderCardProps) => (
   <Box
     key={order.id}
     borderBottom="1px solid transparent"
@@ -40,11 +49,23 @@ const OrderCard = ({ order, isActive, onClick }: OrderCardProps) => (
     onClick={onClick}
     textAlign="left"
   >
-    <Flex justifyContent="space-between" alignItems="center" mb={4}>
+    <Flex
+      justifyContent="space-between"
+      alignItems="center"
+      mb={4}
+      zIndex="20"
+      position="relative"
+    >
       <Badge fontWeight="500">ID: {order.id}</Badge>
       <CloseButton color="gray.500" p={4} width="12px" height="12px" />
     </Flex>
-    <Flex justifyContent="space-between" alignItems="start" mb={4}>
+    <Flex
+      justifyContent="space-between"
+      alignItems="start"
+      mb={4}
+      zIndex="20"
+      position="relative"
+    >
       <Box>
         <Heading fontSize="lg" fontWeight="700" mb={1}>
           {order.username}
@@ -60,14 +81,33 @@ const OrderCard = ({ order, isActive, onClick }: OrderCardProps) => (
         </Text>
       </Flex>
     </Flex>
-    <Flex justifyContent="space-between" alignItems="end">
+    <Flex
+      zIndex="20"
+      position="relative"
+      justifyContent="space-between"
+      alignItems="center"
+    >
       <Text fontSize="xl" fontWeight="500">
         {formatToRealCurrency(
           sumOrderSubtotal(order.orderProducts) + Number(order.tax)
         )}
       </Text>
-      <Button lineHeight="0" colorScheme="brand" size="sm">
-        Confirmar
+      <Button
+        lineHeight="0"
+        colorScheme="brand"
+        size="sm"
+        onClick={(event) => {
+          event.stopPropagation()
+
+          if (onConfirm) {
+            onConfirm()
+          }
+        }}
+        isLoading={isConfirming}
+      >
+        {order.status === ORDER_STATUS.PENDING && "Confirmar"}
+        {order.status === ORDER_STATUS.DOING && "Despachar"}
+        {order.status === ORDER_STATUS.DELIVERY && "Confirmar entrega"}
       </Button>
     </Flex>
     {isActive ? (
@@ -80,6 +120,7 @@ const OrderCard = ({ order, isActive, onClick }: OrderCardProps) => (
           top="0"
           right="0"
           transform="translate(16px)"
+          zIndex="10"
         />
         <Box
           position="absolute"
@@ -90,6 +131,7 @@ const OrderCard = ({ order, isActive, onClick }: OrderCardProps) => (
           top="0"
           left="0"
           transform="scaleX(1.5)"
+          zIndex="10"
         />
       </>
     ) : null}

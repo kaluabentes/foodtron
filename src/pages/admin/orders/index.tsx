@@ -41,6 +41,9 @@ import BaseOrderItem from "@/modules/app/components/order/BaseOrderItem"
 import sumOrderSubtotal from "@/modules/orders/lib/sumOrderSubtotal"
 import OrderDetails from "@/modules/orders/components/OrderDetails"
 import OrderDetailsModal from "@/modules/orders/components/OrderDetailsModal"
+import useUpdateOrder from "@/modules/orders/hooks/useUpdateOrder"
+import OrderCardTabs from "@/modules/orders/components/OrderCardTabs"
+import { useRouter } from "next/router"
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   return auth(context, ["admin"])
@@ -57,19 +60,47 @@ interface OrdersProps {
 configureAbly(process.env.NEXT_PUBLIC_ABLY_SUBSCRIBE_KEY!)
 
 const Orders = ({ user }: OrdersProps) => {
+  const router = useRouter()
   const toast = useBottomToast()
 
   const { orders, getOrders } = useGetOrders()
+  const { updateOrder, isUpdating, orderId } = useUpdateOrder()
+
   const [selectedOrder, setSelectedOrder] = useState<Order | undefined>()
 
   const getFilteredOrders = (orders: Order[] = [], status: string) =>
     orders.filter((order: Order) => order.status === status)
 
-  const pendingOrders = getFilteredOrders(orders, "pending")
+  const pendingOrders = getFilteredOrders(orders, ORDER_STATUS.PENDING)
+  const doingOrders = getFilteredOrders(orders, ORDER_STATUS.DOING)
+  const deliveryOrders = getFilteredOrders(orders, ORDER_STATUS.DELIVERY)
 
   const playNotificationSound = async () => {
     const audio = new Audio("/notification.mp3")
     await audio.play()
+  }
+
+  const handleConfirm = async (order: Order) => {
+    let status
+
+    if (order.status === ORDER_STATUS.PENDING) {
+      status = ORDER_STATUS.DOING
+    }
+
+    if (order.status === ORDER_STATUS.DOING) {
+      status = ORDER_STATUS.DELIVERY
+    }
+
+    if (order.status === ORDER_STATUS.DELIVERY) {
+      status = ORDER_STATUS.DONE
+    }
+
+    await updateOrder(order.id, {
+      status,
+    })
+
+    setSelectedOrder(undefined)
+    getOrders()
   }
 
   useChannel(user.store.subdomain!, async () => {
@@ -118,8 +149,10 @@ const Orders = ({ user }: OrdersProps) => {
       .map((order: Order) => (
         <OrderCard
           onClick={() => setSelectedOrder(order)}
+          onConfirm={() => handleConfirm(order!)}
           order={order}
           isActive={selectedOrder! && selectedOrder.id === order.id}
+          isConfirming={isUpdating && orderId === order.id}
         />
       ))
   }
@@ -127,9 +160,11 @@ const Orders = ({ user }: OrdersProps) => {
   const renderOrderDetailsModal = useBreakpointValue({
     base: selectedOrder ? (
       <OrderDetailsModal
+        isConfirming={isUpdating}
         isOpen={Boolean(selectedOrder)}
         order={selectedOrder}
         onClose={() => setSelectedOrder(undefined)}
+        onConfirm={() => handleConfirm(selectedOrder)}
       />
     ) : null,
     lg: null,
@@ -149,19 +184,25 @@ const Orders = ({ user }: OrdersProps) => {
           overflow="hidden"
           shadow="sm"
         >
-          <OrderDetails order={selectedOrder} />
+          <OrderDetails
+            isConfirming={isUpdating}
+            order={selectedOrder}
+            onConfirm={() => handleConfirm(selectedOrder)}
+          />
         </Box>
       </Box>
     ) : (
-      <Box
-        margin="40px auto"
-        width="100%"
-        maxWidth="container.md"
-        background="white"
-        shadow="sm"
-        borderRadius="md"
-      >
-        <EmptyState message="Nenhum pedido selecionado" />
+      <Box width="100%" p={4}>
+        <Box
+          margin="40px auto"
+          width="100%"
+          maxWidth="container.md"
+          background="white"
+          shadow="sm"
+          borderRadius="md"
+        >
+          <EmptyState message="Nenhum pedido selecionado" />
+        </Box>
       </Box>
     ),
   })
@@ -169,51 +210,12 @@ const Orders = ({ user }: OrdersProps) => {
   return (
     <AdminLayout isFullWidth hasPadding={false}>
       <Flex alignItems="start">
-        <Box
-          background="white"
-          borderRadius="md"
-          shadow="md"
-          height="100vh"
-          maxWidth={{ base: undefined, lg: "400px" }}
-          width="100%"
-          overflowY="auto"
-        >
-          <Box
-            p={4}
-            pt={0}
-            pb={0}
-            borderBottom="1px solid transparent"
-            borderColor="gray.200"
-          >
-            <PageHeader title="Pedidos" />
-          </Box>
-          <Tabs colorScheme="brand">
-            <TabList
-              overflowX={{ base: "auto", md: "initial" }}
-              overflowY={{ base: "hidden", md: "initial" }}
-              borderBottomWidth="1px"
-            >
-              <Tab flex={1} fontWeight="500" fontSize="sm">
-                Aguardando{" "}
-                {pendingOrders.length && (
-                  <Badge
-                    colorScheme="brand"
-                    variant="solid"
-                    borderRadius="md"
-                    ml={2}
-                  >
-                    {pendingOrders.length}
-                  </Badge>
-                )}
-              </Tab>
-              <Tab flex={1} fontWeight="500" fontSize="sm">
-                Fazendo
-              </Tab>
-              <Tab flex={1} fontWeight="500" fontSize="sm">
-                Entrega
-              </Tab>
-            </TabList>
-
+        <OrderCardTabs
+          onArchiveClick={() => router.push("/admin/orders/archive")}
+          pendingOrders={pendingOrders}
+          doingOrders={doingOrders}
+          deliveryOrders={deliveryOrders}
+          panels={
             <TabPanels>
               <TabPanel pt={0} pb={0} overflow="hidden">
                 {renderOrders(ORDER_STATUS.PENDING)}
@@ -225,8 +227,8 @@ const Orders = ({ user }: OrdersProps) => {
                 {renderOrders(ORDER_STATUS.DELIVERY)}
               </TabPanel>
             </TabPanels>
-          </Tabs>
-        </Box>
+          }
+        />
         {renderOrderDetails}
         {renderOrderDetailsModal}
       </Flex>

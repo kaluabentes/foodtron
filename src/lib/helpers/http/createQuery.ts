@@ -1,4 +1,4 @@
-const createQuery = (queryObject: any) =>
+const createQuery = (queryObject: any, url?: string) =>
   `?${Object.keys(queryObject)
     .map((queryKey) => `${queryKey}=${queryObject[queryKey]}`)
     .join("&")}`

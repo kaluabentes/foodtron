@@ -38,7 +38,7 @@ const indexOrderHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "GET") {
       const auth = await serverAuth(req, res, ["admin"])
       const storeId = auth.user.store.id
-      const orders = await getOrders(storeId)
+      const orders = await getOrders(storeId, Boolean(req.query.isArchive))
       return res.status(200).send(orders)
     }
   } catch (error: any) {

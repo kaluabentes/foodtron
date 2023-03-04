@@ -1,9 +1,15 @@
 import prisma from "@/lib/infra/prisma/client"
+import { ORDER_STATUS } from "../constants"
 
-const getOrders = (storeId: string) => {
+const getOrders = (storeId: string, isArchive = false) => {
   return prisma.order.findMany({
     where: {
       storeId,
+      status: {
+        in: isArchive
+          ? [ORDER_STATUS.DONE, ORDER_STATUS.CANCELLED]
+          : [ORDER_STATUS.PENDING, ORDER_STATUS.DELIVERY, ORDER_STATUS.DOING],
+      },
     },
     include: {
       orderProducts: {
