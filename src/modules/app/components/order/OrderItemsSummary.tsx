@@ -11,29 +11,17 @@ import {
   Tr,
 } from "@chakra-ui/react"
 
-import AppLayout from "@/layouts/AppLayout"
 import { useAppContext } from "@/contexts/app"
 import { useRouter } from "next/router"
-import Location from "@/modules/locations/types/Location"
-import BarIconButton from "@/components/BarIconButton"
-import {
-  BiCommentEdit,
-  BiEdit,
-  BiEditAlt,
-  BiLeftArrowAlt,
-} from "react-icons/bi"
 import OrderProduct from "@/modules/orders/types/OrderProduct"
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
-import prisma from "@/lib/infra/prisma/client"
 import OrderProductModal, {
   OrderProductValues,
 } from "@/modules/app/components/order/OrderProductModal"
 import useGetProducts from "@/modules/products/hooks/useGetProducts"
 import Product from "@/modules/products/types/Product"
 import OptionGroup from "@/modules/options/types/OptionGroup"
-import { ProductOptionGroup } from "@prisma/client"
 import Option from "@/modules/options/types/Option"
-import useBottomToast from "@/lib/hooks/useBottomToast"
 import OrderOptionsModal from "@/modules/app/components/order/OrderOptionsModal"
 import OrderProductItem from "@/modules/app/components/order/OrderProductItem"
 import BaseOrderItem from "@/modules/app/components/order/BaseOrderItem"

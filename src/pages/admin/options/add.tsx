@@ -136,7 +136,7 @@ const AddOption = () => {
                 gap={4}
                 p={4}
                 border="1px solid transparent"
-                borderColor="gray.200"
+                borderColor="gray.100"
                 borderRadius="md"
               >
                 <Box flex={1}>
@@ -167,7 +167,7 @@ const AddOption = () => {
               <Button
                 colorScheme="brand"
                 onClick={handleAddOption}
-                disabled={!option.title || !option.price}
+                disabled={!option.title}
               >
                 Adicionar opção
               </Button>

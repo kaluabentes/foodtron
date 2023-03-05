@@ -8,11 +8,13 @@ interface OrderConfirmModalProps {
   onClose: () => void
   onConfirm: () => void
   isOpen: boolean
+  isLoading?: boolean
   address: Address
 }
 
 const OrderConfirmModal = ({
   isOpen,
+  isLoading,
   address,
   onConfirm,
   onClose,
@@ -46,7 +48,12 @@ const OrderConfirmModal = ({
         </Heading>
         {address.street}, {address.number}, {address.location.neighborhood}
       </Box>
-      <Button colorScheme="brand" onClick={onConfirm} mt={4}>
+      <Button
+        colorScheme="brand"
+        onClick={onConfirm}
+        mt={4}
+        isLoading={isLoading}
+      >
         Confirmar
       </Button>
     </BottomModal>

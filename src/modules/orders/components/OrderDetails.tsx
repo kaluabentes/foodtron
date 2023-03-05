@@ -1,12 +1,4 @@
-import {
-  Badge,
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Text,
-  useBreakpointValue,
-} from "@chakra-ui/react"
+import { Badge, Box, Button, Flex, Heading, Text } from "@chakra-ui/react"
 
 import EditableDataItem from "@/components/EditableDataItem"
 import SectionTitle from "@/components/SectionTitle"

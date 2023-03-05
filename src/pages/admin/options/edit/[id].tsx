@@ -192,7 +192,7 @@ const EditOption = ({ option: defaultOption }: EditOptionProps) => {
               <Button
                 colorScheme="brand"
                 onClick={handleAddOption}
-                disabled={!option.title || !option.price}
+                disabled={!option.title}
               >
                 Adicionar opção
               </Button>

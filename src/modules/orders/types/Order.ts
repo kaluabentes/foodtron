@@ -10,8 +10,9 @@ interface Order {
   status: string
   username: string
   phone: string
-  createdAt: String
-  updatedAt: String
+  createdAt: string
+  updatedAt: string
+  estimatedTime: string
   orderProducts: OrderProduct[]
   reasonForCancellation: string
 }

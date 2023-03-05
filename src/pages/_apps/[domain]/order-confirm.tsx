@@ -16,12 +16,13 @@ import OrderConfirmModal from "@/modules/app/components/order/OrderConfirmModal"
 import EditableDataItem from "@/components/EditableDataItem"
 import useCreateOrder from "@/modules/orders/hooks/useCreateOrder"
 import useBottomToast from "@/lib/hooks/useBottomToast"
+import Store from "@/modules/stores/types/Store"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
 
   return {
-    paths: stores.map((store) => ({
+    paths: stores.map((store: any) => ({
       params: {
         domain: store.subdomain,
       },
@@ -66,7 +67,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
   const [isOrderConfirmModalOpen, setIsOrderConfirmModalOpen] = useState(false)
   const { createOrder, isCreating } = useCreateOrder()
 
-  const handleOrderConfirm = () => {
+  const handleOrderConfirm = async () => {
     if (!address.location.neighborhood || !address.street || !address.number) {
       setIsOrderConfirmModalOpen(false)
       toast({
@@ -97,7 +98,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       return
     }
 
-    createOrder({
+    const order = await createOrder({
       tax,
       paymentMethod: paymentMethod.name,
       change: paymentMethod.change,
@@ -105,8 +106,11 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       storeId,
       username: user.name,
       phone: user.phone,
+      estimatedTime: address.location.estimatedTime,
       orderProducts: products,
     })
+    setIsOrderConfirmModalOpen(false)
+    router.push(`/track-order?id=${order.id}`)
   }
 
   return (
@@ -213,6 +217,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         onClose={() => setIsOrderConfirmModalOpen(false)}
         address={address}
         isOpen={isOrderConfirmModalOpen}
+        isLoading={isCreating}
         onConfirm={handleOrderConfirm}
       />
     </AppLayout>

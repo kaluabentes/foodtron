@@ -22,6 +22,7 @@ const createOrder = (order: Order) => {
       status: ORDER_STATUS.PENDING,
       username: order.username,
       phone: formatPhone(order.phone),
+      estimatedTime: order.estimatedTime,
       store: {
         connect: {
           id: order.storeId,
@@ -38,7 +39,7 @@ const createOrder = (order: Order) => {
             create: orderProduct.options?.map((option) => ({
               title: option.title,
               quantity: option.quantity,
-              price: createDecimal(option.price),
+              price: option.price ? createDecimal(option.price) : null,
             })),
           },
         })),
