@@ -1,4 +1,12 @@
-import { Badge, Box, Button, Flex, Heading, Text } from "@chakra-ui/react"
+import {
+  Badge,
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react"
 
 import EditableDataItem from "@/components/EditableDataItem"
 import SectionTitle from "@/components/SectionTitle"
@@ -21,12 +29,16 @@ interface OrderDetailsProps {
   order: Order
   isConfirming?: boolean
   onConfirm?: () => void
+  onCancel?: () => void
+  isCancelling?: boolean
 }
 
 const OrderDetails = ({
   order,
   onConfirm,
+  onCancel,
   isConfirming,
+  isCancelling,
 }: OrderDetailsProps) => (
   <>
     <Flex
@@ -67,10 +79,24 @@ const OrderDetails = ({
             </Badge>
           }
         />
+        {order.reasonForCancellation && (
+          <>
+            <StripeSeparator horizontal />
+            <EditableDataItem
+              field="Motivo de cancelamento"
+              value={order.reasonForCancellation}
+            />
+          </>
+        )}
         <StripeSeparator horizontal />
         <EditableDataItem
           field="Data de criação"
           value={formatDate(String(order.createdAt))}
+        />
+        <StripeSeparator horizontal />
+        <EditableDataItem
+          field="Data de última modificação"
+          value={formatDate(String(order.updatedAt))}
         />
         <StripeSeparator horizontal />
         <EditableDataItem
@@ -154,8 +180,18 @@ const OrderDetails = ({
           </Text>
         }
       />
-      {onConfirm && (
-        <Flex background="white" p={{ base: 4, md: 6 }} justifyContent="end">
+      <Flex
+        background="white"
+        p={onCancel || onConfirm ? { base: 4, md: 6 } : undefined}
+        justifyContent="end"
+        gap={4}
+      >
+        {onCancel && (
+          <Button onClick={onCancel} isLoading={isCancelling}>
+            Cancelar
+          </Button>
+        )}
+        {onConfirm && (
           <Button
             colorScheme="brand"
             onClick={onConfirm}
@@ -165,8 +201,8 @@ const OrderDetails = ({
             {order.status === ORDER_STATUS.DOING && "Despachar"}
             {order.status === ORDER_STATUS.DELIVERY && "Confirmar entrega"}
           </Button>
-        </Flex>
-      )}
+        )}
+      </Flex>
     </Box>
   </>
 )

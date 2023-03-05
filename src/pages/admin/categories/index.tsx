@@ -17,7 +17,7 @@ import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { BiEdit, BiTrash } from "react-icons/bi"
 
-import DeleteAlert from "@/components/DeleteAlert"
+import ConfirmAlert from "@/components/ConfirmAlert"
 import EmptyState from "@/components/EmptyState"
 import PageHeader from "@/components/PageHeader"
 import TableSkeleton from "@/components/TableSkeleton"
@@ -135,7 +135,7 @@ const Categories = () => {
         </Flex>
       )}
       {isPageLoaded && renderData()}
-      <DeleteAlert
+      <ConfirmAlert
         title="Deletar categoria"
         description="Tem certeza? Você não pode desfazer esta ação."
         isOpen={Boolean(selectedCategoryId)}

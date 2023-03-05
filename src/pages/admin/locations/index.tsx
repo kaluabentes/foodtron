@@ -20,7 +20,7 @@ import PageHeader from "@/components/PageHeader"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import auth from "@/middlewares/auth"
 import { BiEdit, BiTrash } from "react-icons/bi"
-import DeleteAlert from "@/components/DeleteAlert"
+import ConfirmAlert from "@/components/ConfirmAlert"
 import { useState } from "react"
 import useDeleteLocation from "@/modules/locations/hooks/useDeleteLocation"
 import useGetLocations from "@/modules/locations/hooks/useGetLocations"
@@ -135,7 +135,7 @@ const Locations = () => {
         </Flex>
       )}
       {isPageLoaded && renderData()}
-      <DeleteAlert
+      <ConfirmAlert
         title="Deletar localização"
         description="Tem certeza? Você não pode desfazer esta ação."
         isOpen={Boolean(selectedLocationId)}

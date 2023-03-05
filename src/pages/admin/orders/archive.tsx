@@ -2,6 +2,7 @@ import {
   Badge,
   Box,
   Button,
+  Flex,
   IconButton,
   Table,
   Tbody,
@@ -30,6 +31,7 @@ import {
   BiArrowToLeft,
   BiBullseye,
   BiChevronLeft,
+  BiEdit,
   BiInfoCircle,
 } from "react-icons/bi"
 import OrderDetailsModal from "@/modules/orders/components/OrderDetailsModal"
@@ -83,15 +85,24 @@ const OrdersArchive = () => {
                 <Td>
                   <Badge>{order.id}</Badge>
                 </Td>
-                <Td fontWeight="500">{order.username}</Td>
+                <Td>{order.username}</Td>
                 <Td>
-                  <Badge colorScheme={ORDER_STATUS_COLOR_SCHEME[order.status]}>
-                    {ORDER_STATUS_TEXT[order.status]}
-                  </Badge>
+                  <Flex alignItems="center">
+                    <Badge
+                      colorScheme={ORDER_STATUS_COLOR_SCHEME[order.status]}
+                    >
+                      {ORDER_STATUS_TEXT[order.status]}
+                    </Badge>
+                    <IconButton
+                      aria-label="Editar pedido"
+                      color="gray.600"
+                      icon={<BiEdit />}
+                      size="sm"
+                      variant="link"
+                    />
+                  </Flex>
                 </Td>
-                <Td fontSize="sm" fontWeight="500">
-                  {formatDate(String(order.updatedAt))}
-                </Td>
+                <Td>{formatDate(String(order.updatedAt))}</Td>
                 <Td>
                   <IconButton
                     onClick={() => setSelectedOrder(order)}

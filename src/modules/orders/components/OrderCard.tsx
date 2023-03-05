@@ -8,6 +8,7 @@ import {
   Flex,
   Heading,
   Icon,
+  Spinner,
   Text,
 } from "@chakra-ui/react"
 import { BiMap } from "react-icons/bi"
@@ -21,6 +22,8 @@ interface OrderCardProps {
   isConfirming?: boolean
   onClick: () => void
   onConfirm?: () => void
+  onCancel?: () => void
+  isCancelling?: boolean
 }
 
 const getNeighborhood = (address: string) => {
@@ -34,6 +37,8 @@ const OrderCard = ({
   isConfirming,
   onClick,
   onConfirm,
+  onCancel,
+  isCancelling,
 }: OrderCardProps) => (
   <Box
     key={order.id}
@@ -56,8 +61,24 @@ const OrderCard = ({
       zIndex="20"
       position="relative"
     >
-      <Badge fontWeight="500">ID: {order.id}</Badge>
-      <CloseButton color="gray.500" p={4} width="12px" height="12px" />
+      <Badge>ID: {order.id}</Badge>
+      {isCancelling ? (
+        <Spinner color="brand.500" size="sm" />
+      ) : (
+        <CloseButton
+          onClick={(event) => {
+            event.stopPropagation()
+
+            if (onCancel) {
+              onCancel()
+            }
+          }}
+          color="gray.500"
+          p={4}
+          width="12px"
+          height="12px"
+        />
+      )}
     </Flex>
     <Flex
       justifyContent="space-between"

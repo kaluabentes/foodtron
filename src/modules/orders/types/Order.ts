@@ -13,6 +13,7 @@ interface Order {
   createdAt: String
   updatedAt: String
   orderProducts: OrderProduct[]
+  reasonForCancellation: string
 }
 
 export default Order

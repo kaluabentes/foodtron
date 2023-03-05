@@ -9,23 +9,23 @@ import {
 } from "@chakra-ui/react"
 import { useRef } from "react"
 
-interface DeleteAlertProps {
+interface ConfirmAlertProps {
   title: string
   description: string
   isOpen: boolean
-  isLoading: boolean
+  isLoading?: boolean
   onClose: () => void
   onConfirm: () => void
 }
 
-const DeleteAlert = ({
+const ConfirmAlert = ({
   title,
   description,
   isOpen,
   isLoading,
   onClose,
   onConfirm,
-}: DeleteAlertProps) => {
+}: ConfirmAlertProps) => {
   const cancelRef = useRef(null)
 
   return (
@@ -44,7 +44,7 @@ const DeleteAlert = ({
 
           <AlertDialogFooter>
             <Button disabled={isLoading} ref={cancelRef} onClick={onClose}>
-              Cancel
+              Cancelar
             </Button>
             <Button
               isLoading={isLoading}
@@ -52,7 +52,7 @@ const DeleteAlert = ({
               onClick={onConfirm}
               ml={3}
             >
-              Deletar
+              Confirmar
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -61,4 +61,4 @@ const DeleteAlert = ({
   )
 }
 
-export default DeleteAlert
+export default ConfirmAlert

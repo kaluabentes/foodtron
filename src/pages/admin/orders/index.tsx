@@ -44,6 +44,8 @@ import OrderDetailsModal from "@/modules/orders/components/OrderDetailsModal"
 import useUpdateOrder from "@/modules/orders/hooks/useUpdateOrder"
 import OrderCardTabs from "@/modules/orders/components/OrderCardTabs"
 import { useRouter } from "next/router"
+import ConfirmAlert from "@/components/ConfirmAlert"
+import OrderCancelConfirm from "@/modules/orders/components/OrderCancelConfirm"
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   return auth(context, ["admin"])
@@ -67,6 +69,7 @@ const Orders = ({ user }: OrdersProps) => {
   const { updateOrder, isUpdating, orderId } = useUpdateOrder()
 
   const [selectedOrder, setSelectedOrder] = useState<Order | undefined>()
+  const [orderToDelete, setOrderToDelete] = useState<Order | undefined>()
 
   const getFilteredOrders = (orders: Order[] = [], status: string) =>
     orders.filter((order: Order) => order.status === status)
@@ -78,6 +81,16 @@ const Orders = ({ user }: OrdersProps) => {
   const playNotificationSound = async () => {
     const audio = new Audio("/notification.mp3")
     await audio.play()
+  }
+
+  const handleConfirmOrderCancel = async (reason: string) => {
+    await updateOrder(orderToDelete?.id!, {
+      status: ORDER_STATUS.CANCELLED,
+      reasonForCancellation: reason,
+    })
+    await getOrders()
+    setOrderToDelete(undefined)
+    setSelectedOrder(undefined)
   }
 
   const handleConfirm = async (order: Order) => {
@@ -98,9 +111,8 @@ const Orders = ({ user }: OrdersProps) => {
     await updateOrder(order.id, {
       status,
     })
-
-    setSelectedOrder(undefined)
     getOrders()
+    setSelectedOrder(undefined)
   }
 
   useChannel(user.store.subdomain!, async () => {
@@ -150,6 +162,7 @@ const Orders = ({ user }: OrdersProps) => {
         <OrderCard
           onClick={() => setSelectedOrder(order)}
           onConfirm={() => handleConfirm(order!)}
+          onCancel={() => setOrderToDelete(order)}
           order={order}
           isActive={selectedOrder! && selectedOrder.id === order.id}
           isConfirming={isUpdating && orderId === order.id}
@@ -186,6 +199,8 @@ const Orders = ({ user }: OrdersProps) => {
         >
           <OrderDetails
             isConfirming={isUpdating}
+            isCancelling={isUpdating}
+            onCancel={() => setOrderToDelete(selectedOrder)}
             order={selectedOrder}
             onConfirm={() => handleConfirm(selectedOrder)}
           />
@@ -232,6 +247,13 @@ const Orders = ({ user }: OrdersProps) => {
         {renderOrderDetails}
         {renderOrderDetailsModal}
       </Flex>
+      <OrderCancelConfirm
+        title="Cancelar pedido"
+        isOpen={Boolean(orderToDelete)}
+        onClose={() => setOrderToDelete(undefined)}
+        onConfirm={handleConfirmOrderCancel}
+        isLoading={isUpdating}
+      />
     </AdminLayout>
   )
 }

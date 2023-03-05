@@ -11,6 +11,7 @@ interface OrderParam {
   status?: string
   username?: string
   phone?: string
+  reasonForCancellation?: string
 }
 
 const useUpdateOrder = () => {
