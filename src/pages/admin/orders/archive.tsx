@@ -36,6 +36,8 @@ import {
 } from "react-icons/bi"
 import OrderDetailsModal from "@/modules/orders/components/OrderDetailsModal"
 import Order from "@/modules/orders/types/Order"
+import OrderStatusEdit from "@/modules/orders/components/OrderStatusEdit"
+import useUpdateOrder from "@/modules/orders/hooks/useUpdateOrder"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])
@@ -45,8 +47,18 @@ const OrdersArchive = () => {
   const router = useRouter()
 
   const { orders, getOrders } = useGetOrders(false)
+  const { updateOrder, isUpdating } = useUpdateOrder()
 
-  const [selectedOrder, setSelectedOrder] = useState<Order | undefined>()
+  const [orderToShow, setOrderToShow] = useState<Order | undefined>()
+  const [orderToEdit, setOrderToEdit] = useState<Order | undefined>()
+
+  const handleEditConfirm = async (status: string) => {
+    await updateOrder(orderToEdit?.id!, {
+      status,
+    })
+    setOrderToEdit(undefined)
+    await getOrders(true)
+  }
 
   useEffect(() => {
     getOrders(true)
@@ -99,13 +111,14 @@ const OrdersArchive = () => {
                       icon={<BiEdit />}
                       size="sm"
                       variant="link"
+                      onClick={() => setOrderToEdit(order)}
                     />
                   </Flex>
                 </Td>
                 <Td>{formatDate(String(order.updatedAt))}</Td>
                 <Td>
                   <IconButton
-                    onClick={() => setSelectedOrder(order)}
+                    onClick={() => setOrderToShow(order)}
                     aria-label="Ver detalhes"
                     icon={<BiInfoCircle />}
                     size="sm"
@@ -128,11 +141,21 @@ const OrdersArchive = () => {
       </Box>
       <PageHeader title="Arquivo de pedidos" />
       {renderData()}
-      {selectedOrder && (
+      {orderToShow && (
         <OrderDetailsModal
-          isOpen={Boolean(selectedOrder)}
-          order={selectedOrder}
-          onClose={() => setSelectedOrder(undefined)}
+          isOpen={Boolean(orderToShow)}
+          order={orderToShow}
+          onClose={() => setOrderToShow(undefined)}
+        />
+      )}
+      {orderToEdit && (
+        <OrderStatusEdit
+          title="Editar status"
+          isOpen={Boolean(orderToEdit)}
+          defaultStatus={orderToEdit.status}
+          onClose={() => setOrderToEdit(undefined)}
+          onConfirm={handleEditConfirm}
+          isLoading={isUpdating}
         />
       )}
     </AdminLayout>
