@@ -4,10 +4,18 @@ import { ReactNode } from "react"
 interface BrandProps {
   logo: string
   storeName: string | ReactNode
-  blue?: boolean
+  hideBrandText?: boolean
+  width?: string
+  height?: string
 }
 
-const Brand = ({ logo, storeName, blue = false }: BrandProps) => (
+const Brand = ({
+  logo,
+  storeName,
+  hideBrandText,
+  width,
+  height,
+}: BrandProps) => (
   <Flex
     as="a"
     href="https://gocomet.app"
@@ -16,20 +24,26 @@ const Brand = ({ logo, storeName, blue = false }: BrandProps) => (
     marginBottom={6}
     overflowX="hidden"
     alignItems="center"
+    width="200px"
+    height="32px"
   >
-    <Image src={logo} width="30px" marginRight={3} marginLeft="8px" />
-    <Flex direction="column" alignItems="center">
-      <Heading
-        size="sm"
-        fontWeight="700"
-        overflow="hidden"
-        whiteSpace="nowrap"
-        textTransform="uppercase"
-        color={blue ? "brand.500" : "white"}
-      >
-        {storeName}
-      </Heading>
-    </Flex>
+    <Image
+      borderRadius="md"
+      src={logo}
+      width="30px"
+      marginRight={3}
+      marginLeft="7px"
+    />
+    <Heading
+      size="sm"
+      fontWeight="700"
+      visibility={hideBrandText ? "hidden" : "visible"}
+      opacity={hideBrandText ? "0" : "1"}
+      transition="0.3s"
+      color="gray.700"
+    >
+      {storeName}
+    </Heading>
   </Flex>
 )
 

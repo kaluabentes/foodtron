@@ -13,12 +13,18 @@ interface SideNavProps {
   header: ReactNode
   bottomMenu: RouteItem[]
   topMenu: RouteItem[]
+  isClosed: boolean
+  onClosedToggle: (state: boolean) => void
 }
 
-const SideNav = ({ header, bottomMenu, topMenu }: SideNavProps) => {
+const SideNav = ({
+  header,
+  bottomMenu,
+  topMenu,
+  isClosed,
+  onClosedToggle,
+}: SideNavProps) => {
   const router = useRouter()
-
-  const [isClosed, setIsClosed] = useState(true)
 
   return (
     <Flex
@@ -34,8 +40,9 @@ const SideNav = ({ header, bottomMenu, topMenu }: SideNavProps) => {
       height="100vh"
       transition="0.5s"
       position="relative"
-      onMouseOver={() => setIsClosed(false)}
-      onMouseLeave={() => setIsClosed(true)}
+      onMouseOver={() => onClosedToggle(false)}
+      onMouseLeave={() => onClosedToggle(true)}
+      overflowX="hidden"
     >
       {header}
       <Flex direction="column" flexGrow={1} justifyContent="space-between">

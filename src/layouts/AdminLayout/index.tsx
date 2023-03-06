@@ -35,6 +35,7 @@ const AdminLayout = ({
   const router = useRouter()
 
   const [isOpen, setIsOpen] = useState(false)
+  const [isClosed, setIsClosed] = useState(true)
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -55,13 +56,15 @@ const AdminLayout = ({
     ),
     lg: (
       <SideNav
+        isClosed={isClosed}
+        onClosedToggle={setIsClosed}
         topMenu={topMenu}
         bottomMenu={bottomMenu}
         header={
           <Brand
             logo="/comet-blue.svg"
             storeName={<Image height="12px" src="/comet-text.svg" />}
-            blue
+            hideBrandText={isClosed}
           />
         }
       />

@@ -17,6 +17,7 @@ import EditableDataItem from "@/components/EditableDataItem"
 import useCreateOrder from "@/modules/orders/hooks/useCreateOrder"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import Store from "@/modules/stores/types/Store"
+import ResponsiveButton from "@/components/ResponsiveButton"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -126,6 +127,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       }
     >
       <Box
+        mt={{ base: 0, md: 4 }}
         background="white"
         overflow="hidden"
         borderRadius={{ base: undefined, lg: "md" }}
@@ -203,17 +205,13 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
           <EditableDataItem field="Phone" value={user.phone} />
         </Flex>
       </Box>
-      <Box p={4} pl={{ base: 4, lg: 0 }} pr={{ base: 4, lg: 0 }}>
-        <Button
-          width="full"
-          colorScheme="brand"
-          onClick={() => {
-            setIsOrderConfirmModalOpen(true)
-          }}
-        >
-          Confirmar
-        </Button>
-      </Box>
+      <ResponsiveButton
+        onClick={() => {
+          setIsOrderConfirmModalOpen(true)
+        }}
+      >
+        Confirmar
+      </ResponsiveButton>
       <OrderConfirmModal
         onClose={() => setIsOrderConfirmModalOpen(false)}
         address={address}

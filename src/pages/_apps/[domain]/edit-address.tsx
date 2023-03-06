@@ -18,6 +18,7 @@ import BarIconButton from "@/components/BarIconButton"
 import { BiLeftArrowAlt } from "react-icons/bi"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import ResponsiveButton from "@/components/ResponsiveButton"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -121,7 +122,8 @@ const EditAddress = ({ locations }: EditAddressProps) => {
           backgroundColor="white"
           borderRadius="md"
           overflow="hidden"
-          p={4}
+          p={{ base: 4, md: 8 }}
+          mt={{ base: 0, md: 4 }}
         >
           <FormControl mb={5}>
             <FormLabel>{t("street")}</FormLabel>
@@ -143,16 +145,9 @@ const EditAddress = ({ locations }: EditAddressProps) => {
             </Select>
           </FormControl>
         </Flex>
-        <Box p={4}>
-          <Button
-            type="submit"
-            width="full"
-            colorScheme="brand"
-            isLoading={isLoading}
-          >
-            Salvar
-          </Button>
-        </Box>
+        <ResponsiveButton type="submit" isLoading={isLoading}>
+          Salvar
+        </ResponsiveButton>
       </form>
     </AppLayout>
   )

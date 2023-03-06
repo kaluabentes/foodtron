@@ -11,6 +11,7 @@ import OrderItemsSummary from "@/modules/app/components/order/OrderItemsSummary"
 import SectionTitle from "@/components/SectionTitle"
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import StripeSeparator from "@/components/StripeSeparator"
+import ResponsiveButton from "@/components/ResponsiveButton"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -91,6 +92,7 @@ const Order = () => {
       }
     >
       <Box
+        mt={{ base: 0, md: 4 }}
         background="white"
         overflow="hidden"
         borderRadius={{ base: undefined, lg: "md" }}
@@ -98,16 +100,9 @@ const Order = () => {
       >
         <OrderItemsSummary />
       </Box>
-      <Box p={4} pl={{ base: 4, lg: 0 }} pr={{ base: 4, lg: 0 }}>
-        <Button
-          mb={4}
-          width="full"
-          colorScheme="brand"
-          onClick={getConfirmHandler()}
-        >
-          {getButtonLabel()}
-        </Button>
-      </Box>
+      <ResponsiveButton onClick={getConfirmHandler()}>
+        {getButtonLabel()}
+      </ResponsiveButton>
     </AppLayout>
   )
 }

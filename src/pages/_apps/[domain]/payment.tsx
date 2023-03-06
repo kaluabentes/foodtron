@@ -78,9 +78,11 @@ const Payment = () => {
         />
       }
     >
-      <Tabs colorScheme="brand">
+      <Tabs colorScheme="brand" mt={{ base: 0, md: 4 }}>
         <TabList background="white">
-          <Tab>Pagar na entrega</Tab>
+          <Tab fontWeight="500" fontSize="sm">
+            Pagar na entrega
+          </Tab>
         </TabList>
 
         <TabPanels>

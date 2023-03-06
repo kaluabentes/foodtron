@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Box } from "@chakra-ui/react"
 import { v4 as uuidv4 } from "uuid"
 
@@ -108,6 +108,7 @@ const Index = ({ store, categories }: IndexProps) => {
   const {
     setState,
     state: {
+      isReady,
       address: {
         street,
         number,
@@ -134,8 +135,6 @@ const Index = ({ store, categories }: IndexProps) => {
       .map((opt) => opt.options)
       .flat()
       .filter((opt) => Number(opt?.quantity) > 0)
-
-    console.log("id", id)
 
     const productPayload = {
       id,
@@ -174,9 +173,22 @@ const Index = ({ store, categories }: IndexProps) => {
     setSelectedProduct(product)
   }
 
+  useEffect(() => {
+    if (isReady) {
+      setState({
+        store: store,
+      })
+    }
+  }, [isReady])
+
   return (
     <AppLayout title="Menu">
-      <Box borderRadius="md" overflow="hidden" boxShadow="sm">
+      <Box
+        borderRadius="md"
+        overflow="hidden"
+        boxShadow="sm"
+        mt={{ base: 0, md: 4 }}
+      >
         <AddressSelectButton
           onClick={() => router.push("/edit-address")}
           address={(street || number || neighborhood) && address}

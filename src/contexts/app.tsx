@@ -10,6 +10,7 @@ import {
 
 import Location from "@/modules/locations/types/Location"
 import OrderProduct from "@/modules/orders/types/OrderProduct"
+import Store from "@/modules/stores/types/Store"
 
 export interface Address {
   street?: string
@@ -18,6 +19,7 @@ export interface Address {
 }
 
 interface AppState {
+  store: Store
   user: {
     name: string
     phone: string
@@ -30,9 +32,11 @@ interface AppState {
       change: string
     }
   }
+  isReady: boolean
 }
 
 interface AppStateParam {
+  store?: Store
   user?: {
     name?: string
     phone?: string
@@ -52,6 +56,7 @@ interface AppStateParam {
 }
 
 const DEFAULT_VALUE_STATE = {
+  store: {},
   user: {
     name: "",
     phone: "",
@@ -73,6 +78,7 @@ const DEFAULT_VALUE_STATE = {
       change: "",
     },
   },
+  isReady: false,
 }
 
 const DEFAULT_ACTION_STATE = {
@@ -90,11 +96,16 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState<AppState>(DEFAULT_VALUE_STATE)
 
   const mutateState = (newState: AppStateParam) => {
-    localStorage.setItem(
-      `${domain}.gocomet.app`,
-      JSON.stringify(merge(state, newState))
-    )
-    setState((oldState) => merge(oldState, newState))
+    setState((oldState) => {
+      const newStateMerged = merge(oldState, newState)
+
+      localStorage.setItem(
+        `${domain}.gocomet.app`,
+        JSON.stringify(newStateMerged)
+      )
+
+      return newStateMerged
+    })
   }
 
   const resetState = (newState: AppStateParam) => {
@@ -106,7 +117,10 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const localState = localStorage.getItem(`${domain}.gocomet.app`)
 
     if (localState) {
-      setState(JSON.parse(localState))
+      setState({
+        ...JSON.parse(localState),
+        isReady: true,
+      })
     }
   }, [])
 

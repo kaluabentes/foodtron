@@ -109,19 +109,15 @@ const OrderDetails = ({
         <EditableDataItem field="Endereço" value={order.address} />
         <StripeSeparator horizontal />
         <EditableDataItem field="Pagamento" value={order.paymentMethod} />
-        <StripeSeparator horizontal />
+
         {order.paymentMethod === "Dinheiro" && (
-          <EditableDataItem
-            field="Troco pra quanto?"
-            value={formatToRealCurrency(Number(order.change))}
-          />
-        )}
-        <StripeSeparator horizontal />
-        {order.paymentMethod === "Dinheiro" && (
-          <EditableDataItem
-            field="Taxa de entrega"
-            value={formatToRealCurrency(Number(order.tax))}
-          />
+          <>
+            <StripeSeparator horizontal />
+            <EditableDataItem
+              field="Troco pra quanto?"
+              value={formatToRealCurrency(Number(order.change))}
+            />
+          </>
         )}
       </Box>
     </Box>

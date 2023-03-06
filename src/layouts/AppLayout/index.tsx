@@ -28,12 +28,14 @@ const AppLayout = ({
   const router = useRouter()
   const {
     state: {
+      store,
       order: { products },
     },
   } = useAppContext()
   const toast = useBottomToast()
 
   const [isOpen, setIsOpen] = useState(false)
+  const [isClosed, setIsClosed] = useState(true)
 
   const handleCartClick = () => {
     if (!products.length) {
@@ -70,12 +72,24 @@ const AppLayout = ({
     ),
     lg: (
       <SideNav
+        isClosed={isClosed}
+        onClosedToggle={setIsClosed}
         header={
-          <Brand
-            logo="/comet-blue.svg"
-            storeName={<Image height="12px" src="/comet-text.svg" />}
-            blue
-          />
+          store.logo ? (
+            <Brand
+              logo={store.logo}
+              storeName={store.name}
+              hideBrandText={isClosed}
+              width="44px"
+              height="44px"
+            />
+          ) : (
+            <Brand
+              hideBrandText={isClosed}
+              logo="/comet-blue.svg"
+              storeName={<Image height="12px" src="/comet-text.svg" />}
+            />
+          )
         }
         topMenu={topMenu}
         bottomMenu={bottomMenu}
@@ -91,10 +105,15 @@ const AppLayout = ({
   const renderPageHeader = useBreakpointValue({
     base: null,
     lg: (
-      <Flex width="100%" justifyContent="space-between" alignItems="center">
-        <PageHeader title={title} />
+      <Flex
+        width="100%"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={4}
+      >
+        <Heading size="lg">{title}</Heading>
         {!hideCartButton && (
-          <CartButton quantity={2} onClick={handleCartClick} />
+          <CartButton quantity={products.length} onClick={handleCartClick} />
         )}
       </Flex>
     ),
