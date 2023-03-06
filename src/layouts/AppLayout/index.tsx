@@ -1,22 +1,30 @@
 import { ReactNode, useState } from "react"
 
 import AppBar from "@/components/AppBar"
-import { Box, Container, Flex, Heading, Icon, Text } from "@chakra-ui/react"
+import { Box, Flex, Heading, Image, useBreakpointValue } from "@chakra-ui/react"
 import ShortcutDeck from "./ShortcutDeck"
-import { BiCart, BiChevronDown, BiMap } from "react-icons/bi"
-import BarIconButton from "@/components/BarIconButton"
 import CartButton from "@/components/CartButton"
 import { useAppContext } from "@/contexts/app"
 import { useRouter } from "next/router"
 import useBottomToast from "@/lib/hooks/useBottomToast"
+import PageHeader from "@/components/PageHeader"
+import { bottomMenu, topMenu } from "@/config/appMenu"
+import SideNav from "@/components/SideNav"
+import Brand from "@/components/Brand"
 
 interface AppLayoutProps {
   children: ReactNode
   title?: string
   rightIcon?: ReactNode
+  hideCartButton?: boolean
 }
 
-const AppLayout = ({ children, title, rightIcon }: AppLayoutProps) => {
+const AppLayout = ({
+  children,
+  title,
+  rightIcon,
+  hideCartButton,
+}: AppLayoutProps) => {
   const router = useRouter()
   const {
     state: {
@@ -40,9 +48,11 @@ const AppLayout = ({ children, title, rightIcon }: AppLayoutProps) => {
     router.push("/order")
   }
 
-  return (
-    <>
+  const renderAppBar = useBreakpointValue({
+    base: (
       <AppBar
+        topMenu={topMenu}
+        bottomMenu={bottomMenu}
         isFixed
         title={
           <Heading fontSize="sm" fontWeight="500" textTransform="uppercase">
@@ -57,18 +67,57 @@ const AppLayout = ({ children, title, rightIcon }: AppLayoutProps) => {
         onMenuClick={() => setIsOpen(true)}
         onClose={() => setIsOpen(false)}
       />
-      <Box
-        as="main"
-        paddingBottom="88px"
-        overflow="auto"
-        paddingTop={{ base: "60px", md: "76px" }}
-        maxWidth={{ base: "100%", md: "container.md" }}
-        margin="0 auto"
-      >
-        {children}
+    ),
+    lg: (
+      <SideNav
+        header={
+          <Brand
+            logo="/comet-blue.svg"
+            storeName={<Image height="12px" src="/comet-text.svg" />}
+            blue
+          />
+        }
+        topMenu={topMenu}
+        bottomMenu={bottomMenu}
+      />
+    ),
+  })
+
+  const renderShortcutDeck = useBreakpointValue({
+    base: <ShortcutDeck />,
+    lg: null,
+  })
+
+  const renderPageHeader = useBreakpointValue({
+    base: null,
+    lg: (
+      <Flex width="100%" justifyContent="space-between" alignItems="center">
+        <PageHeader title={title} />
+        {!hideCartButton && (
+          <CartButton quantity={2} onClick={handleCartClick} />
+        )}
+      </Flex>
+    ),
+  })
+
+  return (
+    <Flex direction={{ base: "column", lg: "row" }}>
+      {renderAppBar}
+      <Box height={{ base: "none", md: "100vh" }} overflow="auto" width="100%">
+        <Box
+          as="main"
+          paddingBottom="88px"
+          paddingTop={{ base: "60px", lg: 4 }}
+          maxWidth={{ base: "100%", md: "container.md" }}
+          margin="0 auto"
+          width="100%"
+        >
+          {renderPageHeader}
+          {children}
+        </Box>
       </Box>
-      <ShortcutDeck />
-    </>
+      {renderShortcutDeck}
+    </Flex>
   )
 }
 

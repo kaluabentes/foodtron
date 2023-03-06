@@ -11,9 +11,13 @@ import {
   BiMoney,
   BiPurchaseTag,
   BiCheckCircle,
+  BiDish,
+  BiTask,
+  BiCart,
 } from "react-icons/bi"
+import { FaWhatsapp } from "react-icons/fa"
 
-interface RouteItem {
+export interface RouteItem {
   icon: IconType
   label: string
   path: string
@@ -22,52 +26,26 @@ interface RouteItem {
 
 export const topMenu: RouteItem[] = [
   {
-    icon: BiCollection,
+    icon: BiDish,
+    label: "Menu",
+    path: "/",
+  },
+  {
+    icon: BiTask,
     label: "Pedidos",
-    path: "/admin/orders",
+    path: "/orders",
   },
   {
-    icon: BiGridAlt,
-    label: "Produtos",
-    path: "/admin/products",
-  },
-  {
-    icon: BiCheckCircle,
-    label: "Opções",
-    path: "/admin/options",
-  },
-  {
-    icon: BiPurchaseTag,
-    label: "Categorias",
-    path: "/admin/categories",
-  },
-  {
-    icon: BiMap,
-    label: "Locais",
-    path: "/admin/locations",
-  },
-  {
-    icon: BiAlarm,
-    label: "Horários",
-    path: "/admin/schedules",
+    icon: BiUser,
+    label: "Perfil",
+    path: "/profile",
   },
 ]
 
 export const bottomMenu: RouteItem[] = [
   {
-    icon: BiHomeHeart,
-    label: "Loja",
+    icon: FaWhatsapp,
+    label: "Conversar",
     path: "/admin/store",
-  },
-  {
-    icon: BiUser,
-    label: "Perfil",
-    path: "/admin/profile",
-  },
-  {
-    icon: BiLogOut,
-    label: "Sair",
-    path: "/admin/logout",
-    onClick: () => signOut({ callbackUrl: "/auth/signin" }),
   },
 ]

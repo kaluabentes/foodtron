@@ -95,6 +95,7 @@ const EditUser = () => {
 
   return (
     <AppLayout
+      hideCartButton
       title="Contato"
       rightIcon={
         <BarIconButton

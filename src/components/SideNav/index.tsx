@@ -3,18 +3,22 @@ import { useRouter } from "next/router"
 
 import Menu from "@/components/Menu"
 import MenuItem from "@/components/Menu/MenuItem"
-import { bottomMenu, topMenu } from "@/config/appMenu"
 
 import MenuToggleButton from "./MenuToggleButton"
 import Brand from "@/components/Brand"
+import { ReactNode, useState } from "react"
+import { RouteItem } from "@/config/adminMenu"
 
 interface SideNavProps {
-  isClosed?: boolean
-  setIsClosed: (state: boolean) => void
+  header: ReactNode
+  bottomMenu: RouteItem[]
+  topMenu: RouteItem[]
 }
 
-const SideNav = ({ isClosed = false, setIsClosed }: SideNavProps) => {
+const SideNav = ({ header, bottomMenu, topMenu }: SideNavProps) => {
   const router = useRouter()
+
+  const [isClosed, setIsClosed] = useState(true)
 
   return (
     <Flex
@@ -33,11 +37,7 @@ const SideNav = ({ isClosed = false, setIsClosed }: SideNavProps) => {
       onMouseOver={() => setIsClosed(false)}
       onMouseLeave={() => setIsClosed(true)}
     >
-      <Brand
-        logo="/comet-blue.svg"
-        storeName={<Image height="12px" src="/comet-text.svg" />}
-        blue
-      />
+      {header}
       <Flex direction="column" flexGrow={1} justifyContent="space-between">
         <Menu>
           {topMenu.map((item, index) => (
@@ -47,7 +47,7 @@ const SideNav = ({ isClosed = false, setIsClosed }: SideNavProps) => {
                 item.onClick ? item.onClick() : router.push(item.path)
               }
               icon={item.icon}
-              isActive={router.asPath.includes(item.path)}
+              isActive={item.path === router.asPath}
               isClosed={isClosed}
             >
               {item.label}
@@ -62,7 +62,7 @@ const SideNav = ({ isClosed = false, setIsClosed }: SideNavProps) => {
                 item.onClick ? item.onClick() : router.push(item.path)
               }
               icon={item.icon}
-              isActive={router.asPath.includes(item.path)}
+              isActive={item.path === router.asPath}
               isClosed={isClosed}
             >
               {item.label}

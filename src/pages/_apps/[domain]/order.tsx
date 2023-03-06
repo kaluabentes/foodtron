@@ -80,6 +80,7 @@ const Order = () => {
 
   return (
     <AppLayout
+      hideCartButton
       title="Pedido"
       rightIcon={
         <BarIconButton

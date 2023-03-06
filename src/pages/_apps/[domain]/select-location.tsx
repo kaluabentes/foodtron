@@ -62,6 +62,7 @@ const SelectLocation = ({ locations }: SelectLocationProps) => {
 
   return (
     <AppLayout
+      hideCartButton
       title="Selecione um bairro"
       rightIcon={
         <BarIconButton

@@ -4,15 +4,25 @@ import { useRouter } from "next/router"
 import Menu from "@/components/Menu"
 import MenuItem from "@/components/Menu/MenuItem"
 import ClickOutside from "@/components/ClickOutside"
-import { topMenu, bottomMenu } from "@/config/appMenu"
+import { RouteItem } from "@/config/adminMenu"
 import Brand from "@/components/Brand"
+import { ReactNode } from "react"
 
 interface SideNavProps {
+  header?: ReactNode
   isOpen: boolean
+  topMenu: RouteItem[]
+  bottomMenu: RouteItem[]
   onClose: () => void
 }
 
-const SideNav = ({ isOpen, onClose }: SideNavProps) => {
+const SideNav = ({
+  header,
+  isOpen,
+  onClose,
+  topMenu,
+  bottomMenu,
+}: SideNavProps) => {
   const router = useRouter()
 
   return (
@@ -45,7 +55,7 @@ const SideNav = ({ isOpen, onClose }: SideNavProps) => {
           _hover={{ backgroundColor: "gray.100" }}
           _active={{ backgroundColor: "gray.100" }}
         />
-        <Brand logo="/comet-blue.svg" storeName="Comet" blue />
+        {header}
         <Flex direction="column" flexGrow={1} justifyContent="space-between">
           <Menu>
             {topMenu.map((item: any, index) => (

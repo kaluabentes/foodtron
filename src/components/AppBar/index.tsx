@@ -5,6 +5,7 @@ import BarIconButton from "@/components/BarIconButton"
 
 import SideNav from "./SideNav"
 import { ReactElement, ReactNode, useEffect } from "react"
+import { RouteItem } from "@/config/adminMenu"
 
 interface AppBarProps {
   title?: ReactNode
@@ -14,6 +15,9 @@ interface AppBarProps {
   onMenuClick: () => void
   onClose: () => void
   isFixed?: boolean
+  topMenu: RouteItem[]
+  bottomMenu: RouteItem[]
+  sideNavHeader?: ReactNode
 }
 
 const AppBar = ({
@@ -24,6 +28,9 @@ const AppBar = ({
   leftIcon,
   onMenuClick,
   onClose,
+  topMenu,
+  bottomMenu,
+  sideNavHeader,
 }: AppBarProps) => (
   <>
     <Flex
@@ -58,7 +65,13 @@ const AppBar = ({
       )}
       {leftIcon}
     </Flex>
-    <SideNav isOpen={isOpen} onClose={onClose} />
+    <SideNav
+      header={sideNavHeader}
+      topMenu={topMenu}
+      bottomMenu={bottomMenu}
+      isOpen={isOpen}
+      onClose={onClose}
+    />
   </>
 )
 

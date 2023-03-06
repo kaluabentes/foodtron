@@ -104,6 +104,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
 
   return (
     <AppLayout
+      hideCartButton
       title="Editar endereço"
       rightIcon={
         <BarIconButton

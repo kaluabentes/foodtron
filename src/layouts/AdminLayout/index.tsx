@@ -1,13 +1,21 @@
 import AppBar from "@/components/AppBar"
 import BarIconButton from "@/components/BarIconButton"
-import { Box, Container, Flex, useBreakpointValue } from "@chakra-ui/react"
+import Brand from "@/components/Brand"
+import { bottomMenu, topMenu } from "@/config/adminMenu"
+import {
+  Box,
+  Container,
+  Flex,
+  Image,
+  useBreakpointValue,
+} from "@chakra-ui/react"
 import { get } from "lodash"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { ReactNode, useEffect, useRef, useState } from "react"
 import { BiBell } from "react-icons/bi"
 
-import SideNav from "./SideNav"
+import SideNav from "../../components/SideNav"
 
 interface AdminLayoutProps {
   children: ReactNode
@@ -26,7 +34,6 @@ const AdminLayout = ({
   const user = get(data, "user", undefined)
   const router = useRouter()
 
-  const [isClosed, setIsClosed] = useState(true)
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -39,12 +46,26 @@ const AdminLayout = ({
     base: (
       <AppBar
         isOpen={isOpen}
+        topMenu={topMenu}
+        bottomMenu={bottomMenu}
         leftIcon={<BarIconButton label="Menu" icon={<BiBell />} />}
         onMenuClick={() => setIsOpen(true)}
         onClose={() => setIsOpen(false)}
       />
     ),
-    lg: <SideNav isClosed={isClosed} setIsClosed={setIsClosed} />,
+    lg: (
+      <SideNav
+        topMenu={topMenu}
+        bottomMenu={bottomMenu}
+        header={
+          <Brand
+            logo="/comet-blue.svg"
+            storeName={<Image height="12px" src="/comet-text.svg" />}
+            blue
+          />
+        }
+      />
+    ),
   })
 
   return (

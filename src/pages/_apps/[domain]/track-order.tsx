@@ -109,7 +109,7 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
                 >{`${order.estimatedTime} min.`}</Box>
               }
             />
-            <Button width="full" onClick={() => setShowDetails(true)}>
+            <Button onClick={() => setShowDetails(true)}>
               Detalhes do pedido
             </Button>
             <Heading mt={4} fontSize="lg">
@@ -179,6 +179,7 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
 
   return (
     <AppLayout
+      hideCartButton
       title="Acompanhar pedido"
       rightIcon={
         <BarIconButton

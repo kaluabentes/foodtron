@@ -115,6 +115,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
 
   return (
     <AppLayout
+      hideCartButton
       title="Confirmar pedido"
       rightIcon={
         <BarIconButton
