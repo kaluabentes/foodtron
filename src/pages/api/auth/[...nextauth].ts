@@ -30,6 +30,36 @@ export const authOptions: NextAuthOptions = {
     verifyRequest: "/auth/verify-request",
     signIn: "/auth/signin",
   },
+  callbacks: {
+    redirect: async ({ url, baseUrl }) => {
+      if (url.endsWith("edit-user")) {
+        const [, baseDomain] = baseUrl.split("//")
+        if (url.includes(baseDomain)) {
+          return Promise.resolve(url)
+        }
+      }
+
+      return Promise.resolve(baseUrl)
+    },
+  },
+  cookies: {
+    sessionToken: {
+      name:
+        process.env.NODE_ENV === "production"
+          ? `__Secure-next-auth.session-token`
+          : `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        domain:
+          process.env.NODE_ENV === "production"
+            ? ".gocomet.app"
+            : ".localhost:3000",
+        secure: process.env.NODE_ENV === "production" ? true : false,
+      },
+    },
+  },
 }
 
 export default NextAuth(authOptions)

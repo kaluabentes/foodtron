@@ -23,6 +23,7 @@ import Location from "@/modules/locations/types/Location"
 import BarIconButton from "@/components/BarIconButton"
 import ResponsiveButton from "@/components/ResponsiveButton"
 import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
+import { useSession } from "next-auth/react"
 
 const MaskedWhatsappInput = IMaskMixin(({ inputRef, ...props }: any) => (
   <Input {...props} ref={inputRef} />
@@ -53,6 +54,7 @@ const EditUser = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const { redirect } = router.query
+  const { data: session } = useSession()
 
   const {
     setState,
@@ -97,6 +99,8 @@ const EditUser = () => {
     }
   }, [name, phone])
 
+  console.log("session", session)
+
   return (
     <AppLayout
       title="Dados de usuário"
@@ -109,16 +113,14 @@ const EditUser = () => {
       }
     >
       <form onSubmit={handleSubmit(handleEditUser)}>
-        <Box p={{ base: 4, md: 0 }} pb={0} pt={{ base: 4, md: 4, lg: 0 }}>
-          {!email && <UserAccountWarning />}
-        </Box>
+        {!session && <UserAccountWarning />}
         <Flex
           direction="column"
           shadow="sm"
           backgroundColor="white"
           borderRadius="md"
           overflow="hidden"
-          p={{ base: 4, md: 6 }}
+          p={{ base: 4, md: 8 }}
         >
           <FormControl mb={5}>
             <FormLabel>{t("name")}</FormLabel>

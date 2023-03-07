@@ -50,9 +50,10 @@ interface SignInData {
 const Signin = () => {
   const { t } = useTranslation()
   const router = useRouter()
+  const { callbackUrl } = router.query
+  const { data: session } = useSession()
 
   const [isLoadingEmail, setIsLoadingEmail] = useState(false)
-  const [isLoadingGoogle, setIsLoadingGoogle] = useState(false)
 
   const signinValidationSchema = Yup.object({
     email: Yup.string()
@@ -78,7 +79,13 @@ const Signin = () => {
 
   return (
     <AuthLayout>
-      <Flex justifyContent="center">
+      <Flex
+        justifyContent="center"
+        as="a"
+        href="https://gocomet.app"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <Image src="/comet-full.svg" height="50px" mb={14} mt={5} />
       </Flex>
       <Heading size="lg" marginBottom={10} fontWeight="semibold">

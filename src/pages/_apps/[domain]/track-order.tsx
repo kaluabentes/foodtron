@@ -92,7 +92,7 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
           mb={4}
           shadow="sm"
         >
-          <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
+          <Flex p={{ base: 4, md: 8 }} gap={4} direction="column">
             <EditableDataItem field="ID" value={<Badge>{order.id}</Badge>} />
             <StripeSeparator horizontal />
             <EditableDataItem

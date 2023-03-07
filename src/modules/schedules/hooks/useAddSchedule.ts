@@ -2,8 +2,7 @@ import useBottomToast from "@/lib/hooks/useBottomToast"
 import axios from "axios"
 import { useRouter } from "next/router"
 import { useState } from "react"
-
-import Schedule from "../types/Schedule"
+import ScheduleParam from "../types/ScheduleParam"
 
 const useAddSchedule = () => {
   const toast = useBottomToast()
@@ -11,7 +10,7 @@ const useAddSchedule = () => {
 
   const [isAdding, setIsAdding] = useState(false)
 
-  const addSchedule = async (data: Schedule) => {
+  const addSchedule = async (data: ScheduleParam) => {
     try {
       setIsAdding(true)
 

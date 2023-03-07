@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 
 import AppBar from "@/components/AppBar"
 import { Box, Flex, Heading, Image, useBreakpointValue } from "@chakra-ui/react"
@@ -11,6 +11,8 @@ import PageHeader from "@/components/PageHeader"
 import { bottomMenu, topMenu } from "@/config/appMenu"
 import SideNav from "@/components/SideNav"
 import Brand from "@/components/Brand"
+import useGetStore from "@/modules/stores/hooks/useGetStore"
+import PageLoaderSpinner from "@/components/PageLoaderSpinner"
 
 interface AppLayoutProps {
   children: ReactNode
@@ -27,12 +29,15 @@ const AppLayout = ({
 }: AppLayoutProps) => {
   const router = useRouter()
   const {
+    setState,
     state: {
-      store,
+      isReady,
       order: { products },
     },
   } = useAppContext()
   const toast = useBottomToast()
+
+  const { store } = useGetStore(String(router.query.domain))
 
   const [isOpen, setIsOpen] = useState(false)
   const [isClosed, setIsClosed] = useState(true)
@@ -50,8 +55,16 @@ const AppLayout = ({
     router.push("/order")
   }
 
+  useEffect(() => {
+    if (isReady) {
+      setState({
+        store: store,
+      })
+    }
+  }, [isReady])
+
   const renderHeader = (isClosed = false) =>
-    store.logo ? (
+    store && store.logo ? (
       <Brand
         logo={store.logo}
         storeName={store.name}
@@ -120,6 +133,10 @@ const AppLayout = ({
       </Flex>
     ),
   })
+
+  if (!store) {
+    return <PageLoaderSpinner />
+  }
 
   return (
     <Flex direction={{ base: "column", lg: "row" }}>

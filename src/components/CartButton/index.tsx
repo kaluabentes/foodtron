@@ -30,7 +30,12 @@ const CartButton = ({ quantity, onClick }: CartButtonProps) => (
         {quantity}
       </Box>
     ) : null}
-    <BarIconButton onClick={onClick} label="Carrinho" icon={<BiCart />} />
+    <BarIconButton
+      background="trasnparent"
+      onClick={onClick}
+      label="Carrinho"
+      icon={<BiCart />}
+    />
   </Box>
 )
 

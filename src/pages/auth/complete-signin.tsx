@@ -150,7 +150,13 @@ const CompleteSignin = () => {
 
   return (
     <AuthLayout>
-      <Flex justifyContent="center">
+      <Flex
+        justifyContent="center"
+        as="a"
+        href="https://gocomet.app"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <Image src="/comet-blue.svg" width="80px" mb={10} />
       </Flex>
       <Heading size="lg" marginBottom={5} fontWeight="semibold">
@@ -180,7 +186,7 @@ const CompleteSignin = () => {
           overflow="hidden"
         >
           <StoreMidiaUpload onCoverChange={setCover} onLogoChange={setLogo} />
-          <Box p={{ base: 4, md: 6 }}>
+          <Box p={{ base: 4, md: 8 }}>
             <FormControl
               isInvalid={Boolean(errors.storeName?.message)}
               marginBottom={4}

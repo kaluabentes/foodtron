@@ -13,7 +13,7 @@ import { useRef, useState } from "react"
 
 interface OrderCancelConfirmProps {
   title: string
-  description: string
+  description?: string
   isOpen: boolean
   isLoading?: boolean
   onClose: () => void

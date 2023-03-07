@@ -52,7 +52,7 @@ const OrderDetailsModal = ({
         onConfirm={onConfirm}
         order={order}
       />
-      {actions && <Box p={{ base: 4, md: 6 }}>{actions}</Box>}
+      {actions && <Box p={{ base: 4, md: 8 }}>{actions}</Box>}
     </ModalContent>
   </Modal>
 )

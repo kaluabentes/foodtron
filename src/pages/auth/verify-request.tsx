@@ -16,7 +16,13 @@ const VerifyRequest = () => {
 
   return (
     <AuthLayout>
-      <Flex justifyContent="center">
+      <Flex
+        as="a"
+        href="https://gocomet.app"
+        target="_blank"
+        rel="noopener noreferrer"
+        justifyContent="center"
+      >
         <Image src="/comet-full.svg" height="50px" mb={14} mt={5} />
       </Flex>
       <Heading size="lg" marginBottom={10} fontWeight="semibold">

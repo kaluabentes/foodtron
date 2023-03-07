@@ -115,7 +115,6 @@ const Index = ({ store, categories }: IndexProps) => {
   const {
     setState,
     state: {
-      isReady,
       address: {
         street,
         number,
@@ -210,14 +209,6 @@ const Index = ({ store, categories }: IndexProps) => {
     setSelectedProduct(product)
   }
 
-  useEffect(() => {
-    if (isReady) {
-      setState({
-        store: store,
-      })
-    }
-  }, [isReady])
-
   return (
     <AppLayout title="Menu">
       <Box
@@ -257,9 +248,9 @@ const Index = ({ store, categories }: IndexProps) => {
       />
       {applyFilters(categories).map((category) => (
         <CategoryItem
-          key={category.id}
+          key={category?.id}
           onMenuItemClick={handleMenuItemClick}
-          category={category}
+          category={category!}
         />
       ))}
       <OrderProductModal

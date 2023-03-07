@@ -30,7 +30,11 @@ function html(params: { url: string; host: string; theme: Theme }) {
         style="background: ${color.mainBackground}; max-width: 600px; margin: auto; border-radius: 10px;">
         <tr>
           <td align="center" style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-            <img height="50px" src="https://gocomet.app/comet-full.png" />
+            <a 
+            href="https://gocomet.app"
+            target="_blank"
+            rel="noopener noreferrer">
+            <img height="50px" src="https://gocomet.app/comet-full.png" /></a>
           </td>
         </tr>
         <tr>

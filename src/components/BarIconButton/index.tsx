@@ -5,12 +5,18 @@ interface BarIconButtonProps {
   label: string
   icon: ReactElement
   onClick?: () => void
+  background?: string
 }
 
-const BarIconButton = ({ label, icon, onClick }: BarIconButtonProps) => (
+const BarIconButton = ({
+  background,
+  label,
+  icon,
+  onClick,
+}: BarIconButtonProps) => (
   <IconButton
     onClick={onClick}
-    background="white"
+    background={background ? background : "white"}
     color="gray.500"
     aria-label={label}
     fontSize="23px"

@@ -49,7 +49,7 @@ const OrderDetails = ({
         alignItems="start"
         justifyContent="space-between"
         background="white"
-        p={{ base: 4, md: 6 }}
+        p={{ base: 4, md: 8 }}
         direction={{ base: "column-reverse", md: "row" }}
         gap={4}
       >
@@ -75,7 +75,7 @@ const OrderDetails = ({
       >
         <SectionTitle>Detalhes</SectionTitle>
         <Box
-          p={{ base: 4, md: 6 }}
+          p={{ base: 4, md: 8 }}
           display="flex"
           flexDirection="column"
           gap={4}

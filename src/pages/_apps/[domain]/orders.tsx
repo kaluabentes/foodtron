@@ -18,6 +18,9 @@ import StripeSeparator from "@/components/StripeSeparator"
 import OrderDetailsModal from "@/modules/orders/components/OrderDetailsModal"
 import { useState } from "react"
 import { useRouter } from "next/router"
+import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
+import { useSession } from "next-auth/react"
+import EmptyState from "@/components/EmptyState"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -51,32 +54,27 @@ const Orders = () => {
   const router = useRouter()
 
   const { state: app } = useAppContext()
+  const { data: session } = useSession()
 
   const [orderToShow, setOrderToShow] = useState<Order | undefined>()
 
+  const renderOrders = () => {
+    if (!app.user.orders.length) {
+      return <EmptyState message="Não há pedidos ainda" />
+    }
+
+    return app.user.orders.map((order) => (
+      <OrderCard
+        onClick={() => setOrderToShow(order)}
+        onTrack={() => router.push(`/track-order?id=${order.id}`)}
+        order={order}
+      />
+    ))
+  }
+
   return (
     <AppLayout title="Pedidos">
-      <Flex
-        direction="column"
-        gap={4}
-        p={{ base: 4, md: 0 }}
-        pt={{ base: 4, md: 4, lg: 0 }}
-        pb={{ base: 4, md: 4, lg: 4 }}
-      >
-        {!app.user.email && (
-          <>
-            <Alert fontWeight="500" fontSize="xs" borderRadius="md" shadow="sm">
-              <AlertIcon />
-              Você ainda não possui uma conta criada, portanto, suas informações
-              estão armazenadas localmente, para salvar as suas informações na
-              nuvem crie uma conta abaixo
-            </Alert>
-            <Button variant="outline" width="full">
-              Criar conta
-            </Button>
-          </>
-        )}
-      </Flex>
+      {!session && <UserAccountWarning />}
       <Flex
         direction="column"
         gap={4}
@@ -86,13 +84,7 @@ const Orders = () => {
         p={{ base: 4, md: 0 }}
         pt={{ base: 0 }}
       >
-        {app.user.orders.map((order) => (
-          <OrderCard
-            onClick={() => setOrderToShow(order)}
-            onTrack={() => router.push(`/track-order?id=${order.id}`)}
-            order={order}
-          />
-        ))}
+        {renderOrders()}
       </Flex>
       {orderToShow && (
         <OrderDetailsModal

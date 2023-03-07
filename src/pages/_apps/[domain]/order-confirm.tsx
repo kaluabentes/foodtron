@@ -154,7 +154,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         mb={4}
       >
         <SectionTitle>Pagamento</SectionTitle>
-        <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
+        <Flex p={{ base: 4, md: 8 }} gap={4} direction="column">
           <EditableDataItem
             field="Tipo"
             value={paymentMethod.name}
@@ -179,7 +179,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         mb={4}
       >
         <SectionTitle>Entrega</SectionTitle>
-        <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
+        <Flex p={{ base: 4, md: 8 }} gap={4} direction="column">
           <EditableDataItem
             field="Endereço"
             value={assembledAddress}
@@ -204,7 +204,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         shadow="sm"
       >
         <SectionTitle>Dados de usuário</SectionTitle>
-        <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
+        <Flex p={{ base: 4, md: 8 }} gap={4} direction="column">
           <EditableDataItem
             field="Nome"
             value={user.name}
