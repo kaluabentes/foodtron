@@ -137,7 +137,6 @@ const StoreMidiaUpload = ({
           outline="3px solid white"
           overflow="hidden"
           disabled={!isEditable}
-          shadow="md"
         >
           {!logo && (
             <Box p={4} color="gray.500" fontSize="14px">

@@ -122,7 +122,12 @@ const AppLayout = ({
   return (
     <Flex direction={{ base: "column", lg: "row" }}>
       {renderAppBar}
-      <Box height={{ base: "none", md: "100vh" }} overflow="auto" width="100%">
+      <Box
+        id="mainWrapper"
+        height={{ base: "initial", lg: "100vh" }}
+        overflow="auto"
+        width="100%"
+      >
         <Box
           as="main"
           paddingBottom="88px"

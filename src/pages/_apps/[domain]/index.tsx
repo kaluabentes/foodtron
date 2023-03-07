@@ -18,6 +18,7 @@ import OrderProductModal, {
 import Product from "@/modules/products/types/Product"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import useGetStore from "@/modules/stores/hooks/useGetStore"
+import FilterBar from "@/modules/app/components/FilterBar"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -103,7 +104,13 @@ interface IndexProps {
 const Index = ({ store, categories }: IndexProps) => {
   const router = useRouter()
   const toast = useBottomToast()
+
   const { store: storeRealTime } = useGetStore(String(store.subdomain))
+
+  const [filters, setFilters] = useState({
+    search: "",
+    category: "",
+  })
 
   const {
     setState,
@@ -128,6 +135,36 @@ const Index = ({ store, categories }: IndexProps) => {
   const currentScheduleTime = `${currentSchedule?.start} ás ${currentSchedule?.end}`
 
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>()
+
+  const matchSearch = (text: string) => {
+    const regex = new RegExp(filters.search, "i")
+
+    return Boolean(regex.exec(text))
+  }
+
+  const applyFilters = (categoriesList: Category[]) => {
+    if (filters.search) {
+      return categoriesList
+        .map((category) => ({
+          ...category,
+          products: category.products?.filter(
+            (product) =>
+              matchSearch(product.title) || matchSearch(product.description)
+          ),
+        }))
+        .filter((category) => category.products?.length! > 0)
+    }
+
+    if (filters.category) {
+      const category = categories.find(
+        (category) => category.id === filters.category
+      )
+
+      return [category]
+    }
+
+    return categoriesList
+  }
 
   const handleOrderConfirm = (values: OrderProductValues) => {
     const id = uuidv4()
@@ -201,7 +238,24 @@ const Index = ({ store, categories }: IndexProps) => {
           location={location}
         />
       </Box>
-      {categories.map((category) => (
+      <FilterBar
+        search={filters.search}
+        categories={categories}
+        category={filters.category}
+        onCategoryChange={(category: string) =>
+          setFilters((prev) => ({
+            ...prev,
+            category,
+          }))
+        }
+        onSearchChange={(search: string) =>
+          setFilters((prev) => ({
+            ...prev,
+            search,
+          }))
+        }
+      />
+      {applyFilters(categories).map((category) => (
         <CategoryItem
           key={category.id}
           onMenuItemClick={handleMenuItemClick}
