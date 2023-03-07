@@ -14,7 +14,7 @@ interface SideNavProps {
   bottomMenu: RouteItem[]
   topMenu: RouteItem[]
   isClosed: boolean
-  onClosedToggle: (state: boolean) => void
+  onClosedToggle?: (state: boolean) => void
 }
 
 const SideNav = ({
@@ -40,8 +40,8 @@ const SideNav = ({
       height="100vh"
       transition="0.5s"
       position="relative"
-      onMouseOver={() => onClosedToggle(false)}
-      onMouseLeave={() => onClosedToggle(true)}
+      onMouseOver={() => onClosedToggle && onClosedToggle(false)}
+      onMouseLeave={() => onClosedToggle && onClosedToggle(true)}
       overflowX="hidden"
     >
       {header}

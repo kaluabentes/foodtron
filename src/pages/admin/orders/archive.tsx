@@ -99,7 +99,7 @@ const OrdersArchive = () => {
                 </Td>
                 <Td>{order.username}</Td>
                 <Td>
-                  <Flex alignItems="center">
+                  <Flex alignItems="center" gap={4}>
                     <Badge
                       colorScheme={ORDER_STATUS_COLOR_SCHEME[order.status]}
                     >
@@ -110,7 +110,6 @@ const OrdersArchive = () => {
                       color="gray.600"
                       icon={<BiEdit />}
                       size="sm"
-                      variant="link"
                       onClick={() => setOrderToEdit(order)}
                     />
                   </Flex>

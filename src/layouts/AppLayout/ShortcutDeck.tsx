@@ -46,6 +46,7 @@ const ShortcutDeck = () => (
     bottom="0"
     boxShadow="0 -1px 2px 0 rgba(0, 0, 0, 0.05);"
     width="100%"
+    zIndex="100"
   >
     <Flex
       maxWidth={{ base: "100%", md: "container.md" }}

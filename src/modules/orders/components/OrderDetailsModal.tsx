@@ -7,11 +7,13 @@ import {
   ModalContent,
   ModalOverlay,
 } from "@chakra-ui/react"
+import { ReactNode } from "react"
 import Order from "../types/Order"
 import OrderDetails from "./OrderDetails"
 
 interface OrderDetailsModal {
   order: Order
+  actions?: ReactNode
   onClose: () => void
   onConfirm?: () => void
   isOpen: boolean
@@ -20,6 +22,7 @@ interface OrderDetailsModal {
 
 const OrderDetailsModal = ({
   order,
+  actions,
   isOpen,
   onClose,
   onConfirm,
@@ -39,7 +42,9 @@ const OrderDetailsModal = ({
         alignItems="center"
         background="gray.50"
       >
-        <Heading fontSize="lg">Detalhes do pedido</Heading>
+        <Heading fontSize="lg" fontWeight="600">
+          Detalhes do pedido
+        </Heading>
         <CloseButton onClick={onClose} />
       </Flex>
       <OrderDetails
@@ -47,6 +52,7 @@ const OrderDetailsModal = ({
         onConfirm={onConfirm}
         order={order}
       />
+      {actions && <Box p={{ base: 4, md: 6 }}>{actions}</Box>}
     </ModalContent>
   </Modal>
 )

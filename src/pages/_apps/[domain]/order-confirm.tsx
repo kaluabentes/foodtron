@@ -54,7 +54,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
   const router = useRouter()
   const toast = useBottomToast()
 
-  const { state } = useAppContext()
+  const { state, setState } = useAppContext()
   const { address } = state
   const {
     user,
@@ -68,37 +68,41 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
   const [isOrderConfirmModalOpen, setIsOrderConfirmModalOpen] = useState(false)
   const { createOrder, isCreating } = useCreateOrder()
 
-  const handleOrderConfirm = async () => {
-    if (!address.location.neighborhood || !address.street || !address.number) {
-      setIsOrderConfirmModalOpen(false)
-      toast({
-        title: "Atenção",
-        description: "Complete os dados de entrega",
-        status: "error",
-      })
-      return
-    }
-
+  const verifyInformations = () => {
     if (!paymentMethod.name) {
       setIsOrderConfirmModalOpen(false)
       toast({
         title: "Atenção",
-        description: "Complete os dados de pagamento",
+        description: "Adicione os dados de pagamento",
         status: "error",
       })
-      return
+      return false
+    }
+
+    if (!address.location.neighborhood || !address.street || !address.number) {
+      setIsOrderConfirmModalOpen(false)
+      toast({
+        title: "Atenção",
+        description: "Adicione os dados de entrega",
+        status: "error",
+      })
+      return false
     }
 
     if (!user.name) {
       setIsOrderConfirmModalOpen(false)
       toast({
         title: "Atenção",
-        description: "Complete os dados de contato",
+        description: "Adicione os dados de usuário",
         status: "error",
       })
-      return
+      return false
     }
 
+    return true
+  }
+
+  const handleOrderConfirm = async () => {
     const order = await createOrder({
       tax,
       paymentMethod: paymentMethod.name,
@@ -109,6 +113,11 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       phone: user.phone,
       estimatedTime: address.location.estimatedTime,
       orderProducts: products,
+    })
+    setState({
+      user: {
+        orders: [...state.user.orders, order],
+      },
     })
     setIsOrderConfirmModalOpen(false)
     router.push(`/track-order?id=${order.id}`)
@@ -121,7 +130,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       rightIcon={
         <BarIconButton
           label="Voltar"
-          onClick={() => router.push("/payment")}
+          onClick={() => router.push("/order")}
           icon={<BiLeftArrowAlt />}
         />
       }
@@ -145,7 +154,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         mb={4}
       >
         <SectionTitle>Pagamento</SectionTitle>
-        <Flex p={4} gap={4} direction="column">
+        <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
           <EditableDataItem
             field="Tipo"
             value={paymentMethod.name}
@@ -170,7 +179,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         mb={4}
       >
         <SectionTitle>Entrega</SectionTitle>
-        <Flex p={4} gap={4} direction="column">
+        <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
           <EditableDataItem
             field="Endereço"
             value={assembledAddress}
@@ -194,19 +203,23 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         borderRadius={{ base: undefined, lg: "md" }}
         shadow="sm"
       >
-        <SectionTitle>Contato</SectionTitle>
-        <Flex p={4} gap={4} direction="column">
+        <SectionTitle>Dados de usuário</SectionTitle>
+        <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
           <EditableDataItem
             field="Nome"
             value={user.name}
             onEdit={() => router.push("/edit-user?redirect=/order-confirm")}
           />
           <StripeSeparator horizontal />
-          <EditableDataItem field="Phone" value={user.phone} />
+          <EditableDataItem field="Telefone" value={user.phone} />
         </Flex>
       </Box>
       <ResponsiveButton
         onClick={() => {
+          if (!verifyInformations()) {
+            return
+          }
+
           setIsOrderConfirmModalOpen(true)
         }}
       >

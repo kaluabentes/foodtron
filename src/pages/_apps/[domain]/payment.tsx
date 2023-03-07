@@ -68,7 +68,6 @@ const Payment = () => {
 
   return (
     <AppLayout
-      hideCartButton
       title="Pagamento"
       rightIcon={
         <BarIconButton

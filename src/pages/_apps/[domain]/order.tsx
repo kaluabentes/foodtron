@@ -47,38 +47,6 @@ const Order = () => {
     order: { paymentMethod },
   } = state
 
-  const getConfirmHandler = () => {
-    if (!tax) {
-      return () => router.push("/edit-address?redirect=/order")
-    }
-
-    if (!paymentMethod.name) {
-      return () => router.push("/payment")
-    }
-
-    if (!user.name) {
-      return () => router.push("/edit-user")
-    }
-
-    return () => router.push("/order-confirm")
-  }
-
-  const getButtonLabel = () => {
-    if (!tax) {
-      return "Adicionar endereço"
-    }
-
-    if (!paymentMethod.name) {
-      return "Forma de pagamento"
-    }
-
-    if (!user.name) {
-      return "Informações de contato"
-    }
-
-    return "Confirmar pedido"
-  }
-
   return (
     <AppLayout
       hideCartButton
@@ -100,8 +68,8 @@ const Order = () => {
       >
         <OrderItemsSummary />
       </Box>
-      <ResponsiveButton onClick={getConfirmHandler()}>
-        {getButtonLabel()}
+      <ResponsiveButton onClick={() => router.push("/order-confirm")}>
+        Confirmar
       </ResponsiveButton>
     </AppLayout>
   )

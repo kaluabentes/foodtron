@@ -32,12 +32,13 @@ const OrderStatusItem = ({
     )}
     {stepStatus === "current" && (
       <Flex
-        width="16px"
-        height="16px"
+        width="15px"
+        height="15px"
         borderRadius="50%"
         background="orange"
         color="white"
         alignItems="center"
+        animation={!isDone ? "pulse 2s infinite" : undefined}
         justifyContent="center"
       >
         {isDone && <BiCheck />}
@@ -45,8 +46,8 @@ const OrderStatusItem = ({
     )}
     {stepStatus === "pending" && (
       <Box
-        width="16px"
-        height="16px"
+        width="15px"
+        height="15px"
         borderRadius="50%"
         border="4px solid transparent"
         borderColor="gray.300"
@@ -55,8 +56,8 @@ const OrderStatusItem = ({
     {stepStatus === "done" && (
       <Flex
         color="white"
-        width="16px"
-        height="16px"
+        width="15px"
+        height="15px"
         borderRadius="50%"
         background="orange.200"
         alignItems="center"

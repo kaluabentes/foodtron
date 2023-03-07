@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react"
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Flex,
@@ -20,6 +22,7 @@ import { useRouter } from "next/router"
 import Location from "@/modules/locations/types/Location"
 import BarIconButton from "@/components/BarIconButton"
 import ResponsiveButton from "@/components/ResponsiveButton"
+import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
 
 const MaskedWhatsappInput = IMaskMixin(({ inputRef, ...props }: any) => (
   <Input {...props} ref={inputRef} />
@@ -54,7 +57,7 @@ const EditUser = () => {
   const {
     setState,
     state: {
-      user: { name, phone },
+      user: { name, phone, email },
     },
   } = useAppContext()
 
@@ -96,8 +99,7 @@ const EditUser = () => {
 
   return (
     <AppLayout
-      hideCartButton
-      title="Contato"
+      title="Dados de usuário"
       rightIcon={
         <BarIconButton
           label="Voltar"
@@ -107,14 +109,16 @@ const EditUser = () => {
       }
     >
       <form onSubmit={handleSubmit(handleEditUser)}>
+        <Box p={{ base: 4, md: 0 }} pb={0} pt={{ base: 4, md: 4, lg: 0 }}>
+          {!email && <UserAccountWarning />}
+        </Box>
         <Flex
           direction="column"
           shadow="sm"
           backgroundColor="white"
           borderRadius="md"
           overflow="hidden"
-          p={{ base: 4, md: 8 }}
-          mt={{ base: 0, md: 4 }}
+          p={{ base: 4, md: 6 }}
         >
           <FormControl mb={5}>
             <FormLabel>{t("name")}</FormLabel>

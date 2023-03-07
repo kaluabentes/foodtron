@@ -92,7 +92,7 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
           mb={4}
           shadow="sm"
         >
-          <Flex p={4} gap={4} direction="column">
+          <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
             <EditableDataItem field="ID" value={<Badge>{order.id}</Badge>} />
             <StripeSeparator horizontal />
             <EditableDataItem
@@ -109,12 +109,7 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
                 >{`${order.estimatedTime} min.`}</Box>
               }
             />
-            <Button onClick={() => setShowDetails(true)}>
-              Detalhes do pedido
-            </Button>
-            <Heading mt={4} fontSize="lg">
-              Status
-            </Heading>
+            <StripeSeparator horizontal />
             <OrderStatusItem
               icon={<BiFile />}
               title="Pedido enviado"
@@ -158,6 +153,14 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
                 order.status === ORDER_STATUS.DONE ? "current" : "pending"
               }
             />
+            <Button colorScheme="brand" onClick={() => setShowDetails(true)}>
+              Detalhes do pedido
+            </Button>
+            {order.status === ORDER_STATUS.PENDING && (
+              <Button onClick={() => setShowDetails(true)}>
+                Cancelar pedido
+              </Button>
+            )}
           </Flex>
         </Box>
         <Flex direction="column" gap={4} p={{ base: 4, md: 0 }} pt={0} pb={0}>
@@ -184,7 +187,7 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
       rightIcon={
         <BarIconButton
           label="Voltar"
-          onClick={() => router.push("/payment")}
+          onClick={() => router.push("/")}
           icon={<BiLeftArrowAlt />}
         />
       }

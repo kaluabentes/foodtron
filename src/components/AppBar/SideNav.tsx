@@ -66,7 +66,7 @@ const SideNav = ({
                 }
                 icon={item.icon}
                 isLight
-                isActive={router.asPath.includes(item.path)}
+                isActive={router.asPath === item.path}
               >
                 {item.label}
               </MenuItem>
@@ -80,7 +80,7 @@ const SideNav = ({
                   item.onClick ? item.onClick() : router.push(item.path)
                 }
                 icon={item.icon}
-                isActive={router.asPath.includes(item.path)}
+                isActive={router.asPath === item.path}
                 isLight
               >
                 {item.label}

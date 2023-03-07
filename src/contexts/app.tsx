@@ -11,6 +11,7 @@ import {
 import Location from "@/modules/locations/types/Location"
 import OrderProduct from "@/modules/orders/types/OrderProduct"
 import Store from "@/modules/stores/types/Store"
+import Order from "@/modules/orders/types/Order"
 
 export interface Address {
   street?: string
@@ -23,6 +24,9 @@ interface AppState {
   user: {
     name: string
     phone: string
+    email: string
+    orders: Order[]
+    hasAccount: boolean
   }
   address: Address
   order: {
@@ -40,6 +44,9 @@ interface AppStateParam {
   user?: {
     name?: string
     phone?: string
+    email?: string
+    orders?: Order[]
+    hasAccount?: boolean
   }
   address?: {
     street?: string
@@ -60,6 +67,9 @@ const DEFAULT_VALUE_STATE = {
   user: {
     name: "",
     phone: "",
+    email: "",
+    orders: [],
+    hasAccount: false,
   },
   address: {
     street: "",
@@ -98,6 +108,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const mutateState = (newState: AppStateParam) => {
     setState((oldState) => {
       const newStateMerged = merge(oldState, newState)
+
+      console.log("newStateMerged", newStateMerged)
 
       localStorage.setItem(
         `${domain}.gocomet.app`,

@@ -50,6 +50,23 @@ const AppLayout = ({
     router.push("/order")
   }
 
+  const renderHeader = (isClosed = false) =>
+    store.logo ? (
+      <Brand
+        logo={store.logo}
+        storeName={store.name}
+        hideBrandText={isClosed}
+        width="44px"
+        height="44px"
+      />
+    ) : (
+      <Brand
+        logo="/comet-blue.svg"
+        hideBrandText={isClosed}
+        storeName={<Image height="12px" src="/comet-text.svg" />}
+      />
+    )
+
   const renderAppBar = useBreakpointValue({
     base: (
       <AppBar
@@ -65,6 +82,7 @@ const AppLayout = ({
         leftIcon={
           <CartButton onClick={handleCartClick} quantity={products.length} />
         }
+        sideNavHeader={renderHeader()}
         isOpen={isOpen}
         onMenuClick={() => setIsOpen(true)}
         onClose={() => setIsOpen(false)}
@@ -74,23 +92,7 @@ const AppLayout = ({
       <SideNav
         isClosed={isClosed}
         onClosedToggle={setIsClosed}
-        header={
-          store.logo ? (
-            <Brand
-              logo={store.logo}
-              storeName={store.name}
-              hideBrandText={isClosed}
-              width="44px"
-              height="44px"
-            />
-          ) : (
-            <Brand
-              hideBrandText={isClosed}
-              logo="/comet-blue.svg"
-              storeName={<Image height="12px" src="/comet-text.svg" />}
-            />
-          )
-        }
+        header={renderHeader(isClosed)}
         topMenu={topMenu}
         bottomMenu={bottomMenu}
       />
