@@ -19,6 +19,8 @@ import { BiLeftArrowAlt } from "react-icons/bi"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import ResponsiveButton from "@/components/ResponsiveButton"
+import Address from "@/modules/addresses/types/Address"
+import AddressParam from "@/modules/addresses/types/AddressParam"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -65,6 +67,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
   const {
     setState,
     state: {
+      user: { addresses },
       address: { street, number, location },
     },
   } = useAppContext()
@@ -80,13 +83,18 @@ const EditAddress = ({ locations }: EditAddressProps) => {
   })
 
   const handleEditAddress = (data: any) => {
+    const address: AddressParam = {
+      street: data.street,
+      number: data.number,
+      location: locations.find((location) => location.id === data.location)!,
+    }
+
     setIsLoading(true)
     setState({
-      address: {
-        street: data.street,
-        number: data.number,
-        location: locations.find((location) => location.id === data.location),
+      user: {
+        addresses: [...addresses, address],
       },
+      address,
     })
 
     if (redirect) {
@@ -105,7 +113,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
 
   return (
     <AppLayout
-      title="Editar endereço"
+      title="Adicionar endereço"
       rightIcon={
         <BarIconButton
           label="Voltar"
@@ -121,20 +129,20 @@ const EditAddress = ({ locations }: EditAddressProps) => {
           backgroundColor="white"
           borderRadius="md"
           overflow="hidden"
-          p={{ base: 4, md: 8 }}
+          p={{ base: 4, md: 6 }}
           mt={{ base: 0, md: 4 }}
         >
           <FormControl mb={5}>
             <FormLabel>{t("street")}</FormLabel>
-            <Input {...register("street")} />
+            <Input {...register("street")} required />
           </FormControl>
           <FormControl mb={5}>
             <FormLabel>{t("number")}</FormLabel>
-            <Input {...register("number")} type="tel" />
+            <Input {...register("number")} type="tel" required />
           </FormControl>
           <FormControl>
             <FormLabel>{t("district")}</FormLabel>
-            <Select {...register("location")}>
+            <Select {...register("location")} required>
               <option value="">Selecione</option>
               {locations.map((location) => (
                 <option key={location.id} value={location.id}>
@@ -145,7 +153,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
           </FormControl>
         </Flex>
         <ResponsiveButton type="submit" isLoading={isLoading}>
-          Salvar
+          Adicionar
         </ResponsiveButton>
       </form>
     </AppLayout>

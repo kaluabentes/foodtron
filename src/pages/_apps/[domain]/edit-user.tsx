@@ -24,6 +24,8 @@ import BarIconButton from "@/components/BarIconButton"
 import ResponsiveButton from "@/components/ResponsiveButton"
 import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
 import { useSession } from "next-auth/react"
+import formatPhone from "@/lib/helpers/string/formatPhone"
+import useBottomToast from "@/lib/hooks/useBottomToast"
 
 const MaskedWhatsappInput = IMaskMixin(({ inputRef, ...props }: any) => (
   <Input {...props} ref={inputRef} />
@@ -54,12 +56,12 @@ const EditUser = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const { redirect } = router.query
-  const { data: session } = useSession()
+  const toast = useBottomToast()
 
   const {
     setState,
     state: {
-      user: { name, phone, email },
+      user: { name, phone, token },
     },
   } = useAppContext()
 
@@ -77,29 +79,31 @@ const EditUser = () => {
     setState({
       user: {
         name: data.name,
-        phone: data.phone,
+        phone: formatPhone(data.phone),
       },
     })
+
+    toast({
+      title: "Feito!",
+      description: "As informações foram salvas localmente",
+    })
+
+    // Salvar nome de usuário caso essteje logado
+    if (token) {
+    }
 
     if (redirect) {
       router.push(String(redirect))
       return
     }
 
-    router.push("/order")
+    setIsLoading(false)
   }
 
   useEffect(() => {
-    if (name) {
-      setValue("name", name)
-    }
-
-    if (phone) {
-      setValue("phone", phone)
-    }
+    setValue("name", name)
+    setValue("phone", phone)
   }, [name, phone])
-
-  console.log("session", session)
 
   return (
     <AppLayout
@@ -112,15 +116,15 @@ const EditUser = () => {
         />
       }
     >
+      {!token && <UserAccountWarning />}
       <form onSubmit={handleSubmit(handleEditUser)}>
-        {!session && <UserAccountWarning />}
         <Flex
           direction="column"
           shadow="sm"
           backgroundColor="white"
           borderRadius="md"
           overflow="hidden"
-          p={{ base: 4, md: 8 }}
+          p={{ base: 4, md: 6 }}
         >
           <FormControl mb={5}>
             <FormLabel>{t("name")}</FormLabel>

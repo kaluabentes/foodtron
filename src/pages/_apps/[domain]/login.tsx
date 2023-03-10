@@ -64,28 +64,25 @@ const CreateAccount = () => {
   const {
     setState,
     state: {
-      user: { phone, name },
+      user: { phone },
     },
   } = useAppContext()
 
   const [isLoading, setIsLoading] = useState(false)
-  const [isSMSSent, setIsSMSSent] = useState(false)
 
-  const { register, handleSubmit, setValue, watch } = useForm({
+  const { handleSubmit, setValue, watch } = useForm({
     defaultValues: {
       phone,
-      name,
     },
   })
 
-  const handleCreateAccount = async (data: any) => {
+  const handleLogin = async (data: any) => {
     const phone = formatPhone(data.phone)
 
     setIsLoading(true)
     setState({
       user: {
         phone,
-        name: data.name,
       },
     })
 
@@ -100,13 +97,9 @@ const CreateAccount = () => {
     setValue("phone", phone)
   }, [phone])
 
-  useEffect(() => {
-    setValue("name", name)
-  }, [name])
-
   return (
     <AppLayout
-      title="Criar conta"
+      title="Entrar"
       rightIcon={
         <BarIconButton
           label="Voltar"
@@ -115,7 +108,7 @@ const CreateAccount = () => {
         />
       }
     >
-      <form onSubmit={handleSubmit(handleCreateAccount)}>
+      <form onSubmit={handleSubmit(handleLogin)}>
         <Flex
           direction="column"
           shadow="sm"
@@ -124,10 +117,6 @@ const CreateAccount = () => {
           overflow="hidden"
           p={{ base: 4, md: 6 }}
         >
-          <FormControl mb={4}>
-            <FormLabel>{t("name")}</FormLabel>
-            <Input {...register("name")} required />
-          </FormControl>
           <FormControl>
             <FormLabel>{t("phone")}</FormLabel>
             <MaskedWhatsappInput
@@ -141,7 +130,7 @@ const CreateAccount = () => {
           </FormControl>
         </Flex>
         <ResponsiveButton type="submit" isLoading={isLoading}>
-          Criar conta
+          Entrar
         </ResponsiveButton>
       </form>
     </AppLayout>

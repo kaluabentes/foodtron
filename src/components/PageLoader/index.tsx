@@ -38,7 +38,7 @@ export default function PageLoader() {
       visibility={isShown ? "visible" : "hidden"}
       opacity={isShown ? "1" : "0"}
       transition="0.5s"
-      zIndex="100"
+      zIndex={400}
       position="fixed"
       top={0}
       left={0}

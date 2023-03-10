@@ -101,7 +101,7 @@ interface IndexProps {
   categories: Category[]
 }
 
-const Index = ({ store, categories }: IndexProps) => {
+const Index = ({ store = {}, categories }: IndexProps) => {
   const router = useRouter()
   const toast = useBottomToast()
 
@@ -211,16 +211,17 @@ const Index = ({ store, categories }: IndexProps) => {
 
   return (
     <AppLayout title="Menu">
+      <AddressSelectButton
+        onClick={() => router.push("/edit-address")}
+        address={(street || number || neighborhood) && address}
+      />
       <Box
-        borderRadius="md"
+        borderRadius={{ lg: "md" }}
         overflow="hidden"
         boxShadow="sm"
         mt={{ base: 0, md: 4 }}
+        mb={{ lg: 0 }}
       >
-        <AddressSelectButton
-          onClick={() => router.push("/edit-address")}
-          address={(street || number || neighborhood) && address}
-        />
         <StoreInfo
           onSelectLocation={() => router.push("/select-location")}
           weekDay={currentWeekDay}

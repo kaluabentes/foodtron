@@ -12,21 +12,19 @@ import Location from "@/modules/locations/types/Location"
 import OrderProduct from "@/modules/orders/types/OrderProduct"
 import Store from "@/modules/stores/types/Store"
 import Order from "@/modules/orders/types/Order"
-
-export interface Address {
-  street?: string
-  number?: string
-  location: Location
-}
+import Address from "@/modules/addresses/types/Address"
+import AddressParam from "@/modules/addresses/types/AddressParam"
 
 interface AppState {
   store: Store
   user: {
+    id: string
     name: string
     phone: string
     email: string
+    token: string
     orders: Order[]
-    hasAccount: boolean
+    addresses: Address[]
   }
   address: Address
   order: {
@@ -42,11 +40,13 @@ interface AppState {
 interface AppStateParam {
   store?: Store
   user?: {
+    id?: string
     name?: string
     phone?: string
     email?: string
+    token?: string
     orders?: Order[]
-    hasAccount?: boolean
+    addresses?: AddressParam[]
   }
   address?: {
     street?: string
@@ -62,32 +62,42 @@ interface AppStateParam {
   }
 }
 
+export const DEFAULT_USER = {
+  id: "",
+  name: "",
+  phone: "",
+  email: "",
+  token: "",
+  orders: [],
+  addresses: [],
+}
+
+export const DEFAULT_ADDRESS = {
+  id: "",
+  name: "",
+  street: "",
+  number: "",
+  location: {
+    id: "",
+    neighborhood: "",
+    tax: "",
+    estimatedTime: "",
+  },
+}
+
+export const DEFAULT_ORDER = {
+  products: [],
+  paymentMethod: {
+    name: "",
+    change: "",
+  },
+}
+
 const DEFAULT_VALUE_STATE = {
   store: {},
-  user: {
-    name: "",
-    phone: "",
-    email: "",
-    orders: [],
-    hasAccount: false,
-  },
-  address: {
-    street: "",
-    number: "",
-    location: {
-      id: "",
-      neighborhood: "",
-      tax: "",
-      estimatedTime: "",
-    },
-  },
-  order: {
-    products: [],
-    paymentMethod: {
-      name: "",
-      change: "",
-    },
-  },
+  user: DEFAULT_USER,
+  address: DEFAULT_ADDRESS,
+  order: DEFAULT_ORDER,
   isReady: false,
 }
 
@@ -108,8 +118,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const mutateState = (newState: AppStateParam) => {
     setState((oldState) => {
       const newStateMerged = merge(oldState, newState)
-
-      console.log("newStateMerged", newStateMerged)
 
       localStorage.setItem(
         `${domain}.gocomet.app`,
@@ -133,8 +141,15 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         ...JSON.parse(localState),
         isReady: true,
       })
+    } else {
+      setState((prevState) => ({
+        ...prevState,
+        isReady: true,
+      }))
     }
   }, [])
+
+  console.log("state", state)
 
   return (
     <AppValueContext.Provider value={state}>

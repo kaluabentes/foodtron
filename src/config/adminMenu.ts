@@ -1,3 +1,4 @@
+import RouteItem from "@/types/RouteItem"
 import { signOut } from "next-auth/react"
 import { IconType } from "react-icons"
 import {
@@ -12,13 +13,6 @@ import {
   BiPurchaseTag,
   BiCheckCircle,
 } from "react-icons/bi"
-
-export interface RouteItem {
-  icon: IconType
-  label: string
-  path: string
-  onClick?: () => void
-}
 
 export const topMenu: RouteItem[] = [
   {

@@ -33,6 +33,8 @@ import { ORDER_STATUS } from "@/modules/orders/constants"
 import { FaWhatsapp } from "react-icons/fa"
 import OrderDetailsModal from "@/modules/orders/components/OrderDetailsModal"
 import Store from "@/modules/stores/types/Store"
+import { useAppContext } from "@/contexts/app"
+import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -70,6 +72,12 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
   const router = useRouter()
   const { id } = router.query
 
+  const {
+    state: {
+      user: { token },
+    },
+  } = useAppContext()
+
   const { order } = useGetOrder(String(id))
 
   const [showDetails, setShowDetails] = useState(false)
@@ -85,6 +93,7 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
 
     return (
       <>
+        {!token && <UserAccountWarning />}
         <Box
           background="white"
           overflow="hidden"
@@ -92,7 +101,7 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
           mb={4}
           shadow="sm"
         >
-          <Flex p={{ base: 4, md: 8 }} gap={4} direction="column">
+          <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
             <EditableDataItem field="ID" value={<Badge>{order.id}</Badge>} />
             <StripeSeparator horizontal />
             <EditableDataItem
@@ -104,6 +113,7 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
               field="Previsão de entrega"
               value={
                 <Box
+                  as="span"
                   fontWeight="700"
                   fontSize="xl"
                 >{`${order.estimatedTime} min.`}</Box>
@@ -153,29 +163,26 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
                 order.status === ORDER_STATUS.DONE ? "current" : "pending"
               }
             />
-            <Button colorScheme="brand" onClick={() => setShowDetails(true)}>
-              Detalhes do pedido
-            </Button>
-            {order.status === ORDER_STATUS.PENDING && (
-              <Button onClick={() => setShowDetails(true)}>
-                Cancelar pedido
+            <Flex direction="column" gap={4}>
+              <Button colorScheme="brand" onClick={() => setShowDetails(true)}>
+                Detalhes
               </Button>
-            )}
+              {order.status === ORDER_STATUS.PENDING && (
+                <Button onClick={() => setShowDetails(true)}>Cancelar</Button>
+              )}
+              <Button
+                as="a"
+                variant="outline"
+                leftIcon={<FaWhatsapp />}
+                href={`https://wa.me/${store.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Conversar
+              </Button>
+            </Flex>
           </Flex>
         </Box>
-        <Flex direction="column" gap={4} p={{ base: 4, md: 0 }} pt={0} pb={0}>
-          <Button
-            as="a"
-            variant="outline"
-            width="full"
-            leftIcon={<FaWhatsapp />}
-            href={`https://wa.me/${store.whatsapp}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Conversar
-          </Button>
-        </Flex>
       </>
     )
   }

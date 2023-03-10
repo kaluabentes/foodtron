@@ -11,6 +11,7 @@ export interface OrderParam {
   username?: string
   phone?: string
   estimatedTime?: string
+  userId?: string
   reasonForCancellation?: string
   orderProducts?: OrderProduct[]
 }

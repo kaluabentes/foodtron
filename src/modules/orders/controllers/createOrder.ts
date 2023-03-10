@@ -13,40 +13,50 @@ const createOrder = (order: Order) => {
     throw new Error("add at least one product")
   }
 
-  return prisma.order.create({
-    data: {
-      tax: createDecimal(order.tax),
-      paymentMethod: order.paymentMethod,
-      change: order.change ? createDecimal(order.change) : null,
-      address: order.address,
-      status: ORDER_STATUS.PENDING,
-      username: order.username,
-      phone: formatPhone(order.phone),
-      estimatedTime: order.estimatedTime,
-      store: {
-        connect: {
-          id: order.storeId,
-        },
-      },
-      orderProducts: {
-        create: order.orderProducts.map((orderProduct) => ({
-          title: orderProduct.title,
-          price: createDecimal(orderProduct.price),
-          quantity: String(orderProduct.quantity),
-          image: orderProduct.image,
-          observation: orderProduct.observation,
-          options: {
-            create: orderProduct.options?.map((option) => ({
-              title: option.title,
-              quantity: option.quantity,
-              price: option.price ? createDecimal(option.price) : null,
-            })),
+  const data = {
+    tax: createDecimal(order.tax),
+    paymentMethod: order.paymentMethod,
+    change: order.change ? createDecimal(order.change) : null,
+    address: order.address,
+    status: ORDER_STATUS.PENDING,
+    username: order.username,
+    phone: formatPhone(order.phone),
+    estimatedTime: order.estimatedTime,
+    user: order.userId
+      ? {
+          connect: {
+            id: order.userId,
           },
-        })),
+        }
+      : undefined,
+    store: {
+      connect: {
+        id: order.storeId,
       },
     },
+    orderProducts: {
+      create: order.orderProducts.map((orderProduct) => ({
+        title: orderProduct.title,
+        price: createDecimal(orderProduct.price),
+        quantity: String(orderProduct.quantity),
+        image: orderProduct.image,
+        observation: orderProduct.observation,
+        options: {
+          create: orderProduct.options?.map((option) => ({
+            title: option.title,
+            quantity: option.quantity,
+            price: option.price ? createDecimal(option.price) : null,
+          })),
+        },
+      })),
+    },
+  }
+
+  return prisma.order.create({
+    data,
     include: {
       store: true,
+      user: true,
       orderProducts: {
         include: {
           options: true,

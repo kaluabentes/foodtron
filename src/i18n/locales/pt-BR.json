@@ -110,6 +110,7 @@
     "productOptionsEmptyState": "Nenhuma opção foi adicionada ainda.",
     "maxOptionRequired": "Máximo de opções obrigatórias",
     "phone": "Telefone",
-    "isEnabled": "Ativo"
+    "isEnabled": "Ativo",
+    "code": "Código"
   }
 }

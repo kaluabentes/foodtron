@@ -42,7 +42,7 @@ const SideNav = ({
         left={isOpen ? "0" : "-220px"}
         visibility={isOpen ? "visible" : "hidden"}
         shadow="md"
-        zIndex={100}
+        zIndex={200}
       >
         <CloseButton
           onClick={onClose}

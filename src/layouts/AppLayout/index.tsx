@@ -4,7 +4,7 @@ import AppBar from "@/components/AppBar"
 import { Box, Flex, Heading, Image, useBreakpointValue } from "@chakra-ui/react"
 import ShortcutDeck from "./ShortcutDeck"
 import CartButton from "@/components/CartButton"
-import { useAppContext } from "@/contexts/app"
+import { useAppContext, DEFAULT_USER } from "@/contexts/app"
 import { useRouter } from "next/router"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import PageHeader from "@/components/PageHeader"
@@ -13,6 +13,7 @@ import SideNav from "@/components/SideNav"
 import Brand from "@/components/Brand"
 import useGetStore from "@/modules/stores/hooks/useGetStore"
 import PageLoaderSpinner from "@/components/PageLoaderSpinner"
+import { BiPowerOff } from "react-icons/bi"
 
 interface AppLayoutProps {
   children: ReactNode
@@ -28,19 +29,34 @@ const AppLayout = ({
   hideCartButton,
 }: AppLayoutProps) => {
   const router = useRouter()
+  const { setState, resetState, state } = useAppContext()
   const {
-    setState,
-    state: {
-      isReady,
-      order: { products },
-    },
-  } = useAppContext()
+    isReady,
+    order: { products },
+    user: { token },
+  } = state
   const toast = useBottomToast()
 
   const { store } = useGetStore(String(router.query.domain))
 
   const [isOpen, setIsOpen] = useState(false)
   const [isClosed, setIsClosed] = useState(true)
+
+  const authBottomMenu = token
+    ? [
+        ...bottomMenu,
+        {
+          icon: BiPowerOff,
+          label: "Sair",
+          onClick: () => {
+            resetState({
+              ...state,
+              user: DEFAULT_USER,
+            })
+          },
+        },
+      ]
+    : bottomMenu
 
   const handleCartClick = () => {
     if (!products.length) {
@@ -84,10 +100,15 @@ const AppLayout = ({
     base: (
       <AppBar
         topMenu={topMenu}
-        bottomMenu={bottomMenu}
+        bottomMenu={authBottomMenu}
         isFixed
         title={
-          <Heading fontSize="sm" fontWeight="500" textTransform="uppercase">
+          <Heading
+            fontSize="sm"
+            fontWeight="500"
+            textTransform="uppercase"
+            lineHeight="0"
+          >
             {title}
           </Heading>
         }
@@ -103,11 +124,12 @@ const AppLayout = ({
     ),
     lg: (
       <SideNav
+        isTransparent
         isClosed={isClosed}
         onClosedToggle={setIsClosed}
         header={renderHeader(isClosed)}
         topMenu={topMenu}
-        bottomMenu={bottomMenu}
+        bottomMenu={authBottomMenu}
       />
     ),
   })

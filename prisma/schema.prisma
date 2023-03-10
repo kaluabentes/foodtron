@@ -43,19 +43,35 @@ model User {
   id             String    @id @default(cuid())
   name           String?
   email          String?   @unique
-  whatsapp       String?
-  role           String?   @default("user")
-  onBoardingStep String?
   emailVerified  DateTime?
   image          String?
+  phone       String?
+  role           String?   @default("user")
+
   storeId        String?
   store          Store?    @relation(fields: [storeId], references: [id], onDelete: Cascade)
-
+  
   accounts Account[]
   sessions Session[]
   orders   Order[]
+  addresses Address[]
 
   @@index(storeId)
+}
+
+model Address {
+  id             String    @id @default(cuid())
+  street String
+  number String
+  
+  locationId String
+  location StoreDeliveryLocation @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index(userId)
+  @@index(locationId)
 }
 
 model VerificationToken {
@@ -109,6 +125,8 @@ model StoreDeliveryLocation {
   neighborhood  String
   tax           Decimal
   estimatedTime String
+
+  addresses Address[]
 
   storeId String
   store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)

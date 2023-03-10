@@ -1,15 +1,7 @@
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import axios from "axios"
 import { useState } from "react"
-
-interface ScheduleParam {
-  id?: string
-  weekDay?: string
-  start?: string
-  end?: string
-  isScheduledClosing?: boolean
-  isEnabled?: boolean
-}
+import ScheduleParam from "../types/ScheduleParam"
 
 const useUpdateSchedule = () => {
   const toast = useBottomToast()

@@ -16,6 +16,7 @@ interface MenuItemProps {
   isActive?: boolean
   isClosed?: boolean
   isLight?: boolean
+  isTransparent?: boolean
 }
 
 const MenuItem = ({
@@ -25,6 +26,7 @@ const MenuItem = ({
   isActive = false,
   isClosed = false,
   isLight = false,
+  isTransparent = false,
 }: MenuItemProps) => {
   return (
     <Tooltip
@@ -38,7 +40,9 @@ const MenuItem = ({
         listStyleType="none"
         borderRadius={7}
         transition="0.2s"
-        backgroundColor={isActive ? "brand.50" : "white"}
+        backgroundColor={
+          isTransparent ? undefined : isActive ? "brand.50" : "white"
+        }
         color={isActive ? "brand.500" : "gray.500"}
         _hover={{
           backgroundColor: "gray.200",
@@ -62,6 +66,10 @@ const MenuItem = ({
             padding={2}
             margin={0}
             fontWeight={isActive ? "500" : "400"}
+            visibility={isClosed ? "hidden" : "visible"}
+            opacity={isClosed ? "0" : "1"}
+            transition="0.3s"
+            whiteSpace="nowrap"
           >
             {children}
           </Text>

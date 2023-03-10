@@ -53,28 +53,35 @@ export const getStaticProps = async ({ params }: any) => {
 const Orders = () => {
   const router = useRouter()
 
-  const { state: app } = useAppContext()
-  const { data: session } = useSession()
+  const {
+    state: {
+      user: { orders, token },
+    },
+  } = useAppContext()
 
   const [orderToShow, setOrderToShow] = useState<Order | undefined>()
 
   const renderOrders = () => {
-    if (!app.user.orders.length) {
+    if (!orders.length) {
       return <EmptyState message="Não há pedidos ainda" />
     }
 
-    return app.user.orders.map((order) => (
-      <OrderCard
-        onClick={() => setOrderToShow(order)}
-        onTrack={() => router.push(`/track-order?id=${order.id}`)}
-        order={order}
-      />
-    ))
+    return orders
+      .slice()
+      .reverse()
+      .map((order) => (
+        <OrderCard
+          key={order.id}
+          onClick={() => setOrderToShow(order)}
+          onTrack={() => router.push(`/track-order?id=${order.id}`)}
+          order={order}
+        />
+      ))
   }
 
   return (
     <AppLayout title="Pedidos">
-      {!session && <UserAccountWarning />}
+      {!token && <UserAccountWarning />}
       <Flex
         direction="column"
         gap={4}

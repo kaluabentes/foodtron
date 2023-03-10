@@ -14,6 +14,7 @@ interface SideNavProps {
   bottomMenu: RouteItem[]
   topMenu: RouteItem[]
   isClosed: boolean
+  isTransparent?: boolean
   onClosedToggle?: (state: boolean) => void
 }
 
@@ -22,6 +23,7 @@ const SideNav = ({
   bottomMenu,
   topMenu,
   isClosed,
+  isTransparent = false,
   onClosedToggle,
 }: SideNavProps) => {
   const router = useRouter()
@@ -35,20 +37,22 @@ const SideNav = ({
       maxWidth={isClosed ? "68px" : "220px"}
       padding={3}
       paddingTop={5}
-      backgroundColor="white"
-      shadow="md"
+      backgroundColor={isTransparent ? undefined : "white"}
+      shadow={isTransparent ? undefined : "md"}
       height="100vh"
       transition="0.5s"
       position="relative"
       onMouseOver={() => onClosedToggle && onClosedToggle(false)}
       onMouseLeave={() => onClosedToggle && onClosedToggle(true)}
       overflowX="hidden"
+      zIndex="1000"
     >
       {header}
       <Flex direction="column" flexGrow={1} justifyContent="space-between">
         <Menu>
           {topMenu.map((item, index) => (
             <MenuItem
+              isTransparent
               key={String(index + 1)}
               onClick={() =>
                 item.onClick ? item.onClick() : router.push(item.path)
@@ -64,6 +68,7 @@ const SideNav = ({
         <Menu>
           {bottomMenu.map((item, index) => (
             <MenuItem
+              isTransparent
               key={String(index + 1)}
               onClick={() =>
                 item.onClick ? item.onClick() : router.push(item.path)

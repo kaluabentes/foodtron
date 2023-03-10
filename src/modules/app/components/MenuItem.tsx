@@ -24,7 +24,7 @@ const MenuItem = ({ product, onClick }: MenuItemProps) => (
       p={{ base: 4, md: 6 }}
       backgroundColor="white"
     >
-      <Flex>
+      <Flex gap={2}>
         <Box flex={1} marginRight={2}>
           <Heading mb={2} fontSize="md" fontWeight="500">
             {product.title}
@@ -37,8 +37,8 @@ const MenuItem = ({ product, onClick }: MenuItemProps) => (
           </Text>
         </Box>
         <Image
-          height="120px"
-          width="120px"
+          height={{ base: "100px", md: "120px" }}
+          width={{ base: "100px", md: "120px" }}
           borderRadius="18px"
           objectFit="cover"
           src={product.image ? product.image : "/placeholder.png"}

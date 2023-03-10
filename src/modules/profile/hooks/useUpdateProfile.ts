@@ -13,7 +13,7 @@ const useUpdateProfile = () => {
     setIsSaving(true)
 
     try {
-      await axios.patch("/api/profile/update", data)
+      await axios.patch("/api/profile/update-admin", data)
       toast({
         title: "Feito!",
         description: "Informações atualizados com sucesso",

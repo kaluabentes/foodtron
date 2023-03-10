@@ -1,4 +1,4 @@
-import { Alert, AlertIcon, Button, Flex } from "@chakra-ui/react"
+import { Alert, AlertIcon, Button, CloseButton, Flex } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 
 const UserAccountWarning = () => {
@@ -8,23 +8,32 @@ const UserAccountWarning = () => {
     <Flex
       direction="column"
       gap={4}
-      p={{ base: 4, md: 0 }}
-      pb={{ base: 0, lg: 4 }}
-      pt={{ base: 4, md: 4, lg: 0 }}
+      mb={4}
+      p={{ base: 4, md: 6 }}
+      background="white"
+      borderRadius="md"
+      shadow="sm"
+      position="relative"
     >
       <Alert fontWeight="500" fontSize="xs" borderRadius="md" shadow="sm">
         <AlertIcon />
-        Você ainda não possui uma conta criada, portanto, suas informações
+        Você ainda não está logado em uma conta, portanto, suas informações
         ficaram armazenadas localmente, para salvar as suas informações na nuvem
-        crie uma conta abaixo
+        crie ou entre em uma conta.
       </Alert>
-      <Button
-        variant="outline"
-        width="full"
-        onClick={() => router.push("/create-account")}
-      >
-        Criar conta
-      </Button>
+      <Flex gap={4} direction={{ md: "row" }}>
+        <Button
+          colorScheme="brand"
+          width="full"
+          size="sm"
+          onClick={() => router.push("/create-account")}
+        >
+          Criar conta
+        </Button>
+        <Button width="full" size="sm" onClick={() => router.push("/login")}>
+          Entrar
+        </Button>
+      </Flex>
     </Flex>
   )
 }

@@ -186,7 +186,7 @@ const CompleteSignin = () => {
           overflow="hidden"
         >
           <StoreMidiaUpload onCoverChange={setCover} onLogoChange={setLogo} />
-          <Box p={{ base: 4, md: 8 }}>
+          <Box p={{ base: 4, md: 6 }}>
             <FormControl
               isInvalid={Boolean(errors.storeName?.message)}
               marginBottom={4}

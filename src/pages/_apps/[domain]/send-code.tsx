@@ -27,9 +27,8 @@ import BarIconButton from "@/components/BarIconButton"
 import ResponsiveButton from "@/components/ResponsiveButton"
 import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
 import { signIn, useSession } from "next-auth/react"
-import sendVerification from "@/lib/infra/sinch/sendVerification"
 import api from "@/lib/infra/axios/api"
-import formatPhone from "@/lib/helpers/string/formatPhone"
+import useBottomToast from "@/lib/hooks/useBottomToast"
 
 const MaskedWhatsappInput = IMaskMixin(({ inputRef, ...props }: any) => (
   <Input {...props} ref={inputRef} />
@@ -60,53 +59,61 @@ const CreateAccount = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const { redirect } = router.query
+  const toast = useBottomToast()
 
   const {
     setState,
     state: {
-      user: { phone, name },
+      store,
+      user: { name, phone, orders, addresses },
     },
   } = useAppContext()
-
+  console.log("store", store)
   const [isLoading, setIsLoading] = useState(false)
-  const [isSMSSent, setIsSMSSent] = useState(false)
 
-  const { register, handleSubmit, setValue, watch } = useForm({
+  const { handleSubmit, setValue, watch } = useForm({
     defaultValues: {
-      phone,
-      name,
+      code: "",
     },
   })
 
-  const handleCreateAccount = async (data: any) => {
-    const phone = formatPhone(data.phone)
-
-    setIsLoading(true)
-    setState({
-      user: {
+  const handleSendCode = async (data: any) => {
+    try {
+      setIsLoading(true)
+      console.log("orders", orders)
+      const response = await api.post("/api/auth/verify-code", {
+        name,
         phone,
-        name: data.name,
-      },
-    })
+        orders,
+        addresses,
+        subdomain: store.subdomain,
+        code: data.code,
+      })
+      console.log("orders from response", response.data.user.orders)
+      setState({
+        user: {
+          id: response.data.user.id,
+          orders: response.data.user.orders,
+          addresses: response.data.user.addresses,
+          token: response.data.token,
+        },
+      })
 
-    await api.post("/api/auth/send-verification", {
-      phone,
-    })
-
-    router.push("/send-code")
+      router.push("/edit-user")
+    } catch (error: any) {
+      toast({
+        title: "Atenção",
+        description: "Código inválido",
+        status: "error",
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
-
-  useEffect(() => {
-    setValue("phone", phone)
-  }, [phone])
-
-  useEffect(() => {
-    setValue("name", name)
-  }, [name])
 
   return (
     <AppLayout
-      title="Criar conta"
+      title="Código de verificação"
       rightIcon={
         <BarIconButton
           label="Voltar"
@@ -115,7 +122,7 @@ const CreateAccount = () => {
         />
       }
     >
-      <form onSubmit={handleSubmit(handleCreateAccount)}>
+      <form onSubmit={handleSubmit(handleSendCode)}>
         <Flex
           direction="column"
           shadow="sm"
@@ -124,24 +131,24 @@ const CreateAccount = () => {
           overflow="hidden"
           p={{ base: 4, md: 6 }}
         >
-          <FormControl mb={4}>
-            <FormLabel>{t("name")}</FormLabel>
-            <Input {...register("name")} required />
-          </FormControl>
+          <Alert mb={4} borderRadius="md">
+            <AlertIcon />
+            Em instantes você receberá um código por SMS
+          </Alert>
           <FormControl>
-            <FormLabel>{t("phone")}</FormLabel>
+            <FormLabel>{t("code")}</FormLabel>
             <MaskedWhatsappInput
-              value={String(watch("phone"))}
-              mask="(00) 0 0000 0000"
-              placeholder="(00) 0 0000 0000"
-              onAccept={(value: string) => setValue("phone", value)}
+              value={String(watch("code"))}
+              mask="0000"
+              placeholder="0000"
+              onAccept={(value: string) => setValue("code", value)}
               type="tel"
               required
             />
           </FormControl>
         </Flex>
         <ResponsiveButton type="submit" isLoading={isLoading}>
-          Criar conta
+          Enviar código
         </ResponsiveButton>
       </form>
     </AppLayout>

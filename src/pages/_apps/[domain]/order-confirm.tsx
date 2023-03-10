@@ -1,22 +1,20 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react"
 
 import AppLayout from "@/layouts/AppLayout"
 import { useAppContext } from "@/contexts/app"
 import { useRouter } from "next/router"
 import BarIconButton from "@/components/BarIconButton"
-import { BiEdit, BiLeftArrowAlt } from "react-icons/bi"
+import { BiLeftArrowAlt } from "react-icons/bi"
 import prisma from "@/lib/infra/prisma/client"
 import OrderItemsSummary from "@/modules/app/components/order/OrderItemsSummary"
 import SectionTitle from "@/components/SectionTitle"
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import StripeSeparator from "@/components/StripeSeparator"
-import OrderOptionsModal from "@/modules/app/components/order/OrderOptionsModal"
 import OrderConfirmModal from "@/modules/app/components/order/OrderConfirmModal"
 import EditableDataItem from "@/components/EditableDataItem"
 import useCreateOrder from "@/modules/orders/hooks/useCreateOrder"
 import useBottomToast from "@/lib/hooks/useBottomToast"
-import Store from "@/modules/stores/types/Store"
 import ResponsiveButton from "@/components/ResponsiveButton"
 
 export const getStaticPaths = async () => {
@@ -54,7 +52,8 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
   const router = useRouter()
   const toast = useBottomToast()
 
-  const { state, setState } = useAppContext()
+  const { state, setState, resetState } = useAppContext()
+
   const { address } = state
   const {
     user,
@@ -63,10 +62,15 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
     },
     order: { paymentMethod, products },
   } = state
-  const assembledAddress = `${address.street}, ${address.number}, ${address.location.neighborhood}`
+
+  const assembledAddress = address.street
+    ? `${address.street}, ${address.number}, ${address.location.neighborhood}`
+    : "---"
+
+  const { createOrder, isCreating } = useCreateOrder()
 
   const [isOrderConfirmModalOpen, setIsOrderConfirmModalOpen] = useState(false)
-  const { createOrder, isCreating } = useCreateOrder()
+  const [isSendingOrder, setIsSendingOrder] = useState(false)
 
   const verifyInformations = () => {
     if (!paymentMethod.name) {
@@ -109,19 +113,38 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       change: paymentMethod.change,
       address: assembledAddress,
       storeId,
+      userId: user.id,
       username: user.name,
       phone: user.phone,
       estimatedTime: address.location.estimatedTime,
       orderProducts: products,
     })
-    setState({
+    setIsOrderConfirmModalOpen(false)
+    setIsSendingOrder(true)
+    resetState({
+      ...state,
+      order: {
+        ...state.order,
+        products: [],
+      },
       user: {
+        ...state.user,
         orders: [...state.user.orders, order],
       },
     })
-    setIsOrderConfirmModalOpen(false)
     router.push(`/track-order?id=${order.id}`)
   }
+
+  useEffect(() => {
+    if (!products.length && !isSendingOrder) {
+      toast({
+        title: "Atenção",
+        description: "Adicione produtos",
+        status: "error",
+      })
+      router.push("/")
+    }
+  }, [products])
 
   return (
     <AppLayout
@@ -154,10 +177,10 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         mb={4}
       >
         <SectionTitle>Pagamento</SectionTitle>
-        <Flex p={{ base: 4, md: 8 }} gap={4} direction="column">
+        <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
           <EditableDataItem
             field="Tipo"
-            value={paymentMethod.name}
+            value={paymentMethod.name || "---"}
             onEdit={() => router.push("/payment?redirect=/order-confirm")}
           />
           {paymentMethod.name === "Dinheiro" ? (
@@ -179,21 +202,25 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         mb={4}
       >
         <SectionTitle>Entrega</SectionTitle>
-        <Flex p={{ base: 4, md: 8 }} gap={4} direction="column">
+        <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
           <EditableDataItem
-            field="Endereço"
+            field="Rua"
             value={assembledAddress}
             onEdit={() => router.push("/edit-address?redirect=/order-confirm")}
           />
           <StripeSeparator horizontal />
           <EditableDataItem
             field="Taxa"
-            value={formatToRealCurrency(Number(tax))}
+            value={tax ? formatToRealCurrency(Number(tax)) : "---"}
           />
           <StripeSeparator horizontal />
           <EditableDataItem
             field="Tempo estimado"
-            value={`${address.location.estimatedTime} min.`}
+            value={
+              address.location.estimatedTime
+                ? `${address.location.estimatedTime} min.`
+                : "---"
+            }
           />
         </Flex>
       </Box>
@@ -204,14 +231,17 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         shadow="sm"
       >
         <SectionTitle>Dados de usuário</SectionTitle>
-        <Flex p={{ base: 4, md: 8 }} gap={4} direction="column">
+        <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
           <EditableDataItem
             field="Nome"
-            value={user.name}
+            value={user.name ? user.name : "---"}
             onEdit={() => router.push("/edit-user?redirect=/order-confirm")}
           />
           <StripeSeparator horizontal />
-          <EditableDataItem field="Telefone" value={user.phone} />
+          <EditableDataItem
+            field="Telefone"
+            value={user.phone ? user.phone : "---"}
+          />
         </Flex>
       </Box>
       <ResponsiveButton

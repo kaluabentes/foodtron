@@ -16,6 +16,9 @@ const AddressSelectButton = ({
     width="100%"
     onClick={onClick}
     backgroundColor="white"
+    mb={{ md: 4 }}
+    borderRadius={{ lg: "md" }}
+    shadow="sm"
   >
     <Icon as={BiMap} color="brand.500" fontSize="30px" />
     <Flex direction="column" alignItems="flex-start" flex={1}>
