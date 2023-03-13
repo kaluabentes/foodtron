@@ -14,6 +14,7 @@ import Brand from "@/components/Brand"
 import useGetStore from "@/modules/stores/hooks/useGetStore"
 import PageLoaderSpinner from "@/components/PageLoaderSpinner"
 import { BiPowerOff } from "react-icons/bi"
+import { FaWhatsapp } from "react-icons/fa"
 
 interface AppLayoutProps {
   children: ReactNode
@@ -42,9 +43,21 @@ const AppLayout = ({
   const [isOpen, setIsOpen] = useState(false)
   const [isClosed, setIsClosed] = useState(true)
 
+  const commonBottomMenu = [
+    {
+      icon: FaWhatsapp,
+      label: "Conversar",
+      path: "/admin/store",
+      onClick: () => {
+        window.open(`https://wa.me/${store.whatsapp}`, "_blank")
+      },
+    },
+  ]
+
   const authBottomMenu = token
     ? [
         ...bottomMenu,
+        ...commonBottomMenu,
         {
           icon: BiPowerOff,
           label: "Sair",
@@ -56,7 +69,7 @@ const AppLayout = ({
           },
         },
       ]
-    : bottomMenu
+    : [...bottomMenu, ...commonBottomMenu]
 
   const handleCartClick = () => {
     if (!products.length) {

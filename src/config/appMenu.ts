@@ -41,10 +41,4 @@ export const topMenu: RouteItem[] = [
   },
 ]
 
-export const bottomMenu: RouteItem[] = [
-  {
-    icon: FaWhatsapp,
-    label: "Conversar",
-    path: "/admin/store",
-  },
-]
+export const bottomMenu: RouteItem[] = []
