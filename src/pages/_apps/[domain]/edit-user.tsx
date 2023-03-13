@@ -26,6 +26,7 @@ import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
 import { useSession } from "next-auth/react"
 import formatPhone from "@/lib/helpers/string/formatPhone"
 import useBottomToast from "@/lib/hooks/useBottomToast"
+import api from "@/lib/infra/axios/api"
 
 const MaskedWhatsappInput = IMaskMixin(({ inputRef, ...props }: any) => (
   <Input {...props} ref={inputRef} />
@@ -74,30 +75,55 @@ const EditUser = () => {
     },
   })
 
-  const handleEditUser = (data: any) => {
-    setIsLoading(true)
-    setState({
-      user: {
-        name: data.name,
-        phone: formatPhone(data.phone),
-      },
-    })
+  const handleEditUser = async (data: any) => {
+    try {
+      setIsLoading(true)
+      setState({
+        user: {
+          name: data.name,
+          phone: formatPhone(data.phone),
+        },
+      })
 
-    toast({
-      title: "Feito!",
-      description: "As informações foram salvas localmente",
-    })
+      // Salvar nome de usuário caso essteje logado
+      if (token) {
+        await api.patch(
+          "/api/profile/update-user",
+          {
+            name: data.name,
+            phone: formatPhone(data.phone),
+          },
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        )
 
-    // Salvar nome de usuário caso essteje logado
-    if (token) {
+        toast({
+          title: "Feito!",
+          description: "As informações foram salvas na nuvem",
+        })
+      } else {
+        toast({
+          title: "Feito!",
+          description: "As informações foram salvas localmente",
+        })
+      }
+
+      if (redirect) {
+        router.push(String(redirect))
+        return
+      }
+    } catch (error: any) {
+      toast({
+        title: "Atenção",
+        description: error.message,
+        status: "error",
+      })
+    } finally {
+      setIsLoading(false)
     }
-
-    if (redirect) {
-      router.push(String(redirect))
-      return
-    }
-
-    setIsLoading(false)
   }
 
   useEffect(() => {
