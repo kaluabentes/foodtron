@@ -142,9 +142,16 @@ const EditUser = () => {
             />
           </FormControl>
         </Flex>
-        <ResponsiveButton type="submit" isLoading={isLoading}>
-          Salvar
-        </ResponsiveButton>
+        <Flex
+          gap={4}
+          mt={{ base: 0, md: 4 }}
+          p={{ base: 4, md: 0 }}
+          direction={{ base: "column", md: "row" }}
+        >
+          <Button colorScheme="brand" type="submit" isLoading={isLoading}>
+            Salvar
+          </Button>
+        </Flex>
       </form>
     </AppLayout>
   )

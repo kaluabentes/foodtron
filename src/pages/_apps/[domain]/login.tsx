@@ -129,9 +129,16 @@ const CreateAccount = () => {
             />
           </FormControl>
         </Flex>
-        <ResponsiveButton type="submit" isLoading={isLoading}>
-          Entrar
-        </ResponsiveButton>
+        <Flex
+          gap={4}
+          mt={{ base: 0, md: 4 }}
+          p={{ base: 4, md: 0 }}
+          direction={{ base: "column", md: "row" }}
+        >
+          <Button colorScheme="brand" type="submit" isLoading={isLoading}>
+            Entrar
+          </Button>
+        </Flex>
       </form>
     </AppLayout>
   )

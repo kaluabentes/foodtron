@@ -244,17 +244,25 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
           />
         </Flex>
       </Box>
-      <ResponsiveButton
-        onClick={() => {
-          if (!verifyInformations()) {
-            return
-          }
-
-          setIsOrderConfirmModalOpen(true)
-        }}
+      <Flex
+        gap={4}
+        mt={{ base: 0, md: 4 }}
+        p={{ base: 4, md: 0 }}
+        direction={{ base: "column", md: "row" }}
       >
-        Confirmar
-      </ResponsiveButton>
+        <Button
+          colorScheme="brand"
+          onClick={() => {
+            if (!verifyInformations()) {
+              return
+            }
+
+            setIsOrderConfirmModalOpen(true)
+          }}
+        >
+          Confirmar
+        </Button>
+      </Flex>
       <OrderConfirmModal
         onClose={() => setIsOrderConfirmModalOpen(false)}
         address={address}

@@ -114,7 +114,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const { domain } = router.query
 
   const [state, setState] = useState<AppState>(DEFAULT_VALUE_STATE)
-
+  console.log("app state", state)
   const mutateState = (newState: AppStateParam) => {
     setState((oldState) => {
       const newStateMerged = merge(oldState, newState)

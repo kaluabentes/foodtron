@@ -68,9 +68,19 @@ const Order = () => {
       >
         <OrderItemsSummary />
       </Box>
-      <ResponsiveButton onClick={() => router.push("/order-confirm")}>
-        Confirmar
-      </ResponsiveButton>
+      <Flex
+        gap={4}
+        mt={{ base: 0, md: 4 }}
+        p={{ base: 4, md: 0 }}
+        direction={{ base: "column", md: "row" }}
+      >
+        <Button
+          colorScheme="brand"
+          onClick={() => router.push("/order-confirm")}
+        >
+          Confirmar
+        </Button>
+      </Flex>
     </AppLayout>
   )
 }

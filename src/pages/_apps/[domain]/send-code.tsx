@@ -61,13 +61,11 @@ const CreateAccount = () => {
   const { redirect } = router.query
   const toast = useBottomToast()
 
+  const { setState, resetState, state } = useAppContext()
   const {
-    setState,
-    state: {
-      store,
-      user: { name, phone, orders, addresses },
-    },
-  } = useAppContext()
+    store,
+    user: { name, phone, orders, addresses },
+  } = state
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -80,7 +78,7 @@ const CreateAccount = () => {
   const handleSendCode = async (data: any) => {
     try {
       setIsLoading(true)
-      console.log("orders", orders)
+
       const response = await api.post("/api/auth/verify-code", {
         name,
         phone,
@@ -89,9 +87,11 @@ const CreateAccount = () => {
         subdomain: store.subdomain,
         code: data.code,
       })
-      console.log("orders from response", response.data.user.orders)
-      setState({
+
+      resetState({
+        ...state,
         user: {
+          ...state.user,
           id: response.data.user.id,
           orders: response.data.user.orders,
           addresses: response.data.user.addresses,
