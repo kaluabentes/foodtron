@@ -149,8 +149,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [])
 
-  console.log("state", state)
-
   return (
     <AppValueContext.Provider value={state}>
       <AppActionContext.Provider value={{ setState: mutateState, resetState }}>

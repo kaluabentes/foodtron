@@ -90,7 +90,7 @@ const CreateAccount = () => {
       phone,
     })
 
-    router.push("/send-code")
+    router.push("/send-code?redirect=/login")
   }
 
   useEffect(() => {

@@ -46,7 +46,6 @@ const verifyCodeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     const response = await verifyCode(req.body.phone, req.body.code)
 
     if (response.data.status === "SUCCESSFUL") {
-      console.log("req.body.subdomain", req.body.subdomain)
       const store = await prisma.store.findFirst({
         where: {
           subdomain: req.body.subdomain,
@@ -106,7 +105,7 @@ const verifyCodeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
           include,
         })
-
+        console.log("chegou aqui")
         return res.send({
           token,
           user,

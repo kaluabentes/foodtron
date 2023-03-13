@@ -68,7 +68,7 @@ const CreateAccount = () => {
       user: { name, phone, orders, addresses },
     },
   } = useAppContext()
-  console.log("store", store)
+
   const [isLoading, setIsLoading] = useState(false)
 
   const { handleSubmit, setValue, watch } = useForm({
@@ -133,7 +133,7 @@ const CreateAccount = () => {
         >
           <Alert mb={4} borderRadius="md">
             <AlertIcon />
-            Em instantes você receberá um código por SMS
+            Em instantes você receberá um código por SMS.
           </Alert>
           <FormControl>
             <FormLabel>{t("code")}</FormLabel>
@@ -147,9 +147,19 @@ const CreateAccount = () => {
             />
           </FormControl>
         </Flex>
-        <ResponsiveButton type="submit" isLoading={isLoading}>
-          Enviar código
-        </ResponsiveButton>
+        <Flex
+          gap={4}
+          mt={{ base: 0, md: 4 }}
+          p={{ base: 4, md: 0 }}
+          direction={{ base: "column", md: "row" }}
+        >
+          <Button colorScheme="brand" type="submit" isLoading={isLoading}>
+            Enviar código
+          </Button>
+          <Button type="button" onClick={() => router.push(String(redirect))}>
+            Alterar telefone
+          </Button>
+        </Flex>
       </form>
     </AppLayout>
   )
