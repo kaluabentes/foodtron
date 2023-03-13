@@ -121,6 +121,7 @@ const Addresses = () => {
         <AddressCard
           key={address.id}
           onSelect={() => handleAddressSelect(address)}
+          onEdit={() => router.push(`/edit-address?id=${address.id}`)}
           address={address}
           isSelecting={isSelecting && address.id === selectedAddress?.id}
           isDisabled={selectedAddressId === address.id}

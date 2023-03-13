@@ -10,6 +10,7 @@ const theme = extendTheme({
     Button: {
       baseStyle: {
         fontWeight: "500",
+        lineHeight: "0px",
       },
       variants: {
         brand: (props: StyleFunctionProps) => ({

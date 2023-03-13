@@ -64,7 +64,6 @@ interface EditAddressProps {
 const EditAddress = ({ locations }: EditAddressProps) => {
   const { t } = useTranslation()
   const router = useRouter()
-  const { redirect } = router.query
   const toast = useBottomToast()
 
   const {
@@ -136,7 +135,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
       rightIcon={
         <BarIconButton
           label="Voltar"
-          onClick={() => router.push(redirect ? String(redirect) : "/")}
+          onClick={() => router.push("/addresses")}
           icon={<BiLeftArrowAlt />}
         />
       }

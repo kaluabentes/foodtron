@@ -21,6 +21,8 @@ import { useTranslation } from "react-i18next"
 import ResponsiveButton from "@/components/ResponsiveButton"
 import Address from "@/modules/addresses/types/Address"
 import AddressParam from "@/modules/addresses/types/AddressParam"
+import useBottomToast from "@/lib/hooks/useBottomToast"
+import api from "@/lib/infra/axios/api"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -62,62 +64,84 @@ interface EditAddressProps {
 const EditAddress = ({ locations }: EditAddressProps) => {
   const { t } = useTranslation()
   const router = useRouter()
-  const { redirect } = router.query
+  const { id } = router.query
+  const toast = useBottomToast()
 
   const {
     setState,
     state: {
-      user: { addresses },
-      address: { street, number, location },
+      user: { addresses, token },
     },
   } = useAppContext()
+  const currentAddress = addresses.find((address) => address.id === id)
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
-      street: street,
-      number: number,
-      location: location.id,
+      street: currentAddress?.street,
+      number: currentAddress?.number,
+      location: currentAddress?.location.id,
     },
   })
 
-  const handleEditAddress = (data: any) => {
-    const address: AddressParam = {
-      street: data.street,
-      number: data.number,
-      location: locations.find((location) => location.id === data.location)!,
+  const handleEditAddress = async (data: any) => {
+    try {
+      const address: AddressParam = {
+        street: data.street,
+        number: data.number,
+        location: locations.find((location) => location.id === data.location)!,
+      }
+
+      setIsLoading(true)
+      setState({
+        user: {
+          addresses: addresses.map((addr) => {
+            if (addr.id === currentAddress?.id) {
+              return {
+                ...addr,
+                ...address,
+              }
+            }
+
+            return addr
+          }),
+        },
+      })
+
+      if (token) {
+        await api.patch(`/api/addresses/${currentAddress?.id}`, address, {
+          headers: {
+            Authorization: token,
+          },
+        })
+      }
+
+      router.push("/addresses")
+
+      toast({
+        title: "Feito!",
+        description: "O endereço foi editado com sucesso",
+        status: "success",
+      })
+    } catch (error: any) {
+      toast({
+        title: "Atenção!",
+        description: error.message,
+        status: "error",
+      })
+    } finally {
+      setIsLoading(false)
     }
-
-    setIsLoading(true)
-    setState({
-      user: {
-        addresses: [...addresses, address],
-      },
-      address,
-    })
-
-    if (redirect) {
-      router.push(String(redirect))
-      return
-    }
-
-    router.push("/")
   }
-
-  useEffect(() => {
-    if (location.neighborhood) {
-      setValue("location", location.id)
-    }
-  }, [location])
 
   return (
     <AppLayout
-      title="Adicionar endereço"
+      title="Editar endereço"
       rightIcon={
         <BarIconButton
           label="Voltar"
-          onClick={() => router.push(redirect ? String(redirect) : "/")}
+          onClick={() => router.push("/addresses")}
           icon={<BiLeftArrowAlt />}
         />
       }
@@ -159,7 +183,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
           direction={{ base: "column", md: "row" }}
         >
           <Button colorScheme="brand" type="submit" isLoading={isLoading}>
-            Adicionar
+            Salvar
           </Button>
         </Flex>
       </form>
