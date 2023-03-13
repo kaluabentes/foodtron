@@ -37,15 +37,16 @@ const AddressCard = ({
   isDisabled,
 }: AddressCardProps) => (
   <Box
+    position="relative"
     background="white"
     key={address.id}
     p={4}
-    position="relative"
     display="block"
     width="100%"
     textAlign="left"
     borderRadius="md"
     shadow="sm"
+    overflow="hidden"
   >
     <Flex
       justifyContent="space-between"
@@ -100,6 +101,17 @@ const AddressCard = ({
         {isDisabled ? "Selecionado" : "Selecionar"}
       </Button>
     </Flex>
+    {isDisabled && (
+      <Box
+        position="absolute"
+        height="100%"
+        width="3px"
+        background="brand.500"
+        top="0"
+        left="0"
+        zIndex="10"
+      />
+    )}
   </Box>
 )
 

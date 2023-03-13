@@ -87,9 +87,7 @@ const Orders = () => {
         gap={4}
         borderRadius="md"
         overflow="hidden"
-        shadow="sm"
         p={{ base: 4, md: 0 }}
-        pt={{ base: 0 }}
       >
         {renderOrders()}
       </Flex>

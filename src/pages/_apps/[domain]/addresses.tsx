@@ -25,6 +25,7 @@ import Address from "@/modules/addresses/types/Address"
 import AddressCard from "@/modules/app/components/address/AddressCard"
 import api from "@/lib/infra/axios/api"
 import useBottomToast from "@/lib/hooks/useBottomToast"
+import { BiPlus } from "react-icons/bi"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -110,7 +111,7 @@ const Addresses = () => {
 
   const renderOrders = () => {
     if (!addresses.length) {
-      return <EmptyState message="Não há pedidos ainda" />
+      return <EmptyState message="Não há endereços ainda" />
     }
 
     return addresses
@@ -138,6 +139,16 @@ const Addresses = () => {
         shadow="sm"
         p={{ base: 4, md: 0 }}
       >
+        <Flex
+          gap={4}
+          mt={{ base: 0, md: 4 }}
+          p={{ base: 4, md: 0 }}
+          direction={{ base: "column", md: "row" }}
+        >
+          <Button leftIcon={<BiPlus />} variant="outline">
+            Adicionar
+          </Button>
+        </Flex>
         {renderOrders()}
       </Flex>
     </AppLayout>
