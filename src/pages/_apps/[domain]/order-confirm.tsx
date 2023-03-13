@@ -52,7 +52,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
   const router = useRouter()
   const toast = useBottomToast()
 
-  const { state, setState, resetState } = useAppContext()
+  const { state, setState, mutateState } = useAppContext()
 
   const { address } = state
   const {
@@ -121,7 +121,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
     })
     setIsOrderConfirmModalOpen(false)
     setIsSendingOrder(true)
-    resetState({
+    mutateState({
       ...state,
       order: {
         ...state.order,

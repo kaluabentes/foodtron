@@ -30,7 +30,7 @@ const AppLayout = ({
   hideCartButton,
 }: AppLayoutProps) => {
   const router = useRouter()
-  const { setState, resetState, state } = useAppContext()
+  const { setState, mutateState, state } = useAppContext()
   const {
     isReady,
     order: { products },
@@ -62,7 +62,7 @@ const AppLayout = ({
           icon: BiPowerOff,
           label: "Sair",
           onClick: () => {
-            resetState({
+            mutateState({
               ...state,
               user: DEFAULT_USER,
             })

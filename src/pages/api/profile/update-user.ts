@@ -24,16 +24,31 @@ const updateUserHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       process.env.JWT_SECRET!
     )) as User
 
-    await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: {
         id: user.id,
       },
       data: req.body,
+      include: {
+        orders: {
+          include: {
+            user: true,
+            orderProducts: {
+              include: {
+                options: true,
+              },
+            },
+          },
+        },
+        addresses: {
+          include: {
+            location: true,
+          },
+        },
+      },
     })
 
-    return res.status(200).send({
-      status: "ok",
-    })
+    return res.status(200).send(updatedUser)
   } catch (error: any) {
     if (error.message === "401") {
       return res.status(401).send("Unauthorized")

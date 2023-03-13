@@ -61,7 +61,7 @@ const CreateAccount = () => {
   const { redirect } = router.query
   const toast = useBottomToast()
 
-  const { setState, resetState, state } = useAppContext()
+  const { setState, mutateState, state } = useAppContext()
   const {
     store,
     user: { name, phone, orders, addresses },
@@ -88,7 +88,7 @@ const CreateAccount = () => {
         code: data.code,
       })
 
-      resetState({
+      mutateState({
         ...state,
         user: {
           ...state.user,

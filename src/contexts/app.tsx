@@ -25,6 +25,7 @@ interface AppState {
     token: string
     orders: Order[]
     addresses: Address[]
+    selectedAddressId: string
   }
   address: Address
   order: {
@@ -47,6 +48,7 @@ interface AppStateParam {
     token?: string
     orders?: Order[]
     addresses?: AddressParam[]
+    selectedAddressId?: string
   }
   address?: {
     street?: string
@@ -70,6 +72,7 @@ export const DEFAULT_USER = {
   token: "",
   orders: [],
   addresses: [],
+  selectedAddressId: "",
 }
 
 export const DEFAULT_ADDRESS = {
@@ -103,7 +106,7 @@ const DEFAULT_VALUE_STATE = {
 
 const DEFAULT_ACTION_STATE = {
   setState: (state: AppStateParam) => {},
-  resetState: (state: AppStateParam) => {},
+  mutateState: (state: AppStateParam) => {},
 }
 
 export const AppValueContext = createContext<AppState>(DEFAULT_VALUE_STATE)
@@ -114,8 +117,13 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const { domain } = router.query
 
   const [state, setState] = useState<AppState>(DEFAULT_VALUE_STATE)
-  console.log("app state", state)
-  const mutateState = (newState: AppStateParam) => {
+
+  // Debug app state
+  if (process.env.NODE_ENV === "development") {
+    console.log("app state", state)
+  }
+
+  const mergeState = (newState: AppStateParam) => {
     setState((oldState) => {
       const newStateMerged = merge(oldState, newState)
 
@@ -128,7 +136,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     })
   }
 
-  const resetState = (newState: AppStateParam) => {
+  const mutateState = (newState: AppStateParam) => {
     localStorage.setItem(`${domain}.gocomet.app`, JSON.stringify(newState))
     setState(newState as AppState)
   }
@@ -151,7 +159,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AppValueContext.Provider value={state}>
-      <AppActionContext.Provider value={{ setState: mutateState, resetState }}>
+      <AppActionContext.Provider value={{ setState: mergeState, mutateState }}>
         {children}
       </AppActionContext.Provider>
     </AppValueContext.Provider>
@@ -160,15 +168,15 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAppContext = (): {
   setState: (state: AppStateParam) => void
-  resetState: (state: AppStateParam) => void
+  mutateState: (state: AppStateParam) => void
   state: AppState
 } => {
-  const { setState, resetState } = useContext(AppActionContext)
+  const { setState, mutateState } = useContext(AppActionContext)
   const state = useContext(AppValueContext)
 
   if (!setState || !state) {
     throw new Error("Wrap AppContextProvider in the root component")
   }
 
-  return { setState, resetState, state }
+  return { setState, mutateState, state }
 }

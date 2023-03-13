@@ -47,6 +47,7 @@ model User {
   image          String?
   phone       String?
   role           String?   @default("user")
+  selectedAddressId String?
 
   storeId        String?
   store          Store?    @relation(fields: [storeId], references: [id], onDelete: Cascade)
@@ -57,6 +58,7 @@ model User {
   addresses Address[]
 
   @@index(storeId)
+  @@index(selectedAddressId)
 }
 
 model Address {

@@ -32,7 +32,7 @@ const OrderItemsSummary = () => {
   const router = useRouter()
   const { domain } = router.query
 
-  const { setState, resetState, state } = useAppContext()
+  const { setState, mutateState, state } = useAppContext()
   const {
     order: { products: orderProducts },
     address: {
@@ -48,7 +48,7 @@ const OrderItemsSummary = () => {
   const [quantity, setQuantity] = useState(1)
 
   const removeOrderProduct = (orderProductId: string) => {
-    resetState({
+    mutateState({
       ...state,
       order: {
         ...state.order,
