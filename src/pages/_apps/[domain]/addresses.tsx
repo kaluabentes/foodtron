@@ -145,7 +145,11 @@ const Addresses = () => {
           p={{ base: 4, md: 0 }}
           direction={{ base: "column", md: "row" }}
         >
-          <Button leftIcon={<BiPlus />} variant="outline">
+          <Button
+            onClick={() => router.push("/add-address")}
+            leftIcon={<BiPlus />}
+            variant="outline"
+          >
             Adicionar
           </Button>
         </Flex>
