@@ -5,6 +5,10 @@ import prisma from "@/lib/infra/prisma/client"
 import serverAuth from "@/middlewares/serverAuth"
 import { User } from "@prisma/client"
 import NextCors from "nextjs-cors"
+import updateAddress from "@/modules/addresses/services/updateAddress"
+import deleteAddress from "@/modules/addresses/services/deleteAddress"
+
+const ALLOWED_METHODS = ["PATCH", "DELETE"]
 
 const singleAddressHandler = async (
   req: NextApiRequest,
@@ -17,40 +21,23 @@ const singleAddressHandler = async (
     optionsSuccessStatus: 200,
   })
 
-  if (req.method !== "PATCH") {
+  if (!ALLOWED_METHODS.includes(req.method!)) {
     return res.status(400).send("Method not allowed")
   }
 
   try {
-    const user = (await jwt.verify(
-      String(req.headers.authorization),
-      process.env.JWT_SECRET!
-    )) as User
+    await jwt.verify(String(req.headers.authorization), process.env.JWT_SECRET!)
 
-    const address = await prisma.address.update({
-      where: {
-        id: String(req.query.id),
-      },
-      data: {
-        street: req.body.street,
-        number: req.body.number,
-        location: {
-          connect: {
-            id: req.body.location.id,
-          },
-        },
-        user: {
-          connect: {
-            id: user.id,
-          },
-        },
-      },
-      include: {
-        location: true,
-      },
-    })
+    if (req.method === "PATCH") {
+      const address = await updateAddress(String(req.query.id), req.body)
 
-    return res.status(200).send(address)
+      return res.status(200).send(address)
+    }
+
+    if (req.method === "DELETE") {
+      const deleteResponse = await deleteAddress(String(req.query.id))
+      return res.status(200).send(deleteResponse)
+    }
   } catch (error: any) {
     if (error.message === "401") {
       return res.status(401).send("Unauthorized")

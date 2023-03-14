@@ -108,7 +108,6 @@ const EditAddress = ({ locations }: EditAddressProps) => {
         user: {
           addresses: mergedAddresses,
         },
-        address,
       })
 
       router.push("/addresses")

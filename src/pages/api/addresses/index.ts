@@ -2,22 +2,23 @@ import { NextApiRequest, NextApiResponse } from "next"
 import jwt from "jsonwebtoken"
 
 import prisma from "@/lib/infra/prisma/client"
-import serverAuth from "@/middlewares/serverAuth"
 import { User } from "@prisma/client"
 import NextCors from "nextjs-cors"
+import getAddresses from "@/modules/addresses/services/getAddresses"
+
+const ALLOWED_METHODS = ["POST", "GET"]
 
 const addressesIndexHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
   await NextCors(req, res, {
-    // Options
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     origin: "*",
     optionsSuccessStatus: 200,
   })
 
-  if (req.method !== "POST") {
+  if (!ALLOWED_METHODS.includes(req.method!)) {
     return res.status(400).send("Method not allowed")
   }
 
@@ -26,6 +27,10 @@ const addressesIndexHandler = async (
       String(req.headers.authorization),
       process.env.JWT_SECRET!
     )) as User
+
+    if (req.method === "GET") {
+      return res.status(200).send(await getAddresses(user.id))
+    }
 
     const address = await prisma.address.create({
       data: {

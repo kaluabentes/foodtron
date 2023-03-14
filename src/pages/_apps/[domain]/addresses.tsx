@@ -16,7 +16,7 @@ import { GetServerSideProps } from "next"
 import prisma from "@/lib/infra/prisma/client"
 import StripeSeparator from "@/components/StripeSeparator"
 import OrderDetailsModal from "@/modules/orders/components/OrderDetailsModal"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
 import { useSession } from "next-auth/react"
@@ -26,6 +26,8 @@ import AddressCard from "@/modules/app/components/address/AddressCard"
 import api from "@/lib/infra/axios/api"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import { BiPlus } from "react-icons/bi"
+import ConfirmAlert from "@/components/ConfirmAlert"
+import AddressParam from "@/modules/addresses/types/AddressParam"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -66,7 +68,45 @@ const Addresses = () => {
   } = state
 
   const [isSelecting, setIsSelecting] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   const [selectedAddress, setSelectedAddress] = useState<Address | undefined>()
+  const [addressToDelete, setAddressToDelete] = useState<Address | undefined>()
+
+  const getAddresses = (headers: any): Promise<Address[]> =>
+    api.get(`/api/addresses`, { headers }).then((response) => response.data)
+
+  const handleDeleteAddress = async () => {
+    const headers = {
+      Authorization: token,
+    }
+
+    try {
+      setIsDeleting(true)
+
+      await api.delete(`/api/addresses/${addressToDelete?.id}`, {
+        headers,
+      })
+
+      const addresses = await getAddresses(headers)
+
+      mutateState({
+        ...state,
+        user: {
+          ...state.user,
+          addresses,
+        },
+      })
+    } catch (error: any) {
+      toast({
+        title: "Atenção!",
+        description: error.message,
+        status: "error",
+      })
+    } finally {
+      setIsDeleting(false)
+      setAddressToDelete(undefined)
+    }
+  }
 
   const handleAddressSelect = async (address: Address) => {
     try {
@@ -109,6 +149,36 @@ const Addresses = () => {
     }
   }
 
+  useEffect(() => {
+    const fetchAddresses = async (token: string) => {
+      const headers = {
+        Authorization: token,
+      }
+
+      try {
+        const addresses = await getAddresses(headers)
+
+        mutateState({
+          ...state,
+          user: {
+            ...state.user,
+            addresses,
+          },
+        })
+      } catch (error: any) {
+        toast({
+          title: "Atenção!",
+          description: error.message,
+          status: "error",
+        })
+      }
+    }
+
+    if (token) {
+      fetchAddresses(token)
+    }
+  }, [token])
+
   const renderOrders = () => {
     if (!addresses.length) {
       return <EmptyState message="Não há endereços ainda" />
@@ -122,6 +192,7 @@ const Addresses = () => {
           key={address.id}
           onSelect={() => handleAddressSelect(address)}
           onEdit={() => router.push(`/edit-address?id=${address.id}`)}
+          onDelete={() => setAddressToDelete(address)}
           address={address}
           isSelecting={isSelecting && address.id === selectedAddress?.id}
           isDisabled={selectedAddressId === address.id}
@@ -156,6 +227,16 @@ const Addresses = () => {
         </Flex>
         {renderOrders()}
       </Flex>
+      {addressToDelete && (
+        <ConfirmAlert
+          isLoading={isDeleting}
+          isOpen={Boolean(addressToDelete)}
+          title="Atenção"
+          description="Você tem certeza que deseja apagar este endereço?"
+          onClose={() => setAddressToDelete(undefined)}
+          onConfirm={handleDeleteAddress}
+        />
+      )}
     </AppLayout>
   )
 }

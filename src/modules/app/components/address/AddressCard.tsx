@@ -22,6 +22,7 @@ interface AddressCardProps {
   isDisabled?: boolean
   onEdit?: () => void
   onSelect?: () => void
+  onDelete?: () => void
 }
 
 const getNeighborhood = (address: string) => {
@@ -35,6 +36,7 @@ const AddressCard = ({
   onSelect,
   isSelecting,
   isDisabled,
+  onDelete,
 }: AddressCardProps) => (
   <Box
     position="relative"
@@ -56,7 +58,12 @@ const AddressCard = ({
       position="relative"
     >
       <Badge>ID: {address.id}</Badge>
-      <IconButton aria-label="Remover endereço" size="sm" icon={<BiTrash />} />
+      <IconButton
+        onClick={onDelete}
+        aria-label="Remover endereço"
+        size="sm"
+        icon={<BiTrash />}
+      />
     </Flex>
     <Flex
       justifyContent="space-between"
@@ -73,7 +80,7 @@ const AddressCard = ({
       <Flex gap={1} alignItems="center">
         <Icon color="brand.500" fontSize="20px" as={BiMap} />
         <Text fontWeight="500" fontSize="sm">
-          {address.location.neighborhood}
+          {address.location?.neighborhood}
         </Text>
       </Flex>
     </Flex>

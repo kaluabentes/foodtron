@@ -48,7 +48,7 @@ const ConfirmAlert = ({
             </Button>
             <Button
               isLoading={isLoading}
-              colorScheme="red"
+              colorScheme="brand"
               onClick={onConfirm}
               ml={3}
             >
