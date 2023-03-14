@@ -53,11 +53,13 @@ const AddressCard = ({
     <Flex
       justifyContent="space-between"
       alignItems="center"
-      mb={4}
+      mb={1}
       zIndex="20"
       position="relative"
     >
-      <Badge>ID: {address.id}</Badge>
+      <Heading fontSize="lg" fontWeight="700">
+        {address.street}, {address.number}
+      </Heading>
       <IconButton
         onClick={onDelete}
         aria-label="Remover endereço"
@@ -72,11 +74,6 @@ const AddressCard = ({
       zIndex="20"
       position="relative"
     >
-      <Box>
-        <Heading fontSize="lg" fontWeight="700" mb={1}>
-          {address.street}, {address.number}
-        </Heading>
-      </Box>
       <Flex gap={1} alignItems="center">
         <Icon color="brand.500" fontSize="20px" as={BiMap} />
         <Text fontWeight="500" fontSize="sm">

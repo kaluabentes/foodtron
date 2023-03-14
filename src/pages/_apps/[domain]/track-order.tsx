@@ -163,13 +163,10 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
                 order.status === ORDER_STATUS.DONE ? "current" : "pending"
               }
             />
-            <Flex direction="column" gap={4}>
+            <Flex direction={{ base: "column", lg: "row" }} gap={3} mt={4}>
               <Button colorScheme="brand" onClick={() => setShowDetails(true)}>
                 Detalhes
               </Button>
-              {order.status === ORDER_STATUS.PENDING && (
-                <Button onClick={() => setShowDetails(true)}>Cancelar</Button>
-              )}
               <Button
                 as="a"
                 variant="outline"
@@ -180,6 +177,9 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
               >
                 Conversar
               </Button>
+              {order.status === ORDER_STATUS.PENDING && (
+                <Button onClick={() => setShowDetails(true)}>Cancelar</Button>
+              )}
             </Flex>
           </Flex>
         </Box>

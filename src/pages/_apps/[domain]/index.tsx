@@ -21,6 +21,7 @@ import useGetStore from "@/modules/stores/hooks/useGetStore"
 import FilterBar from "@/modules/app/components/FilterBar"
 import useCurrentAddress from "@/modules/addresses/hooks/useCurrentAddress"
 import formatAddress from "@/modules/addresses/lib/formatAddress"
+import Location from "@/modules/locations/types/Location"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -117,14 +118,12 @@ const Index = ({ store = {}, categories }: IndexProps) => {
   const {
     setState,
     state: {
-      address: {
-        location: { neighborhood, ...location },
-      },
       order: { products: orderProducts },
     },
   } = useAppContext()
 
   const currentAddress = useCurrentAddress()
+  const location = (currentAddress?.location || {}) as Location
   const assembledAddress = currentAddress
     ? formatAddress(currentAddress!)
     : "---"
@@ -226,7 +225,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
         mb={{ lg: 0 }}
       >
         <StoreInfo
-          onSelectLocation={() => router.push("/select-location")}
+          onSelectLocation={() => router.push("/addresses")}
           weekDay={currentWeekDay}
           schedule={currentScheduleTime}
           store={storeRealTime || store}

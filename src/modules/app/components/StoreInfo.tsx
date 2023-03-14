@@ -65,17 +65,6 @@ const StoreInfo = ({
               Selecionar
             </Text>
           )}
-          {location.estimatedTime && (
-            <Text
-              as="button"
-              onClick={onSelectLocation}
-              fontWeight="500"
-              fontSize="xs"
-              color="brand.500"
-            >
-              Trocar
-            </Text>
-          )}
         </Flex>
         <StripeSeparator />
         <Flex direction="column" alignItems="center">
@@ -98,17 +87,6 @@ const StoreInfo = ({
               color="brand.500"
             >
               Selecionar
-            </Text>
-          )}
-          {location.tax && (
-            <Text
-              as="button"
-              onClick={onSelectLocation}
-              fontWeight="500"
-              fontSize="xs"
-              color="brand.500"
-            >
-              Trocar
             </Text>
           )}
         </Flex>

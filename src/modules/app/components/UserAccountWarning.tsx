@@ -21,16 +21,15 @@ const UserAccountWarning = () => {
         ficaram armazenadas localmente, para salvar as suas informações na nuvem
         crie ou entre em uma conta.
       </Alert>
-      <Flex gap={4} direction={{ md: "row" }}>
+      <Flex gap={3} direction={{ base: "column", lg: "row" }}>
         <Button
           colorScheme="brand"
-          width="full"
           size="sm"
           onClick={() => router.push("/create-account")}
         >
           Criar conta
         </Button>
-        <Button width="full" size="sm" onClick={() => router.push("/login")}>
+        <Button size="sm" onClick={() => router.push("/login")}>
           Entrar
         </Button>
       </Flex>

@@ -8,6 +8,7 @@ import {
   Input,
   Select,
 } from "@chakra-ui/react"
+import { v4 as uuidv4 } from "uuid"
 
 import prisma from "@/lib/infra/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
@@ -85,7 +86,9 @@ const EditAddress = ({ locations }: EditAddressProps) => {
 
   const handleAddAddress = async (data: any) => {
     try {
+      const id = uuidv4()
       const address: AddressParam = {
+        id,
         street: data.street,
         number: data.number,
         location: locations.find((location) => location.id === data.location)!,

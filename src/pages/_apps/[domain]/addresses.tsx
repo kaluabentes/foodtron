@@ -113,23 +113,26 @@ const Addresses = () => {
     try {
       setIsSelecting(true)
       setSelectedAddress(address)
-      const response = await api.patch(
-        "/api/profile/update-user",
-        {
-          selectedAddressId: address.id,
-        },
-        {
-          headers: {
-            Authorization: token,
+
+      if (token) {
+        await api.patch(
+          "/api/profile/update-user",
+          {
+            selectedAddressId: address.id,
           },
-        }
-      )
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        )
+      }
 
       mutateState({
         ...state,
         user: {
           ...state.user,
-          selectedAddressId: response.data.selectedAddressId,
+          selectedAddressId: address.id,
         },
       })
 

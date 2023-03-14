@@ -50,6 +50,8 @@ interface OrderConfirmProps {
   storeId: string
 }
 
+let toastTimeout = setTimeout(() => {}, 3000)
+
 const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
   const router = useRouter()
   const toast = useBottomToast()
@@ -132,15 +134,25 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       },
     })
     router.push(`/track-order?id=${order.id}`)
+    toast({
+      title: "Feito!",
+      description: "Seu pedido foi enviado com sucesso",
+      status: "success",
+    })
   }
 
   useEffect(() => {
     if (!products.length && !isSendingOrder && isReady) {
-      toast({
-        title: "Atenção",
-        description: "Adicione produtos",
-        status: "error",
-      })
+      // Certifica de que somente no ultimo render o toast será mostrado.
+      clearTimeout(toastTimeout)
+      toastTimeout = setTimeout(() => {
+        toast({
+          title: "Atenção",
+          description: "Adicione produtos",
+          status: "error",
+        })
+      }, 600)
+
       router.push("/")
     }
   }, [products, isReady, isSendingOrder])
@@ -234,7 +246,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
           <EditableDataItem
             field="Nome"
             value={user.name ? user.name : "---"}
-            onEdit={() => router.push("/edit-user?redirect=/order-confirm")}
+            onEdit={() => router.push("/profile?redirect=/order-confirm")}
           />
           <StripeSeparator horizontal />
           <EditableDataItem

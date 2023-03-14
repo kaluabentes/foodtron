@@ -79,7 +79,9 @@ const CreateAccount = () => {
     try {
       setIsLoading(true)
 
-      const response = await api.post("/api/auth/verify-code", {
+      const {
+        data: { token, user },
+      } = await api.post("/api/auth/verify-code", {
         name,
         phone,
         orders,
@@ -91,15 +93,18 @@ const CreateAccount = () => {
       mutateState({
         ...state,
         user: {
-          ...state.user,
-          id: response.data.user.id,
-          orders: response.data.user.orders,
-          addresses: response.data.user.addresses,
-          token: response.data.token,
+          ...user,
+          token,
         },
       })
 
-      router.push("/edit-user")
+      router.push("/profile")
+
+      toast({
+        title: "Feito!",
+        description: "Login feito com sucesso",
+        status: "success",
+      })
     } catch (error: any) {
       toast({
         title: "Atenção",

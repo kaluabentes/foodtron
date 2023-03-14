@@ -64,7 +64,16 @@ const AppLayout = ({
           onClick: () => {
             mutateState({
               ...state,
-              user: DEFAULT_USER,
+              user: {
+                id: "",
+                name: "",
+                phone: "",
+                email: "",
+                token: "",
+                orders: [],
+                addresses: [],
+                selectedAddressId: "",
+              },
             })
           },
         },

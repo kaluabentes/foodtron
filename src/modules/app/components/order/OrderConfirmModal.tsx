@@ -43,7 +43,7 @@ const OrderConfirmModal = ({
         >
           <BiEdit />
         </Flex>
-        <Heading size="sm" mb={2} fontWeight="500">
+        <Heading size="md" mb={2} fontWeight="500">
           Entregar em
         </Heading>
         {address}
