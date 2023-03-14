@@ -27,7 +27,7 @@ export const topMenu: RouteItem[] = [
   {
     icon: BiCart,
     label: "Carrinho",
-    path: "/order",
+    path: "/confirm-order",
   },
   {
     icon: BiTask,

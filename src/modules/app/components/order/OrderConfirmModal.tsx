@@ -38,7 +38,7 @@ const OrderConfirmModal = ({
           right={0}
           onClick={() => {
             onClose()
-            router.push("/edit-address?redirect=order-confirm")
+            router.push("/addresses")
           }}
         >
           <BiEdit />
@@ -46,7 +46,7 @@ const OrderConfirmModal = ({
         <Heading size="sm" mb={2} fontWeight="500">
           Entregar em
         </Heading>
-        {address.street}, {address.number}, {address.location.neighborhood}
+        {address}
       </Box>
       <Button
         colorScheme="brand"

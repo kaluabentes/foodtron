@@ -81,7 +81,7 @@ const AppLayout = ({
       return
     }
 
-    router.push("/order")
+    router.push("/order-confirm")
   }
 
   useEffect(() => {
@@ -160,6 +160,7 @@ const AppLayout = ({
         justifyContent="space-between"
         alignItems="center"
         mb={4}
+        mt={4}
       >
         <Heading size="lg">{title}</Heading>
         {!hideCartButton && (

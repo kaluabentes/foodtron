@@ -94,6 +94,7 @@ const Addresses = () => {
         user: {
           ...state.user,
           addresses,
+          selectedAddressId: "",
         },
       })
     } catch (error: any) {

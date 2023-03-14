@@ -16,6 +16,8 @@ import EditableDataItem from "@/components/EditableDataItem"
 import useCreateOrder from "@/modules/orders/hooks/useCreateOrder"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import ResponsiveButton from "@/components/ResponsiveButton"
+import useCurrentAddress from "@/modules/addresses/hooks/useCurrentAddress"
+import formatAddress from "@/modules/addresses/lib/formatAddress"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -54,18 +56,15 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
 
   const { state, setState, mutateState } = useAppContext()
 
-  const { address } = state
   const {
     user,
-    address: {
-      location: { tax },
-    },
     order: { paymentMethod, products },
+    isReady,
   } = state
+  const { selectedAddressId } = user
 
-  const assembledAddress = address.street
-    ? `${address.street}, ${address.number}, ${address.location.neighborhood}`
-    : "---"
+  const address = useCurrentAddress()
+  const assembledAddress = address ? formatAddress(address!) : "---"
 
   const { createOrder, isCreating } = useCreateOrder()
 
@@ -83,7 +82,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       return false
     }
 
-    if (!address.location.neighborhood || !address.street || !address.number) {
+    if (!selectedAddressId) {
       setIsOrderConfirmModalOpen(false)
       toast({
         title: "Atenção",
@@ -108,7 +107,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
 
   const handleOrderConfirm = async () => {
     const order = await createOrder({
-      tax,
+      tax: address?.location.tax,
       paymentMethod: paymentMethod.name,
       change: paymentMethod.change,
       address: assembledAddress,
@@ -116,7 +115,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       userId: user.id,
       username: user.name,
       phone: user.phone,
-      estimatedTime: address.location.estimatedTime,
+      estimatedTime: address?.location.estimatedTime,
       orderProducts: products,
     })
     setIsOrderConfirmModalOpen(false)
@@ -136,7 +135,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
   }
 
   useEffect(() => {
-    if (!products.length && !isSendingOrder) {
+    if (!products.length && !isSendingOrder && isReady) {
       toast({
         title: "Atenção",
         description: "Adicione produtos",
@@ -144,7 +143,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       })
       router.push("/")
     }
-  }, [products])
+  }, [products, isReady, isSendingOrder])
 
   return (
     <AppLayout
@@ -206,21 +205,21 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
           <EditableDataItem
             field="Rua"
             value={assembledAddress}
-            onEdit={() => router.push("/edit-address?redirect=/order-confirm")}
+            onEdit={() => router.push("/addresses")}
           />
           <StripeSeparator horizontal />
           <EditableDataItem
             field="Taxa"
-            value={tax ? formatToRealCurrency(Number(tax)) : "---"}
+            value={
+              address
+                ? formatToRealCurrency(Number(address?.location.estimatedTime))
+                : "---"
+            }
           />
           <StripeSeparator horizontal />
           <EditableDataItem
             field="Tempo estimado"
-            value={
-              address.location.estimatedTime
-                ? `${address.location.estimatedTime} min.`
-                : "---"
-            }
+            value={address ? `${address.location.estimatedTime} min.` : "---"}
           />
         </Flex>
       </Box>
@@ -265,7 +264,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       </Flex>
       <OrderConfirmModal
         onClose={() => setIsOrderConfirmModalOpen(false)}
-        address={address}
+        address={assembledAddress}
         isOpen={isOrderConfirmModalOpen}
         isLoading={isCreating}
         onConfirm={handleOrderConfirm}
