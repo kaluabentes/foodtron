@@ -45,7 +45,7 @@ const StoreInfo = ({
           {schedule || "---"}
         </Text>
       </Flex>
-      <Flex gap={4} alignItems="center">
+      <Flex gap={6} alignItems="center">
         <Flex direction="column" alignItems="center">
           <Text as="span" fontSize="14px">
             Tempo
@@ -91,10 +91,14 @@ const StoreInfo = ({
           )}
         </Flex>
         <StripeSeparator />
-        {store.isOpen ? (
-          <Badge colorScheme="green">Aberto</Badge>
+        {!store.isOpen ? (
+          <Badge colorScheme="green" variant="solid">
+            Aberto
+          </Badge>
         ) : (
-          <Badge colorScheme="red">Fechado</Badge>
+          <Badge colorScheme="red" variant="solid">
+            Fechado
+          </Badge>
         )}
       </Flex>
 
