@@ -10,7 +10,7 @@ interface CategoryItemProps {
 }
 
 const CategoryItem = ({ category, onMenuItemClick }: CategoryItemProps) => (
-  <Box marginTop={4} borderRadius="md" overflow="hidden" boxShadow="sm">
+  <Box borderRadius="md" overflow="hidden" boxShadow="sm">
     <SectionTitle>{category.title}</SectionTitle>
     {category?.products?.map((product: Product) => (
       <MenuItem onClick={onMenuItemClick} key={product.id} product={product} />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box } from "@chakra-ui/react"
+import { Box, Flex } from "@chakra-ui/react"
 import { v4 as uuidv4 } from "uuid"
 
 import prisma from "@/lib/infra/prisma/client"
@@ -249,13 +249,15 @@ const Index = ({ store = {}, categories }: IndexProps) => {
           }))
         }
       />
-      {applyFilters(categories).map((category) => (
-        <CategoryItem
-          key={category?.id}
-          onMenuItemClick={handleMenuItemClick}
-          category={category!}
-        />
-      ))}
+      <Flex direction="column" gap={4} mb={4}>
+        {applyFilters(categories).map((category) => (
+          <CategoryItem
+            key={category?.id}
+            onMenuItemClick={handleMenuItemClick}
+            category={category!}
+          />
+        ))}
+      </Flex>
       <OrderProductModal
         onConfirm={handleOrderConfirm}
         optionGroups={selectedProduct?.productOptionGroups?.map(

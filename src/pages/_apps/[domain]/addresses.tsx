@@ -212,15 +212,9 @@ const Addresses = () => {
         gap={4}
         borderRadius="md"
         overflow="hidden"
-        shadow="sm"
         p={{ base: 4, md: 0 }}
       >
-        <Flex
-          gap={4}
-          mt={{ base: 0, md: 4 }}
-          p={{ base: 4, md: 0 }}
-          direction={{ base: "column", md: "row" }}
-        >
+        <Flex gap={4} direction={{ base: "column", md: "row" }}>
           <Button
             onClick={() => router.push("/add-address")}
             leftIcon={<BiPlus />}

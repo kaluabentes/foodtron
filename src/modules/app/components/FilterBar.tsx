@@ -105,6 +105,7 @@ const FilterBar = ({
         width="100%"
         maxWidth={{ base: "100%", lg: "container.md" }}
         zIndex="100"
+        mb={4}
       >
         <IconButton
           onClick={

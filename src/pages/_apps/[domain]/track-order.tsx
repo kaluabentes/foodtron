@@ -98,7 +98,6 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
           background="white"
           overflow="hidden"
           borderRadius={{ base: undefined, lg: "md" }}
-          mb={4}
           shadow="sm"
         >
           <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">

@@ -57,7 +57,7 @@ const AddressCard = ({
       zIndex="20"
       position="relative"
     >
-      <Heading fontSize="lg" fontWeight="700">
+      <Heading fontSize="lg" fontWeight="700" color="gray.700">
         {address.street}, {address.number}
       </Heading>
       <IconButton
@@ -76,7 +76,7 @@ const AddressCard = ({
     >
       <Flex gap={1} alignItems="center">
         <Icon color="brand.500" fontSize="20px" as={BiMap} />
-        <Text fontWeight="500" fontSize="sm">
+        <Text fontWeight="500" fontSize="sm" color="gray.700">
           {address.location?.neighborhood}
         </Text>
       </Flex>

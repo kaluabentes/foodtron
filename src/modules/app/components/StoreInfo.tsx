@@ -36,7 +36,7 @@ const StoreInfo = ({
       <Text textAlign="center" color="gray.500" fontSize="sm" mb={5}>
         {store.category}
       </Text>
-      <Flex alignItems="center" gap={1.5} mb={8}>
+      <Flex alignItems="center" gap={1.5} mb={4}>
         <Icon as={BiTimeFive} />
         <Text as="span" fontWeight="500" lineHeight="0px">
           {weekDay || "---"}
@@ -45,9 +45,15 @@ const StoreInfo = ({
           {schedule || "---"}
         </Text>
       </Flex>
+      <Text mb={8} fontWeight="500">
+        Pedido mínimo:{" "}
+        <Box as="span" fontWeight="500">
+          R$ 20,00
+        </Box>
+      </Text>
       <Flex gap={6} alignItems="center">
         <Flex direction="column" alignItems="center">
-          <Text as="span" fontSize="14px">
+          <Text as="span" fontSize="14px" color="gray.600">
             Tempo
           </Text>
           {location.estimatedTime ? (
@@ -68,7 +74,7 @@ const StoreInfo = ({
         </Flex>
         <StripeSeparator />
         <Flex direction="column" alignItems="center">
-          <Text as="span" fontSize="14px">
+          <Text as="span" fontSize="14px" color="gray.600">
             Taxa
           </Text>
           {location.tax ? (

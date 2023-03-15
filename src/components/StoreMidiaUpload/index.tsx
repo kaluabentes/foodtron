@@ -98,7 +98,7 @@ const StoreMidiaUpload = ({
         cursor={isEditable ? "pointer" : "initial"}
         overflow="hidden"
         display="flex"
-        height="200px"
+        height={{ base: "200px", lg: "270px" }}
         justifyContent="flex-start"
         alignItems="flex-end"
         width="100%"
@@ -115,7 +115,7 @@ const StoreMidiaUpload = ({
             src={cover}
             alt="Cover"
             objectFit="cover"
-            height="200px"
+            height={{ base: "200px", lg: "270px" }}
             width="100%"
           />
         )}
@@ -133,7 +133,7 @@ const StoreMidiaUpload = ({
           width="130px"
           height="130px"
           borderRadius="25px"
-          margin="-80px 0 0 0"
+          margin="-65px 0 0 0"
           outline="3px solid white"
           overflow="hidden"
           disabled={!isEditable}
