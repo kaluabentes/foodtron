@@ -48,9 +48,9 @@ const MenuItem = ({ product, onClick }: MenuItemProps) => (
     <Box pl={4} pr={4} background="white">
       <Box
         className="separator"
-        height="0.8px"
+        height="1px"
         width="100%"
-        backgroundColor="gray.200"
+        backgroundColor="gray.100"
       />
     </Box>
   </Box>
