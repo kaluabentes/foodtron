@@ -7,7 +7,7 @@ import MenuItem from "@/components/Menu/MenuItem"
 import MenuToggleButton from "./MenuToggleButton"
 import Brand from "@/components/Brand"
 import { ReactNode, useState } from "react"
-import { RouteItem } from "@/config/adminMenu"
+import RouteItem from "@/types/RouteItem"
 
 interface SideNavProps {
   header: ReactNode
@@ -55,7 +55,7 @@ const SideNav = ({
               isTransparent
               key={String(index + 1)}
               onClick={() =>
-                item.onClick ? item.onClick() : router.push(item.path)
+                item.onClick ? item.onClick() : router.push(item.path!)
               }
               icon={item.icon}
               isActive={item.path === router.asPath}
@@ -71,7 +71,7 @@ const SideNav = ({
               isTransparent
               key={String(index + 1)}
               onClick={() =>
-                item.onClick ? item.onClick() : router.push(item.path)
+                item.onClick ? item.onClick() : router.push(item.path!)
               }
               icon={item.icon}
               isActive={item.path === router.asPath}

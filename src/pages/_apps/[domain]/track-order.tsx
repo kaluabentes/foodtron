@@ -86,7 +86,7 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
     if (!order) {
       return (
         <Flex justifyContent="center" height="200px" alignItems="center">
-          <Spinner size="xl" color="brand.500" />
+          <Spinner thickness="4px" size="xl" color="brand.500" />
         </Flex>
       )
     }

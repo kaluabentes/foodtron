@@ -4,7 +4,7 @@ import { useRouter } from "next/router"
 import Menu from "@/components/Menu"
 import MenuItem from "@/components/Menu/MenuItem"
 import ClickOutside from "@/components/ClickOutside"
-import { RouteItem } from "@/config/adminMenu"
+import RouteItem from "@/types/RouteItem"
 import Brand from "@/components/Brand"
 import { ReactNode } from "react"
 

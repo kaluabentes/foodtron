@@ -18,6 +18,7 @@ import useBottomToast from "@/lib/hooks/useBottomToast"
 import ResponsiveButton from "@/components/ResponsiveButton"
 import useCurrentAddress from "@/modules/addresses/hooks/useCurrentAddress"
 import formatAddress from "@/modules/addresses/lib/formatAddress"
+import sumOrderSubtotal from "@/modules/orders/lib/sumOrderSubtotal"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -62,6 +63,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
     user,
     order: { paymentMethod, products },
     isReady,
+    store: { minimumOrderPrice },
   } = state
   const { selectedAddressId } = user
 
@@ -74,6 +76,16 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
   const [isSendingOrder, setIsSendingOrder] = useState(false)
 
   const verifyInformations = () => {
+    if (sumOrderSubtotal(products) < Number(minimumOrderPrice)) {
+      setIsOrderConfirmModalOpen(false)
+      toast({
+        title: "Atenção",
+        description: "Adicione os dados de pagamento",
+        status: "error",
+      })
+      return false
+    }
+
     if (!paymentMethod.name) {
       setIsOrderConfirmModalOpen(false)
       toast({

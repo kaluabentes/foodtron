@@ -5,7 +5,7 @@ import BarIconButton from "@/components/BarIconButton"
 
 import SideNav from "./SideNav"
 import { ReactElement, ReactNode, useEffect } from "react"
-import { RouteItem } from "@/config/adminMenu"
+import RouteItem from "@/types/RouteItem"
 
 interface AppBarProps {
   title?: ReactNode

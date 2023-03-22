@@ -1,5 +1,6 @@
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 import StripeSeparator from "@/components/StripeSeparator"
+import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import Location from "@/modules/locations/types/Location"
 import Store from "@/modules/stores/types/Store"
 import { Badge, Box, Flex, Heading, Icon, Text } from "@chakra-ui/react"
@@ -37,18 +38,16 @@ const StoreInfo = ({
         {store.category}
       </Text>
       <Flex alignItems="center" gap={1.5} mb={4}>
-        <Icon as={BiTimeFive} />
-        <Text as="span" fontWeight="500" lineHeight="0px">
+        <Icon fontSize="22px" as={BiTimeFive} />
+        <Text as="span" fontWeight="500">
           {weekDay || "---"}
         </Text>
-        <Text color="gray.600" lineHeight="0px">
-          {schedule || "---"}
-        </Text>
+        <Text color="gray.600">{schedule || "---"}</Text>
       </Flex>
       <Text mb={8} fontWeight="500">
         Pedido mínimo:{" "}
         <Box as="span" fontWeight="500">
-          R$ 20,00
+          {formatToRealCurrency(Number(store.minimumOrderPrice))}
         </Box>
       </Text>
       <Flex gap={6} alignItems="center">

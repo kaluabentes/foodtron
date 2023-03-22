@@ -38,6 +38,7 @@ const OrderItemsSummary = () => {
     address: {
       location: { tax },
     },
+    store: { minimumOrderPrice },
   } = state
 
   const { products } = useGetProducts(String(domain))
@@ -157,6 +158,14 @@ const OrderItemsSummary = () => {
             onClick={() => handleEditProduct(product.id!, product.productId!)}
           />
         ))}
+        <BaseOrderItem
+          leftSlot={<Text fontWeight="500">Pedido mínimo</Text>}
+          rightSlot={
+            <Text fontSize="md" fontWeight="500" mb={1} textAlign="right">
+              {formatToRealCurrency(Number(minimumOrderPrice))}
+            </Text>
+          }
+        />
         <BaseOrderItem
           leftSlot={<Text>Subtotal</Text>}
           rightSlot={
