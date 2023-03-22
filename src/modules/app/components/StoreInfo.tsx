@@ -38,7 +38,7 @@ const StoreInfo = ({
         fontWeight="700"
         mb={8}
       >
-        Lanchonete e pizzaria do Bill
+        {store.name}
       </Heading>
       <Flex alignItems="center" gap={1.5} mb={2}>
         <Icon fontSize="22px" as={BiTimeFive} />
