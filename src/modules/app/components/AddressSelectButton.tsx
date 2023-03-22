@@ -33,7 +33,7 @@ const AddressSelectButton = ({
         </Text>
       )}
     </Flex>
-    <Icon as={BiEdit} fontSize="22px" justifySelf="flex-end" color="gray.400" />
+    <Icon as={BiEdit} fontSize="20px" justifySelf="flex-end" color="gray.500" />
   </Flex>
 )
 
