@@ -36,14 +36,11 @@ const StoreInfo = ({
         textAlign="center"
         size="md"
         fontWeight="700"
-        mb={2}
+        mb={8}
       >
         Lanchonete e pizzaria do Bill
       </Heading>
-      <Text textAlign="center" color="gray.500" fontSize="sm" mb={5}>
-        {store.category}
-      </Text>
-      <Flex alignItems="center" gap={1.5} mb={4}>
+      <Flex alignItems="center" gap={1.5} mb={2}>
         <Icon fontSize="22px" as={BiTimeFive} />
         <Text as="span" fontWeight="500">
           {weekDay || "---"}

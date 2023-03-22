@@ -22,9 +22,11 @@ const AddressSelectButton = ({
   >
     <Icon as={BiMap} color="brand.500" fontSize="30px" />
     <Flex direction="column" alignItems="flex-start" flex={1}>
-      <Text fontSize="xs">Entregar em:</Text>
+      <Text fontSize="xs" fontWeight="500">
+        Entregar em:
+      </Text>
       {address ? (
-        <Text fontWeight="500" fontSize="sm">
+        <Text fontWeight="400" fontSize="sm">
           {address}
         </Text>
       ) : (
