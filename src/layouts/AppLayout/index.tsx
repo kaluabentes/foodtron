@@ -142,7 +142,7 @@ const AppLayout = ({
         title={
           <Heading
             fontSize="sm"
-            fontWeight="500"
+            fontWeight="700"
             textTransform="uppercase"
             lineHeight="0"
           >
