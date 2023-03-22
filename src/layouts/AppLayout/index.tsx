@@ -186,7 +186,7 @@ const AppLayout = ({
         mb={4}
         mt={4}
       >
-        <Heading size="lg" color="gray.700">
+        <Heading size="lg" fontWeight="500" color="gray.700">
           {title}
         </Heading>
         {!hideCartButton && (

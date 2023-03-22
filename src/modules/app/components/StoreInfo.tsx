@@ -31,8 +31,8 @@ const StoreInfo = ({
       isEditable={false}
     />
     <Flex flexDirection="column" alignItems="center" p={4}>
-      <Heading textAlign="center" size="lg" fontWeight="500" mb={2}>
-        {store.name}
+      <Heading textAlign="center" size="xl" fontWeight="700" mb={2}>
+        Lanchonete e Pizzaria do Antonio vAntonio Antoniosa
       </Heading>
       <Text textAlign="center" color="gray.500" fontSize="sm" mb={5}>
         {store.category}
