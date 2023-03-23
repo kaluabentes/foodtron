@@ -27,6 +27,7 @@ import OrderProductItem from "@/modules/app/components/order/OrderProductItem"
 import BaseOrderItem from "@/modules/app/components/order/BaseOrderItem"
 import sumProductTotal from "@/modules/orders/lib/sumProductTotal"
 import sumOrderSubtotal from "@/modules/orders/lib/sumOrderSubtotal"
+import useCurrentAddress from "@/modules/app/addresses/hooks/useCurrentAddress"
 
 const OrderItemsSummary = () => {
   const router = useRouter()
@@ -35,11 +36,9 @@ const OrderItemsSummary = () => {
   const { setState, mutateState, state } = useAppContext()
   const {
     order: { products: orderProducts },
-    address: {
-      location: { tax },
-    },
     store: { minimumOrderPrice },
   } = state
+  const address = useCurrentAddress()
 
   const { products } = useGetProducts(String(domain))
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>()
@@ -178,7 +177,9 @@ const OrderItemsSummary = () => {
           leftSlot={<Text>Taxa de entrega</Text>}
           rightSlot={
             <Text fontSize="md" fontWeight="500" mb={1} textAlign="right">
-              {tax ? formatToRealCurrency(Number(tax)) : "---"}
+              {address
+                ? formatToRealCurrency(Number(address?.location?.tax))
+                : "---"}
             </Text>
           }
         />
@@ -193,8 +194,9 @@ const OrderItemsSummary = () => {
               color="brand.500"
             >
               {formatToRealCurrency(
-                tax
-                  ? sumOrderSubtotal(orderProducts) + Number(tax)
+                address
+                  ? sumOrderSubtotal(orderProducts) +
+                      Number(address?.location?.tax)
                   : sumOrderSubtotal(orderProducts)
               )}
             </Text>

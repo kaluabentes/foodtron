@@ -12,8 +12,8 @@ import Location from "@/modules/locations/types/Location"
 import OrderProduct from "@/modules/orders/types/OrderProduct"
 import Store from "@/modules/stores/types/Store"
 import Order from "@/modules/orders/types/Order"
-import Address from "@/modules/addresses/types/Address"
-import AddressParam from "@/modules/addresses/types/AddressParam"
+import Address from "@/modules/app/addresses/types/Address"
+import AddressParam from "@/modules/app/addresses/types/AddressParam"
 
 interface AppState {
   store: Store
@@ -27,7 +27,6 @@ interface AppState {
     addresses: Address[]
     selectedAddressId: string
   }
-  address: Address
   order: {
     products: OrderProduct[]
     paymentMethod: {
@@ -49,11 +48,6 @@ interface AppStateParam {
     orders?: Order[]
     addresses?: AddressParam[]
     selectedAddressId?: string
-  }
-  address?: {
-    street?: string
-    number?: string
-    location?: Location
   }
   order?: {
     products?: OrderProduct[]
@@ -99,7 +93,6 @@ export const DEFAULT_ORDER = {
 const DEFAULT_VALUE_STATE = {
   store: {},
   user: DEFAULT_USER,
-  address: DEFAULT_ADDRESS,
   order: DEFAULT_ORDER,
   isReady: false,
 }

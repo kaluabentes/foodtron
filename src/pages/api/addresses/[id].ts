@@ -6,7 +6,7 @@ import serverAuth from "@/middlewares/serverAuth"
 import { User } from "@prisma/client"
 import NextCors from "nextjs-cors"
 import updateAddress from "@/modules/addresses/services/updateAddress"
-import deleteAddress from "@/modules/addresses/services/deleteAddress"
+import deleteAddress from "@/modules/app/addresses/services/deleteAddress"
 
 const ALLOWED_METHODS = ["PATCH", "DELETE"]
 

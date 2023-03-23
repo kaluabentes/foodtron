@@ -1,33 +1,17 @@
 import { useAppContext } from "@/contexts/app"
 import AppLayout from "@/layouts/AppLayout"
-import auth from "@/middlewares/auth"
-import OrderCard from "@/modules/app/components/order/OrderCard"
-import Order from "@/modules/orders/types/Order"
-import { ROLE } from "@/modules/users/constants"
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  Box,
-  Button,
-  Flex,
-} from "@chakra-ui/react"
-import { GetServerSideProps } from "next"
+import { Button, Flex } from "@chakra-ui/react"
 import prisma from "@/lib/infra/prisma/client"
-import StripeSeparator from "@/components/StripeSeparator"
-import OrderDetailsModal from "@/modules/orders/components/OrderDetailsModal"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
-import { useSession } from "next-auth/react"
 import EmptyState from "@/components/EmptyState"
-import Address from "@/modules/addresses/types/Address"
+import Address from "@/modules/app/addresses/types/Address"
 import AddressCard from "@/modules/app/components/address/AddressCard"
 import api from "@/lib/infra/axios/api"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import { BiPlus } from "react-icons/bi"
 import ConfirmAlert from "@/components/ConfirmAlert"
-import AddressParam from "@/modules/addresses/types/AddressParam"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -44,15 +28,9 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }: any) => {
-  const store = await prisma.store.findFirst({
-    where: {
-      subdomain: params.domain,
-    },
-  })
-
   return {
     props: {
-      store,
+      subdomain: params.domain,
     },
   }
 }

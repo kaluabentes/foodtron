@@ -17,6 +17,7 @@ import { BiPowerOff } from "react-icons/bi"
 import { FaWhatsapp } from "react-icons/fa"
 import { ORDER_STATUS } from "@/modules/orders/constants"
 import TrackOrderButton from "@/modules/app/components/order/TrackOrderButton"
+import useGetUser from "@/modules/profile/hooks/useGetUser"
 
 interface AppLayoutProps {
   children: ReactNode
@@ -47,6 +48,7 @@ const AppLayout = ({
     .reverse()
 
   const { store } = useGetStore(String(router.query.domain))
+  const { user } = useGetUser()
 
   const [isOpen, setIsOpen] = useState(false)
   const [isClosed, setIsClosed] = useState(true)
@@ -112,10 +114,18 @@ const AppLayout = ({
   useEffect(() => {
     if (isReady) {
       setState({
-        store: store,
+        store,
       })
     }
-  }, [isReady])
+  }, [isReady, store])
+
+  useEffect(() => {
+    if (isReady && user) {
+      setState({
+        user,
+      })
+    }
+  }, [isReady, user])
 
   const renderHeader = (isClosed = false) =>
     store && store.logo ? (

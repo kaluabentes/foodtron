@@ -16,8 +16,8 @@ import EditableDataItem from "@/components/EditableDataItem"
 import useCreateOrder from "@/modules/orders/hooks/useCreateOrder"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import ResponsiveButton from "@/components/ResponsiveButton"
-import useCurrentAddress from "@/modules/addresses/hooks/useCurrentAddress"
-import formatAddress from "@/modules/addresses/lib/formatAddress"
+import useCurrentAddress from "@/modules/app/addresses/hooks/useCurrentAddress"
+import formatAddress from "@/modules/app/addresses/lib/formatAddress"
 import sumOrderSubtotal from "@/modules/orders/lib/sumOrderSubtotal"
 
 export const getStaticPaths = async () => {
@@ -122,7 +122,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
 
   const handleOrderConfirm = async () => {
     const order = await createOrder({
-      tax: address?.location.tax,
+      tax: address?.location?.tax,
       paymentMethod: paymentMethod.name,
       change: paymentMethod.change,
       address: assembledAddress,
@@ -130,7 +130,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       userId: user.id,
       username: user.name,
       phone: user.phone,
-      estimatedTime: address?.location.estimatedTime,
+      estimatedTime: address?.location?.estimatedTime,
       orderProducts: products,
     })
     setIsOrderConfirmModalOpen(false)
@@ -237,14 +237,14 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
             field="Taxa"
             value={
               address
-                ? formatToRealCurrency(Number(address?.location.estimatedTime))
+                ? formatToRealCurrency(Number(address?.location?.estimatedTime))
                 : "---"
             }
           />
           <StripeSeparator horizontal />
           <EditableDataItem
             field="Tempo estimado"
-            value={address ? `${address.location.estimatedTime} min.` : "---"}
+            value={address ? `${address?.location?.estimatedTime} min.` : "---"}
           />
         </Flex>
       </Box>

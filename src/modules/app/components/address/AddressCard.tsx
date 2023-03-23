@@ -1,6 +1,6 @@
 import formatDate from "@/lib/helpers/date/formatDate"
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
-import Address from "@/modules/addresses/types/Address"
+import Address from "@/modules/app/addresses/types/Address"
 import {
   Badge,
   Box,
@@ -57,7 +57,7 @@ const AddressCard = ({
       zIndex="20"
       position="relative"
     >
-      <Heading fontSize="lg" fontWeight="700" color="gray.700">
+      <Heading fontSize="md" fontWeight="500" color="gray.700">
         {address.street}, {address.number}
       </Heading>
       <IconButton

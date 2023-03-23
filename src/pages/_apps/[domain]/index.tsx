@@ -19,8 +19,8 @@ import Product from "@/modules/products/types/Product"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import useGetStore from "@/modules/stores/hooks/useGetStore"
 import FilterBar from "@/modules/app/components/FilterBar"
-import useCurrentAddress from "@/modules/addresses/hooks/useCurrentAddress"
-import formatAddress from "@/modules/addresses/lib/formatAddress"
+import useCurrentAddress from "@/modules/app/addresses/hooks/useCurrentAddress"
+import formatAddress from "@/modules/app/addresses/lib/formatAddress"
 import Location from "@/modules/locations/types/Location"
 
 export const getStaticPaths = async () => {

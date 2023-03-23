@@ -1,4 +1,5 @@
 import { useAppContext } from "@/contexts/app"
+import Address from "../types/Address"
 
 const useCurrentAddress = () => {
   const {
@@ -9,7 +10,7 @@ const useCurrentAddress = () => {
 
   const currentAddress = addresses.find((addr) => addr.id === selectedAddressId)
 
-  return currentAddress
+  return currentAddress as Address
 }
 
 export default useCurrentAddress
