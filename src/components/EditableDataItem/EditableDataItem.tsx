@@ -1,6 +1,7 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react"
 import { ReactNode } from "react"
 import { BiEdit } from "react-icons/bi"
+import IconActionButton from "../IconActionButton/IconActionButton"
 
 interface EditableDataItemProps {
   field: string
@@ -18,19 +19,8 @@ const EditableDataItem = ({ field, value, onEdit }: EditableDataItemProps) => (
     width="100%"
   >
     {onEdit && (
-      <Flex
-        color="gray.500"
-        shadow="md"
-        width="22px"
-        height="22px"
-        borderRadius="50%"
-        justifyContent="center"
-        alignItems="center"
-        position="absolute"
-        top={0}
-        right={0}
-      >
-        <BiEdit />
+      <Flex position="absolute" top={0} right={0}>
+        <IconActionButton icon={<BiEdit />} />
       </Flex>
     )}
     <Heading size="xs" mb={2} fontWeight="500">

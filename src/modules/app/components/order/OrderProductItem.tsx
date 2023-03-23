@@ -1,3 +1,4 @@
+import IconActionButton from "@/components/IconActionButton/IconActionButton"
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import OrderProduct from "@/modules/orders/types/OrderProduct"
 import { Box, Flex, Heading, Text } from "@chakra-ui/react"
@@ -33,21 +34,7 @@ const OrderProductItem = ({
               Obs.: {product.observation}
             </Text>
           )}
-          {onClick && (
-            <Flex
-              color="gray.500"
-              mt={2}
-              border="1px solid transparent"
-              borderColor="gray.300"
-              width="24px"
-              height="24px"
-              borderRadius="50%"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <BiDotsHorizontalRounded />
-            </Flex>
-          )}
+          {onClick && <IconActionButton icon={<BiDotsHorizontalRounded />} />}
         </Flex>
       }
       rightSlot={
