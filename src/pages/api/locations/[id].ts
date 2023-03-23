@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import serverAuth from "@/middlewares/serverAuth"
-import getLocation from "@/modules/locations/controllers/getLocation"
-import updateLocation from "@/modules/locations/controllers/updateLocation"
-import deleteLocation from "@/modules/locations/controllers/deleteLocation"
+import getLocation from "@/modules/locations/services/getLocation"
+import updateLocation from "@/modules/locations/services/updateLocation"
+import deleteLocation from "@/modules/locations/services/deleteLocation"
 
 const getLocationHandler = async (
   req: NextApiRequest,

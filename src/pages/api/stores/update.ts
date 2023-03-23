@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import serverAuth from "@/middlewares/serverAuth"
-import updateStore from "@/modules/stores/controllers/updateStore"
+import updateStore from "@/modules/stores/services/updateStore"
 
 const updateStoreHandler = async (
   req: NextApiRequest,

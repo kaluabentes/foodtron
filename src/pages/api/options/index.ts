@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import serverAuth from "@/middlewares/serverAuth"
-import createOption from "@/modules/options/controllers/createOption"
-import getOptions from "@/modules/options/controllers/getOptions"
+import createOption from "@/modules/options/services/createOption"
+import getOptions from "@/modules/options/services/getOptions"
 
 const optionIndexHandler = async (
   req: NextApiRequest,

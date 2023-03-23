@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import Cors from "cors"
 
-import getStore from "@/modules/stores/controllers/getStore"
+import getStore from "@/modules/stores/services/getStore"
 import runMiddleware from "@/lib/infra/next/runMiddleware"
 
 const cors = Cors({
