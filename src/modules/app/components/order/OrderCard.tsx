@@ -126,7 +126,6 @@ const OrderCard = ({
           )}
         </Text>
         <Box textAlign="right">
-          <Text fontSize="sm">Status:</Text>
           <Badge colorScheme={ORDER_STATUS_COLOR_SCHEME[order.status]}>
             {ORDER_STATUS_TEXT[order.status]}
           </Badge>
