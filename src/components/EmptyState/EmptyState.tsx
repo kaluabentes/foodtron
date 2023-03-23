@@ -1,33 +1,30 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react"
-import { ReactNode } from "react"
-import { BiEdit } from "react-icons/bi"
-import IconActionButton from "../IconActionButton/IconActionButton"
+import { Flex, Heading, Icon } from "@chakra-ui/react"
+import { BiFile } from "react-icons/bi"
 
-interface EditableDataItemProps {
-  field: string
-  value: string | ReactNode
-  onEdit?: () => void
+interface EmptyStateProps {
+  message: string
+  isGray?: boolean
 }
 
-const EditableDataItem = ({ field, value, onEdit }: EditableDataItemProps) => (
-  <Box
-    as={onEdit && "button"}
-    textAlign="left"
-    position="relative"
-    onClick={onEdit}
-    display="block"
-    width="100%"
+const EmptyState = ({ message, isGray }: EmptyStateProps) => (
+  <Flex
+    direction="column"
+    alignItems="center"
+    justifyContent="center"
+    shadow="sm"
+    backgroundColor={isGray ? "gray.50" : "white"}
+    borderRadius="md"
+    border="1px solid transparent"
+    borderColor={isGray ? "gray.100" : "transparent"}
+    overflow="auto"
+    p={10}
+    gap={7}
   >
-    {onEdit && (
-      <Flex position="absolute" top={0} right={0}>
-        <IconActionButton icon={<BiEdit />} />
-      </Flex>
-    )}
-    <Heading size="xs" mb={2} fontWeight="500">
-      {field}
+    <Icon as={BiFile} fontSize="140px" color="gray.200" />
+    <Heading fontWeight="400" fontSize="md" color="gray.500" textAlign="center">
+      {message}
     </Heading>
-    <Text>{value}</Text>
-  </Box>
+  </Flex>
 )
 
-export default EditableDataItem
+export default EmptyState
