@@ -80,7 +80,8 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       setIsOrderConfirmModalOpen(false)
       toast({
         title: "Atenção",
-        description: "Adicione os dados de pagamento",
+        description:
+          "Você precisa alcançar o pedido mínimo, sem contar com a taxa de entrega",
         status: "error",
       })
       return false

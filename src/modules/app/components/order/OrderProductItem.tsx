@@ -1,7 +1,7 @@
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import OrderProduct from "@/modules/orders/types/OrderProduct"
 import { Box, Flex, Heading, Text } from "@chakra-ui/react"
-import { BiEdit } from "react-icons/bi"
+import { BiDotsHorizontalRounded, BiEdit, BiPlus } from "react-icons/bi"
 import BaseOrderItem from "./BaseOrderItem"
 
 interface OrderProductItemProps {
@@ -37,14 +37,15 @@ const OrderProductItem = ({
             <Flex
               color="gray.500"
               mt={2}
-              shadow="md"
-              width="22px"
-              height="22px"
+              border="1px solid transparent"
+              borderColor="gray.300"
+              width="24px"
+              height="24px"
               borderRadius="50%"
               justifyContent="center"
               alignItems="center"
             >
-              <BiEdit />
+              <BiDotsHorizontalRounded />
             </Flex>
           )}
         </Flex>
