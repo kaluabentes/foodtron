@@ -1,6 +1,6 @@
 import SectionTitle from "@/components/SectionTitle"
-import Category from "@/modules/categories/types/Category"
-import Product from "@/modules/products/types/Product"
+import Category from "@/modules/admin/categories/types/Category"
+import Product from "@/modules/admin/products/types/Product"
 import { Box, Heading } from "@chakra-ui/react"
 import MenuItem from "./MenuItem"
 

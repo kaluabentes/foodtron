@@ -1,8 +1,8 @@
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 import StripeSeparator from "@/components/StripeSeparator"
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
-import Location from "@/modules/locations/types/Location"
-import Store from "@/modules/stores/types/Store"
+import Location from "@/modules/admin/locations/types/Location"
+import Store from "@/modules/admin/stores/types/Store"
 import { Badge, Box, Flex, Heading, Icon, Text } from "@chakra-ui/react"
 import { BiTimeFive } from "react-icons/bi"
 

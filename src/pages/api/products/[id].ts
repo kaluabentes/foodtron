@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import serverAuth from "@/middlewares/serverAuth"
-import deleteProduct from "@/modules/products/services/deleteProduct"
-import updateProduct from "@/modules/products/services/updateProduct"
+import deleteProduct from "@/modules/admin/products/services/deleteProduct"
+import updateProduct from "@/modules/admin/products/services/updateProduct"
 
 const singleProductHandler = async (
   req: NextApiRequest,

@@ -25,9 +25,9 @@ import TableSkeleton from "@/components/TableSkeleton"
 import AdminLayout from "@/layouts/AdminLayout"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import auth from "@/middlewares/auth"
-import useGetProducts from "@/modules/products/hooks/useGetProducts"
-import useDeleteProduct from "@/modules/products/hooks/useDeleteProduct"
-import Product from "@/modules/products/types/Product"
+import useGetProducts from "@/modules/admin/products/hooks/useGetProducts"
+import useDeleteProduct from "@/modules/admin/products/hooks/useDeleteProduct"
+import Product from "@/modules/admin/products/types/Product"
 import { get } from "lodash"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

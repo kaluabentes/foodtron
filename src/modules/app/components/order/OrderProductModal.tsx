@@ -1,8 +1,8 @@
 import QuantitySwitch from "@/components/QuantitySwitch"
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
-import Option from "@/modules/options/types/Option"
-import OptionGroup from "@/modules/options/types/OptionGroup"
-import Product from "@/modules/products/types/Product"
+import Option from "@/modules/admin/options/types/Option"
+import OptionGroup from "@/modules/admin/options/types/OptionGroup"
+import Product from "@/modules/admin/products/types/Product"
 import {
   Badge,
   Box,

@@ -1,4 +1,4 @@
-import Location from "@/modules/locations/types/Location"
+import Location from "@/modules/admin/locations/types/Location"
 
 interface Address {
   id: string

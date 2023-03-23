@@ -6,7 +6,7 @@ import sendVerification from "@/lib/infra/sinch/sendVerification"
 import verifyCode from "@/lib/infra/sinch/verifyCode"
 import prisma from "@/lib/infra/prisma/client"
 import Address from "@/modules/app/addresses/types/Address"
-import Order from "@/modules/orders/types/Order"
+import Order from "@/modules/admin/orders/types/Order"
 
 const ALLOWED_METHODS = ["POST"]
 

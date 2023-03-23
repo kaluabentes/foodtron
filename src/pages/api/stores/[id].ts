@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import serverAuth from "@/middlewares/serverAuth"
-import getStore from "@/modules/stores/services/getStore"
+import getStore from "@/modules/admin/stores/services/getStore"
 
 const storeIndexHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!["GET"].includes(req.method!)) {

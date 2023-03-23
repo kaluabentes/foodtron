@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import serverAuth from "@/middlewares/serverAuth"
-import createPaymentMethod from "@/modules/payment-methods/services/createPaymentMethod"
-import getPaymentMethods from "@/modules/payment-methods/services/getPaymentMethods"
+import createPaymentMethod from "@/modules/admin/payment-methods/services/createPaymentMethod"
+import getPaymentMethods from "@/modules/admin/payment-methods/services/getPaymentMethods"
 
 const paymentMethodsIndexHandler = async (
   req: NextApiRequest,

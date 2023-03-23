@@ -11,13 +11,13 @@ import PageHeader from "@/components/PageHeader"
 import { bottomMenu, topMenu } from "@/config/appMenu"
 import SideNav from "@/components/SideNav"
 import Brand from "@/components/Brand"
-import useGetStore from "@/modules/stores/hooks/useGetStore"
+import useGetStore from "@/modules/admin/stores/hooks/useGetStore"
 import PageLoaderSpinner from "@/components/PageLoaderSpinner"
 import { BiPowerOff } from "react-icons/bi"
 import { FaWhatsapp } from "react-icons/fa"
-import { ORDER_STATUS } from "@/modules/orders/constants"
+import { ORDER_STATUS } from "@/modules/admin/orders/constants"
 import TrackOrderButton from "@/modules/app/components/order/TrackOrderButton"
-import useGetUser from "@/modules/profile/hooks/useGetUser"
+import useGetUser from "@/modules/app/profile/hooks/useGetUser"
 
 interface AppLayoutProps {
   children: ReactNode

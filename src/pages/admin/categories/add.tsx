@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form"
 import DataField from "@/components/DataField"
 import auth from "@/middlewares/auth"
 import { GetServerSideProps } from "next"
-import useCreateCategory from "@/modules/categories/hooks/useCreateCategory"
+import useCreateCategory from "@/modules/admin/categories/hooks/useCreateCategory"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])

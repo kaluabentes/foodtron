@@ -1,6 +1,6 @@
 import IconActionButton from "@/components/IconActionButton/IconActionButton"
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
-import OrderProduct from "@/modules/orders/types/OrderProduct"
+import OrderProduct from "@/modules/admin/orders/types/OrderProduct"
 import { Box, Flex, Heading, Text } from "@chakra-ui/react"
 import { BiDotsHorizontalRounded, BiEdit, BiPlus } from "react-icons/bi"
 import BaseOrderItem from "./BaseOrderItem"

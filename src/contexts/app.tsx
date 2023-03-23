@@ -8,10 +8,10 @@ import {
   useState,
 } from "react"
 
-import Location from "@/modules/locations/types/Location"
-import OrderProduct from "@/modules/orders/types/OrderProduct"
-import Store from "@/modules/stores/types/Store"
-import Order from "@/modules/orders/types/Order"
+import Location from "@/modules/admin/locations/types/Location"
+import OrderProduct from "@/modules/admin/orders/types/OrderProduct"
+import Store from "@/modules/admin/stores/types/Store"
+import Order from "@/modules/admin/orders/types/Order"
 import Address from "@/modules/app/addresses/types/Address"
 import AddressParam from "@/modules/app/addresses/types/AddressParam"
 

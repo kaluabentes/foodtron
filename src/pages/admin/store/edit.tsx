@@ -22,8 +22,8 @@ import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 import prisma from "@/lib/infra/prisma/client"
 import auth from "@/middlewares/auth"
 import { DataCell, DataHead, DataValue } from "@/components/DataTable"
-import Store from "@/modules/stores/types/Store"
-import useUpdateStore from "@/modules/stores/hooks/useUpdateStore"
+import Store from "@/modules/admin/stores/types/Store"
+import useUpdateStore from "@/modules/admin/stores/hooks/useUpdateStore"
 import { User } from "@prisma/client"
 
 const MaskedWhatsappInput = IMaskMixin(({ inputRef, ...props }: any) => (

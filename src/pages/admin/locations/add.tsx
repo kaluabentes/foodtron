@@ -14,7 +14,7 @@ import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
 import DataField from "@/components/DataField"
-import useAddLocation from "@/modules/locations/hooks/useAddLocation"
+import useAddLocation from "@/modules/admin/locations/hooks/useAddLocation"
 import auth from "@/middlewares/auth"
 import { GetServerSideProps } from "next"
 

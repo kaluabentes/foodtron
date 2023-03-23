@@ -17,7 +17,7 @@ import { DataCell, DataHead, DataValue } from "@/components/DataTable"
 import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
 import { User } from "@prisma/client"
-import useUpdateProfile from "@/modules/profile/hooks/useUpdateProfile"
+import useUpdateProfile from "@/modules/admin/users/hooks/useUpdateProfile"
 
 interface ProfileEditProps {
   user: User

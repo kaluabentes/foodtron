@@ -2,8 +2,8 @@ import { useAppContext } from "@/contexts/app"
 import AppLayout from "@/layouts/AppLayout"
 import auth from "@/middlewares/auth"
 import OrderCard from "@/modules/app/components/order/OrderCard"
-import Order from "@/modules/orders/types/Order"
-import { ROLE } from "@/modules/users/constants"
+import Order from "@/modules/admin/orders/types/Order"
+import { ROLE } from "@/modules/admin/users/constants"
 import {
   Alert,
   AlertIcon,
@@ -15,7 +15,7 @@ import {
 import { GetServerSideProps } from "next"
 import prisma from "@/lib/infra/prisma/client"
 import StripeSeparator from "@/components/StripeSeparator"
-import OrderDetailsModal from "@/modules/orders/components/OrderDetailsModal"
+import OrderDetailsModal from "@/modules/admin/orders/components/OrderDetailsModal"
 import { useState } from "react"
 import { useRouter } from "next/router"
 import UserAccountWarning from "@/modules/app/components/UserAccountWarning"

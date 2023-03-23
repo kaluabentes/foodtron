@@ -25,9 +25,9 @@ import TableSkeleton from "@/components/TableSkeleton"
 import AdminLayout from "@/layouts/AdminLayout"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import auth from "@/middlewares/auth"
-import useGetOptions from "@/modules/options/hooks/useGetOptions"
-import useDeleteOption from "@/modules/options/hooks/useDeleteOption"
-import OptionGroup from "@/modules/options/types/OptionGroup"
+import useGetOptions from "@/modules/admin/options/hooks/useGetOptions"
+import useDeleteOption from "@/modules/admin/options/hooks/useDeleteOption"
+import OptionGroup from "@/modules/admin/options/types/OptionGroup"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])

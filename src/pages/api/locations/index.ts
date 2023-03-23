@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next"
 
 import prisma from "@/lib/infra/prisma/client"
 import serverAuth from "@/middlewares/serverAuth"
-import getLocations from "@/modules/locations/services/getLocations"
-import createLocation from "@/modules/locations/services/createLocation"
+import getLocations from "@/modules/admin/locations/services/getLocations"
+import createLocation from "@/modules/admin/locations/services/createLocation"
 
 const locationsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const auth = await serverAuth(req, res, ["admin"])

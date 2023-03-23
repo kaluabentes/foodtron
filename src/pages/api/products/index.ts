@@ -2,9 +2,9 @@ import { NextApiRequest, NextApiResponse } from "next"
 import Cors from "cors"
 
 import serverAuth from "@/middlewares/serverAuth"
-import createProduct from "@/modules/products/services/createProduct"
-import getProducts from "@/modules/products/services/getProducts"
-import getProductsByDomain from "@/modules/products/services/getProductsByDomain"
+import createProduct from "@/modules/admin/products/services/createProduct"
+import getProducts from "@/modules/admin/products/services/getProducts"
+import getProductsByDomain from "@/modules/admin/products/services/getProductsByDomain"
 import runMiddleware from "@/lib/infra/next/runMiddleware"
 
 const cors = Cors({

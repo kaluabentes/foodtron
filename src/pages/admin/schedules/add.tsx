@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form"
 import DataField from "@/components/DataField"
 import auth from "@/middlewares/auth"
 import { GetServerSideProps } from "next"
-import useAddSchedule from "@/modules/schedules/hooks/useAddSchedule"
+import useAddSchedule from "@/modules/admin/schedules/hooks/useAddSchedule"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])

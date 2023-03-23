@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
-import getOrder from "@/modules/orders/services/getOrder"
-import updateOrder from "@/modules/orders/services/updateOrder"
+import getOrder from "@/modules/admin/orders/services/getOrder"
+import updateOrder from "@/modules/admin/orders/services/updateOrder"
 import serverAuth from "@/middlewares/serverAuth"
 import NextCors from "nextjs-cors"
 

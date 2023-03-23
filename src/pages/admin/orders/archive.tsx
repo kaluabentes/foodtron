@@ -19,12 +19,12 @@ import PageHeader from "@/components/PageHeader"
 import TableSkeleton from "@/components/TableSkeleton"
 import AdminLayout from "@/layouts/AdminLayout"
 import auth from "@/middlewares/auth"
-import useGetOrders from "@/modules/orders/hooks/useGetOrders"
+import useGetOrders from "@/modules/admin/orders/hooks/useGetOrders"
 import formatDate from "@/lib/helpers/date/formatDate"
 import {
   ORDER_STATUS_COLOR_SCHEME,
   ORDER_STATUS_TEXT,
-} from "@/modules/orders/constants"
+} from "@/modules/admin/orders/constants"
 import { useEffect, useState } from "react"
 import {
   BiArrowBack,
@@ -34,10 +34,10 @@ import {
   BiEdit,
   BiInfoCircle,
 } from "react-icons/bi"
-import OrderDetailsModal from "@/modules/orders/components/OrderDetailsModal"
-import Order from "@/modules/orders/types/Order"
-import OrderStatusEdit from "@/modules/orders/components/OrderStatusEdit"
-import useUpdateOrder from "@/modules/orders/hooks/useUpdateOrder"
+import OrderDetailsModal from "@/modules/admin/orders/components/OrderDetailsModal"
+import Order from "@/modules/admin/orders/types/Order"
+import OrderStatusEdit from "@/modules/admin/orders/components/OrderStatusEdit"
+import useUpdateOrder from "@/modules/admin/orders/hooks/useUpdateOrder"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])

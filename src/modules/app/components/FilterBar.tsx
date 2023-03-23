@@ -1,4 +1,4 @@
-import Category from "@/modules/categories/types/Category"
+import Category from "@/modules/admin/categories/types/Category"
 import {
   Box,
   Flex,

@@ -20,10 +20,10 @@ import TruncateText from "@/components/TruncateText"
 import prisma from "@/lib/infra/prisma/client"
 import auth from "@/middlewares/auth"
 import { DataCell, DataHead, DataValue } from "@/components/DataTable"
-import Store from "@/modules/stores/types/Store"
+import Store from "@/modules/admin/stores/types/Store"
 import { useEffect, useState } from "react"
 import { User } from "@prisma/client"
-import useUpdateStore from "@/modules/stores/hooks/useUpdateStore"
+import useUpdateStore from "@/modules/admin/stores/hooks/useUpdateStore"
 
 interface StorePageProps {
   store: Store

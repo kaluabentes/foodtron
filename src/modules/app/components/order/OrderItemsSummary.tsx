@@ -13,20 +13,20 @@ import {
 
 import { useAppContext } from "@/contexts/app"
 import { useRouter } from "next/router"
-import OrderProduct from "@/modules/orders/types/OrderProduct"
+import OrderProduct from "@/modules/admin/orders/types/OrderProduct"
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import OrderProductModal, {
   OrderProductValues,
 } from "@/modules/app/components/order/OrderProductModal"
-import useGetProducts from "@/modules/products/hooks/useGetProducts"
-import Product from "@/modules/products/types/Product"
-import OptionGroup from "@/modules/options/types/OptionGroup"
-import Option from "@/modules/options/types/Option"
+import useGetProducts from "@/modules/admin/products/hooks/useGetProducts"
+import Product from "@/modules/admin/products/types/Product"
+import OptionGroup from "@/modules/admin/options/types/OptionGroup"
+import Option from "@/modules/admin/options/types/Option"
 import OrderOptionsModal from "@/modules/app/components/order/OrderOptionsModal"
 import OrderProductItem from "@/modules/app/components/order/OrderProductItem"
 import BaseOrderItem from "@/modules/app/components/order/BaseOrderItem"
-import sumProductTotal from "@/modules/orders/lib/sumProductTotal"
-import sumOrderSubtotal from "@/modules/orders/lib/sumOrderSubtotal"
+import sumProductTotal from "@/modules/admin/orders/lib/sumProductTotal"
+import sumOrderSubtotal from "@/modules/admin/orders/lib/sumOrderSubtotal"
 import useCurrentAddress from "@/modules/app/addresses/hooks/useCurrentAddress"
 
 const OrderItemsSummary = () => {

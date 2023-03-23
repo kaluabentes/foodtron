@@ -1,6 +1,6 @@
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import subWord from "@/lib/helpers/string/subWord"
-import Product from "@/modules/products/types/Product"
+import Product from "@/modules/admin/products/types/Product"
 import { Box, Flex, Heading, Image, Text } from "@chakra-ui/react"
 
 interface MenuItemProps {

@@ -2,10 +2,10 @@ import { NextApiRequest, NextApiResponse } from "next"
 import Cors from "cors"
 import NextCors from "nextjs-cors"
 
-import createOrder from "@/modules/orders/services/createOrder"
+import createOrder from "@/modules/admin/orders/services/createOrder"
 import runMiddleware from "@/lib/infra/next/runMiddleware"
 import serverAuth from "@/middlewares/serverAuth"
-import getOrders from "@/modules/orders/services/getOrders"
+import getOrders from "@/modules/admin/orders/services/getOrders"
 import prisma from "@/lib/infra/prisma/client"
 import createChannel from "@/lib/infra/ably/createChannel"
 

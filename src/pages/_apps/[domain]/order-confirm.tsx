@@ -13,12 +13,12 @@ import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import StripeSeparator from "@/components/StripeSeparator"
 import OrderConfirmModal from "@/modules/app/components/order/OrderConfirmModal"
 import EditableDataItem from "@/components/EditableDataItem"
-import useCreateOrder from "@/modules/orders/hooks/useCreateOrder"
+import useCreateOrder from "@/modules/admin/orders/hooks/useCreateOrder"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import ResponsiveButton from "@/components/ResponsiveButton"
 import useCurrentAddress from "@/modules/app/addresses/hooks/useCurrentAddress"
 import formatAddress from "@/modules/app/addresses/lib/formatAddress"
-import sumOrderSubtotal from "@/modules/orders/lib/sumOrderSubtotal"
+import sumOrderSubtotal from "@/modules/admin/orders/lib/sumOrderSubtotal"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()

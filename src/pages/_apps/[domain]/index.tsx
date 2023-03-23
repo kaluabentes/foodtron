@@ -7,21 +7,21 @@ import AppLayout from "@/layouts/AppLayout"
 import AddressSelectButton from "@/modules/app/components/AddressSelectButton"
 import { useAppContext } from "@/contexts/app"
 import StoreInfo from "@/modules/app/components/StoreInfo"
-import Store from "@/modules/stores/types/Store"
-import weekDayMap from "@/modules/schedules/weekDayMap"
+import Store from "@/modules/admin/stores/types/Store"
+import weekDayMap from "@/modules/admin/schedules/weekDayMap"
 import { useRouter } from "next/router"
-import Category from "@/modules/categories/types/Category"
+import Category from "@/modules/admin/categories/types/Category"
 import CategoryItem from "@/modules/app/components/CategoryItem"
 import OrderProductModal, {
   OrderProductValues,
 } from "@/modules/app/components/order/OrderProductModal"
-import Product from "@/modules/products/types/Product"
+import Product from "@/modules/admin/products/types/Product"
 import useBottomToast from "@/lib/hooks/useBottomToast"
-import useGetStore from "@/modules/stores/hooks/useGetStore"
+import useGetStore from "@/modules/admin/stores/hooks/useGetStore"
 import FilterBar from "@/modules/app/components/FilterBar"
 import useCurrentAddress from "@/modules/app/addresses/hooks/useCurrentAddress"
 import formatAddress from "@/modules/app/addresses/lib/formatAddress"
-import Location from "@/modules/locations/types/Location"
+import Location from "@/modules/admin/locations/types/Location"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()

@@ -26,17 +26,17 @@ import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import DataField from "@/components/DataField"
 import auth from "@/middlewares/auth"
 
-import useCreateProduct from "@/modules/products/hooks/useCreateProduct"
+import useCreateProduct from "@/modules/admin/products/hooks/useCreateProduct"
 import Script from "next/script"
 import { get } from "lodash"
 import { useState } from "react"
-import useGetOptions from "@/modules/options/hooks/useGetOptions"
-import OptionGroup from "@/modules/options/types/OptionGroup"
+import useGetOptions from "@/modules/admin/options/hooks/useGetOptions"
+import OptionGroup from "@/modules/admin/options/types/OptionGroup"
 import EmptyState from "@/components/EmptyState"
 import { BiTrash } from "react-icons/bi"
-import Product from "@/modules/products/types/Product"
-import useGetCategories from "@/modules/categories/hooks/useGetCategories"
-import Category from "@/modules/categories/types/Category"
+import Product from "@/modules/admin/products/types/Product"
+import useGetCategories from "@/modules/admin/categories/hooks/useGetCategories"
+import Category from "@/modules/admin/categories/types/Category"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])

@@ -16,7 +16,9 @@ const updateProfile = async (req: NextApiRequest, res: NextApiResponse) => {
       where: {
         id: user.id,
       },
-      data: req.body,
+      data: {
+        name: req.body.name,
+      },
     })
 
     return res.status(200).send({
