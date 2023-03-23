@@ -8,7 +8,7 @@ export const ORDER_STATUS = {
 
 export const ORDER_STATUS_COLOR_SCHEME = {
   [ORDER_STATUS.PENDING]: "brand",
-  [ORDER_STATUS.DOING]: "orange",
+  [ORDER_STATUS.DOING]: "brand",
   [ORDER_STATUS.DELIVERY]: "red",
   [ORDER_STATUS.DONE]: "green",
   [ORDER_STATUS.CANCELLED]: "gray",

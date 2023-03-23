@@ -39,6 +39,7 @@ const StoreInfo = ({
         mb={8}
       >
         {store.name}
+        {console.log("isOPen", store.isOpen)}
       </Heading>
       <Flex alignItems="center" gap={1.5} mb={2}>
         <Icon fontSize="22px" as={BiTimeFive} />
@@ -99,20 +100,12 @@ const StoreInfo = ({
           )}
         </Flex>
         <StripeSeparator />
-        {!store.isOpen ? (
-          <Badge colorScheme="green" variant="solid">
-            Aberto
-          </Badge>
+        {store.isOpen ? (
+          <Badge colorScheme="green">Aberto</Badge>
         ) : (
-          <Badge colorScheme="red" variant="solid">
-            Fechado
-          </Badge>
+          <Badge colorScheme="red">Fechado</Badge>
         )}
       </Flex>
-
-      {/* <Button colorScheme="whatsapp" width="full" leftIcon={<BsWhatsapp />}>
-            Conversar
-          </Button> */}
     </Flex>
   </Box>
 )

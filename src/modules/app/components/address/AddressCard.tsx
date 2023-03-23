@@ -1,5 +1,3 @@
-import formatDate from "@/lib/helpers/date/formatDate"
-import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import Address from "@/modules/app/addresses/types/Address"
 import {
   Badge,
@@ -14,7 +12,6 @@ import {
   Text,
 } from "@chakra-ui/react"
 import { BiMap, BiTrash } from "react-icons/bi"
-import sumOrderSubtotal from "../../../orders/lib/sumOrderSubtotal"
 
 interface AddressCardProps {
   address: Address
@@ -57,7 +54,7 @@ const AddressCard = ({
       zIndex="20"
       position="relative"
     >
-      <Heading fontSize="md" fontWeight="500" color="gray.700">
+      <Heading fontSize="lg" fontWeight="700" color="gray.700">
         {address.street}, {address.number}
       </Heading>
       <IconButton

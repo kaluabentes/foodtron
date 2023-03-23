@@ -61,7 +61,7 @@ const OrderCard = ({
       zIndex="20"
       position="relative"
     >
-      <Badge>ID: {order.id}</Badge>
+      <Badge fontWeight="500">ID: {order.id}</Badge>
       {isCancelling ? (
         <Spinner color="brand.500" size="sm" />
       ) : (

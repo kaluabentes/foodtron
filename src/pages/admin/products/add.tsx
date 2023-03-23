@@ -182,6 +182,12 @@ const AddProduct = () => {
                     {opt.title}
                   </Button>
                 ))}
+                <Button
+                  onClick={() => router.push("/admin/options/add")}
+                  colorScheme="brand"
+                >
+                  Cadastrar opção
+                </Button>
               </Flex>
             </Box>
             <Box p={8} pt={0} overflow="auto">

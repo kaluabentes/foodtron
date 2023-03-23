@@ -15,6 +15,7 @@ import {
   BiDish,
   BiTask,
   BiCart,
+  BiLogInCircle,
 } from "react-icons/bi"
 import { FaWhatsapp } from "react-icons/fa"
 

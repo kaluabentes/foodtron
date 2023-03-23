@@ -215,7 +215,7 @@ const EditProduct = ({ product }: EditProductProps) => {
             />
             <Box p={8}>
               <Heading fontSize="md" mb={4}>
-                Opções
+                Selecione as opções
               </Heading>
               <Flex gap={2}>
                 {getOptions().map((opt: OptionGroup) => (
@@ -226,6 +226,12 @@ const EditProduct = ({ product }: EditProductProps) => {
                     {opt.title}
                   </Button>
                 ))}
+                <Button
+                  onClick={() => router.push("/admin/options/add")}
+                  colorScheme="brand"
+                >
+                  Cadastrar opção
+                </Button>
               </Flex>
             </Box>
             <Box p={8} pt={0} overflow="auto">

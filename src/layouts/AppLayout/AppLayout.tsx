@@ -13,11 +13,13 @@ import SideNav from "@/components/SideNav"
 import Brand from "@/components/Brand"
 import useGetStore from "@/modules/admin/stores/hooks/useGetStore"
 import PageLoaderSpinner from "@/components/PageLoaderSpinner"
-import { BiPowerOff } from "react-icons/bi"
+import { BiLogInCircle, BiPowerOff } from "react-icons/bi"
 import { FaWhatsapp } from "react-icons/fa"
 import { ORDER_STATUS } from "@/modules/admin/orders/constants"
 import TrackOrderButton from "@/modules/app/components/order/TrackOrderButton"
 import useGetUser from "@/modules/app/profile/hooks/useGetUser"
+import useActiveOrder from "@/modules/app/orders/hooks/useActiveOrder"
+import useGetOrders from "@/modules/app/orders/hooks/useGetOrders"
 
 interface AppLayoutProps {
   children: ReactNode
@@ -33,22 +35,19 @@ const AppLayout = ({
   hideCartButton,
 }: AppLayoutProps) => {
   const router = useRouter()
+  const toast = useBottomToast()
+
   const { setState, mutateState, state } = useAppContext()
   const {
     isReady,
     order: { products },
-    user: { token, orders },
+    user: { token, orders: localOrders },
   } = state
-  const toast = useBottomToast()
-  const restOrders = orders
-    .filter(
-      (order) =>
-        ![ORDER_STATUS.CANCELLED, ORDER_STATUS.DONE].includes(order.status)
-    )
-    .reverse()
+
+  const activeOrder = useActiveOrder()
 
   const { store } = useGetStore(String(router.query.domain))
-  const { user } = useGetUser()
+  const { orders } = useGetOrders(localOrders.map((order) => order.id))
 
   const [isOpen, setIsOpen] = useState(false)
   const [isClosed, setIsClosed] = useState(true)
@@ -66,8 +65,6 @@ const AppLayout = ({
 
   const authBottomMenu = token
     ? [
-        ...bottomMenu,
-        ...commonBottomMenu,
         {
           icon: BiPowerOff,
           label: "Sair",
@@ -87,8 +84,18 @@ const AppLayout = ({
             })
           },
         },
+        ...bottomMenu,
+        ...commonBottomMenu,
       ]
-    : [...bottomMenu, ...commonBottomMenu]
+    : [
+        {
+          icon: BiLogInCircle,
+          label: "Entrar",
+          path: "/login",
+        },
+        ...bottomMenu,
+        ...commonBottomMenu,
+      ]
 
   const getMobilePaddingBottom = () => {
     if (router.asPath.includes("/track-order")) {
@@ -120,12 +127,16 @@ const AppLayout = ({
   }, [isReady, store])
 
   useEffect(() => {
-    if (isReady && user) {
-      setState({
-        user,
+    if (isReady && orders) {
+      mutateState({
+        ...state,
+        user: {
+          ...state.user,
+          orders,
+        },
       })
     }
-  }, [isReady, user])
+  }, [isReady, orders, token])
 
   const renderHeader = (isClosed = false) =>
     store && store.logo ? (
@@ -233,9 +244,9 @@ const AppLayout = ({
         </Box>
       </Box>
       {renderShortcutDeck}
-      {restOrders.length > 0 && !router.asPath.includes("/track-order") && (
+      {activeOrder && !router.asPath.includes("/track-order") && (
         <TrackOrderButton
-          onClick={() => router.push(`/track-order?id=${restOrders[0].id}`)}
+          onClick={() => router.push(`/track-order?id=${activeOrder.id}`)}
         />
       )}
     </Flex>

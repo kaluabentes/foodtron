@@ -109,7 +109,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
   const toast = useBottomToast()
 
   const { store: storeRealTime } = useGetStore(String(store.subdomain))
-
+  console.log("storeRealTime", storeRealTime)
   const [filters, setFilters] = useState({
     search: "",
     category: "",

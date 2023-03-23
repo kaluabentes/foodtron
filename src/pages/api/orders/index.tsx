@@ -1,21 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import Cors from "cors"
 import NextCors from "nextjs-cors"
 
 import createOrder from "@/modules/admin/orders/services/createOrder"
-import runMiddleware from "@/lib/infra/next/runMiddleware"
 import serverAuth from "@/middlewares/serverAuth"
 import getOrders from "@/modules/admin/orders/services/getOrders"
-import prisma from "@/lib/infra/prisma/client"
 import createChannel from "@/lib/infra/ably/createChannel"
-
-const cors = Cors({
-  methods: ["POST", "GET", "HEAD"],
-})
+import getOrdersById from "@/modules/admin/orders/services/getOrdersById"
 
 const indexOrderHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   await NextCors(req, res, {
-    // Options
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     origin: "*",
     optionsSuccessStatus: 200,
@@ -33,6 +26,12 @@ const indexOrderHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       await channel.publish("newOrder", order)
 
       return res.status(200).send(order)
+    }
+
+    if (req.method === "GET" && req.query.ids) {
+      return res
+        .status(200)
+        .send(await getOrdersById(String(req.query.ids).split(",")))
     }
 
     if (req.method === "GET") {

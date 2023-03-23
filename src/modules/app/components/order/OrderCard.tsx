@@ -13,9 +13,12 @@ import {
 } from "@chakra-ui/react"
 import { KeyboardEventHandler } from "react"
 import { BiMap } from "react-icons/bi"
-import { ORDER_STATUS } from "../../../orders/constants"
-import sumOrderSubtotal from "../../../orders/lib/sumOrderSubtotal"
-import Order from "../../../orders/types/Order"
+import sumOrderSubtotal from "@/modules/admin/orders/lib/sumOrderSubtotal"
+import Order from "@/modules/admin/orders/types/Order"
+import {
+  ORDER_STATUS_COLOR_SCHEME,
+  ORDER_STATUS_TEXT,
+} from "@/modules/admin/orders/constants"
 
 interface OrderCardProps {
   order: Order
@@ -122,15 +125,12 @@ const OrderCard = ({
             sumOrderSubtotal(order.orderProducts) + Number(order.tax)
           )}
         </Text>
-        <Button
-          size="sm"
-          onClick={(event) => {
-            event.stopPropagation()
-            onTrack()
-          }}
-        >
-          Acompanhar
-        </Button>
+        <Box textAlign="right">
+          <Text fontSize="sm">Status:</Text>
+          <Badge colorScheme={ORDER_STATUS_COLOR_SCHEME[order.status]}>
+            {ORDER_STATUS_TEXT[order.status]}
+          </Badge>
+        </Box>
       </Flex>
     </Box>
   )

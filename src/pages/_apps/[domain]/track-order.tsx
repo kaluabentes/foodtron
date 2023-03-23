@@ -59,7 +59,9 @@ export const getStaticProps = async ({ params }: any) => {
 
   return {
     props: {
-      store,
+      store: {
+        whatsapp: store?.whatsapp,
+      },
     },
   }
 }

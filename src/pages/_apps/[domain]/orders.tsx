@@ -37,15 +37,9 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }: any) => {
-  const store = await prisma.store.findFirst({
-    where: {
-      subdomain: params.domain,
-    },
-  })
-
   return {
     props: {
-      store,
+      subdomain: params.domain,
     },
   }
 }
