@@ -132,6 +132,7 @@ const Schedules = () => {
               >
                 <Td>
                   <Switch
+                    colorScheme="brand"
                     isChecked={getIsEnabledState(schedule.id)}
                     onChange={() => handleIsEnabledChange(schedule.id)}
                   />
@@ -141,6 +142,7 @@ const Schedules = () => {
                 <Td>{schedule.end}</Td>
                 <Td>
                   <Switch
+                    colorScheme="brand"
                     disabled={!getIsEnabledState(schedule.id)}
                     isChecked={
                       getIsEnabledState(schedule.id)

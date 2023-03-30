@@ -122,11 +122,16 @@ const EditSchedule = ({ schedule }: EditScheduleProps) => {
             />
             <DataField
               label={t("isEnabled")}
-              input={<Switch {...register("isEnabled")} />}
+              input={<Switch colorScheme="brand" {...register("isEnabled")} />}
             />
             <DataField
               label={t("isScheduledClosing")}
-              input={<Switch {...register("isScheduledClosing")} />}
+              input={
+                <Switch
+                  colorScheme="brand"
+                  {...register("isScheduledClosing")}
+                />
+              }
             />
           </Box>
         )}

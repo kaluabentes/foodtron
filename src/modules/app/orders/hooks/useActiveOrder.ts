@@ -8,7 +8,7 @@ const useActiveOrder = () => {
     },
   } = useAppContext()
 
-  const restOrders = orders
+  const restOrders = []
     .filter(
       (order) =>
         ![ORDER_STATUS.CANCELLED, ORDER_STATUS.DONE].includes(order.status)

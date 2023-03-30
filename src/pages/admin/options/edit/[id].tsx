@@ -147,11 +147,16 @@ const EditOption = ({ option: defaultOption }: EditOptionProps) => {
             />
             <DataField
               label={t("maxOptionRequired")}
-              input={<Switch {...register("maxOptionRequired")} />}
+              input={
+                <Switch
+                  colorScheme="brand"
+                  {...register("maxOptionRequired")}
+                />
+              }
             />
             <DataField
               label={t("required")}
-              input={<Switch {...register("required")} />}
+              input={<Switch colorScheme="brand" {...register("required")} />}
             />
             <Box pl={8} pr={8} pt={8}>
               <Heading fontSize="md">Opções</Heading>

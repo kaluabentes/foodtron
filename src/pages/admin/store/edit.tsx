@@ -115,7 +115,7 @@ const EditStore = ({ store }: StorePageProps) => {
                   </Box>
                 </DataHead>
                 <DataValue>
-                  <Switch {...register("isOpen")} />
+                  <Switch colorScheme="brand" {...register("isOpen")} />
                 </DataValue>
               </DataCell>
               <DataCell>

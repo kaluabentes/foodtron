@@ -80,7 +80,11 @@ const Store = ({ store }: StorePageProps) => {
             ) : (
               <Badge colorScheme="red">Fechado</Badge>
             )}
-            <Switch isChecked={isOpen} onChange={handleToggleIsOpen} />
+            <Switch
+              colorScheme="brand"
+              isChecked={isOpen}
+              onChange={handleToggleIsOpen}
+            />
             <Button
               colorScheme="brand"
               onClick={() => router.push("/admin/store/edit")}

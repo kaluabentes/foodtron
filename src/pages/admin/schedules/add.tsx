@@ -99,7 +99,12 @@ const AddSchedule = () => {
             />
             <DataField
               label={t("isScheduledClosing")}
-              input={<Switch {...register("isScheduledClosing")} />}
+              input={
+                <Switch
+                  colorScheme="brand"
+                  {...register("isScheduledClosing")}
+                />
+              }
             />
           </Box>
         )}

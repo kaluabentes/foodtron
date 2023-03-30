@@ -20,6 +20,8 @@ import TrackOrderButton from "@/modules/app/components/order/TrackOrderButton"
 import useGetUser from "@/modules/app/profile/hooks/useGetUser"
 import useActiveOrder from "@/modules/app/orders/hooks/useActiveOrder"
 import useGetOrders from "@/modules/app/orders/hooks/useGetOrders"
+import StoreBrand from "@/components/StoreBrand"
+import FoodtronBrand from "@/components/FoodtronBrand"
 
 interface AppLayoutProps {
   children: ReactNode
@@ -140,7 +142,7 @@ const AppLayout = ({
 
   const renderHeader = (isClosed = false) =>
     store && store.logo ? (
-      <Brand
+      <StoreBrand
         logo={store.logo}
         storeName={store.name}
         hideBrandText={isClosed}
@@ -148,7 +150,7 @@ const AppLayout = ({
         height="44px"
       />
     ) : (
-      <Brand
+      <FoodtronBrand
         logo="/comet-blue.svg"
         hideBrandText={isClosed}
         storeName={<Image height="12px" src="/comet-text.svg" />}

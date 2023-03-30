@@ -17,10 +17,21 @@ const useUpdateStore = () => {
 
     try {
       await axios.patch("/api/stores/update", data)
-      toast({
-        title: "Feito!",
-        description: "Informações atualizados com sucesso",
-      })
+
+      if (data.isOpen) {
+        toast({
+          title: "Feito!",
+          description: "Agora o restaurante está aberto",
+          status: "success",
+        })
+      } else {
+        toast({
+          title: "Feito!",
+          description: "Agora o restaurante está fechado",
+          status: "error",
+        })
+      }
+
       return Promise.resolve()
     } catch (error: any) {
       toast({

@@ -50,7 +50,7 @@ const createOrder = (order: Order) => {
         },
       })),
       orderStatuses: {
-        create: [{ status: order.status }],
+        create: [{ status: ORDER_STATUS.PENDING }],
       },
     },
   }
