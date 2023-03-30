@@ -101,7 +101,7 @@ const AppLayout = ({
 
   const getMobilePaddingBottom = () => {
     if (router.asPath.includes("/track-order")) {
-      return "88px"
+      return "72px"
     }
 
     return "125px"

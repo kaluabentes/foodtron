@@ -1,3 +1,4 @@
+import { OrderStatus } from "@prisma/client"
 import OrderProduct from "./OrderProduct"
 
 interface Order {
@@ -15,6 +16,7 @@ interface Order {
   storeId: string
   userId: string
   orderProducts: OrderProduct[]
+  orderStatuses: OrderStatus[]
   reasonForCancellation: string
 }
 

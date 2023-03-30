@@ -35,6 +35,7 @@ import OrderDetailsModal from "@/modules/admin/orders/components/OrderDetailsMod
 import Store from "@/modules/admin/stores/types/Store"
 import { useAppContext } from "@/contexts/app"
 import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
+import { OrderStatus } from "@prisma/client"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -93,6 +94,20 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
       )
     }
 
+    const getStatusCreatedAt = (status: string) => {
+      const matchRule = (orderStatus: OrderStatus) =>
+        orderStatus.status === status
+      const filteredOrderStatuses = order.orderStatuses.filter(matchRule)
+      const orderStatus =
+        filteredOrderStatuses[filteredOrderStatuses.length - 1]
+
+      if (orderStatus) {
+        return orderStatus.createdAt
+      }
+
+      return undefined
+    }
+
     return (
       <>
         {!token && <UserAccountWarning />}
@@ -121,49 +136,55 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
               }
             />
             <StripeSeparator horizontal />
-            <OrderStatusItem
-              icon={<BiFile />}
-              title="Pedido enviado"
-              description="Aguardando confirmação"
-              stepStatus={
-                order.status === ORDER_STATUS.PENDING ? "current" : "done"
-              }
-            />
-            <OrderStatusItem
-              icon={<BiCheckCircle />}
-              title="Pedido confirmado"
-              description="Estamos preparando o seu pedido"
-              stepStatus={
-                order.status === ORDER_STATUS.DOING
-                  ? "current"
-                  : order.status === ORDER_STATUS.DELIVERY ||
-                    order.status === ORDER_STATUS.DONE
-                  ? "done"
-                  : "pending"
-              }
-            />
-            <OrderStatusItem
-              icon={<BiRocket />}
-              title="Em trânsito"
-              description="O pedido saiu para entrega"
-              stepStatus={
-                order.status === ORDER_STATUS.DELIVERY
-                  ? "current"
-                  : order.status === ORDER_STATUS.DONE
-                  ? "done"
-                  : "pending"
-              }
-            />
-            <OrderStatusItem
-              isLastItem
-              isDone={order.status === ORDER_STATUS.DONE}
-              icon={<BiHappyHeartEyes />}
-              title="Pedido entregue"
-              description="O pedido foi entregue com sucesso"
-              stepStatus={
-                order.status === ORDER_STATUS.DONE ? "current" : "pending"
-              }
-            />
+            <Flex direction="column">
+              <OrderStatusItem
+                icon={<BiFile />}
+                title="Pedido enviado"
+                description="Aguardando confirmação"
+                createdAt={getStatusCreatedAt(ORDER_STATUS.PENDING)}
+                stepStatus={
+                  order.status === ORDER_STATUS.PENDING ? "current" : "done"
+                }
+              />
+              <OrderStatusItem
+                icon={<BiCheckCircle />}
+                title="Pedido confirmado"
+                description="Estamos preparando o seu pedido"
+                createdAt={getStatusCreatedAt(ORDER_STATUS.DOING)}
+                stepStatus={
+                  order.status === ORDER_STATUS.DOING
+                    ? "current"
+                    : order.status === ORDER_STATUS.DELIVERY ||
+                      order.status === ORDER_STATUS.DONE
+                    ? "done"
+                    : "pending"
+                }
+              />
+              <OrderStatusItem
+                icon={<BiRocket />}
+                title="Em trânsito"
+                description="O pedido saiu para entrega"
+                createdAt={getStatusCreatedAt(ORDER_STATUS.DELIVERY)}
+                stepStatus={
+                  order.status === ORDER_STATUS.DELIVERY
+                    ? "current"
+                    : order.status === ORDER_STATUS.DONE
+                    ? "done"
+                    : "pending"
+                }
+              />
+              <OrderStatusItem
+                isLastItem
+                isDone={order.status === ORDER_STATUS.DONE}
+                icon={<BiHappyHeartEyes />}
+                title="Pedido entregue"
+                description="O pedido foi entregue com sucesso"
+                createdAt={getStatusCreatedAt(ORDER_STATUS.DONE)}
+                stepStatus={
+                  order.status === ORDER_STATUS.DONE ? "current" : "pending"
+                }
+              />
+            </Flex>
             <Flex direction={{ base: "column", lg: "row" }} gap={3} mt={4}>
               <Button colorScheme="brand" onClick={() => setShowDetails(true)}>
                 Detalhes

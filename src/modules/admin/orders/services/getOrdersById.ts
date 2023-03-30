@@ -13,6 +13,7 @@ const getOrdersById = (ids: string[]) =>
           options: true,
         },
       },
+      orderStatuses: true,
     },
   })
 

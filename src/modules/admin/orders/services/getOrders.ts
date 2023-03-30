@@ -17,6 +17,7 @@ const getOrders = (storeId: string, isArchive = false) => {
           options: true,
         },
       },
+      orderStatuses: true,
     },
   })
 }

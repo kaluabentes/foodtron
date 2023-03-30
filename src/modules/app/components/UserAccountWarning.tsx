@@ -8,7 +8,7 @@ const UserAccountWarning = () => {
     <Flex
       direction="column"
       gap={4}
-      mb={4}
+      mb={{ base: 0, md: 4 }}
       p={{ base: 4, md: 6 }}
       background="white"
       borderRadius="md"

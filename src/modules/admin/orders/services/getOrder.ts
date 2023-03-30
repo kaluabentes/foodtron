@@ -11,6 +11,7 @@ const getOrder = (id: string) => {
           options: true,
         },
       },
+      orderStatuses: true,
     },
   })
 }

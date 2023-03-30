@@ -49,9 +49,9 @@ const createOrder = (order: Order) => {
           })),
         },
       })),
-      orderStatuses: {
-        create: [{ status: ORDER_STATUS.PENDING }],
-      },
+    },
+    orderStatuses: {
+      create: [{ status: ORDER_STATUS.PENDING }],
     },
   }
 
@@ -65,6 +65,7 @@ const createOrder = (order: Order) => {
           options: true,
         },
       },
+      orderStatuses: true,
     },
   })
 }

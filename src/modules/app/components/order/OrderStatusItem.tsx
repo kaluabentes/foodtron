@@ -1,3 +1,5 @@
+import formatDate from "@/lib/helpers/date/formatDate"
+import { ORDER_STATUS } from "@/modules/admin/orders/constants"
 import { Box, Flex, Heading, Text } from "@chakra-ui/react"
 import { ReactNode } from "react"
 import { BiCheck } from "react-icons/bi"
@@ -6,6 +8,7 @@ interface OrderStatusItemProps {
   icon: ReactNode
   title: string
   description: string
+  createdAt?: string | Date
   stepStatus: "pending" | "current" | "done"
   isLastItem?: boolean
   isDone?: boolean
@@ -15,86 +18,116 @@ const OrderStatusItem = ({
   icon,
   title,
   description,
+  createdAt,
   stepStatus,
   isLastItem,
   isDone,
 }: OrderStatusItemProps) => (
-  <Flex alignItems="center" gap={3} ml={2} pt={2} pb={2} position="relative">
-    {!isLastItem && (
+  <Flex
+    alignItems="center"
+    justifyContent="space-between"
+    gap={3}
+    pt={2}
+    pb={2}
+    position="relative"
+  >
+    <Flex alignItems="start" gap={3} position="relative">
+      {!isLastItem && (
+        <Box
+          height="88%"
+          transform="translate(7px, 25px)"
+          width="1px"
+          position="absolute"
+          background="gray.200"
+          bottom={0}
+        />
+      )}
+      {stepStatus === "current" && (
+        <Flex
+          width="15px"
+          height="15px"
+          borderRadius="50%"
+          background="orange"
+          color="white"
+          alignItems="center"
+          animation={!isDone ? "pulse 2s infinite" : undefined}
+          justifyContent="center"
+          transform="translateY(13px)"
+        >
+          {isDone && <BiCheck />}
+        </Flex>
+      )}
+      {stepStatus === "pending" && (
+        <Box
+          width="15px"
+          height="15px"
+          borderRadius="50%"
+          border="4px solid transparent"
+          borderColor="gray.300"
+          transform="translateY(13px)"
+        />
+      )}
+      {stepStatus === ORDER_STATUS.DONE && (
+        <Flex
+          color="white"
+          width="15px"
+          height="15px"
+          borderRadius="50%"
+          background="orange.200"
+          alignItems="center"
+          justifyContent="center"
+          transform="translateY(13px)"
+        >
+          <BiCheck />
+        </Flex>
+      )}
       <Box
-        height="90%"
-        transform="translate(7px, 66%)"
-        width="1px"
-        position="absolute"
-        background="gray.200"
-        bottom={0}
-      />
-    )}
-    {stepStatus === "current" && (
-      <Flex
-        width="15px"
-        height="15px"
-        borderRadius="50%"
-        background="orange"
-        color="white"
-        alignItems="center"
-        animation={!isDone ? "pulse 2s infinite" : undefined}
-        justifyContent="center"
-      >
-        {isDone && <BiCheck />}
-      </Flex>
-    )}
-    {stepStatus === "pending" && (
-      <Box
-        width="15px"
-        height="15px"
-        borderRadius="50%"
-        border="4px solid transparent"
-        borderColor="gray.300"
-      />
-    )}
-    {stepStatus === "done" && (
-      <Flex
-        color="white"
-        width="15px"
-        height="15px"
-        borderRadius="50%"
-        background="orange.200"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <BiCheck />
-      </Flex>
-    )}
-    <Box
-      fontSize="40px"
-      opacity={
-        stepStatus === "pending" || stepStatus === "done" ? "0.4" : undefined
-      }
-      color="brand.500"
-    >
-      {icon}
-    </Box>
-    <Box>
-      <Heading
+        fontSize="40px"
         opacity={
-          stepStatus === "pending" || stepStatus === "done" ? "0.4" : undefined
+          stepStatus === "pending" || stepStatus === ORDER_STATUS.DONE
+            ? "0.4"
+            : undefined
         }
-        as="h2"
-        fontSize="md"
-        fontWeight="600"
+        color="brand.500"
       >
-        {title}
-      </Heading>
-      <Text
-        opacity={
-          stepStatus === "pending" || stepStatus === "done" ? "0.4" : undefined
-        }
-        fontSize="sm"
-      >
-        {description}
-      </Text>
-    </Box>
+        {icon}
+      </Box>
+      <Box>
+        <Heading
+          opacity={
+            stepStatus === "pending" || stepStatus === ORDER_STATUS.DONE
+              ? "0.4"
+              : undefined
+          }
+          as="h2"
+          fontSize="md"
+          fontWeight="600"
+        >
+          {title}
+        </Heading>
+        <Text
+          opacity={
+            stepStatus === "pending" || stepStatus === ORDER_STATUS.DONE
+              ? "0.4"
+              : undefined
+          }
+          fontSize="sm"
+        >
+          {description}
+        </Text>
+        <Text
+          opacity={
+            stepStatus === "pending" || stepStatus === ORDER_STATUS.DONE
+              ? "0.4"
+              : undefined
+          }
+          fontSize="xs"
+          color={stepStatus === ORDER_STATUS.DONE ? "gray.600" : "gray.400"}
+        >
+          {createdAt ? formatDate(String(createdAt), true) : null}
+        </Text>
+      </Box>
+    </Flex>
   </Flex>
 )
 
