@@ -7,7 +7,12 @@ const updateOrder = (id: string, data: Order) => {
     where: {
       id,
     },
-    data,
+    data: {
+      ...data,
+      orderStatuses: {
+        create: [{ status: data.status }],
+      },
+    },
   })
 }
 

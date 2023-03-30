@@ -236,9 +236,21 @@ model Order {
   user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   orderProducts OrderProduct[]
+  orderStatuses OrderStatus[]
 
   @@index(storeId)
   @@index(userId)
+}
+
+model OrderStatus {
+  id            String  @id @default(cuid())
+  status String
+  createdAt DateTime @default(now())
+
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index(orderId)
 }
 
 model OrderProduct {

@@ -25,14 +25,14 @@ const Brand = ({
     overflowX="hidden"
     alignItems="center"
     width="200px"
-    height="32px"
+    height="38px"
   >
     <Image
       borderRadius="md"
       src={logo}
-      width="30px"
-      marginRight={3}
-      marginLeft="7px"
+      height="38px"
+      marginRight={4}
+      marginLeft="9px"
     />
     <Heading
       size="sm"

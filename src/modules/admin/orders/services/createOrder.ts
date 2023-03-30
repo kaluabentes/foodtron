@@ -49,6 +49,9 @@ const createOrder = (order: Order) => {
           })),
         },
       })),
+      orderStatuses: {
+        create: [{ status: order.status }],
+      },
     },
   }
 
