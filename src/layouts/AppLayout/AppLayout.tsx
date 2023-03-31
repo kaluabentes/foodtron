@@ -104,7 +104,11 @@ const AppLayout = ({
       return "72px"
     }
 
-    return "125px"
+    if (activeOrder) {
+      return "125px"
+    }
+
+    return "72px"
   }
 
   const handleCartClick = () => {

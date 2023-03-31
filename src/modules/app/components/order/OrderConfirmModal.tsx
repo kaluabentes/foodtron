@@ -1,4 +1,5 @@
 import BottomModal from "@/components/BottomModal"
+import IconActionButton from "@/components/IconActionButton"
 import { Box, Button, Flex, Heading } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { BiEdit } from "react-icons/bi"
@@ -24,24 +25,14 @@ const OrderConfirmModal = ({
     <BottomModal isOpen={isOpen} onClose={onClose} hasPadding>
       <Box position="relative">
         <>
-          <Flex
-            as="button"
-            color="gray.500"
-            shadow="md"
-            width="22px"
-            height="22px"
-            borderRadius="50%"
-            justifyContent="center"
-            alignItems="center"
-            position="absolute"
-            top={0}
-            right={0}
-            onClick={() => {
-              onClose()
-              router.push("/addresses")
-            }}
-          >
-            <BiEdit />
+          <Flex position="absolute" top={0} right={0}>
+            <IconActionButton
+              onClick={() => {
+                onClose()
+                router.push("/addresses")
+              }}
+              icon={<BiEdit />}
+            />
           </Flex>
           <Heading size="md" mb={2} fontWeight="500">
             Entregar em

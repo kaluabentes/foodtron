@@ -34,8 +34,8 @@ const OrderStatusItem = ({
     <Flex alignItems="start" gap={3} position="relative">
       {!isLastItem && (
         <Box
-          height="88%"
-          transform="translate(7px, 25px)"
+          height="94%"
+          transform="translate(7px, 31px)"
           width="1px"
           position="absolute"
           background="gray.200"
@@ -102,6 +102,7 @@ const OrderStatusItem = ({
           as="h2"
           fontSize="md"
           fontWeight="600"
+          mb={1}
         >
           {title}
         </Heading>
@@ -112,6 +113,7 @@ const OrderStatusItem = ({
               : undefined
           }
           fontSize="sm"
+          mb={1}
         >
           {description}
         </Text>
