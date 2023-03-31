@@ -32,7 +32,7 @@ const FoodtronBrand = ({
       src={logo}
       height="38px"
       marginRight={4}
-      marginLeft="9px"
+      marginLeft="10px"
     />
     <Heading
       size="sm"

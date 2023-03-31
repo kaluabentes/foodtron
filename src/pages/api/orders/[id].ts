@@ -10,7 +10,6 @@ const singleOrderHandler = async (
   res: NextApiResponse
 ) => {
   await NextCors(req, res, {
-    // Options
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     origin: "*",
     optionsSuccessStatus: 200,
