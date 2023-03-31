@@ -39,7 +39,6 @@ const StoreInfo = ({
         mb={8}
       >
         {store.name}
-        {console.log("isOPen", store.isOpen)}
       </Heading>
       <Flex alignItems="center" gap={1.5} mb={2}>
         <Icon fontSize="22px" as={BiTimeFive} />

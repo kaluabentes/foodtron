@@ -1,11 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import jwt from "jsonwebtoken"
 
-import prisma from "@/lib/infra/prisma/client"
-import serverAuth from "@/middlewares/serverAuth"
-import { User } from "@prisma/client"
 import NextCors from "nextjs-cors"
-import updateAddress from "@/modules/addresses/services/updateAddress"
+import updateAddress from "@/modules/app/addresses/services/updateAddress"
 import deleteAddress from "@/modules/app/addresses/services/deleteAddress"
 
 const ALLOWED_METHODS = ["PATCH", "DELETE"]
@@ -15,8 +12,7 @@ const singleAddressHandler = async (
   res: NextApiResponse
 ) => {
   await NextCors(req, res, {
-    // Options
-    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    methods: ALLOWED_METHODS,
     origin: "*",
     optionsSuccessStatus: 200,
   })
