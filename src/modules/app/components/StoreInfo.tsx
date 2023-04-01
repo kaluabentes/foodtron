@@ -34,7 +34,7 @@ const StoreInfo = ({
       <Heading
         textTransform="uppercase"
         textAlign="center"
-        size="md"
+        size="lg"
         fontWeight="700"
         mb={8}
       >

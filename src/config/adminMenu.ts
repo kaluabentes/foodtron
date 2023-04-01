@@ -50,7 +50,7 @@ export const topMenu: RouteItem[] = [
 export const bottomMenu: RouteItem[] = [
   {
     icon: BiHomeHeart,
-    label: "Loja",
+    label: "Restaurante",
     path: "/admin/store",
   },
   {
