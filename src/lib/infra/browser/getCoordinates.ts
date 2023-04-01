@@ -1,6 +1,6 @@
 const getCoordinates = (): Promise<{
-  latitude?: string
-  longitude?: string
+  latitude?: number
+  longitude?: number
 }> => {
   return new Promise((resolve) => {
     navigator.geolocation.getCurrentPosition(
@@ -10,8 +10,8 @@ const getCoordinates = (): Promise<{
         } = position
 
         resolve({
-          latitude: String(latitude),
-          longitude: String(longitude),
+          latitude,
+          longitude,
         })
       },
       () => {

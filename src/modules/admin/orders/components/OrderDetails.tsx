@@ -7,6 +7,7 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react"
+import { GoogleMap, LoadScript, Marker, MarkerF } from "@react-google-maps/api"
 
 import EditableDataItem from "@/components/EditableDataItem"
 import SectionTitle from "@/components/SectionTitle"
@@ -25,6 +26,7 @@ import {
   ORDER_STATUS_TEXT,
 } from "../constants"
 import useGetOrder from "../hooks/useGetOrder"
+import { useEffect, useState } from "react"
 
 interface OrderDetailsProps {
   order: Order
@@ -42,6 +44,11 @@ const OrderDetails = ({
   isCancelling,
 }: OrderDetailsProps) => {
   const { order: realtimeOrder } = useGetOrder(order.id)
+  const [showMap, setShowMap] = useState(false)
+
+  useEffect(() => {
+    setShowMap(false)
+  }, [order])
 
   return (
     <>
@@ -106,13 +113,13 @@ const OrderDetails = ({
           <StripeSeparator horizontal />
           <EditableDataItem
             field="Data de criação"
-            value={formatDate(String(order.createdAt))}
+            value={formatDate(String(order.createdAt), true)}
           />
           <StripeSeparator horizontal />
           {realtimeOrder ? (
             <EditableDataItem
               field="Data de última modificação"
-              value={formatDate(String(realtimeOrder.updatedAt))}
+              value={formatDate(String(realtimeOrder.updatedAt), true)}
             />
           ) : (
             <Spinner color="gray.500" />
@@ -134,6 +141,39 @@ const OrderDetails = ({
           />
           <StripeSeparator horizontal />
           <EditableDataItem field="Endereço" value={order.address} />
+          {order.latitude && (
+            <Button
+              alignSelf="start"
+              size="sm"
+              onClick={() => setShowMap((prev) => !prev)}
+            >
+              {showMap ? "Fechar mapa" : "Mostrar mapa"}
+            </Button>
+          )}
+
+          <Box
+            transition="0.5s"
+            height={showMap ? "400px" : "0px"}
+            overflow="hidden"
+          >
+            <LoadScript
+              googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY!}
+            >
+              <GoogleMap
+                mapContainerStyle={{
+                  width: "100%",
+                  height: "400px",
+                }}
+                center={{ lat: order.latitude, lng: order.longitude }}
+                zoom={15}
+              >
+                <MarkerF
+                  position={{ lat: order.latitude, lng: order.longitude }}
+                />
+              </GoogleMap>
+            </LoadScript>
+          </Box>
+
           <StripeSeparator horizontal />
           <EditableDataItem field="Pagamento" value={order.paymentMethod} />
 

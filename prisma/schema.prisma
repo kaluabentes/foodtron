@@ -65,8 +65,8 @@ model Address {
   id             String    @id @default(cuid())
   street String
   number String
-  latitude String?
-  longitude String?
+  latitude Float?
+  longitude Float?
   
   locationId String
   location StoreDeliveryLocation @relation(fields: [locationId], references: [id], onDelete: Cascade)
@@ -224,8 +224,8 @@ model Order {
   paymentMethod String
   change        Decimal?
   address       String
-  latitude      String?
-  longitude     String?
+  latitude      Float?
+  longitude     Float?
   status        String
   username      String
   phone         String

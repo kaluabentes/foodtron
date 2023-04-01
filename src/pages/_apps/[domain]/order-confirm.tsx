@@ -126,6 +126,8 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       paymentMethod: paymentMethod.name,
       change: paymentMethod.change,
       address: assembledAddress,
+      latitude: address.latitude,
+      longitude: address.longitude,
       storeId,
       userId: user.id,
       username: user.name,

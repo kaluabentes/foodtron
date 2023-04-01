@@ -5,8 +5,8 @@ interface AddressParam {
   street?: string
   number?: string
   location?: Location
-  latitude?: string
-  longitude?: string
+  latitude?: number
+  longitude?: number
 }
 
 export default AddressParam

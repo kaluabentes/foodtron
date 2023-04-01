@@ -7,8 +7,8 @@ interface Order {
   paymentMethod: string
   change: string
   address: string
-  latitude: string
-  longitude: string
+  latitude: number
+  longitude: number
   status: string
   username: string
   phone: string
