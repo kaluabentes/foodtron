@@ -10,12 +10,17 @@ const fetcher = (url: string) => api.get(url).then((res) => res.data)
 
 interface GetOrderResponse {
   order: Order
+  mutate: () => void
 }
 
 const useGetOrder = (orderId: string): GetOrderResponse => {
   const toast = useBottomToast()
 
-  const { data: order, error } = useSWR(`/api/orders/${orderId}`, fetcher)
+  const {
+    data: order,
+    error,
+    mutate,
+  } = useSWR(`/api/orders/${orderId}`, fetcher)
 
   useEffect(() => {
     if (error) {
@@ -29,6 +34,7 @@ const useGetOrder = (orderId: string): GetOrderResponse => {
 
   return {
     order,
+    mutate,
   }
 }
 

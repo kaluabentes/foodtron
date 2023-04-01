@@ -37,6 +37,9 @@ import Store from "@/modules/admin/stores/types/Store"
 import { useAppContext } from "@/contexts/app"
 import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
 import { OrderStatus } from "@prisma/client"
+import ConfirmAlert from "@/components/ConfirmAlert"
+import api from "@/lib/infra/axios/api"
+import useBottomToast from "@/lib/hooks/useBottomToast"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -73,6 +76,7 @@ interface TrackOrderProps {
 }
 
 const TrackOrder = ({ store }: TrackOrderProps) => {
+  const toast = useBottomToast()
   const router = useRouter()
   const { id } = router.query
 
@@ -82,9 +86,36 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
     },
   } = useAppContext()
 
-  const { order } = useGetOrder(String(id))
+  const { order, mutate } = useGetOrder(String(id))
 
   const [showDetails, setShowDetails] = useState(false)
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false)
+  const [isCancelling, setIsCancelling] = useState(false)
+
+  const handleOrderCancelConfirm = async () => {
+    try {
+      setIsCancelling(true)
+
+      await api.patch(`/api/orders/cancel`, { orderId: order.id })
+
+      mutate()
+
+      toast({
+        title: "Feito!",
+        description: "Pedido cancelado com sucesso",
+        status: "success",
+      })
+    } catch (error: any) {
+      toast({
+        title: "Error!",
+        description: error.message,
+        status: "error",
+      })
+    } finally {
+      setShowCancelConfirm(false)
+      setIsCancelling(false)
+    }
+  }
 
   const renderContent = () => {
     if (!order) {
@@ -224,7 +255,9 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
                   </Button>
                 )}
                 {order.status === ORDER_STATUS.PENDING && (
-                  <Button onClick={() => setShowDetails(true)}>Cancelar</Button>
+                  <Button onClick={() => setShowCancelConfirm(true)}>
+                    Cancelar
+                  </Button>
                 )}
               </Flex>
             </Flex>
@@ -252,6 +285,16 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
         isOpen={showDetails}
         order={order}
         onClose={() => setShowDetails(false)}
+      />
+
+      <ConfirmAlert
+        title="Atenção"
+        description="Você tem certeza que deseja cancelar seu pedido?"
+        isOpen={showCancelConfirm}
+        colorScheme="red"
+        onClose={() => setShowCancelConfirm(false)}
+        onConfirm={handleOrderCancelConfirm}
+        isLoading={isCancelling}
       />
     </AppLayout>
   )

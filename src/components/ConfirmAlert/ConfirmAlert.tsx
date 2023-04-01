@@ -16,6 +16,7 @@ interface ConfirmAlertProps {
   isLoading?: boolean
   onClose: () => void
   onConfirm: () => void
+  colorScheme?: string
 }
 
 const ConfirmAlert = ({
@@ -25,6 +26,7 @@ const ConfirmAlert = ({
   isLoading,
   onClose,
   onConfirm,
+  colorScheme = "brand",
 }: ConfirmAlertProps) => {
   const cancelRef = useRef(null)
 
@@ -48,7 +50,7 @@ const ConfirmAlert = ({
             </Button>
             <Button
               isLoading={isLoading}
-              colorScheme="brand"
+              colorScheme={colorScheme}
               onClick={onConfirm}
               ml={3}
             >
