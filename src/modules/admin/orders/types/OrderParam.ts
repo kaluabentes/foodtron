@@ -6,6 +6,8 @@ export interface OrderParam {
   paymentMethod?: string
   change?: string
   address?: string
+  latitude?: string
+  longitude?: string
   storeId?: string
   status?: string
   username?: string

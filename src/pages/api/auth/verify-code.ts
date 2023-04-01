@@ -86,6 +86,7 @@ const verifyCodeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
             id: existingUser.id,
           },
           data: {
+            selectedAddressId: req.body.selectedAddressId,
             orders: {
               connect: req.body.orders.map((order: Order) => ({
                 id: order.id,
@@ -95,6 +96,8 @@ const verifyCodeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
               create: req.body.addresses.map((address: Address) => ({
                 street: address.street,
                 number: address.number,
+                latitude: address.latitude,
+                longitude: address.longitude,
                 location: {
                   connect: {
                     id: address.location.id,
@@ -105,7 +108,7 @@ const verifyCodeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
           include,
         })
-        console.log("chegou aqui")
+
         return res.send({
           token,
           user,
@@ -116,6 +119,7 @@ const verifyCodeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         data: {
           name: req.body.name,
           phone: req.body.phone,
+          selectedAddressId: req.body.selectedAddressId,
           store: {
             connect: {
               id: store?.id,
@@ -130,6 +134,8 @@ const verifyCodeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
             create: req.body.addresses.map((address: Address) => ({
               street: address.street,
               number: address.number,
+              latitude: address.latitude,
+              longitude: address.longitude,
               location: {
                 connect: {
                   id: address.location.id,

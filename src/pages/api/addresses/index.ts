@@ -36,6 +36,8 @@ const addressesIndexHandler = async (
       data: {
         street: req.body.street,
         number: req.body.number,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
         location: {
           connect: {
             id: req.body.location.id,

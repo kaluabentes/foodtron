@@ -64,7 +64,7 @@ const CreateAccount = () => {
   const { setState, mutateState, state } = useAppContext()
   const {
     store,
-    user: { name, phone, orders, addresses },
+    user: { name, phone, orders, addresses, selectedAddressId },
   } = state
 
   const [isLoading, setIsLoading] = useState(false)
@@ -86,6 +86,7 @@ const CreateAccount = () => {
         phone,
         orders,
         addresses,
+        selectedAddressId,
         subdomain: store.subdomain,
         code: data.code,
       })

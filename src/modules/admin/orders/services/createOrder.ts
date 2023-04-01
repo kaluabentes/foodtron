@@ -18,6 +18,8 @@ const createOrder = (order: Order) => {
     paymentMethod: order.paymentMethod,
     change: order.change ? createDecimal(order.change) : null,
     address: order.address,
+    latitude: order.latitude ? order.latitude : null,
+    longitude: order.longitude ? order.longitude : null,
     status: ORDER_STATUS.PENDING,
     username: order.username,
     phone: formatPhone(order.phone),

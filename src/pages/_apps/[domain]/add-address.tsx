@@ -7,6 +7,7 @@ import {
   FormLabel,
   Input,
   Select,
+  Switch,
 } from "@chakra-ui/react"
 import { v4 as uuidv4 } from "uuid"
 
@@ -19,11 +20,10 @@ import BarIconButton from "@/components/BarIconButton"
 import { BiLeftArrowAlt } from "react-icons/bi"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
-import ResponsiveButton from "@/components/ResponsiveButton"
-import Address from "@/modules/app/addresses/types/Address"
 import AddressParam from "@/modules/app/addresses/types/AddressParam"
 import api from "@/lib/infra/axios/api"
 import useBottomToast from "@/lib/hooks/useBottomToast"
+import getCoordinates from "@/lib/infra/browser/getCoordinates"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -81,6 +81,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
       street: "",
       number: "",
       location: "",
+      currentLocation: false,
     },
   })
 
@@ -97,6 +98,15 @@ const EditAddress = ({ locations }: EditAddressProps) => {
       let mergedAddresses = [...addresses, address]
 
       setIsLoading(true)
+
+      if (data.currentLocation) {
+        const { latitude, longitude } = await getCoordinates()
+
+        if (latitude) {
+          address.latitude = latitude
+          address.longitude = longitude
+        }
+      }
 
       if (token) {
         const response = await api.post("/api/addresses", address, {
@@ -160,7 +170,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
             <FormLabel>{t("number")}</FormLabel>
             <Input {...register("number")} type="tel" required />
           </FormControl>
-          <FormControl>
+          <FormControl mb={5}>
             <FormLabel>{t("district")}</FormLabel>
             <Select {...register("location")} required>
               <option value="">Selecione</option>
@@ -170,6 +180,10 @@ const EditAddress = ({ locations }: EditAddressProps) => {
                 </option>
               ))}
             </Select>
+          </FormControl>
+          <FormControl>
+            <FormLabel>É onde você está atualmente?</FormLabel>
+            Não <Switch {...register("currentLocation")} type="tel" /> Sim
           </FormControl>
         </Flex>
         <Flex

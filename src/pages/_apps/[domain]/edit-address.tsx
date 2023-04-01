@@ -7,6 +7,7 @@ import {
   FormLabel,
   Input,
   Select,
+  Switch,
 } from "@chakra-ui/react"
 
 import prisma from "@/lib/infra/prisma/client"
@@ -23,6 +24,7 @@ import Address from "@/modules/app/addresses/types/Address"
 import AddressParam from "@/modules/app/addresses/types/AddressParam"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import api from "@/lib/infra/axios/api"
+import getCoordinates from "@/lib/infra/browser/getCoordinates"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -82,6 +84,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
       street: currentAddress?.street,
       number: currentAddress?.number,
       location: currentAddress?.location.id,
+      currentLocation: false,
     },
   })
 
@@ -94,6 +97,24 @@ const EditAddress = ({ locations }: EditAddressProps) => {
       }
 
       setIsLoading(true)
+
+      if (data.currentLocation) {
+        const { latitude, longitude } = await getCoordinates()
+
+        if (latitude) {
+          address.latitude = latitude
+          address.longitude = longitude
+        }
+      }
+
+      if (token) {
+        await api.patch(`/api/addresses/${currentAddress?.id}`, address, {
+          headers: {
+            Authorization: token,
+          },
+        })
+      }
+
       setState({
         user: {
           addresses: addresses.map((addr) => {
@@ -108,14 +129,6 @@ const EditAddress = ({ locations }: EditAddressProps) => {
           }),
         },
       })
-
-      if (token) {
-        await api.patch(`/api/addresses/${currentAddress?.id}`, address, {
-          headers: {
-            Authorization: token,
-          },
-        })
-      }
 
       router.push("/addresses")
 
@@ -164,7 +177,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
             <FormLabel>{t("number")}</FormLabel>
             <Input {...register("number")} type="tel" required />
           </FormControl>
-          <FormControl>
+          <FormControl mb={5}>
             <FormLabel>{t("district")}</FormLabel>
             <Select {...register("location")} required>
               <option value="">Selecione</option>
@@ -174,6 +187,10 @@ const EditAddress = ({ locations }: EditAddressProps) => {
                 </option>
               ))}
             </Select>
+          </FormControl>
+          <FormControl>
+            <FormLabel>É onde você está atualmente?</FormLabel>
+            Não <Switch {...register("currentLocation")} type="tel" /> Sim
           </FormControl>
         </Flex>
         <Flex
