@@ -189,7 +189,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
             </Select>
           </FormControl>
           <FormControl>
-            <FormLabel>É onde você está atualmente?</FormLabel>
+            <FormLabel>Mandar localização atual?</FormLabel>
             Não <Switch {...register("currentLocation")} type="tel" /> Sim
           </FormControl>
         </Flex>
