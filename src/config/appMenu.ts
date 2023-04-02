@@ -36,6 +36,11 @@ export const topMenu: RouteItem[] = [
     path: "/orders",
   },
   {
+    icon: BiAlarm,
+    label: "Horários",
+    path: "/schedules",
+  },
+  {
     icon: BiMap,
     label: "Endereços",
     path: "/addresses",

@@ -225,6 +225,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
         mb={{ lg: 0 }}
       >
         <StoreInfo
+          onSchedulesClick={() => router.push("/schedules")}
           onSelectLocation={() => router.push("/addresses")}
           weekDay={currentWeekDay}
           schedule={currentScheduleTime}

@@ -15,6 +15,7 @@ interface StoreInfoProps {
     tax: string
   }
   onSelectLocation: () => void
+  onSchedulesClick: () => void
 }
 
 const StoreInfo = ({
@@ -23,6 +24,7 @@ const StoreInfo = ({
   weekDay,
   schedule,
   onSelectLocation,
+  onSchedulesClick,
 }: StoreInfoProps) => (
   <Box shadow="sm" backgroundColor="white" overflow="hidden">
     <StoreMidiaUpload
@@ -40,7 +42,13 @@ const StoreInfo = ({
       >
         {store.name}
       </Heading>
-      <Flex alignItems="center" gap={1.5} mb={2}>
+      <Flex
+        as="button"
+        onClick={onSchedulesClick}
+        alignItems="center"
+        gap={1.5}
+        mb={2}
+      >
         <Icon fontSize="22px" as={BiTimeFive} />
         <Text as="span" fontWeight="500">
           {weekDay || "---"}
@@ -100,9 +108,13 @@ const StoreInfo = ({
         </Flex>
         <StripeSeparator />
         {store.isOpen ? (
-          <Badge colorScheme="green">Aberto</Badge>
+          <Badge as="button" onClick={onSchedulesClick} colorScheme="green">
+            Aberto
+          </Badge>
         ) : (
-          <Badge colorScheme="red">Fechado</Badge>
+          <Badge as="button" onClick={onSchedulesClick} colorScheme="red">
+            Fechado
+          </Badge>
         )}
       </Flex>
     </Flex>
