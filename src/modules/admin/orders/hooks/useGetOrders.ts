@@ -1,32 +1,23 @@
 import { useEffect, useState } from "react"
+import useSWR from "swr"
 
 import api from "@/lib/infra/axios/api"
 import Order from "../types/Order"
 
-const useGetOrders = (initialFetch = true) => {
-  const [orders, setOrders] = useState<Order[] | undefined>()
+const fetcher = (url: string) => api.get(url).then((res) => res.data)
 
-  const getOrders = async (isArchive = false) => {
-    try {
-      const response = await api.get(
-        isArchive ? "/api/orders?isArchive=true" : "/api/orders"
-      )
-      setOrders(response.data)
-      return response.data
-    } catch (error: any) {
-      console.log(error.message)
-    }
+const useGetOrders = (isArchive = false) => {
+  const { data: orders, mutate } = useSWR(
+    isArchive ? "/api/orders?isArchive=true" : "/api/orders",
+    fetcher
+  )
+
+  const getOrders = () => {
+    mutate()
   }
-
-  useEffect(() => {
-    if (initialFetch) {
-      getOrders()
-    }
-  }, [])
 
   return {
     orders,
-    setOrders,
     getOrders,
   }
 }

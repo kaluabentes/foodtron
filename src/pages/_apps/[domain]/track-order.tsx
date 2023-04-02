@@ -247,7 +247,7 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
                     as="a"
                     variant="outline"
                     leftIcon={<FaWhatsapp />}
-                    href={`https://wa.me/${store.whatsapp}`}
+                    href={`https://api.whatsapp.com/send?phone=${store.whatsapp}&text=Olá,%20gostaria%20de%20conversar%20sobre%20o%20pedido%20*${order.id}*`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

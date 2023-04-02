@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const OrdersArchive = () => {
   const router = useRouter()
 
-  const { orders, getOrders } = useGetOrders(false)
+  const { orders, getOrders } = useGetOrders(true)
   const { updateOrder, isUpdating } = useUpdateOrder()
 
   const [orderToShow, setOrderToShow] = useState<Order | undefined>()
@@ -57,12 +57,8 @@ const OrdersArchive = () => {
       status,
     })
     setOrderToEdit(undefined)
-    await getOrders(true)
+    await getOrders()
   }
-
-  useEffect(() => {
-    getOrders(true)
-  }, [])
 
   const renderData = () => {
     if (!orders) {
