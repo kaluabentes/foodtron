@@ -10,7 +10,7 @@ interface BellButtonProps {
 
 const BellButton = ({ count, onClick }: BellButtonProps) => (
   <Box position="relative">
-    {count && (
+    {count > 0 ? (
       <Box
         position="absolute"
         right={0}
@@ -29,7 +29,7 @@ const BellButton = ({ count, onClick }: BellButtonProps) => (
       >
         {count}
       </Box>
-    )}
+    ) : null}
     <BarIconButton onClick={onClick} label="Menu" icon={<BiBell />} />
   </Box>
 )
