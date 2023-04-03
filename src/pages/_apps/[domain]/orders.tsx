@@ -67,7 +67,6 @@ const Orders = () => {
         <OrderCard
           key={order.id}
           onClick={() => setOrderToShow(order)}
-          onTrack={() => router.push(`/track-order?id=${order.id}`)}
           order={order}
         />
       ))
