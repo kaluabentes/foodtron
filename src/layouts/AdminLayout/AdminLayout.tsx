@@ -5,7 +5,6 @@ import {
   Image,
   useBreakpointValue,
 } from "@chakra-ui/react"
-import { get } from "lodash"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { ReactNode, useEffect, useRef, useState } from "react"
@@ -16,7 +15,6 @@ import { ORDER_STATUS } from "@/modules/admin/orders/constants"
 import { useAppContext } from "@/contexts/app"
 import AppBar from "@/components/AppBar"
 import BellButton from "@/components/BellButton"
-import BellButtonLarge from "@/components/BellButtonLarge/BellButtonLarge"
 import Brand from "@/components/Brand"
 import Order from "@/modules/admin/orders/types/Order"
 import OrderNotificationModal from "@/modules/admin/orders/components/OrderNotificationModal"
@@ -25,6 +23,7 @@ import useBottomToast from "@/lib/hooks/useBottomToast"
 import useGetOrders from "@/modules/admin/orders/hooks/useGetOrders"
 
 import SideNav from "../../components/SideNav"
+import BellButtonLarge from "@/components/BellButtonLarge"
 
 interface AdminLayoutProps {
   children: ReactNode
