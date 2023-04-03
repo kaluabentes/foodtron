@@ -157,7 +157,7 @@ const CompleteSignin = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Image src="/comet-blue.svg" width="80px" mb={10} />
+        <Image src="/comet-full.svg" height="50px" mb={14} mt={5} />
       </Flex>
       <Heading size="lg" marginBottom={5} fontWeight="semibold">
         {t("completeSignin")}
@@ -174,7 +174,12 @@ const CompleteSignin = () => {
             {errors.userName?.message}
           </FormErrorMessage>
         </FormControl>
-        <Heading size="sm" marginBottom={5}>
+        <Heading
+          size="sm"
+          marginBottom={5}
+          fontWeight="600"
+          textTransform="uppercase"
+        >
           {t("storeInformation")}
         </Heading>
         <Box

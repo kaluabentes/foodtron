@@ -6,12 +6,15 @@ import {
   FormLabel,
   Image,
   Input,
+  Text,
 } from "@chakra-ui/react"
 import { get } from "lodash"
 import Script from "next/script"
 import { useEffect, useRef, useState } from "react"
 import { FieldErrorsImpl, UseFormRegister } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import IconActionButton from "../IconActionButton"
+import { BiEdit } from "react-icons/bi"
 
 interface StoreMidiaUploadProps {
   onCoverChange?: (url: string) => void
@@ -94,7 +97,7 @@ const StoreMidiaUpload = ({
       <Box
         onClick={handleCoverUpload}
         as="button"
-        background="gray.200"
+        background="gray.100"
         cursor={isEditable ? "pointer" : "initial"}
         overflow="hidden"
         display="flex"
@@ -104,12 +107,24 @@ const StoreMidiaUpload = ({
         width="100%"
         type="button"
         disabled={!isEditable}
+        p={!cover ? 2 : 0}
+        position="relative"
       >
         {!cover && (
-          <Box p={4} color="gray.500" fontSize="14px">
-            {t("editCover")}
-          </Box>
+          <Text
+            position="absolute"
+            left="50%"
+            top="50%"
+            transform="translate(-50%, -50%)"
+            fontWeight="500"
+            textTransform="uppercase"
+            fontSize="sm"
+            color="gray.500"
+          >
+            Capa
+          </Text>
         )}
+        {!cover && <IconActionButton icon={<BiEdit />} />}
         {cover && (
           <Image
             src={cover}
@@ -125,11 +140,11 @@ const StoreMidiaUpload = ({
           onClick={handleLogoUpload}
           as="button"
           type="button"
-          background="gray.300"
+          background="gray.100"
           cursor={isEditable ? "pointer" : "initial"}
           display="flex"
-          justifyContent="center"
-          alignItems="center"
+          justifyContent="start"
+          alignItems="end"
           width="130px"
           height="130px"
           borderRadius="25px"
@@ -137,12 +152,24 @@ const StoreMidiaUpload = ({
           outline="3px solid white"
           overflow="hidden"
           disabled={!isEditable}
+          p={!logo ? 2 : 0}
+          position="relative"
         >
           {!logo && (
-            <Box p={4} color="gray.500" fontSize="14px">
-              {t("editLogo")}
-            </Box>
+            <Text
+              position="absolute"
+              left="50%"
+              top="50%"
+              transform="translate(-50%, -50%)"
+              fontWeight="500"
+              textTransform="uppercase"
+              fontSize="sm"
+              color="gray.500"
+            >
+              Logo
+            </Text>
           )}
+          {!logo && <IconActionButton icon={<BiEdit />} />}
           {logo && (
             <Image
               src={logo}
