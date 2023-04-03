@@ -78,7 +78,7 @@ const sendVerificationRequest = async (params: any) => {
   const result = await transport.sendMail({
     to: identifier,
     from: {
-      name: "Comet",
+      name: "Foodtron",
       address: provider.from,
     },
     subject: `Entrar em ${host}`,
