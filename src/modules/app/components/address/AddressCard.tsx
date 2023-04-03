@@ -16,7 +16,7 @@ import { BiMap, BiTrash } from "react-icons/bi"
 interface AddressCardProps {
   address: Address
   isSelecting?: boolean
-  isDisabled?: boolean
+  isSelected?: boolean
   onEdit?: () => void
   onSelect?: () => void
   onDelete?: () => void
@@ -32,7 +32,7 @@ const AddressCard = ({
   onEdit,
   onSelect,
   isSelecting,
-  isDisabled,
+  isSelected,
   onDelete,
 }: AddressCardProps) => (
   <Box
@@ -46,6 +46,8 @@ const AddressCard = ({
     borderRadius="md"
     shadow="sm"
     overflow="hidden"
+    border="3px solid black"
+    borderColor={isSelected ? "brand.500" : "transparent"}
   >
     <Flex
       justifyContent="space-between"
@@ -97,22 +99,11 @@ const AddressCard = ({
           onSelect!()
         }}
         isLoading={isSelecting}
-        isDisabled={isDisabled}
+        isDisabled={isSelected}
       >
-        {isDisabled ? "Selecionado" : "Selecionar"}
+        {isSelected ? "Selecionado" : "Selecionar"}
       </Button>
     </Flex>
-    {isDisabled && (
-      <Box
-        position="absolute"
-        height="100%"
-        width="3px"
-        background="brand.500"
-        top="0"
-        left="0"
-        zIndex="10"
-      />
-    )}
   </Box>
 )
 

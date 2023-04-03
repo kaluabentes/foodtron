@@ -190,7 +190,7 @@ const Addresses = () => {
           onDelete={() => setAddressToDelete(address)}
           address={address}
           isSelecting={isSelecting && address.id === selectedAddress?.id}
-          isDisabled={selectedAddressId === address.id}
+          isSelected={selectedAddressId === address.id}
         />
       ))
   }

@@ -1,51 +1,33 @@
 import {
-  Badge,
   Box,
-  Button,
-  CloseButton,
   Flex,
-  Heading,
-  Icon,
   Skeleton,
-  Tab,
-  TabList,
   TabPanel,
   TabPanels,
-  Tabs,
-  Text,
   useBreakpointValue,
 } from "@chakra-ui/react"
 import { GetServerSideProps } from "next"
 import { configureAbly, useChannel } from "@ably-labs/react-hooks"
 
-import PageHeader from "@/components/PageHeader"
 import AdminLayout from "@/layouts/AdminLayout"
 import auth from "@/middlewares/auth"
 import useGetOrders from "@/modules/admin/orders/hooks/useGetOrders"
 import Order from "@/modules/admin/orders/types/Order"
 import range from "@/lib/helpers/array/range"
 import { ORDER_STATUS } from "@/modules/admin/orders/constants"
-import formatDate from "@/lib/helpers/date/formatDate"
-import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
-import StripeSeparator from "@/components/StripeSeparator"
 import EmptyState from "@/components/EmptyState"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Store from "@/modules/admin/stores/types/Store"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import OrderCard from "@/modules/admin/orders/components/OrderCard"
-import EditableDataItem from "@/components/EditableDataItem"
-import SectionTitle from "@/components/SectionTitle"
-import OrderProductItem from "@/modules/app/components/order/OrderProductItem"
-import sumProductTotal from "@/modules/admin/orders/lib/sumProductTotal"
-import BaseOrderItem from "@/modules/app/components/order/BaseOrderItem"
-import sumOrderSubtotal from "@/modules/admin/orders/lib/sumOrderSubtotal"
 import OrderDetails from "@/modules/admin/orders/components/OrderDetails"
 import OrderDetailsModal from "@/modules/admin/orders/components/OrderDetailsModal"
 import useUpdateOrder from "@/modules/admin/orders/hooks/useUpdateOrder"
 import OrderCardTabs from "@/modules/admin/orders/components/OrderCardTabs"
 import { useRouter } from "next/router"
-import ConfirmAlert from "@/components/ConfirmAlert"
 import OrderCancelConfirm from "@/modules/admin/orders/components/OrderCancelConfirm"
+import match from "@/lib/helpers/string/match"
+import getNeighborhood from "@/modules/admin/orders/lib/getNeighborhood"
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   return auth(context, ["admin"])
@@ -70,9 +52,24 @@ const Orders = ({ user }: OrdersProps) => {
 
   const [selectedOrder, setSelectedOrder] = useState<Order | undefined>()
   const [orderToDelete, setOrderToDelete] = useState<Order | undefined>()
+  const [search, setSearch] = useState("")
 
   const getFilteredOrders = (orders: Order[] = [], status: string) =>
     orders.filter((order: Order) => order.status === status)
+
+  const getSearch = (orders: Order[]) => {
+    if (search.length > 0) {
+      return orders.filter((order) => {
+        const idResult = match(search, order.id)
+        const nameResult = match(search, order.username)
+        const neighborhoodResult = match(search, getNeighborhood(order.address))
+
+        return idResult || nameResult || neighborhoodResult
+      })
+    }
+
+    return orders
+  }
 
   const pendingOrders = getFilteredOrders(orders, ORDER_STATUS.PENDING)
   const doingOrders = getFilteredOrders(orders, ORDER_STATUS.DOING)
@@ -146,7 +143,7 @@ const Orders = ({ user }: OrdersProps) => {
       return renderSkeleton()
     }
 
-    const filteredOrders = getFilteredOrders(orders, status)
+    const filteredOrders = getSearch(getFilteredOrders(orders, status))
 
     if (!filteredOrders.length) {
       return (
@@ -160,6 +157,7 @@ const Orders = ({ user }: OrdersProps) => {
       .reverse()
       .map((order: Order) => (
         <OrderCard
+          key={order.id}
           onClick={() => setSelectedOrder(order)}
           onConfirm={() => handleConfirm(order!)}
           onCancel={() => setOrderToDelete(order)}
@@ -226,6 +224,8 @@ const Orders = ({ user }: OrdersProps) => {
     <AdminLayout isFullWidth hasPadding={false}>
       <Flex alignItems="start">
         <OrderCardTabs
+          onSearch={setSearch}
+          search={search}
           onArchiveClick={() => router.push("/admin/orders/archive")}
           pendingOrders={pendingOrders}
           doingOrders={doingOrders}

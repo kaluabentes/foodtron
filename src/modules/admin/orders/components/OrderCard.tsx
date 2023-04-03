@@ -15,6 +15,8 @@ import { BiMap } from "react-icons/bi"
 import { ORDER_STATUS } from "../constants"
 import sumOrderSubtotal from "../lib/sumOrderSubtotal"
 import Order from "../types/Order"
+import getNeighborhood from "../lib/getNeighborhood"
+import handleKeyDown from "@/lib/infra/browser/handleKeyDown"
 
 interface OrderCardProps {
   order: Order
@@ -24,11 +26,6 @@ interface OrderCardProps {
   onConfirm?: () => void
   onCancel?: () => void
   isCancelling?: boolean
-}
-
-const getNeighborhood = (address: string) => {
-  const addressParts = address.split(" ")
-  return addressParts[addressParts.length - 1]
 }
 
 const OrderCard = ({
@@ -48,7 +45,10 @@ const OrderCard = ({
     pl={0}
     pr={0}
     position="relative"
-    as="button"
+    cursor="pointer"
+    role="button"
+    tabIndex={0}
+    onKeyDown={handleKeyDown(onClick)}
     display="block"
     width="100%"
     onClick={onClick}

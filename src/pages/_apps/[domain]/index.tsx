@@ -22,6 +22,7 @@ import FilterBar from "@/modules/app/components/FilterBar"
 import useCurrentAddress from "@/modules/app/addresses/hooks/useCurrentAddress"
 import formatAddress from "@/modules/app/addresses/lib/formatAddress"
 import Location from "@/modules/admin/locations/types/Location"
+import match from "@/lib/helpers/string/match"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -137,12 +138,6 @@ const Index = ({ store = {}, categories }: IndexProps) => {
 
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>()
 
-  const matchSearch = (text: string) => {
-    const regex = new RegExp(filters.search, "i")
-
-    return Boolean(regex.exec(text))
-  }
-
   const applyFilters = (categoriesList: Category[]) => {
     if (filters.search) {
       return categoriesList
@@ -150,7 +145,8 @@ const Index = ({ store = {}, categories }: IndexProps) => {
           ...category,
           products: category.products?.filter(
             (product) =>
-              matchSearch(product.title) || matchSearch(product.description)
+              match(filters.search, product.title) ||
+              match(filters.search, product.description)
           ),
         }))
         .filter((category) => category.products?.length! > 0)
