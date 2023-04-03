@@ -28,13 +28,16 @@ import { Cloudinary } from "@cloudinary/url-gen"
 import AuthLayout from "@/layouts/AuthLayout"
 import prisma from "@/lib/infra/prisma/client"
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
+import { IMaskMixin } from "react-imask"
+import MaskedPhoneInput from "@/components/MaskedPhoneInput"
 
-const DESTINATION = "/admin/store"
+const DESTINATION = "/admin/orders"
 
 export interface CompleteSignInData {
   storeName: string
   userName: string
   subdomain: string
+  whatsapp: string
   cover: string
   logo: string
 }
@@ -75,6 +78,7 @@ const CompleteSignin = () => {
     storeName: Yup.string().required(t("requiredMessage")!),
     userName: Yup.string().required(t("requiredMessage")!),
     subdomain: Yup.string().required(t("requiredMessage")!),
+    whatsapp: Yup.string().required(t("requiredMessage")!),
   })
 
   const {
@@ -88,6 +92,7 @@ const CompleteSignin = () => {
     resolver: yupResolver(signinValidationSchema),
     defaultValues: {
       userName: session?.user?.name!,
+      whatsapp: "",
     },
   })
 
@@ -99,6 +104,7 @@ const CompleteSignin = () => {
         storeName: data.storeName,
         userName: data.userName,
         subdomain: data.subdomain,
+        whatsapp: data.whatsapp,
         logo: logo,
         cover: cover,
       })
@@ -200,6 +206,21 @@ const CompleteSignin = () => {
               <Input id="storeName" placeholder="" {...register("storeName")} />
               <FormErrorMessage fontSize="xs">
                 {errors.storeName?.message}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl
+              isInvalid={Boolean(errors.storeName?.message)}
+              marginBottom={4}
+            >
+              <FormLabel htmlFor="storeName">Whatsapp</FormLabel>
+              <MaskedPhoneInput
+                value={String(watch("whatsapp"))}
+                mask="(00) 0 0000 0000"
+                placeholder="(00) 0 0000 0000"
+                onAccept={(value: string) => setValue("whatsapp", value)}
+              />
+              <FormErrorMessage fontSize="xs">
+                {errors.whatsapp?.message}
               </FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={Boolean(errors.subdomain?.message)}>

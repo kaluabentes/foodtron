@@ -28,14 +28,10 @@ const VerifyRequest = () => {
       <Heading size="lg" marginBottom={10} fontWeight="semibold">
         Link mágico enviado
       </Heading>
-      <Text></Text>
-      <Alert status="success" borderRadius="md" alignItems="start">
-        <AlertIcon />
-        <AlertDescription>
-          Verifique seu email enviamos um link mágico, use-o para conectar a sua
-          conta.
-        </AlertDescription>
-      </Alert>
+      <Text>
+        Verifique seu email enviamos um link mágico, use-o para conectar ou
+        criar sua conta.
+      </Text>
     </AuthLayout>
   )
 }

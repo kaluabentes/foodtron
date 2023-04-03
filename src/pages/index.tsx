@@ -19,7 +19,7 @@ const Home = () => {
         type="submit"
         onClick={() => router.push("/auth/signin")}
       >
-        {`${t("signin")} `}
+        Entrar ou cadastrar
       </Button>
       <Button
         variant="outlined"

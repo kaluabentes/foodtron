@@ -25,10 +25,7 @@ import { DataCell, DataHead, DataValue } from "@/components/DataTable"
 import Store from "@/modules/admin/stores/types/Store"
 import useUpdateStore from "@/modules/admin/stores/hooks/useUpdateStore"
 import { User } from "@prisma/client"
-
-const MaskedWhatsappInput = IMaskMixin(({ inputRef, ...props }: any) => (
-  <Input {...props} ref={inputRef} />
-))
+import MaskedPhoneInput from "@/components/MaskedPhoneInput"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async (user: User) => {
@@ -133,16 +130,6 @@ const EditStore = ({ store }: StorePageProps) => {
               <DataCell>
                 <DataHead>
                   <Box as="span" fontWeight="500">
-                    {t("category")}
-                  </Box>
-                </DataHead>
-                <DataValue>
-                  <Input {...register("category")} />
-                </DataValue>
-              </DataCell>
-              <DataCell>
-                <DataHead>
-                  <Box as="span" fontWeight="500">
                     {t("address")}
                   </Box>
                 </DataHead>
@@ -160,7 +147,7 @@ const EditStore = ({ store }: StorePageProps) => {
                 </DataHead>
                 <DataValue>
                   <FormControl>
-                    <MaskedWhatsappInput
+                    <MaskedPhoneInput
                       value={String(watch("whatsapp"))}
                       mask="(00) 0 0000 0000"
                       placeholder="(00) 0 0000 0000"

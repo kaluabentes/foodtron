@@ -44,6 +44,7 @@ const completeSignin = async (req: NextApiRequest, res: NextApiResponse) => {
       data: {
         name: req.body.storeName,
         subdomain: req.body.subdomain,
+        whatsapp: req.body.whatsapp,
         logo: req.body.logo,
         cover: req.body.cover,
         schedules: {

@@ -14,7 +14,7 @@ const PageHeader = ({ title, actions }: PageHeaderProps) => (
     paddingTop={5}
     paddingBottom={5}
   >
-    <Heading size="lg" fontWeight="700" color="gray.700">
+    <Heading size="lg" fontWeight="600" color="gray.700">
       {title}
     </Heading>
     {actions && <Flex>{actions}</Flex>}

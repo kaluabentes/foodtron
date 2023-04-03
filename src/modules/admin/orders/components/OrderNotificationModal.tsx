@@ -25,7 +25,7 @@ const OrderNotificationModal = ({
   onOrderClick,
 }: OrderNotificationModalProps) => {
   const renderContent = () => {
-    if (!orders) {
+    if (!orders || !orders.length) {
       return <EmptyState message="Nenhuma novidade por aqui" />
     }
 

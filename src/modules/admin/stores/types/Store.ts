@@ -4,7 +4,6 @@ import Schedule from "../../schedules/types/Schedule"
 interface Store {
   id?: string
   name?: string
-  category?: string
   logo?: string
   cover?: string
   address?: string
