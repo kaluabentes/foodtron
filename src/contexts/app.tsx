@@ -121,7 +121,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       const newStateMerged = merge(oldState, newState)
 
       localStorage.setItem(
-        `${domain}.gocomet.app`,
+        `${domain}.foodtron.app`,
         JSON.stringify(newStateMerged)
       )
 
@@ -130,12 +130,12 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const mutateState = (newState: AppStateParam) => {
-    localStorage.setItem(`${domain}.gocomet.app`, JSON.stringify(newState))
+    localStorage.setItem(`${domain}.foodtron.app`, JSON.stringify(newState))
     setState(newState as AppState)
   }
 
   useEffect(() => {
-    const localState = localStorage.getItem(`${domain}.gocomet.app`)
+    const localState = localStorage.getItem(`${domain}.foodtron.app`)
 
     if (localState) {
       setState({

@@ -18,7 +18,7 @@ const Brand = ({
 }: BrandProps) => (
   <Flex
     as="a"
-    href="https://gocomet.app"
+    href="https://foodtron.app"
     target="_blank"
     rel="noopener noreferrer"
     marginBottom={6}

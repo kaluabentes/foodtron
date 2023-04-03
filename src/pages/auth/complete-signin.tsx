@@ -153,7 +153,7 @@ const CompleteSignin = () => {
       <Flex
         justifyContent="center"
         as="a"
-        href="https://gocomet.app"
+        href="https://foodtron.app"
         target="_blank"
         rel="noopener noreferrer"
       >

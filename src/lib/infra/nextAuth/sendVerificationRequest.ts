@@ -31,10 +31,10 @@ function html(params: { url: string; host: string; theme: Theme }) {
         <tr>
           <td align="center" style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
             <a 
-            href="https://gocomet.app"
+            href="https://foodtron.app"
             target="_blank"
             rel="noopener noreferrer">
-            <img height="50px" src="https://gocomet.app/comet-full.png" /></a>
+            <img height="50px" src="https://foodtron.app/comet-full.png" /></a>
           </td>
         </tr>
         <tr>
