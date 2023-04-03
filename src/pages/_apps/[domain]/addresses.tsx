@@ -54,27 +54,40 @@ const Addresses = () => {
     api.get(`/api/addresses`, { headers }).then((response) => response.data)
 
   const handleDeleteAddress = async () => {
-    const headers = {
-      Authorization: token,
-    }
-
     try {
       setIsDeleting(true)
 
-      await api.delete(`/api/addresses/${addressToDelete?.id}`, {
-        headers,
-      })
+      if (token) {
+        const headers = {
+          Authorization: token,
+        }
 
-      const addresses = await getAddresses(headers)
+        await api.delete(`/api/addresses/${addressToDelete?.id}`, {
+          headers,
+        })
 
-      mutateState({
-        ...state,
-        user: {
-          ...state.user,
-          addresses,
-          selectedAddressId: "",
-        },
-      })
+        const addresses = await getAddresses(headers)
+
+        mutateState({
+          ...state,
+          user: {
+            ...state.user,
+            addresses,
+            selectedAddressId: "",
+          },
+        })
+      } else {
+        mutateState({
+          ...state,
+          user: {
+            ...state.user,
+            selectedAddressId: "",
+            addresses: state.user.addresses.filter(
+              (address) => address.id !== addressToDelete?.id
+            ),
+          },
+        })
+      }
     } catch (error: any) {
       toast({
         title: "Atenção!",
