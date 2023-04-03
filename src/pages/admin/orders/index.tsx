@@ -16,7 +16,7 @@ import Order from "@/modules/admin/orders/types/Order"
 import range from "@/lib/helpers/array/range"
 import { ORDER_STATUS } from "@/modules/admin/orders/constants"
 import EmptyState from "@/components/EmptyState"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Store from "@/modules/admin/stores/types/Store"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import OrderCard from "@/modules/admin/orders/components/OrderCard"
@@ -28,10 +28,14 @@ import { useRouter } from "next/router"
 import OrderCancelConfirm from "@/modules/admin/orders/components/OrderCancelConfirm"
 import match from "@/lib/helpers/string/match"
 import getNeighborhood from "@/modules/admin/orders/lib/getNeighborhood"
+import playNotificationSound from "@/modules/admin/orders/lib/playNotificationSound"
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   return auth(context, ["admin"])
 }
+
+const getFilteredOrders = (orders: Order[] = [], status: string) =>
+  orders.filter((order: Order) => order.status === status)
 
 interface User {
   store: Store
@@ -46,6 +50,9 @@ configureAbly(process.env.NEXT_PUBLIC_ABLY_SUBSCRIBE_KEY!)
 const Orders = ({ user }: OrdersProps) => {
   const router = useRouter()
   const toast = useBottomToast()
+  const {
+    query: { id },
+  } = router
 
   const { orders, getOrders } = useGetOrders()
   const { updateOrder, isUpdating, orderId } = useUpdateOrder()
@@ -54,8 +61,9 @@ const Orders = ({ user }: OrdersProps) => {
   const [orderToDelete, setOrderToDelete] = useState<Order | undefined>()
   const [search, setSearch] = useState("")
 
-  const getFilteredOrders = (orders: Order[] = [], status: string) =>
-    orders.filter((order: Order) => order.status === status)
+  const pendingOrders = getFilteredOrders(orders, ORDER_STATUS.PENDING)
+  const doingOrders = getFilteredOrders(orders, ORDER_STATUS.DOING)
+  const deliveryOrders = getFilteredOrders(orders, ORDER_STATUS.DELIVERY)
 
   const getSearch = (orders: Order[]) => {
     if (search.length > 0) {
@@ -69,15 +77,6 @@ const Orders = ({ user }: OrdersProps) => {
     }
 
     return orders
-  }
-
-  const pendingOrders = getFilteredOrders(orders, ORDER_STATUS.PENDING)
-  const doingOrders = getFilteredOrders(orders, ORDER_STATUS.DOING)
-  const deliveryOrders = getFilteredOrders(orders, ORDER_STATUS.DELIVERY)
-
-  const playNotificationSound = async () => {
-    const audio = new Audio("/notification.mp3")
-    await audio.play()
   }
 
   const handleConfirmOrderCancel = async (reason: string) => {
@@ -111,6 +110,12 @@ const Orders = ({ user }: OrdersProps) => {
     getOrders()
     setSelectedOrder(undefined)
   }
+
+  useEffect(() => {
+    if (id) {
+      setSelectedOrder(orders.find((order: Order) => order.id === id)!)
+    }
+  }, [id])
 
   useChannel(user.store.subdomain!, async () => {
     await getOrders()

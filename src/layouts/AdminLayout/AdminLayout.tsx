@@ -1,7 +1,3 @@
-import AppBar from "@/components/AppBar"
-import BarIconButton from "@/components/BarIconButton"
-import Brand from "@/components/Brand"
-import { bottomMenu, topMenu } from "@/config/adminMenu"
 import {
   Box,
   Container,
@@ -13,7 +9,20 @@ import { get } from "lodash"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { ReactNode, useEffect, useRef, useState } from "react"
-import { BiBell } from "react-icons/bi"
+import { configureAbly, useChannel } from "@ably-labs/react-hooks"
+
+import { bottomMenu, topMenu } from "@/config/adminMenu"
+import { ORDER_STATUS } from "@/modules/admin/orders/constants"
+import { useAppContext } from "@/contexts/app"
+import AppBar from "@/components/AppBar"
+import BellButton from "@/components/BellButton"
+import BellButtonLarge from "@/components/BellButtonLarge/BellButtonLarge"
+import Brand from "@/components/Brand"
+import Order from "@/modules/admin/orders/types/Order"
+import OrderNotificationModal from "@/modules/admin/orders/components/OrderNotificationModal"
+import playNotificationSound from "@/modules/admin/orders/lib/playNotificationSound"
+import useBottomToast from "@/lib/hooks/useBottomToast"
+import useGetOrders from "@/modules/admin/orders/hooks/useGetOrders"
 
 import SideNav from "../../components/SideNav"
 
@@ -25,17 +34,42 @@ interface AdminLayoutProps {
   onActionClick?: () => void
 }
 
+configureAbly(process.env.NEXT_PUBLIC_ABLY_SUBSCRIBE_KEY!)
+
 const AdminLayout = ({
   children,
   isFullWidth = false,
   hasPadding = true,
 }: AdminLayoutProps) => {
-  const { data, status } = useSession()
-  const user = get(data, "user", undefined)
+  const { status } = useSession()
   const router = useRouter()
+  const toast = useBottomToast()
+
+  const {
+    state: { store },
+  } = useAppContext()
+
+  console.log("store", store)
 
   const [isOpen, setIsOpen] = useState(false)
   const [isClosed, setIsClosed] = useState(true)
+  const [isOrdersModalOpen, setIsOrdersModalOpen] = useState(false)
+
+  const { orders, getOrders } = useGetOrders()
+
+  const newOrders = orders
+    ? orders.filter((order: Order) => order.status === ORDER_STATUS.PENDING)
+    : []
+
+  useChannel("goodfood", async () => {
+    getOrders()
+    await playNotificationSound()
+    toast({
+      title: "Oba!",
+      description: "Você recebeu um novo pedido",
+      status: "info",
+    })
+  })
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -46,10 +80,16 @@ const AdminLayout = ({
   const renderNavigation = useBreakpointValue({
     base: (
       <AppBar
+        isFixed
         isOpen={isOpen}
         topMenu={topMenu}
         bottomMenu={bottomMenu}
-        leftIcon={<BarIconButton label="Menu" icon={<BiBell />} />}
+        leftIcon={
+          <BellButton
+            count={newOrders.length}
+            onClick={() => setIsOrdersModalOpen(true)}
+          />
+        }
         onMenuClick={() => setIsOpen(true)}
         onClose={() => setIsOpen(false)}
       />
@@ -71,6 +111,16 @@ const AdminLayout = ({
     ),
   })
 
+  const renderBellButtonLarge = useBreakpointValue({
+    base: null,
+    lg: (
+      <BellButtonLarge
+        count={newOrders.length}
+        onClick={() => setIsOrdersModalOpen(true)}
+      />
+    ),
+  })
+
   return (
     <Flex direction={{ base: "column", lg: "row" }}>
       {renderNavigation}
@@ -87,6 +137,16 @@ const AdminLayout = ({
           {children}
         </Container>
       </Box>
+      <OrderNotificationModal
+        isOpen={isOrdersModalOpen}
+        orders={newOrders}
+        onClose={() => setIsOrdersModalOpen(false)}
+        onOrderClick={(order: Order) => {
+          setIsOrdersModalOpen(false)
+          router.push(`/admin/orders?id=${order.id}`)
+        }}
+      />
+      {renderBellButtonLarge}
     </Flex>
   )
 }

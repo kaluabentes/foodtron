@@ -52,8 +52,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   })
 }
 
-let typingTimeout: any
-
 const Store = ({ store }: StorePageProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()

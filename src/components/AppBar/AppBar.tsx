@@ -59,7 +59,7 @@ const AppBar = ({
         title
       ) : (
         <Flex alignItems="center" gap="10px">
-          <Image src="/comet-blue.svg" alt="Comet" width="30px" />
+          <Image src="/comet-blue.svg" alt="Comet" width="26px" />
           <Image src="/comet-text.svg" alt="Comet" height="12px" />
         </Flex>
       )}

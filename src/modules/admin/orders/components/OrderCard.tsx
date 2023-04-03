@@ -20,7 +20,7 @@ import handleKeyDown from "@/lib/infra/browser/handleKeyDown"
 
 interface OrderCardProps {
   order: Order
-  isActive: boolean
+  isActive?: boolean
   isConfirming?: boolean
   onClick: () => void
   onConfirm?: () => void
@@ -65,19 +65,21 @@ const OrderCard = ({
       {isCancelling ? (
         <Spinner color="brand.500" size="sm" />
       ) : (
-        <CloseButton
-          onClick={(event) => {
-            event.stopPropagation()
+        onCancel && (
+          <CloseButton
+            onClick={(event) => {
+              event.stopPropagation()
 
-            if (onCancel) {
-              onCancel()
-            }
-          }}
-          color="gray.500"
-          p={4}
-          width="12px"
-          height="12px"
-        />
+              if (onCancel) {
+                onCancel()
+              }
+            }}
+            color="gray.500"
+            p={4}
+            width="12px"
+            height="12px"
+          />
+        )
       )}
     </Flex>
     <Flex

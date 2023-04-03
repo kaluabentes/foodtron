@@ -11,7 +11,7 @@ import { ReactNode } from "react"
 import Order from "../types/Order"
 import OrderDetails from "./OrderDetails"
 
-interface OrderDetailsModal {
+interface OrderDetailsModalProps {
   order: Order
   actions?: ReactNode
   onClose: () => void
@@ -27,7 +27,7 @@ const OrderDetailsModal = ({
   onClose,
   onConfirm,
   isConfirming,
-}: OrderDetailsModal) => (
+}: OrderDetailsModalProps) => (
   <Modal
     onClose={onClose}
     size={{ base: "full", md: "lg" }}
@@ -40,7 +40,9 @@ const OrderDetailsModal = ({
         p={4}
         justifyContent="space-between"
         alignItems="center"
-        background="gray.50"
+        background="white"
+        borderBottom="1px solid black"
+        borderColor="gray.100"
       >
         <Heading fontSize="lg" fontWeight="600">
           Detalhes do pedido
