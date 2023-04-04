@@ -12,6 +12,7 @@ import {
   Image,
   Input,
   Select,
+  Text,
 } from "@chakra-ui/react"
 import { BiLeftArrowAlt } from "react-icons/bi"
 import { useForm } from "react-hook-form"
@@ -137,12 +138,9 @@ const CreateAccount = () => {
           overflow="hidden"
           p={{ base: 4, md: 6 }}
         >
-          <Alert mb={4} borderRadius="md">
-            <AlertIcon />
-            Em instantes você receberá um código por SMS.
-          </Alert>
+          <Text mb={4}>Em instantes você receberá um código por SMS.</Text>
           <FormControl>
-            <FormLabel>{t("code")}</FormLabel>
+            <FormLabel>Insira o código</FormLabel>
             <MaskedWhatsappInput
               value={String(watch("code"))}
               mask="0000"

@@ -132,16 +132,7 @@ const EditUser = () => {
   }, [name, phone])
 
   return (
-    <AppLayout
-      title="Dados de usuário"
-      leftIcon={
-        <BarIconButton
-          label="Voltar"
-          onClick={() => router.push(redirect ? String(redirect) : "/")}
-          icon={<BiLeftArrowAlt />}
-        />
-      }
-    >
+    <AppLayout title="Dados de usuário">
       {!token && <UserAccountWarning />}
       <form onSubmit={handleSubmit(handleEditUser)}>
         <Flex

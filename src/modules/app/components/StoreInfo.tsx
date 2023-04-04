@@ -34,7 +34,7 @@ const StoreInfo = ({
     />
     <Flex flexDirection="column" alignItems="center" p={4}>
       <Heading
-        textTransform="uppercase"
+        maxWidth="400px"
         textAlign="center"
         size="lg"
         fontWeight="700"

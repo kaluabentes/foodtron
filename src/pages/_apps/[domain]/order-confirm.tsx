@@ -179,7 +179,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       leftIcon={
         <BarIconButton
           label="Voltar"
-          onClick={() => router.push("/order")}
+          onClick={() => router.push("/")}
           icon={<BiLeftArrowAlt />}
         />
       }
