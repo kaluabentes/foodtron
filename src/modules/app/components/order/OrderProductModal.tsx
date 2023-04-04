@@ -245,10 +245,10 @@ const OrderProductModal = ({
             shadow="md"
           />
           <Box p={4} mb={4}>
-            <Heading mb={1} fontSize="lg" fontWeight="500">
+            <Heading mb={4} fontSize="lg" fontWeight="500">
               {product?.title}
             </Heading>
-            <Text mb={2} color="gray.500" fontSize="sm">
+            <Text mb={4} color="gray.500" fontSize="sm">
               {product?.description}
             </Text>
             <Text fontWeight="500" fontSize="md">
