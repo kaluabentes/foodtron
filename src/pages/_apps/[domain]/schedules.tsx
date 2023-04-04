@@ -92,7 +92,9 @@ const Orders = ({ schedules }: OrdersProps) => {
         <Tbody>
           {schedules.map((schedule: Schedule) => (
             <Tr>
-              <Td p={4}>{weekDayMap.get(schedule.weekDay)}</Td>
+              <Td p={4} fontWeight="500">
+                {weekDayMap.get(schedule.weekDay)}
+              </Td>
               <Td p={4}>{schedule.isEnabled ? schedule.start : "---"}</Td>
               <Td p={4}>{schedule.isEnabled ? schedule.end : "---"}</Td>
             </Tr>
