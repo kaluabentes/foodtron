@@ -84,12 +84,15 @@ const Orders = ({ schedules }: OrdersProps) => {
 
     return (
       <Table sx={{ tableLayout: "fixed" }}>
+        <Thead>
+          <Th p={4}>{t("weekDay")}</Th>
+          <Th p={4}>{t("start")}</Th>
+          <Th p={4}>{t("end")}</Th>
+        </Thead>
         <Tbody>
           {schedules.map((schedule: Schedule) => (
             <Tr>
-              <Td p={4} fontWeight="500">
-                {weekDayMap.get(schedule.weekDay)}
-              </Td>
+              <Td p={4}>{weekDayMap.get(schedule.weekDay)}</Td>
               <Td p={4}>{schedule.isEnabled ? schedule.start : "---"}</Td>
               <Td p={4}>{schedule.isEnabled ? schedule.end : "---"}</Td>
             </Tr>
@@ -108,6 +111,7 @@ const Orders = ({ schedules }: OrdersProps) => {
         shadow="sm"
         backgroundColor="white"
         overflow="hidden"
+        p={{ base: 4, md: 0 }}
       >
         {renderOrders()}
       </Flex>
