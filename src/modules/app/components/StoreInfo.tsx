@@ -49,14 +49,16 @@ const StoreInfo = ({
         gap={1.5}
         mb={2}
       >
-        <Icon fontSize="22px" as={BiTimeFive} />
+        <Icon fontSize="22px" as={BiTimeFive} color="gray.500" />
         <Text as="span" fontWeight="500">
           {weekDay || "---"}
         </Text>
-        <Text color="gray.600">{schedule || "---"}</Text>
+        <Text fontWeight="500">{schedule || "---"}</Text>
       </Flex>
-      <Text mb={8} fontWeight="500">
-        Pedido mínimo:{" "}
+      <Text mb={8}>
+        <Box as="span" color="gray.600" fontSize="md">
+          Pedido mínimo:
+        </Box>{" "}
         <Box as="span" fontWeight="500">
           {formatToRealCurrency(Number(store.minimumOrderPrice))}
         </Box>

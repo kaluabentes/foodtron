@@ -20,7 +20,12 @@ const AddressSelectButton = ({
     borderRadius={{ lg: "md" }}
     shadow="sm"
   >
-    <Icon as={BiMap} color="brand.500" fontSize="30px" />
+    <Icon
+      as={BiMap}
+      color="brand.500"
+      fontSize="30px"
+      transform="translateY(-4px)"
+    />
     <Flex direction="column" alignItems="flex-start" flex={1}>
       <Text fontSize="xs" fontWeight="500">
         Entregar em:
