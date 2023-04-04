@@ -48,12 +48,12 @@ const StoreInfo = ({
         alignItems="center"
         gap={1.5}
         mb={2}
+        textDecoration={store.isOpen ? undefined : "line-through"}
       >
         <Icon fontSize="22px" as={BiTimeFive} color="gray.500" />
-        <Text as="span" fontWeight="500">
-          {weekDay || "---"}
+        <Text fontWeight="500">
+          {!weekDay ? "--- - ---" : `${weekDay} - ${schedule}`}
         </Text>
-        <Text fontWeight="500">{schedule || "---"}</Text>
       </Flex>
       <Text mb={8}>
         <Box as="span" color="gray.600" fontSize="md">
