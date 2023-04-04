@@ -209,16 +209,12 @@ const Index = ({ store = {}, categories }: IndexProps) => {
 
   return (
     <AppLayout title="Menu">
-      <AddressSelectButton
-        onClick={() => router.push("/addresses")}
-        address={assembledAddress}
-      />
       <Box
         borderRadius={{ lg: "md" }}
         overflow="hidden"
         boxShadow="sm"
         mt={{ base: 0, md: 4 }}
-        mb={{ lg: 0 }}
+        mb={4}
       >
         <StoreInfo
           onSchedulesClick={() => router.push("/schedules")}
@@ -229,6 +225,10 @@ const Index = ({ store = {}, categories }: IndexProps) => {
           location={location}
         />
       </Box>
+      <AddressSelectButton
+        onClick={() => router.push("/addresses")}
+        address={assembledAddress}
+      />
       <FilterBar
         search={filters.search}
         categories={categories}
