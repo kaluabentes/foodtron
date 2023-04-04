@@ -176,7 +176,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
     <AppLayout
       hideCartButton
       title="Confirmar pedido"
-      rightIcon={
+      leftIcon={
         <BarIconButton
           label="Voltar"
           onClick={() => router.push("/order")}

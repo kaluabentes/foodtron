@@ -107,7 +107,7 @@ const CreateAccount = () => {
   return (
     <AppLayout
       title="Criar conta"
-      rightIcon={
+      leftIcon={
         <BarIconButton
           label="Voltar"
           onClick={() => router.push(redirect ? String(redirect) : "/")}

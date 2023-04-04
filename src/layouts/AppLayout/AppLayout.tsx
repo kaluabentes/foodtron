@@ -26,14 +26,14 @@ import FoodtronBrand from "@/components/FoodtronBrand"
 interface AppLayoutProps {
   children: ReactNode
   title?: string
-  rightIcon?: ReactNode
+  leftIcon?: ReactNode
   hideCartButton?: boolean
 }
 
 const AppLayout = ({
   children,
   title,
-  rightIcon,
+  leftIcon,
   hideCartButton,
 }: AppLayoutProps) => {
   const router = useRouter()
@@ -177,8 +177,8 @@ const AppLayout = ({
             {title}
           </Heading>
         }
-        rightIcon={rightIcon}
-        leftIcon={
+        leftIcon={leftIcon}
+        rightIcon={
           <CartButton onClick={handleCartClick} quantity={products.length} />
         }
         sideNavHeader={renderHeader()}

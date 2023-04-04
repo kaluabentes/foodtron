@@ -271,7 +271,7 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
     <AppLayout
       hideCartButton
       title="Acompanhar pedido"
-      rightIcon={
+      leftIcon={
         <BarIconButton
           label="Voltar"
           onClick={() => router.push("/")}

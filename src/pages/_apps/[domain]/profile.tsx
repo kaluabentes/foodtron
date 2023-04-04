@@ -134,7 +134,7 @@ const EditUser = () => {
   return (
     <AppLayout
       title="Dados de usuário"
-      rightIcon={
+      leftIcon={
         <BarIconButton
           label="Voltar"
           onClick={() => router.push(redirect ? String(redirect) : "/")}

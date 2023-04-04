@@ -50,8 +50,8 @@ const AppBar = ({
       pl={2}
       pr={2}
     >
-      {rightIcon ? (
-        rightIcon
+      {leftIcon ? (
+        leftIcon
       ) : (
         <BarIconButton onClick={onMenuClick} label="Menu" icon={<BiMenu />} />
       )}
@@ -63,7 +63,7 @@ const AppBar = ({
           <Image src="/comet-text.svg" alt="Comet" height="12px" />
         </Flex>
       )}
-      {leftIcon}
+      {rightIcon}
     </Flex>
     <SideNav
       header={sideNavHeader}

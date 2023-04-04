@@ -144,7 +144,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
   return (
     <AppLayout
       title="Adicionar endereço"
-      rightIcon={
+      leftIcon={
         <BarIconButton
           label="Voltar"
           onClick={() => router.push("/addresses")}

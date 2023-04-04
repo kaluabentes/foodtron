@@ -30,6 +30,7 @@ const Shortcut = ({ icon, path, label }: ShortcutProps) => {
       p={3}
       gap="2px"
       color={isActive ? "brand.500" : "gray.500"}
+      fontWeight={isActive ? "500" : "400"}
       onClick={() => router.push(path)}
     >
       <Icon as={icon} fontSize="28px" />

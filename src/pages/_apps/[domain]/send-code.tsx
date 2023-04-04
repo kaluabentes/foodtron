@@ -120,7 +120,7 @@ const CreateAccount = () => {
   return (
     <AppLayout
       title="Código de verificação"
-      rightIcon={
+      leftIcon={
         <BarIconButton
           label="Voltar"
           onClick={() => router.push(redirect ? String(redirect) : "/")}

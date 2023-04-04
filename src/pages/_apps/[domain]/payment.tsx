@@ -69,7 +69,7 @@ const Payment = () => {
   return (
     <AppLayout
       title="Pagamento"
-      rightIcon={
+      leftIcon={
         <BarIconButton
           label="Voltar"
           onClick={handleRedirect}
