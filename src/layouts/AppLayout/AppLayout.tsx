@@ -168,7 +168,7 @@ const AppLayout = ({
         bottomMenu={authBottomMenu}
         isFixed
         title={
-          <Heading fontSize="sm" fontWeight="700" lineHeight="0">
+          <Heading fontSize="md" fontWeight="700" lineHeight="0">
             {title}
           </Heading>
         }
