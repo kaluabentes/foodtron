@@ -24,13 +24,10 @@ const updateStore = async ({ store, body }: any) => {
     },
     data: {
       name: body.name || store.name,
-      category: body.category || store.category,
       logo: body.logo || store.logo,
       cover: body.cover || store.cover,
       address: body.address || store.address,
       whatsapp: body.whatsapp ? formatPhone(body.whatsapp) : store.whatsapp,
-      facebook: body.facebook || store.facebook,
-      instagram: body.instagram || store.instagram,
       subdomain: body.subdomain || store.subdomain,
       customDomain: body.customDomain || store.customDomain,
       minimumOrderPrice: body.minimumOrderPrice
