@@ -169,7 +169,7 @@ const AddProduct = () => {
                 )
               }
             />
-            <Box p={8}>
+            <Box p={6}>
               <Heading fontSize="md" mb={4}>
                 Adicionar opções
               </Heading>
@@ -190,7 +190,7 @@ const AddProduct = () => {
                 </Button>
               </Flex>
             </Box>
-            <Box p={8} pt={0} overflow="auto">
+            <Box p={6} pt={0} overflow="auto">
               {productOptions.length === 0 ? (
                 <EmptyState isGray message={t("productOptionsEmptyState")} />
               ) : (

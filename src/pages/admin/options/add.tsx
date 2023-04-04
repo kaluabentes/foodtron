@@ -133,10 +133,10 @@ const AddOption = () => {
               label={t("required")}
               input={<Switch colorScheme="brand" {...register("required")} />}
             />
-            <Box pl={8} pr={8} pt={8}>
+            <Box pl={6} pr={6} pt={6}>
               <Heading fontSize="md">Opções</Heading>
             </Box>
-            <Box padding={8} pb={4} pt={4}>
+            <Box padding={6} pb={4} pt={4}>
               <Flex
                 gap={4}
                 p={4}
@@ -168,7 +168,7 @@ const AddOption = () => {
                 </Box>
               </Flex>
             </Box>
-            <Box pb={8} pl={8} pr={8}>
+            <Box pb={6} pl={6} pr={6}>
               <Button
                 colorScheme="brand"
                 onClick={handleAddOption}
@@ -177,7 +177,7 @@ const AddOption = () => {
                 Adicionar opção
               </Button>
             </Box>
-            <Box p={8} pt={0}>
+            <Box p={6} pt={0}>
               {options.length === 0 ? (
                 <EmptyState isGray message={t("optionsEmptyState")} />
               ) : (

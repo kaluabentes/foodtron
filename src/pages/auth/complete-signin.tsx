@@ -180,12 +180,7 @@ const CompleteSignin = () => {
             {errors.userName?.message}
           </FormErrorMessage>
         </FormControl>
-        <Heading
-          size="sm"
-          marginBottom={5}
-          fontWeight="600"
-          textTransform="uppercase"
-        >
+        <Heading size="sm" marginBottom={5} fontWeight="700">
           {t("storeInformation")}
         </Heading>
         <Box
