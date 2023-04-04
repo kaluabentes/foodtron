@@ -4,12 +4,14 @@ import { ReactNode } from "react"
 interface BaseOrderItemProps {
   leftSlot: ReactNode
   rightSlot: ReactNode
+  alignItems?: string
   onClick?: () => void
 }
 
 const BaseOrderItem = ({
   leftSlot,
   rightSlot,
+  alignItems = "center",
   onClick,
 }: BaseOrderItemProps) => {
   return (
@@ -23,7 +25,7 @@ const BaseOrderItem = ({
       textAlign="left"
       onClick={onClick}
     >
-      <Flex p={{ base: 4, md: 6 }} alignItems="center">
+      <Flex p={{ base: 4, md: 6 }} alignItems={alignItems}>
         <Box flex={1}>{leftSlot}</Box>
         <Box flex={1} textAlign="right">
           {rightSlot}

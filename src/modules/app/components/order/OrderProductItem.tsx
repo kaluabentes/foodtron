@@ -18,6 +18,7 @@ const OrderProductItem = ({
 }: OrderProductItemProps) => {
   return (
     <BaseOrderItem
+      alignItems="start"
       onClick={onClick}
       leftSlot={
         <Flex direction="column" gap={1}>
@@ -34,7 +35,11 @@ const OrderProductItem = ({
               Obs.: {product.observation}
             </Text>
           )}
-          {onClick && <IconActionButton icon={<BiDotsHorizontalRounded />} />}
+          {onClick && (
+            <Box mt={2}>
+              <IconActionButton icon={<BiDotsHorizontalRounded />} />
+            </Box>
+          )}
         </Flex>
       }
       rightSlot={

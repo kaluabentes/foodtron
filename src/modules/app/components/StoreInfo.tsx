@@ -56,7 +56,7 @@ const StoreInfo = ({
         </Text>
       </Flex>
       <Text mb={8}>
-        <Box as="span" color="gray.600" fontSize="md">
+        <Box as="span" color="gray.500" fontSize="md">
           Pedido mínimo:
         </Box>{" "}
         <Box as="span" fontWeight="500">
@@ -65,7 +65,7 @@ const StoreInfo = ({
       </Text>
       <Flex gap={6} alignItems="center">
         <Flex direction="column" alignItems="center">
-          <Text as="span" fontSize="14px" color="gray.600">
+          <Text as="span" fontSize="14px" color="gray.500">
             Tempo
           </Text>
           {location.estimatedTime ? (
@@ -86,7 +86,7 @@ const StoreInfo = ({
         </Flex>
         <StripeSeparator />
         <Flex direction="column" alignItems="center">
-          <Text as="span" fontSize="14px" color="gray.600">
+          <Text as="span" fontSize="14px" color="gray.500">
             Taxa
           </Text>
           {location.tax ? (
