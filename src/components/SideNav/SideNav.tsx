@@ -15,6 +15,7 @@ interface SideNavProps {
   topMenu: RouteItem[]
   isClosed: boolean
   isTransparent?: boolean
+  isFixed?: boolean
   onClosedToggle?: (state: boolean) => void
 }
 
@@ -24,6 +25,7 @@ const SideNav = ({
   topMenu,
   isClosed,
   isTransparent = false,
+  isFixed = false,
   onClosedToggle,
 }: SideNavProps) => {
   const router = useRouter()
@@ -41,7 +43,7 @@ const SideNav = ({
       shadow={isTransparent ? undefined : "md"}
       height="100vh"
       transition="0.5s"
-      position="relative"
+      position={isFixed ? "fixed" : "relative"}
       onMouseOver={() => onClosedToggle && onClosedToggle(false)}
       onMouseLeave={() => onClosedToggle && onClosedToggle(true)}
       overflowX="hidden"
