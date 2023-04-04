@@ -26,7 +26,7 @@ const MenuItem = ({ product, onClick }: MenuItemProps) => (
     >
       <Flex gap={2}>
         <Box flex={1} marginRight={2}>
-          <Heading mb={4} fontSize={{ base: "sm", lg: "md" }} fontWeight="500">
+          <Heading mb={4} fontSize={{ base: "md", lg: "md" }} fontWeight="500">
             {product.title}
           </Heading>
           <Text mb={4} color="gray.500" fontSize={{ base: "sm", lg: "md" }}>
