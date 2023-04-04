@@ -93,8 +93,6 @@ model Store {
   cover             String?
   address           String?
   whatsapp          String?
-  facebook          String?
-  instagram         String?
   subdomain         String?  @unique
   customDomain      String?
   minimumOrderPrice Decimal?

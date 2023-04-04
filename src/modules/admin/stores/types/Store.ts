@@ -8,8 +8,6 @@ interface Store {
   cover?: string
   address?: string
   whatsapp?: string
-  facebook?: string
-  instagram?: string
   subdomain?: string
   customDomain?: string
   minimumOrderPrice?: Number

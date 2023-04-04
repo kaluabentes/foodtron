@@ -70,7 +70,7 @@ const Store = ({ store }: StorePageProps) => {
   return (
     <AdminLayout>
       <PageHeader
-        title={t("store")}
+        title="Configurações"
         actions={
           <Flex gap={3} alignItems="center">
             {isOpen ? (
@@ -85,7 +85,7 @@ const Store = ({ store }: StorePageProps) => {
             />
             <Button
               colorScheme="brand"
-              onClick={() => router.push("/admin/store/edit")}
+              onClick={() => router.push("/admin/settings/edit")}
             >
               Editar
             </Button>
@@ -146,26 +146,6 @@ const Store = ({ store }: StorePageProps) => {
                 <DataCell>
                   <DataHead>
                     <Box as="span" fontWeight="500">
-                      {t("facebook")}
-                    </Box>
-                  </DataHead>
-                  <DataValue>
-                    <TruncateText>{store.facebook}</TruncateText>
-                  </DataValue>
-                </DataCell>
-                <DataCell>
-                  <DataHead>
-                    <Box as="span" fontWeight="500">
-                      {t("instagram")}
-                    </Box>
-                  </DataHead>
-                  <DataValue>
-                    <TruncateText>{store.instagram}</TruncateText>
-                  </DataValue>
-                </DataCell>
-                <DataCell>
-                  <DataHead>
-                    <Box as="span" fontWeight="500">
                       {t("subdomain")}
                     </Box>
                   </DataHead>
@@ -191,14 +171,6 @@ const Store = ({ store }: StorePageProps) => {
                       minimumFractionDigits: 2,
                     })}
                   </DataValue>
-                </DataCell>
-                <DataCell>
-                  <DataHead>
-                    <Box as="span" fontWeight="500">
-                      {t("isOpen")}
-                    </Box>
-                  </DataHead>
-                  <DataValue>{store.isOpen ? t("yes") : t("no")}</DataValue>
                 </DataCell>
               </Box>
             </Box>

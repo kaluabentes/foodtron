@@ -63,19 +63,19 @@ const EditStore = ({ store }: StorePageProps) => {
 
   const handleUpdate = async (values: Store) => {
     await updateStore(values)
-    router.push("/admin/store")
+    router.push("/admin/settings")
   }
 
   return (
     <AdminLayout>
       <form onSubmit={handleSubmit(handleUpdate)}>
         <PageHeader
-          title={t("editStore")}
+          title="Editar configurações"
           actions={
             <Flex gap="8px">
               <Button
                 variant="outline"
-                onClick={() => router.push("/admin/store")}
+                onClick={() => router.push("/admin/settings")}
               >
                 {t("cancel")}
               </Button>
@@ -159,30 +159,12 @@ const EditStore = ({ store }: StorePageProps) => {
               <DataCell>
                 <DataHead>
                   <Box as="span" fontWeight="500">
-                    {t("facebook")}
+                    {t("minimumOrderPrice")}
                   </Box>
                 </DataHead>
                 <DataValue>
                   <FormControl>
-                    <Input
-                      placeholder="example@domain.com"
-                      {...register("facebook")}
-                    />
-                  </FormControl>
-                </DataValue>
-              </DataCell>
-              <DataCell>
-                <DataHead>
-                  <Box as="span" fontWeight="500">
-                    {t("instagram")}
-                  </Box>
-                </DataHead>
-                <DataValue>
-                  <FormControl>
-                    <Input
-                      placeholder="example@domain.com"
-                      {...register("instagram")}
-                    />
+                    <Input {...register("minimumOrderPrice")} />
                   </FormControl>
                 </DataValue>
               </DataCell>
@@ -200,18 +182,6 @@ const EditStore = ({ store }: StorePageProps) => {
                         children={`.${process.env.NEXT_PUBLIC_APEX_DOMAIN}`}
                       />
                     </InputGroup>
-                  </FormControl>
-                </DataValue>
-              </DataCell>
-              <DataCell>
-                <DataHead>
-                  <Box as="span" fontWeight="500">
-                    {t("minimumOrderPrice")}
-                  </Box>
-                </DataHead>
-                <DataValue>
-                  <FormControl>
-                    <Input {...register("minimumOrderPrice")} type="number" />
                   </FormControl>
                 </DataValue>
               </DataCell>

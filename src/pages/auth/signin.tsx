@@ -30,7 +30,7 @@ export const getServerSideProps = async (context: any) => {
   if (session?.user) {
     return {
       redirect: {
-        destination: "/admin/store",
+        destination: "/admin/orders",
         permanent: false,
       },
     }

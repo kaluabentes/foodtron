@@ -124,7 +124,11 @@ const StoreMidiaUpload = ({
             Capa
           </Text>
         )}
-        {!cover && <IconActionButton icon={<BiEdit />} />}
+        {(!cover || onCoverChange) && (
+          <Box position="absolute" left={4} bottom={4}>
+            <IconActionButton icon={<BiEdit />} />
+          </Box>
+        )}
         {cover && (
           <Image
             src={cover}
@@ -169,7 +173,11 @@ const StoreMidiaUpload = ({
               Logo
             </Text>
           )}
-          {!logo && <IconActionButton icon={<BiEdit />} />}
+          {(!logo || onLogoChange) && (
+            <Box position="absolute" left={4} bottom={4}>
+              <IconActionButton icon={<BiEdit />} />
+            </Box>
+          )}
           {logo && (
             <Image
               src={logo}

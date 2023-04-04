@@ -58,7 +58,7 @@ const AppLayout = ({
     {
       icon: FaWhatsapp,
       label: "WhatsApp",
-      path: "/admin/store",
+      path: "/admin/settings",
       onClick: () => {
         window.open(`https://wa.me/${store.whatsapp}`, "_blank")
       },
