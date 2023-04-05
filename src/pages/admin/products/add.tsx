@@ -186,7 +186,7 @@ const AddProduct = () => {
                   onClick={() => router.push("/admin/options/add")}
                   colorScheme="brand"
                 >
-                  Cadastrar opção
+                  Criar opção
                 </Button>
               </Flex>
             </Box>

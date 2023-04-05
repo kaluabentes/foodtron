@@ -6,33 +6,30 @@ import {
   Spinner,
   Input,
   Switch,
-  FormLabel,
   Heading,
-  Table,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  IconButton,
 } from "@chakra-ui/react"
 import { GetServerSideProps } from "next"
 import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
+import { v4 as uuidv4 } from "uuid"
 
 import AdminLayout from "@/layouts/AdminLayout"
 import PageHeader from "@/components/PageHeader"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import DataField from "@/components/DataField"
 import auth from "@/middlewares/auth"
-import useCreateOption from "@/modules/admin/options/hooks/useCreateOption"
 import { useState } from "react"
 import Option from "@/modules/admin/options/types/Option"
-import EmptyState from "@/components/EmptyState"
-import { BiTrash } from "react-icons/bi"
 import OptionGroup from "@/modules/admin/options/types/OptionGroup"
 import useUpdateOption from "@/modules/admin/options/hooks/useUpdateOption"
 import useBottomToast from "@/lib/hooks/useBottomToast"
+import { OptionDraft } from "../add"
+import OptionInputCard from "@/modules/admin/options/components/OptionInputCard"
+
+interface EditOptionProps {
+  option: OptionGroup
+  options: OptionDraft[]
+}
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async () => {
@@ -48,44 +45,70 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         options: true,
       },
     })
+    const options = option?.options.map((opt) => ({
+      ...opt,
+      price: opt.price ? opt.price?.toFixed(2) : null,
+    }))
 
     return {
       props: {
         option: {
           ...option,
-          options: option?.options.map((opt) => ({
-            ...opt,
-            price: opt.price ? opt.price?.toFixed(2) : null,
-          })),
+          options,
         },
+        options,
       },
     }
   })
 }
 
-interface EditOptionProps {
-  option: OptionGroup
-}
-
-const EditOption = ({ option: defaultOption }: EditOptionProps) => {
+const EditOption = ({ option, options: defaultOptions }: EditOptionProps) => {
   const { t } = useTranslation()
   const toast = useBottomToast()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
-  const [option, setOption] = useState({
+
+  const [options, setOptions] = useState<OptionDraft[]>(defaultOptions || [])
+
+  const { updateOption, isUpdating } = useUpdateOption(String(option.id))
+
+  const { register, handleSubmit } = useForm({
+    defaultValues: option,
+  })
+
+  const getOptionValue = (optionId: string, field: string) => {
+    const foundOpt = options.find((opt) => opt.id === optionId)
+
+    return foundOpt![field]
+  }
+
+  const createNewOption = () => ({
+    id: uuidv4(),
     title: "",
     price: "",
   })
-  const [options, setOptions] = useState<Option[]>(defaultOption?.options || [])
-
-  const { updateOption, isUpdating } = useUpdateOption(String(defaultOption.id))
-
-  const { register, handleSubmit } = useForm({
-    defaultValues: defaultOption,
-  })
 
   const handleAddOption = () => {
-    setOptions((prev) => [...prev, option])
+    setOptions((prev) => [...prev, createNewOption()])
+  }
+
+  const handleOptionChange = (
+    option: OptionDraft,
+    field: string,
+    value: string
+  ) => {
+    setOptions((prev) =>
+      prev.map((opt) => {
+        if (opt.id === option.id) {
+          return {
+            ...opt,
+            [field]: value,
+          }
+        }
+
+        return opt
+      })
+    )
   }
 
   const handleFormSubmit = () => {
@@ -94,6 +117,15 @@ const EditOption = ({ option: defaultOption }: EditOptionProps) => {
         toast({
           title: "Atenção!",
           description: "Adicione ao menos uma opção",
+          status: "error",
+        })
+        return
+      }
+
+      if (options.length > 0 && options.some((opt) => !opt.title.length)) {
+        toast({
+          title: "Atenção!",
+          description: "Preencha o campo título",
           status: "error",
         })
         return
@@ -161,38 +193,34 @@ const EditOption = ({ option: defaultOption }: EditOptionProps) => {
             <Box pl={6} pr={6} pt={6}>
               <Heading fontSize="md">Opções</Heading>
             </Box>
-            <Box padding={6} pb={4} pt={4}>
-              <Flex
-                gap={4}
-                p={4}
-                border="1px solid transparent"
-                borderColor="gray.200"
-                borderRadius="md"
-              >
-                <Box flex={1}>
-                  <FormLabel>Título</FormLabel>
-                  <Input
-                    onChange={(event) =>
-                      setOption((prev) => ({
-                        ...prev,
-                        title: event.target.value,
-                      }))
-                    }
-                  />
-                </Box>
-                <Box flex={1}>
-                  <FormLabel>Preço</FormLabel>
-                  <Input
-                    onChange={(event) =>
-                      setOption((prev) => ({
-                        ...prev,
-                        price: event.target.value,
-                      }))
-                    }
-                  />
-                </Box>
-              </Flex>
-            </Box>
+            <Flex direction="column" gap={4} padding={6} pb={4} pt={4}>
+              {options.map((option) => (
+                <OptionInputCard
+                  title={getOptionValue(option.id, "title")}
+                  price={getOptionValue(option.id, "price")}
+                  onTitleChange={(event) =>
+                    handleOptionChange(
+                      option,
+                      "title",
+                      event.currentTarget.value
+                    )
+                  }
+                  onPriceChange={(event) =>
+                    handleOptionChange(
+                      option,
+                      "price",
+                      event.currentTarget.value
+                    )
+                  }
+                  onRemove={() =>
+                    setOptions((prev) =>
+                      prev.filter((opt) => opt.id !== option.id)
+                    )
+                  }
+                  key={option.id}
+                />
+              ))}
+            </Flex>
             <Box pb={6} pl={6} pr={6}>
               <Button
                 colorScheme="brand"
@@ -201,43 +229,6 @@ const EditOption = ({ option: defaultOption }: EditOptionProps) => {
               >
                 Adicionar opção
               </Button>
-            </Box>
-            <Box p={6} pt={0}>
-              {options.length === 0 ? (
-                <EmptyState isGray message={t("optionsEmptyState")} />
-              ) : (
-                <Table>
-                  <Thead>
-                    <Tr>
-                      <Th>Título</Th>
-                      <Th>Preço</Th>
-                      <Th>Ações</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {options.map((option: Option) => (
-                      <Tr key={option.id}>
-                        <Td>{option.title}</Td>
-                        <Td>{option.price}</Td>
-                        <Td>
-                          <IconButton
-                            aria-label="Remover produto"
-                            icon={<BiTrash />}
-                            size="sm"
-                            onClick={() =>
-                              setOptions((prev) =>
-                                prev.filter(
-                                  (childOption) => childOption.id !== option.id
-                                )
-                              )
-                            }
-                          />
-                        </Td>
-                      </Tr>
-                    ))}
-                  </Tbody>
-                </Table>
-              )}
             </Box>
           </Box>
         )}
