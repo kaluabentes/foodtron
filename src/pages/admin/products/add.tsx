@@ -15,6 +15,8 @@ import {
   Td,
   IconButton,
   Select,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react"
 import { GetServerSideProps } from "next"
 import { useRouter } from "next/router"
@@ -37,6 +39,7 @@ import { BiTrash } from "react-icons/bi"
 import Product from "@/modules/admin/products/types/Product"
 import useGetCategories from "@/modules/admin/categories/hooks/useGetCategories"
 import Category from "@/modules/admin/categories/types/Category"
+import OptionButton from "@/modules/admin/products/components/OptionButton"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])
@@ -68,13 +71,16 @@ const AddProduct = () => {
     },
   })
 
-  const getOptions = () =>
-    options.filter(
-      (optionGroup: OptionGroup) =>
-        !productOptions.find(
-          (productOption) => productOption.id === optionGroup.id
-        )
-    )
+  const handleOptionClick = (option: OptionGroup) =>
+    setProductOptions((prev) => {
+      const foundOpt = prev.find((prevOption) => prevOption.id === option.id)
+
+      if (foundOpt) {
+        return prev.filter((prevOption) => prevOption.id !== option.id)
+      } else {
+        return [...prev, option]
+      }
+    })
 
   const handleImageUpload = () => {
     window.cloudinary.openUploadWidget(
@@ -173,62 +179,27 @@ const AddProduct = () => {
               <Heading fontSize="md" mb={4}>
                 Adicionar opções
               </Heading>
-              <Flex gap={2}>
-                {getOptions().map((opt: OptionGroup) => (
-                  <Button
-                    key={opt.id}
-                    onClick={() => setProductOptions((prev) => [...prev, opt])}
-                  >
-                    {opt.title}
-                  </Button>
+              <Grid templateColumns="repeat(2, 1fr)" gap={2} mb={4}>
+                {options.map((option: OptionGroup) => (
+                  <GridItem colSpan={1}>
+                    <OptionButton
+                      key={option.id}
+                      onClick={() => handleOptionClick(option)}
+                      isActive={Boolean(
+                        productOptions.find((opt) => opt.id === option.id)
+                      )}
+                    >
+                      {option.title}
+                    </OptionButton>
+                  </GridItem>
                 ))}
-                <Button
-                  onClick={() => router.push("/admin/options/add")}
-                  colorScheme="brand"
-                >
-                  Criar opção
-                </Button>
-              </Flex>
-            </Box>
-            <Box p={6} pt={0} overflow="auto">
-              {productOptions.length === 0 ? (
-                <EmptyState isGray message={t("productOptionsEmptyState")} />
-              ) : (
-                <Table>
-                  <Thead>
-                    <Tr>
-                      <Th>Título</Th>
-                      <Th>Máximo de opções</Th>
-                      <Th>Obrigatório</Th>
-                      <Th>Ações</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {productOptions.map((option: OptionGroup) => (
-                      <Tr key={option.id}>
-                        <Td>{option.title}</Td>
-                        <Td>{option.maxOption}</Td>
-                        <Td>{option.required ? "Sim" : "Não"}</Td>
-                        <Td>
-                          <IconButton
-                            aria-label="Remover produto"
-                            icon={<BiTrash />}
-                            size="sm"
-                            onClick={() =>
-                              setProductOptions((prev) =>
-                                prev.filter(
-                                  (childOption: OptionGroup) =>
-                                    childOption.id !== option.id
-                                )
-                              )
-                            }
-                          />
-                        </Td>
-                      </Tr>
-                    ))}
-                  </Tbody>
-                </Table>
-              )}
+              </Grid>
+              <Button
+                onClick={() => router.push("/admin/options/add")}
+                colorScheme="brand"
+              >
+                Criar opção
+              </Button>
             </Box>
           </Box>
         )}

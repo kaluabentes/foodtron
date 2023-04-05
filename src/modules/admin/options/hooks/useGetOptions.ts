@@ -1,29 +1,17 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
+import useSWR from "swr"
+
+import api from "@/lib/infra/axios/api"
+
+const fetcher = (url: string) => api.get(url).then((res) => res.data)
 
 const useGetOptions = () => {
-  const [options, setOptions] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const { data: options, mutate } = useSWR("/api/options", fetcher)
 
   const getOptions = async () => {
-    try {
-      setIsLoading(true)
-
-      const response = await axios.get("/api/options")
-
-      setOptions(response.data)
-    } catch (error: any) {
-      console.log(error.message)
-    } finally {
-      setIsLoading(false)
-    }
+    mutate()
   }
 
-  useEffect(() => {
-    getOptions()
-  }, [])
-
-  return { options, getOptions, isLoading }
+  return { options: options || [], getOptions, isLoading: !options }
 }
 
 export default useGetOptions
