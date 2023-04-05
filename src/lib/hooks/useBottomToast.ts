@@ -18,7 +18,7 @@ const useBottomToast = () => {
       title,
       description,
       status,
-      duration: 3000,
+      duration: 5000,
       isClosable: true,
       position: "bottom-right",
     })

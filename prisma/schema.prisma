@@ -92,6 +92,9 @@ model Store {
   logo              String?
   cover             String?
   address           String?
+  city              String?
+  state             String?
+  cnpj              String?
   whatsapp          String?
   subdomain         String?  @unique
   customDomain      String?

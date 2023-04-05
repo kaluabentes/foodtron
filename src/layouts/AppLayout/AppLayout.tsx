@@ -54,17 +54,6 @@ const AppLayout = ({
   const [isOpen, setIsOpen] = useState(false)
   const [isClosed, setIsClosed] = useState(true)
 
-  const commonBottomMenu = [
-    {
-      icon: FaWhatsapp,
-      label: "WhatsApp",
-      path: "/admin/settings",
-      onClick: () => {
-        window.open(`https://wa.me/${store.whatsapp}`, "_blank")
-      },
-    },
-  ]
-
   const authBottomMenu = token
     ? [
         {
@@ -87,7 +76,6 @@ const AppLayout = ({
           },
         },
         ...bottomMenu,
-        ...commonBottomMenu,
       ]
     : [
         {
@@ -96,7 +84,6 @@ const AppLayout = ({
           path: "/login",
         },
         ...bottomMenu,
-        ...commonBottomMenu,
       ]
 
   const getMobilePaddingBottom = () => {
