@@ -83,7 +83,7 @@ const AdminLayout = ({
         isOpen={isOpen}
         topMenu={topMenu}
         bottomMenu={bottomMenu}
-        leftIcon={
+        rightIcon={
           <BellButton
             count={newOrders.length}
             onClick={() => setIsOrdersModalOpen(true)}
@@ -132,6 +132,7 @@ const AdminLayout = ({
           }}
           padding={hasPadding ? undefined : 0}
           as="main"
+          pt={{ base: "60px", lg: 0 }}
         >
           {children}
         </Container>
