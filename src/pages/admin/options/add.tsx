@@ -111,8 +111,6 @@ const AddOption = () => {
     })
   }
 
-  console.log("options", options)
-
   return (
     <AdminLayout>
       <form onSubmit={handleFormSubmit()}>

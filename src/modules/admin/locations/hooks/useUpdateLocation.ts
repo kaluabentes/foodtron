@@ -30,7 +30,7 @@ const useUpdateLocation = (locationId: string) => {
       })
       router.push("/admin/locations")
     } catch (error: any) {
-      console.log("> update location: ", error)
+      console.log("> Update location: ", error)
     } finally {
       setIsSaving(false)
     }

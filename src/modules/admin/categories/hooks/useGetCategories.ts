@@ -13,7 +13,7 @@ const useGetCategories = () => {
 
       setCategories(response.data)
     } catch (error: any) {
-      console.log(error.message)
+      console.log("> Get categories: ", error.message)
     } finally {
       setIsLoading(false)
     }

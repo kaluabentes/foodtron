@@ -48,8 +48,6 @@ const AdminLayout = ({
     state: { store },
   } = useAppContext()
 
-  console.log("store", store)
-
   const [isOpen, setIsOpen] = useState(false)
   const [isClosed, setIsClosed] = useState(true)
   const [isOrdersModalOpen, setIsOrdersModalOpen] = useState(false)

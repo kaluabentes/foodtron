@@ -8,8 +8,6 @@ const Home = () => {
   const router = useRouter()
   const { data: session } = useSession()
 
-  console.log("session", session)
-
   return (
     <>
       <h1>Home</h1>
