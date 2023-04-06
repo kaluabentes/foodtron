@@ -10,7 +10,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "yarn build"
+      "prepush": "yarn build"
     }
   },
   "dependencies": {
