@@ -40,6 +40,7 @@ import { BiTrash } from "react-icons/bi"
 import useGetCategories from "@/modules/admin/categories/hooks/useGetCategories"
 import Category from "@/modules/admin/categories/types/Category"
 import OptionButton from "@/modules/admin/products/components/OptionButton"
+import AddOptionModal from "@/modules/admin/products/components/AddOptionModal"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async () => {
@@ -85,17 +86,18 @@ const EditProduct = ({ product }: EditProductProps) => {
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
 
+  const { register, handleSubmit, watch, setValue } = useForm({
+    defaultValues: product,
+  })
+
   const { updateProduct, isUpdating } = useUpdateProduct(product.id!)
-  const { options } = useGetOptions()
+  const { options, getOptions } = useGetOptions()
   const { categories } = useGetCategories()
 
   const [productOptions, setProductOptions] = useState<OptionGroup[]>(
     product.productOptionGroups?.map((pog) => pog.optionGroup)!
   )
-
-  const { register, handleSubmit, watch, setValue } = useForm({
-    defaultValues: product,
-  })
+  const [isAddOptionModalOpen, setIsAddOptionModal] = useState(false)
 
   const handleOptionClick = (option: OptionGroup) =>
     setProductOptions((prev) => {
@@ -223,6 +225,9 @@ const EditProduct = ({ product }: EditProductProps) => {
               <Heading fontSize="md" mb={4}>
                 Selecione as opções
               </Heading>
+              {!options.length && (
+                <EmptyState message="Não opções criados no momento." />
+              )}
               <Grid templateColumns="repeat(2, 1fr)" gap={2} mb={4}>
                 {options.map((option: OptionGroup) => (
                   <GridItem colSpan={{ base: 2, md: 1 }}>
@@ -239,7 +244,7 @@ const EditProduct = ({ product }: EditProductProps) => {
                 ))}
               </Grid>
               <Button
-                onClick={() => router.push("/admin/options/add")}
+                onClick={() => setIsAddOptionModal(true)}
                 colorScheme="brand"
               >
                 Criar opção
@@ -248,6 +253,14 @@ const EditProduct = ({ product }: EditProductProps) => {
           </Box>
         )}
       </form>
+      <AddOptionModal
+        isOpen={isAddOptionModalOpen}
+        onClose={() => setIsAddOptionModal(false)}
+        onConfirm={() => {
+          getOptions()
+          setIsAddOptionModal(false)
+        }}
+      />
     </AdminLayout>
   )
 }

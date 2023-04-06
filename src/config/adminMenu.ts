@@ -7,9 +7,7 @@ import {
   BiGridAlt,
   BiLogOut,
   BiMap,
-  BiHomeHeart,
   BiAlarm,
-  BiMoney,
   BiPurchaseTag,
   BiCheckCircle,
   BiCog,
@@ -46,23 +44,32 @@ export const topMenu: RouteItem[] = [
     label: "Horários",
     path: "/admin/schedules",
   },
-]
-
-export const bottomMenu: RouteItem[] = [
   {
     icon: BiCog,
     label: "Configurações",
     path: "/admin/settings",
   },
+]
+
+export const bottomMenu: RouteItem[] = [
+  // {
+  //   icon: BiBug,
+  //   label: "Reportar bug",
+  //   path: "/admin/settings",
+  // },
+  // {
+  //   icon: BiHelpCircle,
+  //   label: "Ajuda",
+  //   path: "/admin/settings",
+  // },
   {
     icon: BiUser,
-    label: "Perfil",
+    label: "Perfil de usuário",
     path: "/admin/profile",
   },
   {
     icon: BiLogOut,
     label: "Sair",
-    path: "/admin/logout",
     onClick: () => signOut({ callbackUrl: "/auth/signin" }),
   },
 ]

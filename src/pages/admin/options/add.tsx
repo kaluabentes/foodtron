@@ -22,6 +22,7 @@ import useCreateOption from "@/modules/admin/options/hooks/useCreateOption"
 import { useState } from "react"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import OptionInputCard from "@/modules/admin/options/components/OptionInputCard"
+import { BiPlus } from "react-icons/bi"
 
 export interface OptionDraft {
   title: string
@@ -88,7 +89,7 @@ const AddOption = () => {
   }
 
   const handleFormSubmit = () => {
-    return handleSubmit((data) => {
+    return handleSubmit(async (data) => {
       if (!options.length) {
         toast({
           title: "Atenção!",
@@ -107,7 +108,8 @@ const AddOption = () => {
         return
       }
 
-      createOption({ ...data, options })
+      await createOption({ ...data, options })
+      router.push("/admin/options")
     })
   }
 
@@ -198,7 +200,11 @@ const AddOption = () => {
               ))}
             </Flex>
             <Box pb={6} pl={6} pr={6}>
-              <Button colorScheme="brand" onClick={handleAddOption}>
+              <Button
+                leftIcon={<BiPlus />}
+                variant="outline"
+                onClick={handleAddOption}
+              >
                 Adicionar opção
               </Button>
             </Box>

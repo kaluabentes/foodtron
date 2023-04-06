@@ -25,6 +25,7 @@ import useUpdateOption from "@/modules/admin/options/hooks/useUpdateOption"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import { OptionDraft } from "../add"
 import OptionInputCard from "@/modules/admin/options/components/OptionInputCard"
+import { BiPlus } from "react-icons/bi"
 
 interface EditOptionProps {
   option: OptionGroup
@@ -223,7 +224,8 @@ const EditOption = ({ option, options: defaultOptions }: EditOptionProps) => {
             </Flex>
             <Box pb={6} pl={6} pr={6}>
               <Button
-                colorScheme="brand"
+                leftIcon={<BiPlus />}
+                variant="outline"
                 onClick={handleAddOption}
                 disabled={!option.title}
               >

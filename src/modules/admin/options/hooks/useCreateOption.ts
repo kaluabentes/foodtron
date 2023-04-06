@@ -15,14 +15,14 @@ const useCreateOption = () => {
     try {
       setIsCreating(true)
 
-      await axios.post("/api/options", data)
+      const response = await axios.post("/api/options", data)
 
       toast({
         title: "Feito!",
         description: "Opção criado com sucesso.",
       })
 
-      router.push("/admin/options")
+      return response.data
     } catch (error: any) {
       toast({ title: "Erro!", description: error.message })
     } finally {
