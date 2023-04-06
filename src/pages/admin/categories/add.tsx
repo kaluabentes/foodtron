@@ -11,7 +11,7 @@ import auth from "@/middlewares/auth"
 import { GetServerSideProps } from "next"
 import useCreateCategory from "@/modules/admin/categories/hooks/useCreateCategory"
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps = async (context) => {
   return auth(context, ["admin"])
 }
 
