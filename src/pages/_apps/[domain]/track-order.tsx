@@ -178,7 +178,9 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
                     O pedido foi cancelado
                   </Text>
                   <Text>
-                    <strong>Motivo: </strong>
+                    <Box as="span" fontWeight="500">
+                      Motivo:{" "}
+                    </Box>
                     {order.reasonForCancellation}
                   </Text>
                 </Flex>
