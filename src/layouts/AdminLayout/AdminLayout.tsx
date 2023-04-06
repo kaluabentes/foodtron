@@ -24,6 +24,9 @@ import useGetOrders from "@/modules/admin/orders/hooks/useGetOrders"
 
 import SideNav from "../../components/SideNav"
 import BellButtonLarge from "@/components/BellButtonLarge"
+import useUser from "@/modules/admin/auth/hooks/useUser"
+import createChannel from "@/lib/infra/ably/createChannel"
+import { once } from "lodash"
 
 interface AdminLayoutProps {
   children: ReactNode
@@ -35,6 +38,8 @@ interface AdminLayoutProps {
 
 configureAbly(process.env.NEXT_PUBLIC_ABLY_SUBSCRIBE_KEY!)
 
+let notificationTimeout = setTimeout(() => {}, 600)
+
 const AdminLayout = ({
   children,
   isFullWidth = false,
@@ -44,21 +49,18 @@ const AdminLayout = ({
   const router = useRouter()
   const toast = useBottomToast()
 
-  const {
-    state: { store },
-  } = useAppContext()
-
   const [isOpen, setIsOpen] = useState(false)
   const [isClosed, setIsClosed] = useState(true)
   const [isOrdersModalOpen, setIsOrdersModalOpen] = useState(false)
 
   const { orders, getOrders } = useGetOrders()
+  const { user } = useUser()
 
   const newOrders = orders
     ? orders.filter((order: Order) => order.status === ORDER_STATUS.PENDING)
     : []
 
-  useChannel("goodfood", async () => {
+  const executeChannelOnce = once(async () => {
     getOrders()
     await playNotificationSound()
     toast({
@@ -67,6 +69,21 @@ const AdminLayout = ({
       status: "info",
     })
   })
+
+  useEffect(() => {
+    if (user) {
+      const subscribeToAbly = async () => {
+        const channel = await createChannel(user?.store?.subdomain)
+        channel.subscribe("newOrder", async () => {
+          if (router.asPath !== "/admin/orders") {
+            executeChannelOnce()
+          }
+        })
+      }
+
+      subscribeToAbly()
+    }
+  }, [user])
 
   useEffect(() => {
     if (status === "unauthenticated") {

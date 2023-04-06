@@ -34,8 +34,8 @@ const OrderConfirmModal = ({
               icon={<BiEdit />}
             />
           </Flex>
-          <Heading size="md" mb={2} fontWeight="500">
-            Entregar em
+          <Heading size="md" mb={2} fontWeight="700">
+            Confirme o endereço
           </Heading>
           {address}
         </>

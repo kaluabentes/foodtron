@@ -8,7 +8,7 @@ const singleScheduleHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const auth = await serverAuth(req, res, ["admin"])
+  await serverAuth(req, res, ["admin"])
   const { id } = req.query
 
   if (!["PATCH", "DELETE"].includes(req.method!)) {

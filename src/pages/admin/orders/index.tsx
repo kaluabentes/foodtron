@@ -29,6 +29,8 @@ import OrderCancelConfirm from "@/modules/admin/orders/components/OrderCancelCon
 import match from "@/lib/helpers/string/match"
 import getNeighborhood from "@/modules/admin/orders/lib/getNeighborhood"
 import playNotificationSound from "@/modules/admin/orders/lib/playNotificationSound"
+import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
+import { once } from "lodash"
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   return auth(context, ["admin"])
@@ -49,6 +51,7 @@ configureAbly(process.env.NEXT_PUBLIC_ABLY_SUBSCRIBE_KEY!)
 
 const Orders = ({ user }: OrdersProps) => {
   const router = useRouter()
+  const pageIsLoaded = useIsPageLoaded()
   const toast = useBottomToast()
   const {
     query: { id },
@@ -111,13 +114,7 @@ const Orders = ({ user }: OrdersProps) => {
     setSelectedOrder(undefined)
   }
 
-  useEffect(() => {
-    if (id) {
-      setSelectedOrder(orders.find((order: Order) => order.id === id)!)
-    }
-  }, [id])
-
-  useChannel(user.store.subdomain!, async () => {
+  const executeChannelOnce = once(async () => {
     await getOrders()
     await playNotificationSound()
     toast({
@@ -125,6 +122,20 @@ const Orders = ({ user }: OrdersProps) => {
       description: "Você recebeu um novo pedido",
       status: "info",
     })
+  })
+
+  useEffect(() => {
+    if (id) {
+      setSelectedOrder(orders.find((order: Order) => order.id === id)!)
+    }
+  }, [id])
+
+  useChannel(user.store.subdomain!, "newOrder", async () => {
+    try {
+      executeChannelOnce()
+    } catch (error: any) {
+      console.log(error.message)
+    }
   })
 
   const renderSkeleton = () =>

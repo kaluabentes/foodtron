@@ -89,7 +89,7 @@ const OrdersArchive = () => {
           </Thead>
           <Tbody>
             {orders.map((order: Order) => (
-              <Tr>
+              <Tr key={order.id}>
                 <Td>
                   <Badge>{order.id}</Badge>
                 </Td>
