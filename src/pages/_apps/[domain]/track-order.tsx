@@ -174,7 +174,7 @@ const TrackOrder = ({ store }: TrackOrderProps) => {
                   <Box color="gray.300" mb={4}>
                     <BiXCircle fontSize="100px" />
                   </Box>
-                  <Text mb={2} fontWeight="700" fontSize="2xl">
+                  <Text mb={2} fontWeight="600" fontSize="2xl">
                     O pedido foi cancelado
                   </Text>
                   <Text>
