@@ -73,11 +73,13 @@ const Products = () => {
       >
         <Table>
           <Thead>
-            <Th>{t("image")}</Th>
-            <Th>{t("title")}</Th>
-            <Th>{t("category")}</Th>
-            <Th>{t("price")}</Th>
-            <Th>{t("actions")}</Th>
+            <Tr>
+              <Th>{t("image")}</Th>
+              <Th>{t("title")}</Th>
+              <Th>{t("category")}</Th>
+              <Th>{t("price")}</Th>
+              <Th>{t("actions")}</Th>
+            </Tr>
           </Thead>
           <Tbody>
             {products.map((product: Product) => (

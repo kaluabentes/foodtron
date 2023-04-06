@@ -83,8 +83,10 @@ const Categories = () => {
       >
         <Table>
           <Thead>
-            <Th>{t("title")}</Th>
-            <Th>{t("actions")}</Th>
+            <Tr>
+              <Th>{t("title")}</Th>
+              <Th>{t("actions")}</Th>
+            </Tr>
           </Thead>
           <Tbody>
             {categories.map((category: Category) => (

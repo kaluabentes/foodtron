@@ -114,12 +114,14 @@ const Schedules = () => {
       >
         <Table>
           <Thead>
-            <Th>Ativo?</Th>
-            <Th>{t("weekDay")}</Th>
-            <Th>{t("start")}</Th>
-            <Th>{t("end")}</Th>
-            <Th>{t("isScheduledClosing")}</Th>
-            <Th>{t("actions")}</Th>
+            <Tr>
+              <Th>Ativo?</Th>
+              <Th>{t("weekDay")}</Th>
+              <Th>{t("start")}</Th>
+              <Th>{t("end")}</Th>
+              <Th>{t("isScheduledClosing")}</Th>
+              <Th>{t("actions")}</Th>
+            </Tr>
           </Thead>
           <Tbody>
             {schedules.map((schedule: Schedule) => (

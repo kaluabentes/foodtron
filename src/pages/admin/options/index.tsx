@@ -70,11 +70,13 @@ const Options = () => {
       >
         <Table>
           <Thead>
-            <Th>{t("title")}</Th>
-            <Th>{t("maxOption")}</Th>
-            <Th>{t("maxOptionRequired")}</Th>
-            <Th>{t("required")}</Th>
-            <Th>{t("actions")}</Th>
+            <Tr>
+              <Th>{t("title")}</Th>
+              <Th>{t("maxOption")}</Th>
+              <Th>{t("maxOptionRequired")}</Th>
+              <Th>{t("required")}</Th>
+              <Th>{t("actions")}</Th>
+            </Tr>
           </Thead>
           <Tbody>
             {options.map((option: OptionGroup) => (

@@ -73,10 +73,12 @@ const Locations = () => {
       >
         <Table>
           <Thead>
-            <Th>{t("neighborhood")}</Th>
-            <Th>{t("tax")}</Th>
-            <Th>{t("estimatedTime")}</Th>
-            <Th>{t("actions")}</Th>
+            <Tr>
+              <Th>{t("neighborhood")}</Th>
+              <Th>{t("tax")}</Th>
+              <Th>{t("estimatedTime")}</Th>
+              <Th>{t("actions")}</Th>
+            </Tr>
           </Thead>
           <Tbody>
             {locations.map((location: Location) => (

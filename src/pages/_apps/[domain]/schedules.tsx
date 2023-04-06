@@ -1,31 +1,11 @@
 import { useAppContext } from "@/contexts/app"
 import AppLayout from "@/layouts/AppLayout"
-import auth from "@/middlewares/auth"
-import OrderCard from "@/modules/app/components/order/OrderCard"
 import Order from "@/modules/admin/orders/types/Order"
-import { ROLE } from "@/modules/admin/users/constants"
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  Box,
-  Button,
-  Flex,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from "@chakra-ui/react"
-import { GetServerSideProps } from "next"
+import { Button, Flex, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react"
 import prisma from "@/lib/infra/prisma/client"
-import StripeSeparator from "@/components/StripeSeparator"
 import OrderDetailsModal from "@/modules/admin/orders/components/OrderDetailsModal"
 import { useState } from "react"
 import { useRouter } from "next/router"
-import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
-import { useSession } from "next-auth/react"
 import EmptyState from "@/components/EmptyState"
 import Schedule from "@/modules/admin/schedules/types/Schedule"
 import weekDayMap from "@/modules/admin/schedules/weekDayMap"
@@ -85,13 +65,15 @@ const Orders = ({ schedules }: OrdersProps) => {
     return (
       <Table sx={{ tableLayout: "fixed" }}>
         <Thead>
-          <Th p={4}>{t("weekDay")}</Th>
-          <Th p={4}>{t("start")}</Th>
-          <Th p={4}>{t("end")}</Th>
+          <Tr>
+            <Th p={4}>{t("weekDay")}</Th>
+            <Th p={4}>{t("start")}</Th>
+            <Th p={4}>{t("end")}</Th>
+          </Tr>
         </Thead>
         <Tbody>
           {schedules.map((schedule: Schedule) => (
-            <Tr>
+            <Tr key={schedule.id}>
               <Td p={4} fontWeight="500">
                 {weekDayMap.get(schedule.weekDay)}
               </Td>
@@ -113,7 +95,7 @@ const Orders = ({ schedules }: OrdersProps) => {
         shadow="sm"
         backgroundColor="white"
         overflow="hidden"
-        p={{ base: 4, md: 0 }}
+        p={4}
       >
         {renderOrders()}
       </Flex>
