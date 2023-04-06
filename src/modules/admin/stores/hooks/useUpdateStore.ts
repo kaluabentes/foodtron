@@ -4,7 +4,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 import { useState } from "react"
 
-import Store from "../types/Store"
+import StoreParam from "../types/StoreParam"
 
 const useUpdateStore = () => {
   const toast = useBottomToast()
@@ -12,7 +12,7 @@ const useUpdateStore = () => {
 
   const [isSaving, setIsSaving] = useState(false)
 
-  const updateStore = async (data: Store) => {
+  const updateStore = async (data: StoreParam) => {
     setIsSaving(true)
 
     try {

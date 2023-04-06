@@ -172,7 +172,6 @@ const AppLayout = ({
     lg: (
       <SideNav
         isFixed
-        isTransparent
         isClosed={isClosed}
         onClosedToggle={setIsClosed}
         header={renderHeader(isClosed)}

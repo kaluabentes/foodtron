@@ -23,6 +23,7 @@ import { useState } from "react"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 import OptionInputCard from "@/modules/admin/options/components/OptionInputCard"
 import { BiPlus } from "react-icons/bi"
+import isNaN from "@/lib/helpers/number/isNaN"
 
 export interface OptionDraft {
   title: string
@@ -88,34 +89,41 @@ const AddOption = () => {
     )
   }
 
-  const handleFormSubmit = () => {
-    return handleSubmit(async (data) => {
-      if (!options.length) {
-        toast({
-          title: "Atenção!",
-          description: "Adicione ao menos uma opção",
-          status: "error",
-        })
-        return
-      }
+  const handleCreate = async (data: any) => {
+    if (options.some((opt) => isNaN(opt.price))) {
+      toast({
+        title: "Atenção",
+        description: "O preço está mal formatado",
+        status: "error",
+      })
+      return
+    }
 
-      if (options.length > 0 && options.some((opt) => !opt.title.length)) {
-        toast({
-          title: "Atenção!",
-          description: "Preencha o campo título",
-          status: "error",
-        })
-        return
-      }
+    if (!options.length) {
+      toast({
+        title: "Atenção!",
+        description: "Adicione ao menos uma opção",
+        status: "error",
+      })
+      return
+    }
 
-      await createOption({ ...data, options })
-      router.push("/admin/options")
-    })
+    if (options.length > 0 && options.some((opt) => !opt.title.length)) {
+      toast({
+        title: "Atenção!",
+        description: "Preencha o campo título",
+        status: "error",
+      })
+      return
+    }
+
+    await createOption({ ...data, options })
+    router.push("/admin/options")
   }
 
   return (
     <AdminLayout>
-      <form onSubmit={handleFormSubmit()}>
+      <form onSubmit={handleSubmit(handleCreate)}>
         <PageHeader
           title={t("addOptions")}
           actions={
@@ -183,12 +191,8 @@ const AddOption = () => {
                       event.currentTarget.value
                     )
                   }
-                  onPriceChange={(event) =>
-                    handleOptionChange(
-                      option,
-                      "price",
-                      event.currentTarget.value
-                    )
+                  onPriceChange={(value) =>
+                    handleOptionChange(option, "price", value)
                   }
                   onRemove={() =>
                     setOptions((prev) =>

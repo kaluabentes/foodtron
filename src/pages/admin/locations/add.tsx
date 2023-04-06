@@ -17,6 +17,8 @@ import DataField from "@/components/DataField"
 import useAddLocation from "@/modules/admin/locations/hooks/useAddLocation"
 import auth from "@/middlewares/auth"
 import { GetServerSideProps } from "next"
+import { ChangeEvent } from "react"
+import filterNumber from "@/lib/helpers/string/filterNumber"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])
@@ -28,7 +30,7 @@ const AddLocation = () => {
   const router = useRouter()
   const { handleSubmitCallback, isSaving } = useAddLocation()
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       neighborhood: "",
       tax: "",
@@ -74,7 +76,15 @@ const AddLocation = () => {
             />
             <DataField
               label={t("tax")}
-              input={<Input {...register("tax")} type="text" isRequired />}
+              input={
+                <Input
+                  value={String(watch("tax"))}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    setValue("tax", filterNumber(event.currentTarget.value))
+                  }
+                  required
+                />
+              }
             />
             <DataField
               label={t("estimatedTime")}

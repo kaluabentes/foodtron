@@ -19,6 +19,8 @@ import useUpdateLocation from "@/modules/admin/locations/hooks/useUpdateLocation
 import auth from "@/middlewares/auth"
 import Location from "@/modules/admin/locations/types/Location"
 import prisma from "@/lib/infra/prisma/client"
+import { ChangeEvent } from "react"
+import filterNumber from "@/lib/helpers/string/filterNumber"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async () => {
@@ -53,7 +55,7 @@ const EditLocation = ({ location }: EditLocationProps) => {
   const router = useRouter()
   const { updateLocation, isSaving } = useUpdateLocation(location.id)
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       neighborhood: location.neighborhood,
       tax: location.tax,
@@ -99,7 +101,15 @@ const EditLocation = ({ location }: EditLocationProps) => {
             />
             <DataField
               label={t("tax")}
-              input={<Input {...register("tax")} type="text" isRequired />}
+              input={
+                <Input
+                  value={String(watch("tax"))}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    setValue("tax", filterNumber(event.currentTarget.value))
+                  }
+                  required
+                />
+              }
             />
             <DataField
               label={t("estimatedTime")}

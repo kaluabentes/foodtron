@@ -25,11 +25,19 @@ import useBottomToast from "@/lib/hooks/useBottomToast"
 import OptionInputCard from "@/modules/admin/options/components/OptionInputCard"
 
 import { OptionDraft } from "@/pages/admin/options/add"
+import isNaN from "@/lib/helpers/number/isNaN"
 
 interface AddOptionModalProps {
   onClose: () => void
   onConfirm: () => void
   isOpen: boolean
+}
+
+const DEFAULT_VALUES = {
+  title: "",
+  maxOption: "",
+  required: false,
+  maxOptionRequired: false,
 }
 
 const AddOptionModal = ({
@@ -44,13 +52,8 @@ const AddOptionModal = ({
 
   const { createOption, isCreating } = useCreateOption()
 
-  const { register, handleSubmit } = useForm({
-    defaultValues: {
-      title: "",
-      maxOption: "",
-      required: false,
-      maxOptionRequired: false,
-    },
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: DEFAULT_VALUES,
   })
 
   const getOptionValue = (optionId: string, field: string) => {
@@ -88,33 +91,43 @@ const AddOptionModal = ({
     )
   }
 
-  const handleFormSubmit = () =>
-    handleSubmit(async (data) => {
-      if (!options.length) {
-        toast({
-          title: "Atenção!",
-          description: "Adicione ao menos uma opção",
-          status: "error",
-        })
-        return
-      }
+  const handleCreate = async (data: any) => {
+    if (options.some((opt) => isNaN(opt.price))) {
+      toast({
+        title: "Atenção",
+        description: "O preço está mal formatado",
+        status: "error",
+      })
+      return
+    }
 
-      if (options.length > 0 && options.some((opt) => !opt.title.length)) {
-        toast({
-          title: "Atenção!",
-          description: "Preencha o campo título",
-          status: "error",
-        })
-        return
-      }
+    if (!options.length) {
+      toast({
+        title: "Atenção!",
+        description: "Adicione ao menos uma opção",
+        status: "error",
+      })
+      return
+    }
 
-      await createOption({ ...data, options })
-      onConfirm()
-    })
+    if (options.length > 0 && options.some((opt) => !opt.title.length)) {
+      toast({
+        title: "Atenção!",
+        description: "Preencha o campo título",
+        status: "error",
+      })
+      return
+    }
+
+    await createOption({ ...data, options })
+    setOptions([])
+    reset()
+    onConfirm()
+  }
 
   return (
     <Modal size={{ base: "full", lg: "3xl" }} isOpen={isOpen} onClose={onClose}>
-      <form onSubmit={handleFormSubmit()}>
+      <form onSubmit={handleSubmit(handleCreate)}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Adicionar opção</ModalHeader>
@@ -164,12 +177,8 @@ const AddOptionModal = ({
                         event.currentTarget.value
                       )
                     }
-                    onPriceChange={(event) =>
-                      handleOptionChange(
-                        option,
-                        "price",
-                        event.currentTarget.value
-                      )
+                    onPriceChange={(value) =>
+                      handleOptionChange(option, "price", value)
                     }
                     onRemove={() =>
                       setOptions((prev) =>

@@ -9,6 +9,7 @@ import {
   InputGroup,
   InputRightAddon,
   Switch,
+  FormErrorMessage,
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
@@ -26,6 +27,11 @@ import Store from "@/modules/admin/stores/types/Store"
 import useUpdateStore from "@/modules/admin/stores/hooks/useUpdateStore"
 import { User } from "@prisma/client"
 import MaskedPhoneInput from "@/components/MaskedPhoneInput"
+import { ChangeEvent } from "react"
+import filterNumber from "@/lib/helpers/string/filterNumber"
+import StoreParam from "@/modules/admin/stores/types/StoreParam"
+import useBottomToast from "@/lib/hooks/useBottomToast"
+import isNaN from "@/lib/helpers/number/isNaN"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async (user: User) => {
@@ -53,15 +59,25 @@ interface StorePageProps {
 const EditStore = ({ store }: StorePageProps) => {
   const { t } = useTranslation()
   const router = useRouter()
+  const toast = useBottomToast()
 
   const isPageLoaded = useIsPageLoaded()
   const { updateStore, isSaving } = useUpdateStore()
 
   const { register, handleSubmit, setValue, watch } = useForm({
-    defaultValues: store,
+    defaultValues: store as StoreParam,
   })
 
-  const handleUpdate = async (values: Store) => {
+  const handleUpdate = async (values: StoreParam) => {
+    if (isNaN(values.minimumOrderPrice!)) {
+      toast({
+        title: "Atenção",
+        description: "O preço mínimo está mal formatado",
+        status: "error",
+      })
+      return
+    }
+
     await updateStore(values)
     router.push("/admin/settings")
   }
@@ -164,7 +180,16 @@ const EditStore = ({ store }: StorePageProps) => {
                 </DataHead>
                 <DataValue>
                   <FormControl>
-                    <Input {...register("minimumOrderPrice")} />
+                    <Input
+                      value={String(watch("minimumOrderPrice"))}
+                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        setValue(
+                          "minimumOrderPrice",
+                          filterNumber(event.currentTarget.value)
+                        )
+                      }
+                      required
+                    />
                   </FormControl>
                 </DataValue>
               </DataCell>

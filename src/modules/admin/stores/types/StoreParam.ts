@@ -1,7 +1,7 @@
 import Product from "../../products/types/Product"
 import Schedule from "../../schedules/types/Schedule"
 
-interface Store {
+interface StoreParam {
   id?: string
   name?: string
   logo?: string
@@ -10,10 +10,10 @@ interface Store {
   whatsapp?: string
   subdomain?: string
   customDomain?: string
-  minimumOrderPrice?: number
+  minimumOrderPrice?: string
   isOpen?: boolean
   schedules?: Schedule[]
   products?: Product[]
 }
 
-export default Store
+export default StoreParam

@@ -7,13 +7,6 @@ import {
   Input,
   Image,
   Heading,
-  Table,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  IconButton,
   Select,
   Grid,
   GridItem,
@@ -31,7 +24,7 @@ import auth from "@/middlewares/auth"
 import useCreateProduct from "@/modules/admin/products/hooks/useCreateProduct"
 import Script from "next/script"
 import { get } from "lodash"
-import { useState } from "react"
+import { ChangeEvent, useState } from "react"
 import useGetOptions from "@/modules/admin/options/hooks/useGetOptions"
 import OptionGroup from "@/modules/admin/options/types/OptionGroup"
 import useGetCategories from "@/modules/admin/categories/hooks/useGetCategories"
@@ -39,6 +32,9 @@ import Category from "@/modules/admin/categories/types/Category"
 import OptionButton from "@/modules/admin/products/components/OptionButton"
 import AddOptionModal from "@/modules/admin/products/components/AddOptionModal"
 import EmptyState from "@/components/EmptyState"
+import filterNumber from "@/lib/helpers/string/filterNumber"
+import useBottomToast from "@/lib/hooks/useBottomToast"
+import isNaN from "@/lib/helpers/number/isNaN"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])
@@ -53,6 +49,7 @@ const AddProduct = () => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
+  const toast = useBottomToast()
 
   const { createProduct, isCreating } = useCreateProduct()
   const { options, getOptions } = useGetOptions()
@@ -70,6 +67,19 @@ const AddProduct = () => {
       categoryId: "",
     },
   })
+
+  const handleCreate = (data: any) => {
+    if (isNaN(data.price)) {
+      toast({
+        title: "Atenção",
+        description: "O preço está mal formatado",
+        status: "error",
+      })
+      return
+    }
+
+    createProduct({ ...data, optionGroups: productOptions })
+  }
 
   const handleOptionClick = (option: OptionGroup) =>
     setProductOptions((prev) => {
@@ -101,11 +111,7 @@ const AddProduct = () => {
   return (
     <AdminLayout>
       <Script src="https://upload-widget.cloudinary.com/global/all.js" />
-      <form
-        onSubmit={handleSubmit((data: any) =>
-          createProduct({ ...data, optionGroups: productOptions })
-        )}
-      >
+      <form onSubmit={handleSubmit(handleCreate)}>
         <PageHeader
           title={t("addProducts")}
           actions={
@@ -158,7 +164,15 @@ const AddProduct = () => {
             />
             <DataField
               label={t("price")}
-              input={<Input {...register("price")} required />}
+              input={
+                <Input
+                  value={String(watch("price"))}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    setValue("price", filterNumber(event.currentTarget.value))
+                  }
+                  required
+                />
+              }
             />
             <DataField
               label={t("image")}

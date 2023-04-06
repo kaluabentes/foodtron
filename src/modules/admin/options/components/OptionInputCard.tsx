@@ -1,4 +1,5 @@
 import IconActionButton from "@/components/IconActionButton"
+import filterNumber from "@/lib/helpers/string/filterNumber"
 import { Box, Flex, FormLabel, Input } from "@chakra-ui/react"
 import { ChangeEvent } from "react"
 import { BiTrash } from "react-icons/bi"
@@ -6,7 +7,7 @@ import { BiTrash } from "react-icons/bi"
 interface OptionInputCardProps {
   onRemove: () => void
   onTitleChange: (event: ChangeEvent<HTMLInputElement>) => void
-  onPriceChange: (event: ChangeEvent<HTMLInputElement>) => void
+  onPriceChange: (value: string) => void
   title: string
   price: string
 }
@@ -32,7 +33,12 @@ const OptionInputCard = ({
     </Box>
     <Box flex={1}>
       <FormLabel>Preço</FormLabel>
-      <Input value={price} onChange={onPriceChange} />
+      <Input
+        value={price}
+        onChange={(event) =>
+          onPriceChange(filterNumber(event.currentTarget.value))
+        }
+      />
     </Box>
     <Box position="absolute" top={2} right={2}>
       <IconActionButton onClick={onRemove} icon={<BiTrash />} />

@@ -33,7 +33,7 @@ import useUpdateProduct from "@/modules/admin/products/hooks/useUpdateProduct"
 import Script from "next/script"
 import { get } from "lodash"
 import OptionGroup from "@/modules/admin/options/types/OptionGroup"
-import { useState } from "react"
+import { ChangeEvent, useState } from "react"
 import useGetOptions from "@/modules/admin/options/hooks/useGetOptions"
 import EmptyState from "@/components/EmptyState"
 import { BiTrash } from "react-icons/bi"
@@ -41,6 +41,8 @@ import useGetCategories from "@/modules/admin/categories/hooks/useGetCategories"
 import Category from "@/modules/admin/categories/types/Category"
 import OptionButton from "@/modules/admin/products/components/OptionButton"
 import AddOptionModal from "@/modules/admin/products/components/AddOptionModal"
+import filterNumber from "@/lib/helpers/string/filterNumber"
+import useBottomToast from "@/lib/hooks/useBottomToast"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"], async () => {
@@ -85,6 +87,7 @@ const EditProduct = ({ product }: EditProductProps) => {
   const { t } = useTranslation()
   const isPageLoaded = useIsPageLoaded()
   const router = useRouter()
+  const toast = useBottomToast()
 
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: product,
@@ -127,23 +130,30 @@ const EditProduct = ({ product }: EditProductProps) => {
     )!
   }
 
-  const handleFormSubmit = () => {
-    return handleSubmit((data) =>
-      updateProduct({
-        ...data,
-        optionGroups: productOptions,
-        disconnectOptionGroups: options.filter(
-          (opt: OptionGroup) =>
-            !productOptions.find((childOpt) => childOpt.id === opt.id)
-        ),
+  const handleUpdate = (data: any) => {
+    if (isNaN(data.price)) {
+      toast({
+        title: "Atenção",
+        description: "O preço está mal formatado",
+        status: "error",
       })
-    )
+      return
+    }
+
+    updateProduct({
+      ...data,
+      optionGroups: productOptions,
+      disconnectOptionGroups: options.filter(
+        (opt: OptionGroup) =>
+          !productOptions.find((childOpt) => childOpt.id === opt.id)
+      ),
+    })
   }
 
   return (
     <AdminLayout>
       <Script src="https://upload-widget.cloudinary.com/global/all.js" />
-      <form onSubmit={handleFormSubmit()}>
+      <form onSubmit={handleSubmit(handleUpdate)}>
         <PageHeader
           title={t("editProduct")}
           actions={
@@ -200,7 +210,15 @@ const EditProduct = ({ product }: EditProductProps) => {
             />
             <DataField
               label={t("price")}
-              input={<Input {...register("price")} required />}
+              input={
+                <Input
+                  value={String(watch("price"))}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    setValue("price", filterNumber(event.currentTarget.value))
+                  }
+                  required
+                />
+              }
             />
             <DataField
               label={t("image")}

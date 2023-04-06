@@ -26,6 +26,7 @@ import useBottomToast from "@/lib/hooks/useBottomToast"
 import { OptionDraft } from "../add"
 import OptionInputCard from "@/modules/admin/options/components/OptionInputCard"
 import { BiPlus } from "react-icons/bi"
+import isNaN from "@/lib/helpers/number/isNaN"
 
 interface EditOptionProps {
   option: OptionGroup
@@ -112,33 +113,40 @@ const EditOption = ({ option, options: defaultOptions }: EditOptionProps) => {
     )
   }
 
-  const handleFormSubmit = () => {
-    return handleSubmit((data) => {
-      if (!options.length) {
-        toast({
-          title: "Atenção!",
-          description: "Adicione ao menos uma opção",
-          status: "error",
-        })
-        return
-      }
+  const handleUpdate = (data: any) => {
+    if (options.some((opt) => isNaN(opt.price))) {
+      toast({
+        title: "Atenção",
+        description: "O preço está mal formatado",
+        status: "error",
+      })
+      return
+    }
 
-      if (options.length > 0 && options.some((opt) => !opt.title.length)) {
-        toast({
-          title: "Atenção!",
-          description: "Preencha o campo título",
-          status: "error",
-        })
-        return
-      }
+    if (!options.length) {
+      toast({
+        title: "Atenção!",
+        description: "Adicione ao menos uma opção",
+        status: "error",
+      })
+      return
+    }
 
-      updateOption({ ...data, options })
-    })
+    if (options.length > 0 && options.some((opt) => !opt.title.length)) {
+      toast({
+        title: "Atenção!",
+        description: "Preencha o campo título",
+        status: "error",
+      })
+      return
+    }
+
+    updateOption({ ...data, options })
   }
 
   return (
     <AdminLayout>
-      <form onSubmit={handleFormSubmit()}>
+      <form onSubmit={handleSubmit(handleUpdate)}>
         <PageHeader
           title={t("updateOptions")}
           actions={
@@ -206,12 +214,8 @@ const EditOption = ({ option, options: defaultOptions }: EditOptionProps) => {
                       event.currentTarget.value
                     )
                   }
-                  onPriceChange={(event) =>
-                    handleOptionChange(
-                      option,
-                      "price",
-                      event.currentTarget.value
-                    )
+                  onPriceChange={(value) =>
+                    handleOptionChange(option, "price", value)
                   }
                   onRemove={() =>
                     setOptions((prev) =>
