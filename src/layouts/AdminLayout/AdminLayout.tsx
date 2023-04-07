@@ -27,6 +27,8 @@ import BellButtonLarge from "@/components/BellButtonLarge"
 import useUser from "@/modules/admin/auth/hooks/useUser"
 import createChannel from "@/lib/infra/ably/createChannel"
 import { once } from "lodash"
+import Schedule from "@/modules/admin/schedules/types/Schedule"
+import useUpdateStore from "@/modules/admin/stores/hooks/useUpdateStore"
 
 interface AdminLayoutProps {
   children: ReactNode
@@ -38,7 +40,21 @@ interface AdminLayoutProps {
 
 configureAbly(process.env.NEXT_PUBLIC_ABLY_SUBSCRIBE_KEY!)
 
-let notificationTimeout = setTimeout(() => {}, 600)
+const getCurrentSchedule = () => {
+  const date = new Date()
+  return `${String(date.getHours()).padStart(2, "0")}:${String(
+    date.getMinutes()
+  ).padEnd(2, "0")}`
+}
+
+const getTodaySchedule = (schedules: Schedule[]) => {
+  const currentDay = new Date().getDay()
+  const todaySchedule = schedules.find(
+    (schedule) => schedule.weekDay === String(currentDay)
+  )
+
+  return todaySchedule
+}
 
 const AdminLayout = ({
   children,
@@ -54,6 +70,7 @@ const AdminLayout = ({
   const [isOrdersModalOpen, setIsOrdersModalOpen] = useState(false)
 
   const { orders, getOrders } = useGetOrders()
+  const { updateStore } = useUpdateStore()
   const { user } = useUser()
 
   const newOrders = orders
@@ -68,6 +85,10 @@ const AdminLayout = ({
       description: "Você recebeu um novo pedido",
       status: "info",
     })
+  })
+
+  const closeStore = once(async () => {
+    await updateStore({ isOpen: false })
   })
 
   useEffect(() => {
@@ -90,6 +111,25 @@ const AdminLayout = ({
       router.push("/auth/signin")
     }
   }, [status])
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      if (user) {
+        const currentSchedule = getCurrentSchedule()
+        const schedule = getTodaySchedule(user.store.schedules)
+        const todaySchedule = schedule?.end
+        const isScheduledClosing = schedule?.isScheduledClosing
+
+        if (currentSchedule === todaySchedule && isScheduledClosing) {
+          closeStore()
+        }
+      }
+    }, 1000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [user])
 
   const renderNavigation = useBreakpointValue({
     base: (

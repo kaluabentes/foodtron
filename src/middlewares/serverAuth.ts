@@ -30,7 +30,11 @@ const serverAuth = async (
       email: session.user?.email,
     },
     include: {
-      store: true,
+      store: {
+        include: {
+          schedules: true,
+        },
+      },
     },
   })
 

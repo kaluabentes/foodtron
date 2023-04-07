@@ -21,13 +21,13 @@ const useUpdateStore = () => {
       if (data.isOpen) {
         toast({
           title: "Feito!",
-          description: "Agora o restaurante está aberto",
+          description: "O restaurante está aberto",
           status: "success",
         })
       } else {
         toast({
           title: "Feito!",
-          description: "Agora o restaurante está fechado",
+          description: "O restaurante está fechado",
           status: "error",
         })
       }
