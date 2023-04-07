@@ -278,6 +278,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
       >
         <Button
           colorScheme="brand"
+          type="button"
           onClick={() => {
             if (!verifyInformations()) {
               return

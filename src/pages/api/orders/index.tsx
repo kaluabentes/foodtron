@@ -6,6 +6,9 @@ import serverAuth from "@/middlewares/serverAuth"
 import getOrders from "@/modules/admin/orders/services/getOrders"
 import createChannel from "@/lib/infra/ably/createChannel"
 import getOrdersById from "@/modules/admin/orders/services/getOrdersById"
+import sendSMS from "@/lib/infra/sinch/sendSMS"
+
+const ROOT_URL = process.env.NEXTAUTH_URL
 
 const indexOrderHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   await NextCors(req, res, {
@@ -24,6 +27,11 @@ const indexOrderHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const channel = await createChannel(order.store.subdomain!, "server")
       await channel.publish("newOrder", order)
+
+      await sendSMS(
+        order.store.whatsapp!,
+        `Você recebeu um novo pedido, confira em: ${ROOT_URL}/admin/orders?id=${order.id}`
+      )
 
       return res.status(200).send(order)
     }
