@@ -2,7 +2,7 @@ import BottomModal from "@/components/BottomModal"
 import IconActionButton from "@/components/IconActionButton"
 import { Box, Button, Flex, Heading } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import { BiEdit } from "react-icons/bi"
+import { BiEdit, BiPaperPlane } from "react-icons/bi"
 
 interface OrderConfirmModalProps {
   onClose: () => void
@@ -45,8 +45,9 @@ const OrderConfirmModal = ({
         onClick={onConfirm}
         mt={4}
         isLoading={isLoading}
+        leftIcon={<BiPaperPlane />}
       >
-        Confirmar
+        Enviar pedido
       </Button>
     </BottomModal>
   )
