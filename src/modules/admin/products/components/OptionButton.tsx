@@ -13,9 +13,9 @@ const OptionButton = ({ onClick, isActive, children }: OptionButtonProps) => (
     onClick={onClick}
     variant="outline"
     width="full"
-    borderWidth={isActive ? "3px" : undefined}
+    borderWidth={isActive ? "2px" : undefined}
     borderColor={isActive ? "brand.500" : undefined}
-    color={isActive ? "brand.500" : undefined}
+    background={isActive ? "blue.50" : undefined}
   >
     {children}
   </Button>
