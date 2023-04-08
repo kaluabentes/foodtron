@@ -209,7 +209,7 @@ model Option {
 model Category {
   id    String @id @default(cuid())
   title String
-  ordination Int
+  ordination String?
 
   storeId String
   store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)

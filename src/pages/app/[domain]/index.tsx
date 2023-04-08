@@ -23,6 +23,7 @@ import useCurrentAddress from "@/modules/app/addresses/hooks/useCurrentAddress"
 import formatAddress from "@/modules/app/addresses/lib/formatAddress"
 import Location from "@/modules/admin/locations/types/Location"
 import match from "@/lib/helpers/string/match"
+import sortCategories from "@/modules/admin/categories/lib/sortCategories"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -139,7 +140,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
 
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>()
 
-  const applyFilters = (categoriesList: Category[]) => {
+  const applyFilters = (categoriesList: Category[]): Category[] => {
     if (filters.search) {
       return categoriesList
         .map((category) => ({
@@ -158,7 +159,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
         (category) => category.id === filters.category
       )
 
-      return [category]
+      return [category!]
     }
 
     return categoriesList
@@ -221,7 +222,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
           onSchedulesClick={() => router.push("/schedules")}
           onSelectLocation={() => router.push("/addresses")}
           weekDay={currentWeekDay}
-          isEnabled={isEnabled}
+          isEnabled={isEnabled!}
           schedule={currentScheduleTime}
           store={storeRealTime || store}
           location={location}
@@ -249,7 +250,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
         }
       />
       <Flex direction="column" gap={4} mb={4}>
-        {applyFilters(categories).map((category) => (
+        {sortCategories(applyFilters(categories)).map((category) => (
           <CategoryItem
             key={category?.id}
             onMenuItemClick={handleMenuItemClick}

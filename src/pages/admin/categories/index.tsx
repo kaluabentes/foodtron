@@ -30,6 +30,7 @@ import useDeleteSchedule from "@/modules/admin/schedules/hooks/useDeleteSchedule
 import useGetCategories from "@/modules/admin/categories/hooks/useGetCategories"
 import useDeleteCategory from "@/modules/admin/categories/hooks/useDeleteCategory"
 import Category from "@/modules/admin/categories/types/Category"
+import sortCategories from "@/modules/admin/categories/lib/sortCategories"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return auth(context, ["admin"])
@@ -85,13 +86,15 @@ const Categories = () => {
           <Thead>
             <Tr>
               <Th>{t("title")}</Th>
+              <Th>Ordenação</Th>
               <Th>{t("actions")}</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {categories.map((category: Category) => (
+            {sortCategories(categories).map((category: Category) => (
               <Tr key={category.id}>
                 <Td>{category.title}</Td>
+                <Td>{category.ordination}</Td>
                 <Td>
                   <Flex gap={2}>
                     <IconButton

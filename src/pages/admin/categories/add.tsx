@@ -24,6 +24,7 @@ const AddCategory = () => {
   const { register, handleSubmit } = useForm({
     defaultValues: {
       title: "",
+      ordination: "",
     },
   })
 
@@ -62,6 +63,12 @@ const AddCategory = () => {
             <DataField
               label={t("title")}
               input={<Input {...register("title")} required />}
+            />
+            <DataField
+              label="Ordenação"
+              input={
+                <Input {...register("ordination")} type="number" required />
+              }
             />
           </Box>
         )}
