@@ -16,7 +16,7 @@ const rewriteUrls = (req: NextRequest) => {
     return NextResponse.rewrite(url)
   }
 
-  url.pathname = `/_apps/${currentHost}${url.pathname}`
+  url.pathname = `/app/${currentHost}${url.pathname}`
   return NextResponse.rewrite(url)
 }
 
