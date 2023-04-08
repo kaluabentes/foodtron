@@ -158,25 +158,25 @@ const OrderItemsSummary = () => {
           />
         ))}
         <BaseOrderItem
-          leftSlot={<Text>Pedido mínimo</Text>}
+          leftSlot={<Text fontWeight="500">Pedido mínimo</Text>}
           rightSlot={
-            <Text fontSize="md" fontWeight="500" mb={1} textAlign="right">
+            <Text fontSize="md" mb={1} textAlign="right">
               {formatToRealCurrency(Number(minimumOrderPrice))}
             </Text>
           }
         />
         <BaseOrderItem
-          leftSlot={<Text>Subtotal</Text>}
+          leftSlot={<Text fontWeight="500">Subtotal</Text>}
           rightSlot={
-            <Text fontSize="md" fontWeight="500" mb={1} textAlign="right">
+            <Text fontSize="md" mb={1} textAlign="right">
               {formatToRealCurrency(sumOrderSubtotal(orderProducts))}
             </Text>
           }
         />
         <BaseOrderItem
-          leftSlot={<Text>Taxa de entrega</Text>}
+          leftSlot={<Text fontWeight="500">Taxa de entrega</Text>}
           rightSlot={
-            <Text fontSize="md" fontWeight="500" mb={1} textAlign="right">
+            <Text fontSize="md" mb={1} textAlign="right">
               {address
                 ? formatToRealCurrency(Number(address?.location?.tax))
                 : "---"}

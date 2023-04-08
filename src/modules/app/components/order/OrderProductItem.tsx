@@ -22,8 +22,8 @@ const OrderProductItem = ({
       onClick={onClick}
       leftSlot={
         <Flex direction="column" gap={1}>
-          <Heading fontSize="md" fontWeight="500">
-            {product.quantity} {product.title}
+          <Heading fontSize="md" fontWeight="400">
+            {product.quantity} {product.title} {product.image}
           </Heading>
           {product.options!.map((opt, index) => (
             <Text key={String(index + 1)} fontSize="sm" color="gray.500">
@@ -44,9 +44,7 @@ const OrderProductItem = ({
       }
       rightSlot={
         <>
-          <Text fontWeight="500" mb={1}>
-            {productTotal}
-          </Text>
+          <Text mb={1}>{productTotal}</Text>
           {product.options!.map((opt, optIndex) => (
             <Text
               key={String(optIndex + 1)}
