@@ -157,13 +157,20 @@ const AddOption = () => {
               label={t("title")}
               input={<Input {...register("title")} required />}
             />
+
             <DataField
+              label={t("required")}
+              input={<Switch colorScheme="brand" {...register("required")} />}
+            />
+            <DataField
+              tooltip="Máximo de opções que o usuário poderá escolher"
               label={t("maxOption")}
               input={
                 <Input {...register("maxOption")} type="number" required />
               }
             />
             <DataField
+              tooltip="Tornar número máximo de escolhas obrigatório"
               label={t("maxOptionRequired")}
               input={
                 <Switch
@@ -171,10 +178,6 @@ const AddOption = () => {
                   {...register("maxOptionRequired")}
                 />
               }
-            />
-            <DataField
-              label={t("required")}
-              input={<Switch colorScheme="brand" {...register("required")} />}
             />
             <Box pl={6} pr={6} pt={6}>
               <Heading fontSize="md">Opções</Heading>

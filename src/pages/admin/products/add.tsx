@@ -190,8 +190,8 @@ const AddProduct = () => {
               }
             />
             <Box p={6}>
-              <Heading fontSize="md" mb={4}>
-                Adicionar opções
+              <Heading fontSize="md" fontWeight="600" mb={4}>
+                Selecione as opções
               </Heading>
               {!options.length && (
                 <EmptyState message="Não opções criados no momento." />
