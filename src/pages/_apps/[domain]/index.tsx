@@ -133,6 +133,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
   const currentSchedule = store!.schedules!.find(
     (schedule) => schedule.weekDay === String(currentDay)
   )
+  const isEnabled = currentSchedule?.isEnabled
   const currentWeekDay = String(weekDayMap.get(currentSchedule?.weekDay))
   const currentScheduleTime = `${currentSchedule?.start} ás ${currentSchedule?.end}`
 
@@ -220,6 +221,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
           onSchedulesClick={() => router.push("/schedules")}
           onSelectLocation={() => router.push("/addresses")}
           weekDay={currentWeekDay}
+          isEnabled={isEnabled}
           schedule={currentScheduleTime}
           store={storeRealTime || store}
           location={location}

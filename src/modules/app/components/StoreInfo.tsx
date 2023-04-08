@@ -10,6 +10,7 @@ interface StoreInfoProps {
   store: Store
   weekDay: string
   schedule: string
+  isEnabled: boolean
   location: {
     estimatedTime: string
     tax: string
@@ -23,6 +24,7 @@ const StoreInfo = ({
   location,
   weekDay,
   schedule,
+  isEnabled,
   onSelectLocation,
   onSchedulesClick,
 }: StoreInfoProps) => (
@@ -48,7 +50,7 @@ const StoreInfo = ({
         alignItems="center"
         gap={1.5}
         mb={2}
-        textDecoration={store.isOpen ? undefined : "line-through"}
+        textDecoration={store.isOpen && isEnabled ? undefined : "line-through"}
       >
         <Icon fontSize="22px" as={BiTimeFive} color="gray.500" />
         <Text fontWeight="500">
