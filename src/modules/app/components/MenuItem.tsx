@@ -32,7 +32,7 @@ const MenuItem = ({ product, onClick }: MenuItemProps) => (
           <Text mb={4} color="gray.500" fontSize="sm">
             {product.description && subWord(product.description, 0, 7)}
           </Text>
-          <Text fontWeight="600" fontSize="md">
+          <Text fontWeight="400" fontSize="md">
             {formatToRealCurrency(Number(product.price))}
           </Text>
         </Box>

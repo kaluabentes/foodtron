@@ -251,7 +251,7 @@ const OrderProductModal = ({
             <Text mb={4} color="gray.500" fontSize="sm">
               {product?.description}
             </Text>
-            <Text fontWeight="600" fontSize="md">
+            <Text fontWeight="400" fontSize="md">
               {formatToRealCurrency(Number(product?.price))}
             </Text>
           </Box>
