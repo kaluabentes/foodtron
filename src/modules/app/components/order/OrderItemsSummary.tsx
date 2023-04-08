@@ -158,7 +158,7 @@ const OrderItemsSummary = () => {
           />
         ))}
         <BaseOrderItem
-          leftSlot={<Text fontWeight="500">Pedido mínimo</Text>}
+          leftSlot={<Text>Pedido mínimo</Text>}
           rightSlot={
             <Text fontSize="md" fontWeight="500" mb={1} textAlign="right">
               {formatToRealCurrency(Number(minimumOrderPrice))}
@@ -184,7 +184,7 @@ const OrderItemsSummary = () => {
           }
         />
         <BaseOrderItem
-          leftSlot={<Text>Total</Text>}
+          leftSlot={<Text fontWeight="500">Total</Text>}
           rightSlot={
             <Text
               fontSize="md"

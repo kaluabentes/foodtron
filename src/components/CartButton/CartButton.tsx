@@ -8,7 +8,7 @@ interface CartButtonProps {
 }
 
 const CartButton = ({ quantity, onClick }: CartButtonProps) => (
-  <Box position="relative">
+  <Box as="button" position="relative" onClick={onClick}>
     {quantity ? (
       <Box
         width="18px"
@@ -31,8 +31,8 @@ const CartButton = ({ quantity, onClick }: CartButtonProps) => (
       </Box>
     ) : null}
     <BarIconButton
+      as="div"
       background="trasnparent"
-      onClick={onClick}
       label="Carrinho"
       icon={<BiCart />}
     />

@@ -1,7 +1,8 @@
-import { IconButton } from "@chakra-ui/react"
+import { As, IconButton } from "@chakra-ui/react"
 import { ReactElement } from "react"
 
 interface BarIconButtonProps {
+  as?: As
   label: string
   icon: ReactElement
   onClick?: () => void
@@ -9,12 +10,14 @@ interface BarIconButtonProps {
 }
 
 const BarIconButton = ({
+  as,
   background,
   label,
   icon,
   onClick,
 }: BarIconButtonProps) => (
   <IconButton
+    as={as}
     onClick={onClick}
     background={background ? background : "white"}
     color="gray.500"
