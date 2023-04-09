@@ -46,7 +46,7 @@ const AddressCard = ({
     borderRadius="md"
     shadow="sm"
     overflow="hidden"
-    border="3px solid black"
+    border="2px solid black"
     borderColor={isSelected ? "brand.500" : "transparent"}
   >
     <Flex

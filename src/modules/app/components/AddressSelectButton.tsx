@@ -4,9 +4,11 @@ import { BiChevronDown, BiEdit, BiMap } from "react-icons/bi"
 const AddressSelectButton = ({
   address,
   onClick,
+  isBordered,
 }: {
   address: string
   onClick: () => void
+  isBordered?: boolean
 }) => (
   <Flex
     as="button"
@@ -21,6 +23,7 @@ const AddressSelectButton = ({
     shadow="sm"
     border={{ lg: "2px solid transparent" }}
     _hover={{ borderColor: "brand.500" }}
+    borderColor={{ lg: isBordered ? "gray.200" : "none" }}
   >
     <Icon
       as={BiMap}
@@ -33,7 +36,7 @@ const AddressSelectButton = ({
         Entregar em:
       </Text>
       {address ? (
-        <Text fontWeight="400" fontSize="sm">
+        <Text fontWeight="400" fontSize="md">
           {address}
         </Text>
       ) : (

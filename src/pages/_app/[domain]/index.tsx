@@ -245,7 +245,22 @@ const Index = ({ store = {}, categories }: IndexProps) => {
   })
 
   const renderMyOrder = useBreakpointValue({
-    lg: <MyOrder />,
+    lg: (
+      <MyOrder
+        onAddressClick={() => router.push("/addresses")}
+        address={assembledAddress}
+      />
+    ),
+  })
+
+  const renderAddressSelectButton = useBreakpointValue({
+    base: (
+      <AddressSelectButton
+        onClick={() => router.push("/addresses")}
+        address={assembledAddress}
+      />
+    ),
+    lg: null,
   })
 
   return (
@@ -263,10 +278,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
           pr={{ lg: 4 }}
         >
           {renderStoreInfo}
-          <AddressSelectButton
-            onClick={() => router.push("/addresses")}
-            address={assembledAddress}
-          />
+          {renderAddressSelectButton}
           <FilterBar
             search={filters.search}
             categories={categories}

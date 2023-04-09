@@ -14,7 +14,7 @@ const IconActionButton = ({ onClick, icon, zIndex }: IconActionButtonProps) => (
     onClick={onClick}
     color="gray.500"
     background="white"
-    border="1px solid transparent"
+    border="2px solid transparent"
     borderColor="gray.300"
     width="28px"
     height="28px"

@@ -12,9 +12,8 @@ const TrackOrderButton = ({ onClick }: TrackOrderButtonProps) => (
     pt={5}
     pb={5}
     borderRadius={{ base: undefined, lg: "md" }}
-    bottom={{ base: "72px", lg: "initial" }}
-    top={{ lg: 4 }}
-    right={{ base: "0", lg: "416px" }}
+    bottom={{ base: "72px", lg: 4 }}
+    right={{ base: "0", lg: 4 }}
     width={{ base: "full", lg: "initial" }}
     boxShadow="0 -1px 2px 0 rgba(0, 0, 0, 0.05);"
     alignItems="center"
