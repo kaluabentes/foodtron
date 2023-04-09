@@ -30,6 +30,7 @@ interface AppLayoutProps {
   hideCartButton?: boolean
   maxWidth?: any
   hideTitle?: boolean
+  margin?: string
 }
 
 const AppLayout = ({
@@ -39,6 +40,7 @@ const AppLayout = ({
   hideCartButton,
   maxWidth,
   hideTitle = false,
+  margin,
 }: AppLayoutProps) => {
   const router = useRouter()
   const toast = useBottomToast()
@@ -229,6 +231,7 @@ const AppLayout = ({
           paddingTop={{ base: "60px", lg: 4 }}
           maxWidth={maxWidth || { base: "100%", md: "container.md" }}
           width="100%"
+          margin={margin || "0 auto"}
         >
           {renderPageHeader}
           {children}

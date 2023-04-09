@@ -23,7 +23,7 @@ const OrderProductItem = ({
       leftSlot={
         <Flex direction="column" gap={1}>
           <Heading fontSize="md" fontWeight="400">
-            {product.quantity} {product.title} {product.image}
+            {product.quantity} {product.title}
           </Heading>
           {product.options!.map((opt, index) => (
             <Text key={String(index + 1)} fontSize="sm" color="gray.500">

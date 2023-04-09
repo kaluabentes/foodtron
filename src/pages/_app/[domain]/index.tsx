@@ -253,11 +253,12 @@ const Index = ({ store = {}, categories }: IndexProps) => {
       title="Menu"
       hideTitle
       maxWidth={{ base: "100%", lg: "calc(100vw - 68px)" }}
+      margin="initial"
     >
       <Flex gap={6}>
         <Box
           ml={{ lg: "68px" }}
-          width={{ base: "100%", lg: "calc(100vw - 468px)" }}
+          width={{ base: "100%", lg: "calc(100vw - 484px)" }}
           pl={{ lg: 4 }}
           pr={{ lg: 4 }}
         >
