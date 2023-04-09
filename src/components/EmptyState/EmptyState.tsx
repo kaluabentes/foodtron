@@ -20,7 +20,7 @@ const EmptyState = ({ message, isGray }: EmptyStateProps) => (
     p={10}
     gap={7}
   >
-    <Icon as={BiFile} fontSize="140px" color="gray.200" />
+    <Icon as={BiFile} fontSize="140px" color="gray.100" />
     <Heading fontWeight="400" fontSize="md" color="gray.500" textAlign="center">
       {message}
     </Heading>

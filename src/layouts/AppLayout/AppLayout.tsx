@@ -28,6 +28,8 @@ interface AppLayoutProps {
   title?: string
   leftIcon?: ReactNode
   hideCartButton?: boolean
+  maxWidth?: any
+  hideTitle?: boolean
 }
 
 const AppLayout = ({
@@ -35,6 +37,8 @@ const AppLayout = ({
   title,
   leftIcon,
   hideCartButton,
+  maxWidth,
+  hideTitle = false,
 }: AppLayoutProps) => {
   const router = useRouter()
   const toast = useBottomToast()
@@ -188,7 +192,7 @@ const AppLayout = ({
 
   const renderPageHeader = useBreakpointValue({
     base: null,
-    lg: (
+    lg: !hideTitle && (
       <Flex
         width="100%"
         justifyContent="space-between"
@@ -223,8 +227,7 @@ const AppLayout = ({
           as="main"
           paddingBottom={{ base: getMobilePaddingBottom(), lg: 8 }}
           paddingTop={{ base: "60px", lg: 4 }}
-          maxWidth={{ base: "100%", md: "container.md" }}
-          margin="0 auto"
+          maxWidth={maxWidth || { base: "100%", md: "container.md" }}
           width="100%"
         >
           {renderPageHeader}

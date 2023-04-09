@@ -1,9 +1,11 @@
-import { extendTheme } from "@chakra-ui/react"
+import { Theme, extendTheme } from "@chakra-ui/react"
 import type { StyleFunctionProps } from "@chakra-ui/styled-system"
 import { mode } from "@chakra-ui/theme-tools"
+import Input from "./components/Input"
 
 const theme = extendTheme({
   components: {
+    Input,
     Badge: {
       baseStyle: {},
     },

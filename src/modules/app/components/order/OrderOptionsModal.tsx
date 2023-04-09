@@ -28,7 +28,7 @@ const OrderOptionsModal = ({
         as="button"
         p={5}
         borderBottom="1px solid transparent"
-        borderColor="gray.200"
+        borderColor="gray.100"
         textAlign="left"
         outline="none"
       >
@@ -39,7 +39,7 @@ const OrderOptionsModal = ({
         as="button"
         p={5}
         borderBottom="1px solid transparent"
-        borderColor="gray.200"
+        borderColor="gray.100"
         textAlign="left"
         outline="none"
       >

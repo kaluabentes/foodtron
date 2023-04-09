@@ -326,7 +326,7 @@ const OrderProductModal = ({
                       <Box
                         height="0.8px"
                         width="100%"
-                        backgroundColor="gray.200"
+                        backgroundColor="gray.100"
                       />
                     </Box>
                   </Box>
@@ -354,7 +354,7 @@ const OrderProductModal = ({
           background="white"
           shadow="md"
           borderTop="1px solid transparent"
-          borderColor="gray.200"
+          borderColor="gray.100"
         >
           <QuantitySwitch onChange={setQuantity} value={quantity} min={1} />
           <Button

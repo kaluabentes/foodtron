@@ -1,7 +1,7 @@
 import SectionTitle from "@/components/SectionTitle"
 import Category from "@/modules/admin/categories/types/Category"
 import Product from "@/modules/admin/products/types/Product"
-import { Box, Heading } from "@chakra-ui/react"
+import { Box, Flex, Grid, Heading } from "@chakra-ui/react"
 import MenuItem from "./MenuItem"
 
 interface CategoryItemProps {
@@ -10,11 +10,37 @@ interface CategoryItemProps {
 }
 
 const CategoryItem = ({ category, onMenuItemClick }: CategoryItemProps) => (
-  <Box borderRadius="md" overflow="hidden" boxShadow="sm">
-    <SectionTitle>{category.title}</SectionTitle>
-    {category?.products?.map((product: Product) => (
-      <MenuItem onClick={onMenuItemClick} key={product.id} product={product} />
-    ))}
+  <Box
+    borderRadius="md"
+    overflow={{ base: "hidden", lg: "initial" }}
+    boxShadow={{ base: "sm", lg: "none" }}
+  >
+    <Heading
+      backgroundColor="white"
+      p={{ base: 4, md: 6 }}
+      pt={{ base: 4, md: 4, lg: 0 }}
+      pl={{ base: 4, md: 6, lg: 0 }}
+      pb={{ base: 4, md: 4 }}
+      fontSize="17px"
+      fontWeight="600"
+      borderBottom="1px solid transparent"
+      borderColor="gray.100"
+      background={{ base: "gray.50", lg: "transparent" }}
+    >
+      {category.title}
+    </Heading>
+    <Grid
+      templateColumns={{ base: "repeat(1, 1fr)", lg: "repeat(2, 1fr)" }}
+      gap={{ lg: 4 }}
+    >
+      {category?.products?.map((product: Product) => (
+        <MenuItem
+          onClick={onMenuItemClick}
+          key={product.id}
+          product={product}
+        />
+      ))}
+    </Grid>
   </Box>
 )
 

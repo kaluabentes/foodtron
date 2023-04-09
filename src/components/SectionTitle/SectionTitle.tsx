@@ -12,7 +12,7 @@ const SectionTitle = ({ children }: SectionTitleProps) => (
     pt={{ base: 4, md: 4 }}
     pb={{ base: 4, md: 4 }}
     fontSize="17px"
-    fontWeight="700"
+    fontWeight="600"
     borderBottom="1px solid transparent"
     borderColor="gray.100"
     background="gray.50"

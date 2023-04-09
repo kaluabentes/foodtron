@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Flex } from "@chakra-ui/react"
+import { Box, Flex, Heading, useBreakpointValue } from "@chakra-ui/react"
 import { v4 as uuidv4 } from "uuid"
 
 import prisma from "@/lib/infra/prisma/client"
@@ -24,6 +24,8 @@ import formatAddress from "@/modules/app/addresses/lib/formatAddress"
 import Location from "@/modules/admin/locations/types/Location"
 import match from "@/lib/helpers/string/match"
 import sortCategories from "@/modules/admin/categories/lib/sortCategories"
+import StoreInfoDesktop from "@/modules/app/components/StoreInfoDesktop"
+import MyOrder from "@/modules/app/components/MyOrder"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -209,8 +211,8 @@ const Index = ({ store = {}, categories }: IndexProps) => {
     setSelectedProduct(product)
   }
 
-  return (
-    <AppLayout title="Menu">
+  const renderStoreInfo = useBreakpointValue({
+    base: (
       <Box
         borderRadius={{ lg: "md" }}
         overflow="hidden"
@@ -228,45 +230,80 @@ const Index = ({ store = {}, categories }: IndexProps) => {
           location={location}
         />
       </Box>
-      <AddressSelectButton
-        onClick={() => router.push("/addresses")}
-        address={assembledAddress}
+    ),
+    lg: (
+      <StoreInfoDesktop
+        onSchedulesClick={() => router.push("/schedules")}
+        onSelectLocation={() => router.push("/addresses")}
+        weekDay={currentWeekDay}
+        isEnabled={isEnabled!}
+        schedule={currentScheduleTime}
+        store={storeRealTime || store}
+        location={location}
       />
-      <FilterBar
-        search={filters.search}
-        categories={categories}
-        category={filters.category}
-        onCategoryChange={(category: string) =>
-          setFilters((prev) => ({
-            ...prev,
-            category,
-          }))
-        }
-        onSearchChange={(search: string) =>
-          setFilters((prev) => ({
-            ...prev,
-            search,
-          }))
-        }
-      />
-      <Flex direction="column" gap={4} mb={4}>
-        {sortCategories(applyFilters(categories)).map((category) => (
-          <CategoryItem
-            key={category?.id}
-            onMenuItemClick={handleMenuItemClick}
-            category={category!}
+    ),
+  })
+
+  const renderMyOrder = useBreakpointValue({
+    lg: <MyOrder />,
+  })
+
+  return (
+    <AppLayout
+      title="Menu"
+      hideTitle
+      maxWidth={{ base: "100%", lg: "calc(100vw - 68px)" }}
+    >
+      <Flex gap={6}>
+        <Box
+          ml={{ lg: "68px" }}
+          width={{ base: "100%", lg: "calc(100vw - 468px)" }}
+          pl={{ lg: 4 }}
+          pr={{ lg: 4 }}
+        >
+          {renderStoreInfo}
+          <AddressSelectButton
+            onClick={() => router.push("/addresses")}
+            address={assembledAddress}
           />
-        ))}
+          <FilterBar
+            search={filters.search}
+            categories={categories}
+            category={filters.category}
+            onCategoryChange={(category: string) =>
+              setFilters((prev) => ({
+                ...prev,
+                category,
+              }))
+            }
+            onSearchChange={(search: string) =>
+              setFilters((prev) => ({
+                ...prev,
+                search,
+              }))
+            }
+          />
+          <Flex direction="column" gap={4} mb={4}>
+            {sortCategories(applyFilters(categories)).map((category) => (
+              <CategoryItem
+                key={category?.id}
+                onMenuItemClick={handleMenuItemClick}
+                category={category!}
+              />
+            ))}
+          </Flex>
+          <OrderProductModal
+            onConfirm={handleOrderConfirm}
+            optionGroups={selectedProduct?.productOptionGroups?.map(
+              (productOptionGroup) => productOptionGroup.optionGroup
+            )}
+            product={selectedProduct}
+            isOpen={Boolean(selectedProduct)}
+            onClose={() => setSelectedProduct(undefined)}
+          />
+        </Box>
+        {renderMyOrder}
       </Flex>
-      <OrderProductModal
-        onConfirm={handleOrderConfirm}
-        optionGroups={selectedProduct?.productOptionGroups?.map(
-          (productOptionGroup) => productOptionGroup.optionGroup
-        )}
-        product={selectedProduct}
-        isOpen={Boolean(selectedProduct)}
-        onClose={() => setSelectedProduct(undefined)}
-      />
     </AppLayout>
   )
 }

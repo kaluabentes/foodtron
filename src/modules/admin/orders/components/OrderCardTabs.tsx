@@ -54,7 +54,7 @@ const OrderCardTabs = ({
         pt={0}
         pb={0}
         borderBottom="1px solid transparent"
-        borderColor="gray.200"
+        borderColor="gray.100"
       >
         <PageHeader
           title="Pedidos"

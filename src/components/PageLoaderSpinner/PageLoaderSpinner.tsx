@@ -16,7 +16,7 @@ const PageLoaderSpinner = () => (
     <Spinner
       thickness="4px"
       color="brand.400"
-      emptyColor="gray.200"
+      emptyColor="gray.100"
       size="xl"
     />
   </Flex>

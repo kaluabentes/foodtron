@@ -38,7 +38,7 @@ const OrderStatusItem = ({
           transform="translate(7px, 31px)"
           width="1px"
           position="absolute"
-          background="gray.200"
+          background="gray.100"
           bottom={0}
         />
       )}

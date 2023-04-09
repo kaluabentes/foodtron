@@ -19,6 +19,8 @@ const AddressSelectButton = ({
     mb={{ md: 4 }}
     borderRadius={{ lg: "md" }}
     shadow="sm"
+    border={{ lg: "2px solid transparent" }}
+    _hover={{ borderColor: "brand.500" }}
   >
     <Icon
       as={BiMap}
