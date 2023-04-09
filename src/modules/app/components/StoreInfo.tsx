@@ -40,18 +40,22 @@ const StoreInfo = ({
         textAlign="center"
         size="lg"
         fontWeight="700"
-        mb={2}
+        mb={4}
       >
         {store.name}
       </Heading>
-      <Schedule
-        store={store}
-        isEnabled={isEnabled}
-        onSchedulesClick={onSchedulesClick}
-        weekDay={weekDay}
-        schedule={schedule}
-      />
-      <MinimumOrderPrice store={store} />
+      <Box mb={1}>
+        <Schedule
+          store={store}
+          isEnabled={isEnabled}
+          onSchedulesClick={onSchedulesClick}
+          weekDay={weekDay}
+          schedule={schedule}
+        />
+      </Box>
+      <Box mb={6}>
+        <MinimumOrderPrice store={store} />
+      </Box>
       <StoreDetails
         location={location}
         store={store}

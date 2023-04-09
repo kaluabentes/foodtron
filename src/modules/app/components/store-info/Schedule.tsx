@@ -23,13 +23,10 @@ const Schedule = ({
     onClick={onSchedulesClick}
     alignItems="center"
     gap={1.5}
-    mb={2}
     textDecoration={store.isOpen && isEnabled ? undefined : "line-through"}
   >
-    <Icon fontSize="22px" as={BiTimeFive} color="gray.500" />
-    <Text fontWeight="500">
-      {!weekDay ? "--- - ---" : `${weekDay} - ${schedule}`}
-    </Text>
+    <Icon fontSize="22px" as={BiTimeFive} />
+    <Text>{!weekDay ? "--- - ---" : `${weekDay} - ${schedule}`}</Text>
   </Flex>
 )
 

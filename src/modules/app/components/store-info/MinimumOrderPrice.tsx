@@ -7,13 +7,11 @@ interface MinimumOrderPriceProps {
 }
 
 const MinimumOrderPrice = ({ store }: MinimumOrderPriceProps) => (
-  <Text mb={8}>
-    <Box as="span" color="gray.500" fontSize="md">
+  <Text>
+    <Box as="span" fontWeight="500" fontSize="md">
       Pedido mínimo:
     </Box>{" "}
-    <Box as="span" fontWeight="500">
-      {formatToRealCurrency(Number(store.minimumOrderPrice))}
-    </Box>
+    <Box as="span">{formatToRealCurrency(Number(store.minimumOrderPrice))}</Box>
   </Text>
 )
 
