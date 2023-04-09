@@ -29,17 +29,18 @@ const StoreInfoDesktop = ({
       src={store.cover}
       alt="Cover"
       objectFit="cover"
-      height={{ base: "200px" }}
+      height={{ base: "300px" }}
       width="100%"
     />
     <Flex p={6}>
       <Image
+        marginTop="-50px"
         src={store.logo}
         alt="Logo"
         objectFit="cover"
         outline="3px solid white"
-        height="130px"
-        width="130px"
+        height="160px"
+        width="160px"
         borderRadius="25px"
       />
       <Flex direction="column" ml={6}>

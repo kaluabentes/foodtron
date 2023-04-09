@@ -30,7 +30,10 @@ const CategoryItem = ({ category, onMenuItemClick }: CategoryItemProps) => (
       {category.title}
     </Heading>
     <Grid
-      templateColumns={{ base: "repeat(1, 1fr)", lg: "repeat(2, 1fr)" }}
+      templateColumns={{
+        base: "repeat(1, 1fr)",
+        lg: "repeat(2, 1fr)",
+      }}
       gap={{ lg: 4 }}
     >
       {category?.products?.map((product: Product) => (

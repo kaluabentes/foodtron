@@ -44,6 +44,7 @@ const MenuItem = ({ product, onClick }: MenuItemProps) => {
       borderRadius={{ lg: "md" }}
       overflow="hidden"
       shadow={{ lg: "sm" }}
+      backgroundColor="white"
     >
       <Box
         onClick={() => onClick(product)}
@@ -51,7 +52,6 @@ const MenuItem = ({ product, onClick }: MenuItemProps) => {
         width="full"
         textAlign="left"
         p={{ base: 4 }}
-        backgroundColor="white"
       >
         <Flex gap={2}>
           <Box flex={1} marginRight={2}>
@@ -63,15 +63,15 @@ const MenuItem = ({ product, onClick }: MenuItemProps) => {
               {product.title}
             </Heading>
             <Text mb={4} color="gray.500" fontSize="sm">
-              {product.description && subWord(product.description, 0, 7)}
+              {product.description && subWord(product.description, 0, 13)}
             </Text>
             <Text fontWeight="400" fontSize="md">
               {formatToRealCurrency(Number(product.price))}
             </Text>
           </Box>
           <Image
-            height={{ base: "100px", md: "120px" }}
-            width={{ base: "100px", md: "120px" }}
+            height={{ base: "100px", md: "100px" }}
+            width={{ base: "100px", md: "100px" }}
             borderRadius="18px"
             objectFit="cover"
             src={product.image ? product.image : "/placeholder.png"}
