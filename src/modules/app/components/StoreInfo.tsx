@@ -44,7 +44,7 @@ const StoreInfo = ({
       >
         {store.name}
       </Heading>
-      <Box mb={1}>
+      <Box mb={2}>
         <Schedule
           store={store}
           isEnabled={isEnabled}
