@@ -274,8 +274,8 @@ const Index = ({ store = {}, categories }: IndexProps) => {
         <Box
           ml={{ lg: "68px" }}
           width={{ base: "100%", lg: "calc(100vw - 484px)" }}
-          pl={{ lg: 4 }}
-          pr={{ lg: 4 }}
+          pl={{ lg: 6 }}
+          pr={{ lg: 6 }}
         >
           {renderStoreInfo}
           {renderAddressSelectButton}

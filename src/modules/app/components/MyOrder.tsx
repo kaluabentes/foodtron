@@ -4,7 +4,7 @@ import AddressSelectButton from "./AddressSelectButton"
 
 interface MyOrderProps {
   onAddressClick: () => void
-  address: string
+  address: string | undefined
 }
 
 const MyOrder = ({ onAddressClick, address }: MyOrderProps) => (
@@ -19,7 +19,7 @@ const MyOrder = ({ onAddressClick, address }: MyOrderProps) => (
     boxShadow="sm"
     overflow="auto"
   >
-    <Heading p={6} pb={0} fontSize="lg" fontWeight="600" mb={4}>
+    <Heading p={6} pb={0} pt={6} fontSize="xl" fontWeight="600" mb={6}>
       Meu pedido
     </Heading>
     <Box pl={6} pr={6}>

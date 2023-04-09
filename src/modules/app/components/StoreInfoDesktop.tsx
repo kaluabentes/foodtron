@@ -41,7 +41,7 @@ const StoreInfoDesktop = ({
         outline="3px solid white"
         height="160px"
         width="160px"
-        borderRadius="25px"
+        borderRadius="2xl"
       />
       <Flex direction="column" ml={6} width="100%">
         <Heading size="lg" fontWeight="700" mb={4}>

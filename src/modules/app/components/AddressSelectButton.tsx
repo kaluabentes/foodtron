@@ -6,7 +6,7 @@ const AddressSelectButton = ({
   onClick,
   isBordered,
 }: {
-  address: string
+  address: string | undefined
   onClick: () => void
   isBordered?: boolean
 }) => (
