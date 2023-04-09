@@ -130,7 +130,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
   const location = (currentAddress?.location || {}) as Location
   const assembledAddress = currentAddress
     ? formatAddress(currentAddress!)
-    : "---"
+    : undefined
 
   const currentDay = new Date().getDay()
   const currentSchedule = store!.schedules!.find(

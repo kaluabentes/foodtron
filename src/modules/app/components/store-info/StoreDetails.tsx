@@ -26,14 +26,8 @@ const StoreDetails = ({
           {location.estimatedTime} Min.
         </Text>
       ) : (
-        <Text
-          as="button"
-          onClick={onSelectLocation}
-          fontWeight="500"
-          fontSize="sm"
-          color="brand.500"
-        >
-          Selecionar
+        <Text as="span" fontWeight="500">
+          ---
         </Text>
       )}
     </Flex>
@@ -50,14 +44,8 @@ const StoreDetails = ({
           })}`}
         </Text>
       ) : (
-        <Text
-          as="button"
-          onClick={onSelectLocation}
-          fontWeight="500"
-          fontSize="sm"
-          color="brand.500"
-        >
-          Selecionar
+        <Text as="span" fontWeight="500">
+          ---
         </Text>
       )}
     </Flex>
