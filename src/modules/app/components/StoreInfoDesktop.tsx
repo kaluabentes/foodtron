@@ -53,7 +53,7 @@ const StoreInfoDesktop = ({
       />
       <Flex direction="column" ml={6} width="100%">
         <Flex
-          alignItems="center"
+          alignItems="start"
           gap={4}
           mb={4}
           justifyContent="space-between"

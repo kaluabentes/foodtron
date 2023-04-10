@@ -36,15 +36,12 @@ const StoreInfo = ({
       isEditable={false}
     />
     <Flex flexDirection="column" alignItems="center" p={4}>
-      <Heading
-        maxWidth="400px"
-        textAlign="center"
-        size="lg"
-        fontWeight="700"
-        mb={4}
-      >
-        {store.name}
-      </Heading>
+      <Flex gap={2} alignItems="center" mb={4}>
+        <Heading maxWidth="400px" textAlign="center" size="lg" fontWeight="700">
+          {store.name}
+        </Heading>
+        <IconActionButton size="sm" icon={<BiInfoCircle fontSize="14px" />} />
+      </Flex>
       <Box mb={2}>
         <Schedule
           store={store}
