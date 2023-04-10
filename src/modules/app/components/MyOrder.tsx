@@ -39,7 +39,7 @@ const MyOrder = ({ onAddressClick, onConfirm, address }: MyOrderProps) => (
     </Box>
 
     <Box
-      height="calc(100vh - 434px)"
+      height="calc(100vh - 418px)"
       overflow="auto"
       zIndex={1}
       position="relative"
@@ -55,7 +55,7 @@ const MyOrder = ({ onAddressClick, onConfirm, address }: MyOrderProps) => (
       background="white"
     >
       <OrderItemsSummary hideMinimumPrice section="summary" />
-      <Box p={6}>
+      <Box p={6} pt={0}>
         <Button onClick={onConfirm} width="full" colorScheme="brand">
           Fechar pedido
         </Button>

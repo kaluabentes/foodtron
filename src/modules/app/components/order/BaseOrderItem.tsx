@@ -17,7 +17,7 @@ const BaseOrderItem = ({
   return (
     <Box
       sx={{
-        "&:fisrt-of-type .separator": {
+        "&:last-of-type .separator": {
           display: "none",
         },
       }}

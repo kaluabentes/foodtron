@@ -214,6 +214,7 @@ const OrderItemsSummary = ({
           }
         />
         <BaseOrderItem
+          hideBorder
           leftSlot={<Text fontWeight="500">Total</Text>}
           rightSlot={
             <Text
