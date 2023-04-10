@@ -9,7 +9,7 @@ const StripeSeparator = ({ horizontal }: StripeSeparatorProps) => (
     width={horizontal ? "100%" : "1px"}
     height={horizontal ? "1px" : "30px"}
     borderRadius="50px"
-    backgroundColor="gray.300"
+    backgroundColor="gray.200"
   />
 )
 
