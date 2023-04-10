@@ -9,7 +9,7 @@ import { BiInfoCircle } from "react-icons/bi"
 
 interface StoreInfoDesktopProps {
   store: Store
-  onSchedulesClick: () => void
+  onInfoClick: () => void
   isEnabled: boolean
   weekDay: string
   schedule: string
@@ -20,7 +20,7 @@ interface StoreInfoDesktopProps {
 const StoreInfoDesktop = ({
   store,
   isEnabled,
-  onSchedulesClick,
+  onInfoClick,
   weekDay,
   schedule,
   onSelectLocation,
@@ -62,7 +62,7 @@ const StoreInfoDesktop = ({
           <Heading size="lg" fontWeight="700">
             {store.name}
           </Heading>
-          <IconActionButton icon={<BiInfoCircle />} />
+          <IconActionButton onClick={onInfoClick} icon={<BiInfoCircle />} />
         </Flex>
         <Flex
           alignItems="center"
@@ -74,7 +74,7 @@ const StoreInfoDesktop = ({
           <Schedule
             store={store}
             isEnabled={isEnabled}
-            onSchedulesClick={onSchedulesClick}
+            onSchedulesClick={onInfoClick}
             weekDay={weekDay}
             schedule={schedule}
           />
@@ -84,7 +84,7 @@ const StoreInfoDesktop = ({
           location={location}
           store={store}
           onSelectLocation={onSelectLocation}
-          onSchedulesClick={onSchedulesClick}
+          onSchedulesClick={onInfoClick}
         />
       </Flex>
     </Flex>

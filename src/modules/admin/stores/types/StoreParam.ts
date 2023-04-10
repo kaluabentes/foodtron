@@ -9,6 +9,7 @@ interface StoreParam {
   address?: string
   city?: string
   state?: string
+  cep?: string
   cnpj?: string
   whatsapp?: string
   subdomain?: string

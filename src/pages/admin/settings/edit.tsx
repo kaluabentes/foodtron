@@ -199,6 +199,18 @@ const EditStore = ({ store }: StorePageProps) => {
               <DataCell>
                 <DataHead>
                   <Box as="span" fontWeight="500">
+                    CEP
+                  </Box>
+                </DataHead>
+                <DataValue>
+                  <FormControl>
+                    <Input {...register("cep")} />
+                  </FormControl>
+                </DataValue>
+              </DataCell>
+              <DataCell>
+                <DataHead>
+                  <Box as="span" fontWeight="500">
                     CNPJ
                   </Box>
                 </DataHead>

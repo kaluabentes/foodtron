@@ -166,6 +166,16 @@ const Store = ({ store }: StorePageProps) => {
                 <DataCell>
                   <DataHead>
                     <Box as="span" fontWeight="500">
+                      CEP
+                    </Box>
+                  </DataHead>
+                  <DataValue>
+                    <TruncateText>{store.cep}</TruncateText>
+                  </DataValue>
+                </DataCell>
+                <DataCell>
+                  <DataHead>
+                    <Box as="span" fontWeight="500">
                       CNPJ
                     </Box>
                   </DataHead>

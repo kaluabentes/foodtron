@@ -17,7 +17,7 @@ interface StoreInfoProps {
   isEnabled: boolean
   location: Location
   onSelectLocation: () => void
-  onSchedulesClick: () => void
+  onInfoClick: () => void
 }
 
 const StoreInfo = ({
@@ -27,7 +27,7 @@ const StoreInfo = ({
   schedule,
   isEnabled,
   onSelectLocation,
-  onSchedulesClick,
+  onInfoClick,
 }: StoreInfoProps) => (
   <Box shadow="sm" backgroundColor="white" overflow="hidden">
     <StoreMidiaUpload
@@ -40,13 +40,17 @@ const StoreInfo = ({
         <Heading maxWidth="400px" textAlign="center" size="lg" fontWeight="700">
           {store.name}
         </Heading>
-        <IconActionButton size="sm" icon={<BiInfoCircle fontSize="14px" />} />
+        <IconActionButton
+          onClick={onInfoClick}
+          size="sm"
+          icon={<BiInfoCircle fontSize="14px" />}
+        />
       </Flex>
       <Box mb={2}>
         <Schedule
           store={store}
           isEnabled={isEnabled}
-          onSchedulesClick={onSchedulesClick}
+          onSchedulesClick={onInfoClick}
           weekDay={weekDay}
           schedule={schedule}
         />
@@ -58,7 +62,7 @@ const StoreInfo = ({
         location={location}
         store={store}
         onSelectLocation={onSelectLocation}
-        onSchedulesClick={onSchedulesClick}
+        onSchedulesClick={onInfoClick}
       />
     </Flex>
   </Box>

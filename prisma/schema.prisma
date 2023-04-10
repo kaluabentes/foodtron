@@ -94,6 +94,7 @@ model Store {
   address           String?
   city              String?
   state             String?
+  cep               String?
   cnpj              String?
   whatsapp          String?
   subdomain         String?  @unique

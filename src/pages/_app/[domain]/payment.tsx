@@ -92,13 +92,19 @@ const Payment = () => {
               backgroundColor="white"
               borderRadius="md"
               overflow="hidden"
+              p={4}
             >
+              <Heading fontWeight="600" p={2} fontSize="md">
+                Escolha um método
+              </Heading>
               {paymentMethods.map((paymentMethod) => (
                 <Box
                   key={paymentMethod.type}
                   onClick={() => handlePaymentClick(paymentMethod)}
                   as="button"
                   p={4}
+                  pr={2}
+                  pl={2}
                   borderBottom="1px solid transparent"
                   borderColor="gray.100"
                   textAlign="left"

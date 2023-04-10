@@ -16,6 +16,7 @@ import {
   BiTask,
   BiCart,
   BiLogInCircle,
+  BiInfoCircle,
 } from "react-icons/bi"
 import { FaWhatsapp } from "react-icons/fa"
 
@@ -31,14 +32,9 @@ export const topMenu: RouteItem[] = [
     path: "/order-confirm",
   },
   {
-    icon: BiTask,
-    label: "Pedidos",
-    path: "/orders",
-  },
-  {
-    icon: BiAlarm,
-    label: "Horários",
-    path: "/schedules",
+    icon: BiMoney,
+    label: "Pagamento",
+    path: "/payment",
   },
   {
     icon: BiMap,
@@ -49,6 +45,16 @@ export const topMenu: RouteItem[] = [
     icon: BiUser,
     label: "Perfil",
     path: "/profile",
+  },
+  {
+    icon: BiTask,
+    label: "Pedidos",
+    path: "/orders",
+  },
+  {
+    icon: BiInfoCircle,
+    label: "Informações",
+    path: "/about",
   },
 ]
 
