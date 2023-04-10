@@ -4,10 +4,11 @@ import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import Location from "@/modules/admin/locations/types/Location"
 import Store from "@/modules/admin/stores/types/Store"
 import { Badge, Box, Flex, Heading, Icon, Text } from "@chakra-ui/react"
-import { BiTimeFive } from "react-icons/bi"
+import { BiInfoCircle, BiTimeFive } from "react-icons/bi"
 import Schedule from "./store-info/Schedule"
 import MinimumOrderPrice from "./store-info/MinimumOrderPrice"
 import StoreDetails from "./store-info/StoreDetails"
+import IconActionButton from "@/components/IconActionButton"
 
 interface StoreInfoProps {
   store: Store

@@ -28,8 +28,19 @@ import BaseOrderItem from "@/modules/app/components/order/BaseOrderItem"
 import sumProductTotal from "@/modules/admin/orders/lib/sumProductTotal"
 import sumOrderSubtotal from "@/modules/admin/orders/lib/sumOrderSubtotal"
 import useCurrentAddress from "@/modules/app/addresses/hooks/useCurrentAddress"
+import EmptyState from "@/components/EmptyState"
+import { FaRegSadCry } from "react-icons/fa"
+import StripeSeparator from "@/components/StripeSeparator"
 
-const OrderItemsSummary = () => {
+interface OrderItemsSummaryProps {
+  section?: "all" | "items" | "summary"
+  hideMinimumPrice?: boolean
+}
+
+const OrderItemsSummary = ({
+  section = "all",
+  hideMinimumPrice = false,
+}: OrderItemsSummaryProps) => {
   const router = useRouter()
   const { domain } = router.query
 
@@ -140,31 +151,50 @@ const OrderItemsSummary = () => {
     setQuantity(orderProduct.quantity)
   }
 
-  return (
-    <>
-      <Flex
-        direction="column"
-        shadow="sm"
-        backgroundColor="white"
-        borderRadius={{ base: undefined, lg: "md" }}
-        overflow="hidden"
-      >
-        {orderProducts.map((product: OrderProduct) => (
-          <OrderProductItem
-            key={product.id}
-            product={product}
-            productTotal={formatToRealCurrency(sumProductTotal(product))}
-            onClick={() => handleEditProduct(product.id!, product.productId!)}
+  const renderItems = () => {
+    if (section === "summary") {
+      return null
+    }
+
+    if (!orderProducts.length) {
+      return (
+        <Box p={6}>
+          <EmptyState
+            message="Nada aqui por enquanto"
+            isGray
+            icon={FaRegSadCry}
           />
-        ))}
-        <BaseOrderItem
-          leftSlot={<Text fontWeight="500">Pedido mínimo</Text>}
-          rightSlot={
-            <Text fontSize="md" mb={1} textAlign="right">
-              {formatToRealCurrency(Number(minimumOrderPrice))}
-            </Text>
-          }
-        />
+        </Box>
+      )
+    }
+
+    return orderProducts.map((product: OrderProduct) => (
+      <OrderProductItem
+        key={product.id}
+        product={product}
+        productTotal={formatToRealCurrency(sumProductTotal(product))}
+        onClick={() => handleEditProduct(product.id!, product.productId!)}
+      />
+    ))
+  }
+
+  const renderSummary = () => {
+    if (section === "items") {
+      return null
+    }
+
+    return (
+      <>
+        {!hideMinimumPrice && (
+          <BaseOrderItem
+            leftSlot={<Text fontWeight="500">Pedido mínimo</Text>}
+            rightSlot={
+              <Text fontSize="md" mb={1} textAlign="right">
+                {formatToRealCurrency(Number(minimumOrderPrice))}
+              </Text>
+            }
+          />
+        )}
         <BaseOrderItem
           leftSlot={<Text fontWeight="500">Subtotal</Text>}
           rightSlot={
@@ -202,6 +232,23 @@ const OrderItemsSummary = () => {
             </Text>
           }
         />
+      </>
+    )
+  }
+
+  return (
+    <>
+      <Flex
+        direction="column"
+        backgroundColor="white"
+        borderRadius={{ base: undefined, lg: "md" }}
+        overflow="hidden"
+      >
+        {renderItems()}
+        <Box pl={{ base: 4, md: 6 }} pr={{ base: 4, md: 6 }}>
+          <StripeSeparator horizontal />
+        </Box>
+        {renderSummary()}
       </Flex>
       <OrderProductModal
         onConfirm={handleEditOrderConfirm}

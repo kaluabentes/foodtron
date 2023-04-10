@@ -18,7 +18,6 @@ const AddressSelectButton = ({
     width="100%"
     onClick={onClick}
     backgroundColor="white"
-    mb={{ md: 4 }}
     borderRadius={{ lg: "md" }}
     shadow="sm"
     border={{ lg: "2px solid transparent" }}

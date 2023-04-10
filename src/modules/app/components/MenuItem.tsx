@@ -58,7 +58,7 @@ const MenuItem = ({ product, onClick }: MenuItemProps) => {
             <Heading
               mb={4}
               fontSize={{ base: "md", lg: "md" }}
-              fontWeight="500"
+              fontWeight="400"
             >
               {product.title}
             </Heading>

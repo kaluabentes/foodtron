@@ -4,6 +4,8 @@ import Schedule from "./store-info/Schedule"
 import MinimumOrderPrice from "./store-info/MinimumOrderPrice"
 import Location from "@/modules/admin/locations/types/Location"
 import StoreDetails from "./store-info/StoreDetails"
+import IconActionButton from "@/components/IconActionButton"
+import { BiInfoCircle } from "react-icons/bi"
 
 interface StoreInfoDesktopProps {
   store: Store
@@ -24,7 +26,13 @@ const StoreInfoDesktop = ({
   onSelectLocation,
   location,
 }: StoreInfoDesktopProps) => (
-  <Box background="white" mb={4} borderRadius="md" overflow="hidden">
+  <Box
+    background="white"
+    mb={4}
+    borderRadius="md"
+    overflow="hidden"
+    shadow="sm"
+  >
     <Image
       src={store.cover}
       alt="Cover"
@@ -44,9 +52,18 @@ const StoreInfoDesktop = ({
         borderRadius="2xl"
       />
       <Flex direction="column" ml={6} width="100%">
-        <Heading size="lg" fontWeight="700" mb={4}>
-          {store.name}
-        </Heading>
+        <Flex
+          alignItems="center"
+          gap={4}
+          mb={4}
+          justifyContent="space-between"
+          width="100%"
+        >
+          <Heading size="lg" fontWeight="700">
+            {store.name}
+          </Heading>
+          <IconActionButton icon={<BiInfoCircle />} />
+        </Flex>
         <Flex
           alignItems="center"
           gap={4}
