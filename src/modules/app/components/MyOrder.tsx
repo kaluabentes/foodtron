@@ -4,10 +4,11 @@ import AddressSelectButton from "./AddressSelectButton"
 
 interface MyOrderProps {
   onAddressClick: () => void
+  onConfirm: () => void
   address: string | undefined
 }
 
-const MyOrder = ({ onAddressClick, address }: MyOrderProps) => (
+const MyOrder = ({ onAddressClick, onConfirm, address }: MyOrderProps) => (
   <Box
     minWidth="400px"
     maxWidth="400px"
@@ -55,7 +56,7 @@ const MyOrder = ({ onAddressClick, address }: MyOrderProps) => (
     >
       <OrderItemsSummary hideMinimumPrice section="summary" />
       <Box p={6}>
-        <Button width="full" colorScheme="brand">
+        <Button onClick={onConfirm} width="full" colorScheme="brand">
           Fechar pedido
         </Button>
       </Box>

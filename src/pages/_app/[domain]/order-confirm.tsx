@@ -192,7 +192,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         mb={4}
         shadow="sm"
       >
-        <SectionTitle>Pedido</SectionTitle>
+        <SectionTitle>Carrinho</SectionTitle>
         <OrderItemsSummary />
       </Box>
       <Box

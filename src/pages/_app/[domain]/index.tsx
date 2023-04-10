@@ -198,6 +198,19 @@ const Index = ({ store = {}, categories }: IndexProps) => {
     setSelectedProduct(undefined)
   }
 
+  const handleCartClick = () => {
+    if (!orderProducts.length) {
+      toast({
+        title: "Atenção",
+        description: "Adicione um produto",
+        status: "error",
+      })
+      return
+    }
+
+    router.push("/order-confirm")
+  }
+
   const handleMenuItemClick = (product: Product) => {
     if (!storeRealTime.isOpen) {
       toast({
@@ -247,6 +260,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
   const renderMyOrder = useBreakpointValue({
     lg: (
       <MyOrder
+        onConfirm={handleCartClick}
         onAddressClick={() => router.push("/addresses")}
         address={assembledAddress}
       />
