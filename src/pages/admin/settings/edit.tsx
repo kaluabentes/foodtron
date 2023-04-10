@@ -146,6 +146,23 @@ const EditStore = ({ store }: StorePageProps) => {
               <DataCell>
                 <DataHead>
                   <Box as="span" fontWeight="500">
+                    {t("whatsapp")}
+                  </Box>
+                </DataHead>
+                <DataValue>
+                  <FormControl>
+                    <MaskedPhoneInput
+                      value={String(watch("whatsapp"))}
+                      mask="(00) 0 0000 0000"
+                      placeholder="(00) 0 0000 0000"
+                      onAccept={(value: string) => setValue("whatsapp", value)}
+                    />
+                  </FormControl>
+                </DataValue>
+              </DataCell>
+              <DataCell>
+                <DataHead>
+                  <Box as="span" fontWeight="500">
                     {t("address")}
                   </Box>
                 </DataHead>
@@ -158,17 +175,36 @@ const EditStore = ({ store }: StorePageProps) => {
               <DataCell>
                 <DataHead>
                   <Box as="span" fontWeight="500">
-                    {t("whatsapp")}
+                    Cidade
                   </Box>
                 </DataHead>
                 <DataValue>
                   <FormControl>
-                    <MaskedPhoneInput
-                      value={String(watch("whatsapp"))}
-                      mask="(00) 0 0000 0000"
-                      placeholder="(00) 0 0000 0000"
-                      onAccept={(value: string) => setValue("whatsapp", value)}
-                    />
+                    <Input {...register("city")} />
+                  </FormControl>
+                </DataValue>
+              </DataCell>
+              <DataCell>
+                <DataHead>
+                  <Box as="span" fontWeight="500">
+                    Estado
+                  </Box>
+                </DataHead>
+                <DataValue>
+                  <FormControl>
+                    <Input {...register("state")} />
+                  </FormControl>
+                </DataValue>
+              </DataCell>
+              <DataCell>
+                <DataHead>
+                  <Box as="span" fontWeight="500">
+                    CNPJ
+                  </Box>
+                </DataHead>
+                <DataValue>
+                  <FormControl>
+                    <Input {...register("cnpj")} />
                   </FormControl>
                 </DataValue>
               </DataCell>

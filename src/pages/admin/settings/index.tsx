@@ -126,6 +126,16 @@ const Store = ({ store }: StorePageProps) => {
                 <DataCell>
                   <DataHead>
                     <Box as="span" fontWeight="500">
+                      {t("whatsapp")}
+                    </Box>
+                  </DataHead>
+                  <DataValue>
+                    <TruncateText>{store.whatsapp}</TruncateText>
+                  </DataValue>
+                </DataCell>
+                <DataCell>
+                  <DataHead>
+                    <Box as="span" fontWeight="500">
                       {t("address")}
                     </Box>
                   </DataHead>
@@ -136,13 +146,34 @@ const Store = ({ store }: StorePageProps) => {
                 <DataCell>
                   <DataHead>
                     <Box as="span" fontWeight="500">
-                      {t("whatsapp")}
+                      Cidade
                     </Box>
                   </DataHead>
                   <DataValue>
-                    <TruncateText>{store.whatsapp}</TruncateText>
+                    <TruncateText>{store.city}</TruncateText>
                   </DataValue>
                 </DataCell>
+                <DataCell>
+                  <DataHead>
+                    <Box as="span" fontWeight="500">
+                      Estado
+                    </Box>
+                  </DataHead>
+                  <DataValue>
+                    <TruncateText>{store.state}</TruncateText>
+                  </DataValue>
+                </DataCell>
+                <DataCell>
+                  <DataHead>
+                    <Box as="span" fontWeight="500">
+                      CNPJ
+                    </Box>
+                  </DataHead>
+                  <DataValue>
+                    <TruncateText>{store.cnpj}</TruncateText>
+                  </DataValue>
+                </DataCell>
+
                 <DataCell>
                   <DataHead>
                     <Box as="span" fontWeight="500">

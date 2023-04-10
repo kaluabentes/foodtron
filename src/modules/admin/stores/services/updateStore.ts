@@ -23,13 +23,8 @@ const updateStore = async ({ store, body }: any) => {
       id: store.id,
     },
     data: {
-      name: body.name || store.name,
-      logo: body.logo || store.logo,
-      cover: body.cover || store.cover,
-      address: body.address || store.address,
+      ...body,
       whatsapp: body.whatsapp ? formatPhone(body.whatsapp) : store.whatsapp,
-      subdomain: body.subdomain || store.subdomain,
-      customDomain: body.customDomain || store.customDomain,
       minimumOrderPrice: body.minimumOrderPrice
         ? new Prisma.Decimal(body.minimumOrderPrice.replace(",", "."))
         : store.minimumOrderPrice,

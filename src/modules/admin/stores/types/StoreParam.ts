@@ -7,6 +7,9 @@ interface StoreParam {
   logo?: string
   cover?: string
   address?: string
+  city?: string
+  state?: string
+  cnpj?: string
   whatsapp?: string
   subdomain?: string
   customDomain?: string
