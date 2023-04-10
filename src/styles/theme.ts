@@ -1,11 +1,33 @@
 import { Theme, extendTheme } from "@chakra-ui/react"
 import type { StyleFunctionProps } from "@chakra-ui/styled-system"
 import { mode } from "@chakra-ui/theme-tools"
-import Input from "./components/Input"
 
 const theme = extendTheme({
   components: {
-    Input,
+    Input: {
+      variants: {
+        outline: {
+          field: {
+            borderColor: "gray.300",
+          },
+          addon: {
+            borderColor: "gray.300",
+          },
+        },
+      },
+    },
+    Select: {
+      variants: {
+        outline: {
+          field: {
+            borderColor: "gray.300",
+          },
+          addon: {
+            borderColor: "gray.300",
+          },
+        },
+      },
+    },
     Badge: {
       baseStyle: {},
     },
@@ -24,7 +46,6 @@ const theme = extendTheme({
         }),
         outline: {
           borderColor: "gray.300",
-          borderWidth: "1px",
           background: "white",
         },
       },

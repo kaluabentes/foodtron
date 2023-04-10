@@ -104,7 +104,7 @@ const FilterBar = ({
         left={{ base: "0", lg: "initial" }}
         alignSelf="stretch"
         flex={1}
-        width={{ base: "100%", lg: isFixed ? "calc(100% - 500px)" : "100%" }}
+        width={{ base: "100%", lg: isFixed ? "calc(100% - 532px)" : "100%" }}
         zIndex="100"
         mb={4}
       >

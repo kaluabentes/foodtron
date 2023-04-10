@@ -50,7 +50,7 @@ const MyOrder = ({ onAddressClick, onConfirm, address }: MyOrderProps) => (
       position="absolute"
       width="100%"
       bottom={0}
-      boxShadow="0 -1px 2px 0 rgba(0, 0, 0, 0.05);"
+      boxShadow="0 -2px 2px 0 rgba(0, 0, 0, 0.05);"
       zIndex={2}
       background="white"
     >

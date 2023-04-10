@@ -245,9 +245,6 @@ const OrderItemsSummary = ({
         overflow="hidden"
       >
         {renderItems()}
-        <Box pl={{ base: 4, md: 6 }} pr={{ base: 4, md: 6 }}>
-          <StripeSeparator horizontal />
-        </Box>
         {renderSummary()}
       </Flex>
       <OrderProductModal

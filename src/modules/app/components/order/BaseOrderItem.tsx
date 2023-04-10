@@ -17,7 +17,7 @@ const BaseOrderItem = ({
   return (
     <Box
       sx={{
-        "&:last-of-type .separator": {
+        "&:fisrt-of-type .separator": {
           display: "none",
         },
       }}
@@ -41,7 +41,7 @@ const BaseOrderItem = ({
           className="separator"
           height="0.8px"
           width="100%"
-          backgroundColor="gray.100"
+          backgroundColor="gray.200"
         />
       </Box>
     </Box>
