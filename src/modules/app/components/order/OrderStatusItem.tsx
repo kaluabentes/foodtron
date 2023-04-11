@@ -1,4 +1,5 @@
 import formatDate from "@/lib/helpers/date/formatDate"
+import formatTime from "@/lib/helpers/date/formatTime"
 import { ORDER_STATUS } from "@/modules/admin/orders/constants"
 import { Box, Flex, Heading, Text } from "@chakra-ui/react"
 import { ReactNode } from "react"
@@ -31,7 +32,7 @@ const OrderStatusItem = ({
     pb={2}
     position="relative"
   >
-    <Flex alignItems="start" gap={3} position="relative">
+    <Flex width="100%" alignItems="start" gap={3} position="relative">
       {!isLastItem && (
         <Box
           height="94%"
@@ -92,43 +93,46 @@ const OrderStatusItem = ({
       >
         {icon}
       </Box>
-      <Box>
-        <Heading
-          opacity={
-            stepStatus === "pending" || stepStatus === ORDER_STATUS.DONE
-              ? "0.4"
-              : undefined
-          }
-          as="h2"
-          fontSize="md"
-          fontWeight="600"
-          mb={1}
-        >
-          {title}
-        </Heading>
-        <Text
-          opacity={
-            stepStatus === "pending" || stepStatus === ORDER_STATUS.DONE
-              ? "0.4"
-              : undefined
-          }
-          fontSize="sm"
-          mb={1}
-        >
-          {description}
-        </Text>
-        <Text
-          opacity={
-            stepStatus === "pending" || stepStatus === ORDER_STATUS.DONE
-              ? "0.4"
-              : undefined
-          }
-          fontSize="xs"
-          color={stepStatus === ORDER_STATUS.DONE ? "gray.600" : "gray.400"}
-        >
-          {createdAt ? formatDate(String(createdAt), true) : null}
-        </Text>
-      </Box>
+      <Flex justifyContent="space-between" flex={1}>
+        <Box width="100%">
+          <Heading
+            opacity={
+              stepStatus === "pending" || stepStatus === ORDER_STATUS.DONE
+                ? "0.4"
+                : undefined
+            }
+            as="h2"
+            fontSize="md"
+            fontWeight="600"
+            mb={1}
+          >
+            {title}
+          </Heading>
+          <Text
+            opacity={
+              stepStatus === "pending" || stepStatus === ORDER_STATUS.DONE
+                ? "0.4"
+                : undefined
+            }
+            fontSize="sm"
+          >
+            {description}
+          </Text>
+        </Box>
+        {createdAt && (
+          <Text
+            opacity={
+              stepStatus === "pending" || stepStatus === ORDER_STATUS.DONE
+                ? "0.4"
+                : undefined
+            }
+            fontSize="xs"
+            color={stepStatus === ORDER_STATUS.DONE ? "gray.600" : "gray.400"}
+          >
+            {formatTime(String(createdAt))}
+          </Text>
+        )}
+      </Flex>
     </Flex>
   </Flex>
 )

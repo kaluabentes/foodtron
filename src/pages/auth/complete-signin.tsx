@@ -138,11 +138,9 @@ const CompleteSignin = () => {
 
       router.push(DESTINATION)
     } catch (error: any) {
-      if (error?.response?.data?.error?.domain) {
-        setError("subdomain", {
-          message: t("subdomainAlreadyInUse")!,
-        })
-      }
+      setError("subdomain", {
+        message: t("subdomainAlreadyInUse")!,
+      })
 
       console.log("> Complete signin error: ", error)
     } finally {
