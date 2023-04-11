@@ -101,6 +101,8 @@ model Store {
   customDomain      String?
   minimumOrderPrice Decimal?
   isOpen            Boolean? @default(false)
+  isPrivacyPolicySigned Boolean? @default(false)
+  isTermsOfUseSigned    Boolean? @default(false)
 
   users             User[]
   schedules         StoreSchedule[]

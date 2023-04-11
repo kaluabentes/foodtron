@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next"
 import {
   Box,
   Button,
+  Checkbox,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -11,6 +12,7 @@ import {
   Input,
   InputGroup,
   InputRightAddon,
+  Switch,
   Text,
   useToast,
 } from "@chakra-ui/react"
@@ -40,6 +42,8 @@ export interface CompleteSignInData {
   whatsapp: string
   cover: string
   logo: string
+  isPrivacyPolicySigned: boolean
+  isTermsOfUseSigned: boolean
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -65,6 +69,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
+Yup.addMethod(Yup.boolean, "terms", function (errorMessage) {
+  return this.test("test-terms", errorMessage, function (value) {
+    const { path, createError } = this
+
+    return value || createError({ path, message: errorMessage })
+  })
+})
+
 const CompleteSignin = () => {
   const { t } = useTranslation()
   const router = useRouter()
@@ -79,6 +91,8 @@ const CompleteSignin = () => {
     userName: Yup.string().required(t("requiredMessage")!),
     subdomain: Yup.string().required(t("requiredMessage")!),
     whatsapp: Yup.string().required(t("requiredMessage")!),
+    isPrivacyPolicySigned: Yup.boolean().terms(t("requiredMessage")!),
+    isTermsOfUseSigned: Yup.boolean().terms(t("requiredMessage")!),
   })
 
   const {
@@ -93,6 +107,8 @@ const CompleteSignin = () => {
     defaultValues: {
       userName: session?.user?.name!,
       whatsapp: "",
+      isPrivacyPolicySigned: false,
+      isTermsOfUseSigned: false,
     },
   })
 
@@ -107,6 +123,8 @@ const CompleteSignin = () => {
         whatsapp: data.whatsapp,
         logo: logo,
         cover: cover,
+        isPrivacyPolicySigned: data.isPrivacyPolicySigned,
+        isTermsOfUseSigned: data.isTermsOfUseSigned,
       })
 
       toast({
@@ -139,11 +157,11 @@ const CompleteSignin = () => {
   }, [session?.user?.name])
 
   useEffect(() => {
-    const subscription = watch(({ storeName }, { name, type }) => {
+    const subscription = watch((data, { name }) => {
       if (name === "storeName") {
         setValue(
           "subdomain",
-          slugify(storeName!, {
+          slugify(data.storeName!, {
             replacement: "",
             lower: true,
           })
@@ -180,7 +198,7 @@ const CompleteSignin = () => {
             {errors.userName?.message}
           </FormErrorMessage>
         </FormControl>
-        <Heading size="sm" marginBottom={5} fontWeight="700">
+        <Heading size="md" marginBottom={5} fontWeight="500">
           {t("storeInformation")}
         </Heading>
         <Box
@@ -188,7 +206,7 @@ const CompleteSignin = () => {
           borderWidth="1px"
           borderStyle="solid"
           borderRadius="md"
-          marginBottom={5}
+          marginBottom={6}
           overflow="hidden"
         >
           <StoreMidiaUpload onCoverChange={setCover} onLogoChange={setLogo} />
@@ -204,7 +222,7 @@ const CompleteSignin = () => {
               </FormErrorMessage>
             </FormControl>
             <FormControl
-              isInvalid={Boolean(errors.storeName?.message)}
+              isInvalid={Boolean(errors.whatsapp?.message)}
               marginBottom={4}
             >
               <FormLabel htmlFor="storeName">Whatsapp</FormLabel>
@@ -236,6 +254,56 @@ const CompleteSignin = () => {
             </FormControl>
           </Box>
         </Box>
+        <Flex direction="column" mb={6} gap={4}>
+          <FormControl isInvalid={Boolean(errors.isTermsOfUseSigned?.message)}>
+            <Flex gap={3}>
+              <Switch colorScheme="brand" {...register("isTermsOfUseSigned")} />
+              <Text>
+                Eu concordo e aceito os{" "}
+                <Box
+                  as="a"
+                  color="brand.500"
+                  href="/terms-of-use"
+                  fontWeight="500"
+                  target="_blank"
+                  rel="noopender noreferrer"
+                >
+                  Termos de Uso
+                </Box>
+              </Text>
+            </Flex>
+            <FormErrorMessage fontSize="xs">
+              {errors.isTermsOfUseSigned?.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl
+            isInvalid={Boolean(errors.isPrivacyPolicySigned?.message)}
+          >
+            <Flex gap={3}>
+              <Switch
+                colorScheme="brand"
+                {...register("isPrivacyPolicySigned")}
+              />
+              <Text>
+                Eu concordo e aceito os{" "}
+                <Box
+                  as="a"
+                  color="brand.500"
+                  href="/terms-of-use"
+                  fontWeight="500"
+                  target="_blank"
+                  rel="noopender noreferrer"
+                >
+                  Política de Privacidade
+                </Box>
+              </Text>
+            </Flex>
+            <FormErrorMessage fontSize="xs">
+              {errors.isPrivacyPolicySigned?.message}
+            </FormErrorMessage>
+          </FormControl>
+        </Flex>
+
         <Button
           isLoading={isLoading}
           width="full"

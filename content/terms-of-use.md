@@ -1,8 +1,8 @@
-# 1. Termos
+# 1. Termos de uso
 
 Ao acessar ao site [Foodtron](https://foodtron.app/), concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis e concorda que é responsável pelo cumprimento de todas as leis locais aplicáveis. Se você não concordar com algum desses termos, está proibido de usar ou acessar este site. Os materiais contidos neste site são protegidos pelas leis de direitos autorais e marcas comerciais aplicáveis.
 
-## 2. Uso de Licença
+## 2. Uso de licença
 
 É concedida permissão para baixar temporariamente uma cópia dos materiais (informações ou software) no site Foodtron , apenas para visualização transitória pessoal e não comercial. Esta é a concessão de uma licença, não uma transferência de título e, sob esta licença, você não pode:
 

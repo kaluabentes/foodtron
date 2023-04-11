@@ -14,7 +14,7 @@ Você é livre para recusar a nossa solicitação de informações pessoais, ent
 
 O uso continuado de nosso site será considerado como aceitação de nossas práticas em torno de privacidade e informações pessoais. Se você tiver alguma dúvida sobre como lidamos com dados do usuário e informações pessoais, entre em contacto connosco.
 
-### Compromisso do Usuário
+### Compromisso do usuário
 
 O usuário se compromete a fazer uso adequado dos conteúdos e da informação que o Foodtron oferece no site e com caráter enunciativo, mas não limitativo:
 

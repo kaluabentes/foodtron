@@ -47,6 +47,8 @@ const completeSignin = async (req: NextApiRequest, res: NextApiResponse) => {
         whatsapp: req.body.whatsapp,
         logo: req.body.logo,
         cover: req.body.cover,
+        isPrivacyPolicySigned: req.body.isPrivacyPolicySigned,
+        isTermsOfUseSigned: req.body.isTermsOfUseSigned,
         schedules: {
           create: schedules,
         },
@@ -72,7 +74,7 @@ const completeSignin = async (req: NextApiRequest, res: NextApiResponse) => {
       status: "ok",
     })
   } catch (error: any) {
-    return res.status(400).send(error.message)
+    return res.status(400).send(error)
   }
 }
 
