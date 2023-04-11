@@ -5,7 +5,7 @@ import serverAuth from "@/middlewares/serverAuth"
 import createProduct from "@/modules/admin/products/services/createProduct"
 import getProducts from "@/modules/admin/products/services/getProducts"
 import getProductsByDomain from "@/modules/admin/products/services/getProductsByDomain"
-import runMiddleware from "@/lib/infra/next/runMiddleware"
+import runMiddleware from "@/lib/providers/next/runMiddleware"
 
 const cors = Cors({
   methods: ["POST", "GET", "HEAD"],

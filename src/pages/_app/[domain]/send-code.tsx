@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { IMaskMixin } from "react-imask"
 
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
 import { useAppContext } from "@/contexts/app"
 import { useRouter } from "next/router"
@@ -28,7 +28,7 @@ import BarIconButton from "@/components/BarIconButton"
 import ResponsiveButton from "@/components/ResponsiveButton"
 import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
 import { signIn, useSession } from "next-auth/react"
-import api from "@/lib/infra/axios/api"
+import api from "@/lib/providers/axios/api"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 
 const MaskedWhatsappInput = IMaskMixin(({ inputRef, ...props }: any) => (

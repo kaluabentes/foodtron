@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react"
+import { Box, Container } from "@chakra-ui/react"
 import { ReactNode } from "react"
 
 interface ContentLayoutProps {
@@ -7,22 +7,22 @@ interface ContentLayoutProps {
 
 const ContentLayout = ({ children }: ContentLayoutProps) => (
   <Box
+    background="white"
+    p={{ base: 4, lg: 6 }}
     sx={{
       "& p": {
         color: "gray.600",
         lineHeight: 1.75,
-        marginBottom: 10,
-      },
-      "& p:last-child": {
-        marginBottom: 0,
+        marginBottom: 6,
       },
       "& h1": {
         fontSize: "3xl",
         fontWeight: "semibold",
+        marginBottom: 6,
       },
       "& h2, & h3, & h4, & h5, & h6": {
         fontSize: "2xl",
-        marginBottom: 5,
+        marginBottom: 6,
         fontWeight: "semibold",
       },
       "& a": {
@@ -35,17 +35,17 @@ const ContentLayout = ({ children }: ContentLayoutProps) => (
         borderRadius: "1rem",
         width: "100%",
       },
-      "& ul": {
+      "& ol, & ul": {
         color: "gray.600",
-        paddingLeft: 4,
-        marginBottom: 10,
+        paddingLeft: 10,
+        marginBottom: 6,
       },
-      "& ul:last-child": {
-        marginBottom: 0,
+      "& li": {
+        marginBottom: 3,
       },
     }}
   >
-    {children}
+    <Container>{children}</Container>
   </Box>
 )
 

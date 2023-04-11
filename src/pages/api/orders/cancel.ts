@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import jwt from "jsonwebtoken"
 
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 import NextCors from "nextjs-cors"
 import { ORDER_STATUS } from "@/modules/admin/orders/constants"
-import createChannel from "@/lib/infra/ably/createChannel"
+import createChannel from "@/lib/providers/ably/createChannel"
 
 const ALLOWED_METHODS = ["PATCH"]
 

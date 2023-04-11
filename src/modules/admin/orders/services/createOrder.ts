@@ -1,6 +1,6 @@
 import formatPhone from "@/lib/helpers/string/formatPhone"
-import prisma from "@/lib/infra/prisma/client"
-import createDecimal from "@/lib/infra/prisma/createDecimal"
+import prisma from "@/lib/providers/prisma/client"
+import createDecimal from "@/lib/providers/prisma/createDecimal"
 import { ORDER_STATUS } from "../constants"
 import Order from "../types/Order"
 

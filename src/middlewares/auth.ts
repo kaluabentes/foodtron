@@ -2,7 +2,7 @@ import { GetServerSidePropsContext, PreviewData } from "next"
 import { getSession } from "next-auth/react"
 import { ParsedUrlQuery } from "querystring"
 
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 import { User } from "@prisma/client"
 
 const auth = async (

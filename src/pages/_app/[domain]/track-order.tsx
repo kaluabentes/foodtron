@@ -11,7 +11,7 @@ import {
   BiRocket,
   BiXCircle,
 } from "react-icons/bi"
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 import Order from "@/modules/admin/orders/types/Order"
 import useGetOrder from "@/modules/admin/orders/hooks/useGetOrder"
 import EditableDataItem from "@/components/EditableDataItem"
@@ -38,7 +38,7 @@ import { useAppContext } from "@/contexts/app"
 import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
 import { OrderStatus } from "@prisma/client"
 import ConfirmAlert from "@/components/ConfirmAlert"
-import api from "@/lib/infra/axios/api"
+import api from "@/lib/providers/axios/api"
 import useBottomToast from "@/lib/hooks/useBottomToast"
 
 export const getStaticPaths = async () => {

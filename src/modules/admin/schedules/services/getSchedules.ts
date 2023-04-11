@@ -1,6 +1,6 @@
 import { NextApiResponse } from "next"
 
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 
 const getSchedules = async (res: NextApiResponse, storeId: string) => {
   try {

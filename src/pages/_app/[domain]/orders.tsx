@@ -13,7 +13,7 @@ import {
   Flex,
 } from "@chakra-ui/react"
 import { GetServerSideProps } from "next"
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 import StripeSeparator from "@/components/StripeSeparator"
 import OrderDetailsModal from "@/modules/admin/orders/components/OrderDetailsModal"
 import { useState } from "react"

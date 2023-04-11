@@ -18,7 +18,7 @@ import {
   ORDER_STATUS_COLOR_SCHEME,
   ORDER_STATUS_TEXT,
 } from "@/modules/admin/orders/constants"
-import handleKeyDown from "@/lib/infra/browser/handleKeyDown"
+import handleKeyDown from "@/lib/providers/browser/handleKeyDown"
 import getNeighborhood from "@/modules/admin/orders/lib/getNeighborhood"
 
 interface OrderCardProps {

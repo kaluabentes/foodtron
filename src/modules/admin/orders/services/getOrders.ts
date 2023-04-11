@@ -1,4 +1,4 @@
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 import { ORDER_STATUS } from "../constants"
 
 const getOrders = (storeId: string, isArchive = false) => {

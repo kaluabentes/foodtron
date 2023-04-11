@@ -1,4 +1,4 @@
-## Política Privacidade
+# Política Privacidade
 
 A sua privacidade é importante para nós. É política do Foodtron respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site [Foodtron](https://foodtron.app/), e outros sites que possuímos e operamos.
 
@@ -18,9 +18,9 @@ O uso continuado de nosso site será considerado como aceitação de nossas prá
 
 O usuário se compromete a fazer uso adequado dos conteúdos e da informação que o Foodtron oferece no site e com caráter enunciativo, mas não limitativo:
 
-* A) Não se envolver em atividades que sejam ilegais ou contrárias à boa fé a à ordem pública;
-* B) Não difundir propaganda ou conteúdo de natureza racista, xenofóbica, [betano apostas](https://apostasonline.guru/betano-apostas/) ou azar, qualquer tipo de pornografia ilegal, de apologia ao terrorismo ou contra os direitos humanos;
-* C) Não causar danos aos sistemas físicos (hardwares) e lógicos (softwares) do Foodtron, de seus fornecedores ou terceiros, para introduzir ou disseminar vírus informáticos ou quaisquer outros sistemas de hardware ou software que sejam capazes de causar danos anteriormente mencionados.
+- A) Não se envolver em atividades que sejam ilegais ou contrárias à boa fé a à ordem pública;
+- B) Não difundir propaganda ou conteúdo de natureza racista, xenofóbica, [betano apostas](https://apostasonline.guru/betano-apostas/) ou azar, qualquer tipo de pornografia ilegal, de apologia ao terrorismo ou contra os direitos humanos;
+- C) Não causar danos aos sistemas físicos (hardwares) e lógicos (softwares) do Foodtron, de seus fornecedores ou terceiros, para introduzir ou disseminar vírus informáticos ou quaisquer outros sistemas de hardware ou software que sejam capazes de causar danos anteriormente mencionados.
 
 ### Mais informações
 

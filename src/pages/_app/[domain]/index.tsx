@@ -3,7 +3,7 @@ import { Box, Flex, Heading, useBreakpointValue } from "@chakra-ui/react"
 import { v4 as uuidv4 } from "uuid"
 import { motion } from "framer-motion"
 
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
 import AddressSelectButton from "@/modules/app/components/AddressSelectButton"
 import { useAppContext } from "@/contexts/app"

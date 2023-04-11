@@ -18,7 +18,7 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react"
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 import OrderDetailsModal from "@/modules/admin/orders/components/OrderDetailsModal"
 import { useState } from "react"
 import { useRouter } from "next/router"

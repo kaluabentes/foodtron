@@ -1,6 +1,6 @@
 import useSWR from "swr"
 
-import api from "@/lib/infra/axios/api"
+import api from "@/lib/providers/axios/api"
 
 const fetcher = (url: string) => api.get(url).then((res) => res.data)
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import useSWR from "swr"
 
 import useBottomToast from "@/lib/hooks/useBottomToast"
-import api from "@/lib/infra/axios/api"
+import api from "@/lib/providers/axios/api"
 import Order from "../types/Order"
 
 const fetcher = (url: string) => api.get(url).then((res) => res.data)

@@ -1,11 +1,11 @@
 import { Prisma } from "@prisma/client"
 
 import formatPhone from "@/lib/helpers/string/formatPhone"
-import addGoDaddyRecord from "@/lib/infra/godaddy/addGoDaddyRecord"
-import deleteGoDaddyRecord from "@/lib/infra/godaddy/deleteGoDadddyRecord"
-import addVercelSubdomain from "@/lib/infra/vercel/addVercelDomain"
-import deleteVercelSubdomain from "@/lib/infra/vercel/deleteVercelDomain"
-import prisma from "@/lib/infra/prisma/client"
+import addGoDaddyRecord from "@/lib/providers/godaddy/addGoDaddyRecord"
+import deleteGoDaddyRecord from "@/lib/providers/godaddy/deleteGoDadddyRecord"
+import addVercelSubdomain from "@/lib/providers/vercel/addVercelDomain"
+import deleteVercelSubdomain from "@/lib/providers/vercel/deleteVercelDomain"
+import prisma from "@/lib/providers/prisma/client"
 
 const updateStore = async ({ store, body }: any) => {
   if (

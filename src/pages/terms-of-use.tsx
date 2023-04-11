@@ -1,15 +1,11 @@
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout"
-import fs from "fs/promises"
-import path from "path"
+import readContent from "@/lib/providers/content/readContent"
 import ReactMarkdown from "react-markdown"
 
 export const getStaticProps = async () => {
-  const contentPath = path.join(process.cwd(), "/content/terms-of-use.md")
-  const data = await fs.readFile(contentPath, { encoding: "utf8" })
-
   return {
     props: {
-      data,
+      data: await readContent("/content/terms-of-use.md"),
     },
   }
 }

@@ -1,6 +1,6 @@
 import { Order } from "@prisma/client"
 
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 
 const updateOrder = (id: string, data: Order) => {
   return prisma.order.update({

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import useSWR from "swr"
 
 import useBottomToast from "@/lib/hooks/useBottomToast"
-import api from "@/lib/infra/axios/api"
+import api from "@/lib/providers/axios/api"
 import { useAppContext } from "@/contexts/app"
 
 const useGetUser = () => {

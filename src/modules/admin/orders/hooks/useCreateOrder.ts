@@ -1,4 +1,4 @@
-import api from "@/lib/infra/axios/api"
+import api from "@/lib/providers/axios/api"
 import { useState } from "react"
 import { OrderParam } from "../types/OrderParam"
 

@@ -10,7 +10,7 @@ import {
   Switch,
 } from "@chakra-ui/react"
 
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
 import { useAppContext } from "@/contexts/app"
 import { useRouter } from "next/router"
@@ -23,8 +23,8 @@ import ResponsiveButton from "@/components/ResponsiveButton"
 import Address from "@/modules/app/addresses/types/Address"
 import AddressParam from "@/modules/app/addresses/types/AddressParam"
 import useBottomToast from "@/lib/hooks/useBottomToast"
-import api from "@/lib/infra/axios/api"
-import getCoordinates from "@/lib/infra/browser/getCoordinates"
+import api from "@/lib/providers/axios/api"
+import getCoordinates from "@/lib/providers/browser/getCoordinates"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()

@@ -1,4 +1,4 @@
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 
 const getOrdersById = (ids: string[]) =>
   prisma.order.findMany({

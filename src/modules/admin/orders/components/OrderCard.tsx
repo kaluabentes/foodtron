@@ -16,7 +16,7 @@ import { ORDER_STATUS } from "../constants"
 import sumOrderSubtotal from "../lib/sumOrderSubtotal"
 import Order from "../types/Order"
 import getNeighborhood from "../lib/getNeighborhood"
-import handleKeyDown from "@/lib/infra/browser/handleKeyDown"
+import handleKeyDown from "@/lib/providers/browser/handleKeyDown"
 
 interface OrderCardProps {
   order: Order

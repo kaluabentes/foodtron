@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import jwt from "jsonwebtoken"
 
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 import serverAuth from "@/middlewares/serverAuth"
 import { User } from "@prisma/client"
 import NextCors from "nextjs-cors"

@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react"
 import { v4 as uuidv4 } from "uuid"
 
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
 import { useAppContext } from "@/contexts/app"
 import { useRouter } from "next/router"
@@ -21,9 +21,9 @@ import { BiLeftArrowAlt } from "react-icons/bi"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import AddressParam from "@/modules/app/addresses/types/AddressParam"
-import api from "@/lib/infra/axios/api"
+import api from "@/lib/providers/axios/api"
 import useBottomToast from "@/lib/hooks/useBottomToast"
-import getCoordinates from "@/lib/infra/browser/getCoordinates"
+import getCoordinates from "@/lib/providers/browser/getCoordinates"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()

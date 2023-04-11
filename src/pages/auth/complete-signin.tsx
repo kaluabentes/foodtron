@@ -26,7 +26,7 @@ import slugify from "slugify"
 import { Cloudinary } from "@cloudinary/url-gen"
 
 import AuthLayout from "@/layouts/AuthLayout"
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 import StoreMidiaUpload from "@/components/StoreMidiaUpload"
 import { IMaskMixin } from "react-imask"
 import MaskedPhoneInput from "@/components/MaskedPhoneInput"

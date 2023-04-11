@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client"
 import { NextApiResponse } from "next"
 
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 
 const updateLocation = async (id: string, data: any, res: NextApiResponse) => {
   try {

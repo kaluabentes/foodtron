@@ -3,9 +3,9 @@ import { Session, unstable_getServerSession } from "next-auth"
 import * as Yup from "yup"
 import { authOptions } from "./[...nextauth]"
 
-import prisma from "@/lib/infra/prisma/client"
-import addGoDaddyRecord from "@/lib/infra/godaddy/addGoDaddyRecord"
-import addVercelSubdomain from "@/lib/infra/vercel/addVercelDomain"
+import prisma from "@/lib/providers/prisma/client"
+import addGoDaddyRecord from "@/lib/providers/godaddy/addGoDaddyRecord"
+import addVercelSubdomain from "@/lib/providers/vercel/addVercelDomain"
 
 const schema = Yup.object({
   userName: Yup.string().required(),

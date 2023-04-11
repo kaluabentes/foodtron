@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import NextCors from "nextjs-cors"
 
-import sendVerification from "@/lib/infra/sinch/sendVerification"
+import sendVerification from "@/lib/providers/sinch/sendVerification"
 
 const ALLOWED_METHODS = ["POST"]
 

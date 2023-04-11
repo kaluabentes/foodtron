@@ -1,4 +1,4 @@
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 import Address from "@/modules/app/addresses/types/Address"
 import Order from "@/modules/admin/orders/types/Order"
 

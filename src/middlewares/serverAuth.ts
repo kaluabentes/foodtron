@@ -2,7 +2,7 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { NextApiRequest, NextApiResponse } from "next"
 import { Session, unstable_getServerSession } from "next-auth"
 
-import prisma from "@/lib/infra/prisma/client"
+import prisma from "@/lib/providers/prisma/client"
 
 interface ServerAuthResponse {
   unauthorized?: boolean
