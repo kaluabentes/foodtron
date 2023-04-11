@@ -15,7 +15,7 @@ import {
 import { ReactNode } from "react"
 import { DataCell, DataHead, DataValue } from "../DataTable"
 import IconActionButton from "../IconActionButton"
-import { BiHelpCircle } from "react-icons/bi"
+import { BiHelpCircle, BiInfoCircle } from "react-icons/bi"
 
 interface DataFieldProps {
   label: string
@@ -34,13 +34,13 @@ const DataField = ({ label, input, tooltip }: DataFieldProps) => (
           <Popover>
             <PopoverTrigger>
               <Button variant="link">
-                <IconActionButton icon={<BiHelpCircle />} />
+                <IconActionButton icon={<BiInfoCircle />} />
               </Button>
             </PopoverTrigger>
             <PopoverContent>
               <PopoverArrow />
               <PopoverCloseButton />
-              <PopoverHeader fontWeight="500">Ajuda</PopoverHeader>
+              <PopoverHeader fontWeight="500">Informação</PopoverHeader>
               <PopoverBody>{tooltip}</PopoverBody>
             </PopoverContent>
           </Popover>

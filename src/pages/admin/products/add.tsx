@@ -190,7 +190,7 @@ const AddProduct = () => {
               }
             />
             <Box p={6}>
-              <Heading fontSize="md" fontWeight="600" mb={4}>
+              <Heading fontSize="lg" fontWeight="600" mb={4}>
                 Selecione as opções
               </Heading>
               {!options.length && (

@@ -25,7 +25,7 @@ const VerifyRequest = () => {
       >
         <Image src="/comet-full.svg" height="50px" mb={14} mt={5} />
       </Flex>
-      <Heading size="lg" marginBottom={10} fontWeight="semibold">
+      <Heading size="lg" marginBottom={4} fontWeight="semibold">
         Link mágico enviado
       </Heading>
       <Text>

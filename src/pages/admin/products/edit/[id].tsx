@@ -240,7 +240,7 @@ const EditProduct = ({ product }: EditProductProps) => {
               }
             />
             <Box p={6}>
-              <Heading fontSize="md" mb={4} fontWeight="600">
+              <Heading fontSize="lg" mb={4} fontWeight="700">
                 Selecione as opções
               </Heading>
               {!options.length && (

@@ -23,7 +23,7 @@ const OptionInputCard = ({
     gap={4}
     p={4}
     border="1px solid transparent"
-    borderColor="gray.100"
+    borderColor="gray.300"
     borderRadius="md"
     position="relative"
   >

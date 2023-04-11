@@ -170,7 +170,7 @@ const AddOption = () => {
               }
             />
             <DataField
-              tooltip="Tornar número máximo de escolhas obrigatório"
+              tooltip="Torna número máximo de escolhas obrigatório"
               label={t("maxOptionRequired")}
               input={
                 <Switch
@@ -180,7 +180,9 @@ const AddOption = () => {
               }
             />
             <Box pl={6} pr={6} pt={6}>
-              <Heading fontSize="md">Opções</Heading>
+              <Heading fontSize="lg" fontWeight="600">
+                Opções
+              </Heading>
             </Box>
             <Flex direction="column" gap={4} padding={6} pb={4} pt={4}>
               {options.map((option) => (

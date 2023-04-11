@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useState } from "react"
+import { motion } from "framer-motion"
 
 import AppBar from "@/components/AppBar"
 import { Box, Flex, Heading, Image, useBreakpointValue } from "@chakra-ui/react"
@@ -234,7 +235,13 @@ const AppLayout = ({
           margin={margin || "0 auto"}
         >
           {renderPageHeader}
-          {children}
+          <motion.div
+            transition={{ type: "spring", duration: 2, ease: "easeOut" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            {children}
+          </motion.div>
         </Box>
       </Box>
       {renderShortcutDeck}

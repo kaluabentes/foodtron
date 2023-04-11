@@ -9,7 +9,7 @@ export const DataCell = ({ children }: Props) => (
   <Flex
     direction={{ base: "column", md: "row" }}
     borderBottom="1px solid #fff"
-    borderColor="gray.100"
+    borderColor="gray.200"
     alignItems="center"
   >
     {children}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Box, Flex, Heading, useBreakpointValue } from "@chakra-ui/react"
 import { v4 as uuidv4 } from "uuid"
+import { motion } from "framer-motion"
 
 import prisma from "@/lib/infra/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
@@ -285,50 +286,56 @@ const Index = ({ store = {}, categories }: IndexProps) => {
       margin="initial"
     >
       <Flex gap={6}>
-        <Box
-          ml={{ lg: "68px" }}
-          width={{ base: "100%", lg: "calc(100vw - 484px)" }}
-          pl={{ lg: 6 }}
-          pr={{ lg: 6 }}
+        <motion.div
+          transition={{ type: "spring", duration: 2, ease: "easeOut" }}
+          initial={{ y: 500, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
         >
-          {renderStoreInfo}
-          {renderAddressSelectButton}
-          <FilterBar
-            search={filters.search}
-            categories={categories}
-            category={filters.category}
-            onCategoryChange={(category: string) =>
-              setFilters((prev) => ({
-                ...prev,
-                category,
-              }))
-            }
-            onSearchChange={(search: string) =>
-              setFilters((prev) => ({
-                ...prev,
-                search,
-              }))
-            }
-          />
-          <Flex direction="column" gap={4} mb={4}>
-            {sortCategories(applyFilters(categories)).map((category) => (
-              <CategoryItem
-                key={category?.id}
-                onMenuItemClick={handleMenuItemClick}
-                category={category!}
-              />
-            ))}
-          </Flex>
-          <OrderProductModal
-            onConfirm={handleOrderConfirm}
-            optionGroups={selectedProduct?.productOptionGroups?.map(
-              (productOptionGroup) => productOptionGroup.optionGroup
-            )}
-            product={selectedProduct}
-            isOpen={Boolean(selectedProduct)}
-            onClose={() => setSelectedProduct(undefined)}
-          />
-        </Box>
+          <Box
+            ml={{ lg: "68px" }}
+            width={{ base: "100%", lg: "calc(100vw - 484px)" }}
+            pl={{ lg: 6 }}
+            pr={{ lg: 6 }}
+          >
+            {renderStoreInfo}
+            {renderAddressSelectButton}
+            <FilterBar
+              search={filters.search}
+              categories={categories}
+              category={filters.category}
+              onCategoryChange={(category: string) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  category,
+                }))
+              }
+              onSearchChange={(search: string) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  search,
+                }))
+              }
+            />
+            <Flex direction="column" gap={4} mb={4}>
+              {sortCategories(applyFilters(categories)).map((category) => (
+                <CategoryItem
+                  key={category?.id}
+                  onMenuItemClick={handleMenuItemClick}
+                  category={category!}
+                />
+              ))}
+            </Flex>
+            <OrderProductModal
+              onConfirm={handleOrderConfirm}
+              optionGroups={selectedProduct?.productOptionGroups?.map(
+                (productOptionGroup) => productOptionGroup.optionGroup
+              )}
+              product={selectedProduct}
+              isOpen={Boolean(selectedProduct)}
+              onClose={() => setSelectedProduct(undefined)}
+            />
+          </Box>
+        </motion.div>
         {renderMyOrder}
       </Flex>
     </AppLayout>

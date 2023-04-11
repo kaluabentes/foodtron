@@ -363,7 +363,7 @@ const OrderProductModal = ({
             colorScheme="brand"
             width="full"
           >
-            Confirmar: {formatToRealCurrency(getTotal())}
+            Adicionar {formatToRealCurrency(getTotal())}
           </Button>
         </Flex>
       </ModalContent>
