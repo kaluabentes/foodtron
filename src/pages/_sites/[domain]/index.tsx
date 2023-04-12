@@ -286,56 +286,50 @@ const Index = ({ store = {}, categories }: IndexProps) => {
       margin="initial"
     >
       <Flex gap={6}>
-        <motion.div
-          transition={{ type: "spring", duration: 2, ease: "easeOut" }}
-          initial={{ y: 500, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
+        <Box
+          ml={{ lg: "68px" }}
+          width={{ base: "100%", lg: "calc(100vw - 484px)" }}
+          pl={{ lg: 6 }}
+          pr={{ lg: 6 }}
         >
-          <Box
-            ml={{ lg: "68px" }}
-            width={{ base: "100%", lg: "calc(100vw - 484px)" }}
-            pl={{ lg: 6 }}
-            pr={{ lg: 6 }}
-          >
-            {renderStoreInfo}
-            {renderAddressSelectButton}
-            <FilterBar
-              search={filters.search}
-              categories={categories}
-              category={filters.category}
-              onCategoryChange={(category: string) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  category,
-                }))
-              }
-              onSearchChange={(search: string) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  search,
-                }))
-              }
-            />
-            <Flex direction="column" gap={4} mb={4}>
-              {sortCategories(applyFilters(categories)).map((category) => (
-                <CategoryItem
-                  key={category?.id}
-                  onMenuItemClick={handleMenuItemClick}
-                  category={category!}
-                />
-              ))}
-            </Flex>
-            <OrderProductModal
-              onConfirm={handleOrderConfirm}
-              optionGroups={selectedProduct?.productOptionGroups?.map(
-                (productOptionGroup) => productOptionGroup.optionGroup
-              )}
-              product={selectedProduct}
-              isOpen={Boolean(selectedProduct)}
-              onClose={() => setSelectedProduct(undefined)}
-            />
-          </Box>
-        </motion.div>
+          {renderStoreInfo}
+          {renderAddressSelectButton}
+          <FilterBar
+            search={filters.search}
+            categories={categories}
+            category={filters.category}
+            onCategoryChange={(category: string) =>
+              setFilters((prev) => ({
+                ...prev,
+                category,
+              }))
+            }
+            onSearchChange={(search: string) =>
+              setFilters((prev) => ({
+                ...prev,
+                search,
+              }))
+            }
+          />
+          <Flex direction="column" gap={4} mb={4}>
+            {sortCategories(applyFilters(categories)).map((category) => (
+              <CategoryItem
+                key={category?.id}
+                onMenuItemClick={handleMenuItemClick}
+                category={category!}
+              />
+            ))}
+          </Flex>
+          <OrderProductModal
+            onConfirm={handleOrderConfirm}
+            optionGroups={selectedProduct?.productOptionGroups?.map(
+              (productOptionGroup) => productOptionGroup.optionGroup
+            )}
+            product={selectedProduct}
+            isOpen={Boolean(selectedProduct)}
+            onClose={() => setSelectedProduct(undefined)}
+          />
+        </Box>
         {renderMyOrder}
       </Flex>
     </AppLayout>
