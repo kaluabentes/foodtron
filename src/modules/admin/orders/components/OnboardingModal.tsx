@@ -60,8 +60,11 @@ const OnboardingModal = ({ isOpen, onClose }: OnboardingModalProps) => {
           <Text width="400px" textAlign="center" mb={4} color="gray.600">
             Para que seu restaurante esteja pronto para abrir as portas é
             importante verificar se todas as informações estão devidamente
-            cadastradas em <Link path="/admin/settings">Configurações</Link>.
-            Feita a configuração básica você pode partir para o cadastro de
+            cadastradas em{" "}
+            <Box as="span" fontWeight="500">
+              Configurações
+            </Box>
+            . Feita a configuração básica você pode partir para o cadastro de
             bairros e taxas, depois configure corretamente os horários e
             programe os fechamentos automáticos.
           </Text>
