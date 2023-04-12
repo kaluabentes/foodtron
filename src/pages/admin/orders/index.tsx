@@ -31,6 +31,7 @@ import getNeighborhood from "@/modules/admin/orders/lib/getNeighborhood"
 import playNotificationSound from "@/modules/admin/orders/lib/playNotificationSound"
 import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 import { once } from "lodash"
+import OnboardingModal from "@/modules/admin/orders/components/OnboardingModal"
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   return auth(context, ["admin"])
@@ -270,6 +271,7 @@ const Orders = ({ user }: OrdersProps) => {
         onConfirm={handleConfirmOrderCancel}
         isLoading={isUpdating}
       />
+      <OnboardingModal isOpen />
     </AdminLayout>
   )
 }

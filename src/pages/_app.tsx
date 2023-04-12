@@ -9,6 +9,7 @@ import PageLoader from "@/components/PageLoader"
 import { AppContextProvider } from "@/contexts/app"
 import "@/styles/animations.css"
 import "@/styles/global.css"
+import { AdminContextProvider } from "@/contexts/admin"
 
 initI18n()
 
@@ -17,8 +18,10 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     <ChakraProvider theme={theme}>
       <SessionProvider session={session}>
         <AppContextProvider>
-          <Component {...pageProps} />
-          <PageLoader />
+          <AdminContextProvider>
+            <Component {...pageProps} />
+            <PageLoader />
+          </AdminContextProvider>
         </AppContextProvider>
       </SessionProvider>
     </ChakraProvider>

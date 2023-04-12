@@ -1,6 +1,7 @@
-import ContentLayout from "@/layouts/ContentLayout/ContentLayout"
-import readContent from "@/lib/providers/content/readContent"
 import ReactMarkdown from "react-markdown"
+
+import ContentLayout from "@/layouts/ContentLayout"
+import readContent from "@/lib/providers/content/readContent"
 
 export const getStaticProps = async () => {
   return {
