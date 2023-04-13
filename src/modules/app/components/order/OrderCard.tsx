@@ -3,6 +3,7 @@ import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import {
   Badge,
   Box,
+  Button,
   CloseButton,
   Flex,
   Heading,
@@ -15,6 +16,7 @@ import { BiMap } from "react-icons/bi"
 import sumOrderSubtotal from "@/modules/admin/orders/lib/sumOrderSubtotal"
 import Order from "@/modules/admin/orders/types/Order"
 import {
+  ORDER_STATUS,
   ORDER_STATUS_COLOR_SCHEME,
   ORDER_STATUS_TEXT,
 } from "@/modules/admin/orders/constants"
@@ -26,11 +28,13 @@ interface OrderCardProps {
   isCancelling?: boolean
   onClick: () => void
   onCancel?: () => void
+  onTrackClick: (id: string) => void
 }
 
 const OrderCard = ({
   order,
   onClick,
+  onTrackClick,
   onCancel,
   isCancelling,
 }: OrderCardProps) => (
@@ -112,9 +116,26 @@ const OrderCard = ({
         )}
       </Text>
       <Box textAlign="right">
-        <Badge colorScheme={ORDER_STATUS_COLOR_SCHEME[order.status]}>
-          {ORDER_STATUS_TEXT[order.status]}
-        </Badge>
+        {[
+          ORDER_STATUS.PENDING,
+          ORDER_STATUS.DOING,
+          ORDER_STATUS.DELIVERY,
+        ].includes(order.status) ? (
+          <Button
+            onClick={(event) => {
+              event.stopPropagation()
+              onTrackClick(order.id)
+            }}
+            colorScheme="brand"
+            size="sm"
+          >
+            Acompanhar
+          </Button>
+        ) : (
+          <Badge colorScheme={ORDER_STATUS_COLOR_SCHEME[order.status]}>
+            {ORDER_STATUS_TEXT[order.status]}
+          </Badge>
+        )}
       </Box>
     </Flex>
   </Box>

@@ -66,6 +66,7 @@ const Orders = () => {
       .map((order) => (
         <OrderCard
           key={order.id}
+          onTrackClick={(id: string) => router.push(`/track-order?id=${id}`)}
           onClick={() => setOrderToShow(order)}
           order={order}
         />
