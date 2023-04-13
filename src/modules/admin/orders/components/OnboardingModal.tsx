@@ -50,7 +50,7 @@ const OnboardingModal = () => {
           <Heading fontSize="2xl" fontWeight="600">
             Vamos começar
           </Heading>
-          <Text width="400px" textAlign="center" mb={4} color="gray.600">
+          <Text width="400px" textAlign="center" mb={4} color="gray.600" p={4}>
             Para que seu restaurante esteja pronto para abrir as portas é
             importante verificar se todas as informações estão devidamente
             cadastradas em{" "}
