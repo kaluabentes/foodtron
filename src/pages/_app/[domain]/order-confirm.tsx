@@ -230,7 +230,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         <SectionTitle>Entrega</SectionTitle>
         <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
           <EditableDataItem
-            field="Rua"
+            field="Endereço"
             value={assembledAddress}
             onEdit={() => router.push("/addresses")}
           />
