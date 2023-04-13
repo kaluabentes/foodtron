@@ -61,6 +61,11 @@ const AppLayout = ({
   const [isOpen, setIsOpen] = useState(false)
   const [isClosed, setIsClosed] = useState(true)
 
+  const trackButtonBlacklist = useBreakpointValue({
+    base: ["/_app/[domain]/track-order"],
+    lg: ["/_app/[domain]", "/_app/[domain]/track-order"],
+  })
+
   const authBottomMenu = token
     ? [
         {
@@ -212,7 +217,7 @@ const AppLayout = ({
       </Flex>
     ),
   })
-
+  console.log("router", router)
   if (!store) {
     return <PageLoaderSpinner />
   }
@@ -245,7 +250,7 @@ const AppLayout = ({
         </Box>
       </Box>
       {renderShortcutDeck}
-      {activeOrder && !router.asPath.includes("/track-order") && (
+      {activeOrder && !trackButtonBlacklist?.includes(router.pathname) && (
         <TrackOrderButton
           onClick={() => router.push(`/track-order?id=${activeOrder.id}`)}
         />
