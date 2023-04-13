@@ -57,6 +57,12 @@ const OrderItemsSummary = ({
   const [orderProductId, setOrderProductId] = useState("")
   const [productId, setProductId] = useState("")
   const [quantity, setQuantity] = useState(1)
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false)
+
+  const clear = () => {
+    setProductId("")
+    setOrderProductId("")
+  }
 
   const removeOrderProduct = (orderProductId: string) => {
     mutateState({
@@ -108,7 +114,8 @@ const OrderItemsSummary = ({
     setOrderProductId("")
   }
 
-  const handleEditProduct = (orderProductId: string, productId: string) => {
+  const handleAction = (orderProductId: string, productId: string) => {
+    setIsOptionsOpen(true)
     setOrderProductId(orderProductId)
     setProductId(productId)
   }
@@ -173,7 +180,7 @@ const OrderItemsSummary = ({
         key={product.id}
         product={product}
         productTotal={formatToRealCurrency(sumProductTotal(product))}
-        onClick={() => handleEditProduct(product.id!, product.productId!)}
+        onClick={() => handleAction(product.id!, product.productId!)}
       />
     ))
   }
@@ -247,6 +254,22 @@ const OrderItemsSummary = ({
         {renderItems()}
         {renderSummary()}
       </Flex>
+      {isOptionsOpen && (
+        <OrderOptionsModal
+          onRemove={() => {
+            removeOrderProduct(orderProductId)
+            clear()
+          }}
+          onClose={() => {
+            clear()
+          }}
+          onEdit={() => {
+            setIsOptionsOpen(false)
+            editProduct(orderProductId, productId)
+          }}
+          isOpen={isOptionsOpen}
+        />
+      )}
       <OrderProductModal
         onConfirm={handleEditOrderConfirm}
         optionGroups={optionGroups}
@@ -255,22 +278,8 @@ const OrderItemsSummary = ({
         isOpen={Boolean(selectedProduct)}
         onClose={() => {
           setSelectedProduct(undefined)
-          setProductId("")
-          setOrderProductId("")
+          clear()
         }}
-      />
-      <OrderOptionsModal
-        onRemove={() => {
-          removeOrderProduct(orderProductId)
-          setProductId("")
-          setOrderProductId("")
-        }}
-        onClose={() => {
-          setProductId("")
-          setOrderProductId("")
-        }}
-        onEdit={() => editProduct(orderProductId, productId)}
-        isOpen={Boolean(orderProductId)}
       />
     </>
   )
