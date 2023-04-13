@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <LandpageLayout>
       <Container maxWidth="container.xl">
-        <LandpageHero />
+        <LandpageHero onCTAClick={() => router.push("/auth/signin")} />
       </Container>
     </LandpageLayout>
   )

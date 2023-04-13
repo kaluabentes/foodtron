@@ -1,6 +1,10 @@
 import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react"
 
-const LandpageHero = () => (
+interface LandpageHeroProps {
+  onCTAClick: () => void
+}
+
+const LandpageHero = ({ onCTAClick }: LandpageHeroProps) => (
   <>
     <Flex
       direction="column"
@@ -19,7 +23,7 @@ const LandpageHero = () => (
       <Text fontSize="lg" color="gray.600">
         Sem taxas por pedido, experimente de graça.
       </Text>
-      <Button colorScheme="brand" size="lg">
+      <Button onClick={onCTAClick} colorScheme="brand" size="lg">
         Entrar ou Cadastrar
       </Button>
     </Flex>
