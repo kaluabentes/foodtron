@@ -1,4 +1,3 @@
-import Link from "@/components/Link"
 import { useAdminContext } from "@/contexts/admin"
 import {
   Box,
@@ -13,14 +12,8 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import { useState } from "react"
 
-interface OnboardingModalProps {
-  isOpen: boolean
-  onClose: () => void
-}
-
-const OnboardingModal = ({ isOpen, onClose }: OnboardingModalProps) => {
+const OnboardingModal = () => {
   const router = useRouter()
 
   const { mutateState, state } = useAdminContext()
@@ -36,7 +29,7 @@ const OnboardingModal = ({ isOpen, onClose }: OnboardingModalProps) => {
   return (
     <Modal
       size={{ base: "full", lg: "lg" }}
-      onClose={onClose}
+      onClose={() => {}}
       isOpen={!state.onboardingDone && state.isReady}
       motionPreset="slideInBottom"
     >

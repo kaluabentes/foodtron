@@ -271,7 +271,7 @@ const Orders = ({ user }: OrdersProps) => {
         onConfirm={handleConfirmOrderCancel}
         isLoading={isUpdating}
       />
-      <OnboardingModal isOpen />
+      <OnboardingModal />
     </AdminLayout>
   )
 }
