@@ -183,7 +183,13 @@ const EditAddress = ({ locations }: EditAddressProps) => {
           </FormControl>
           <FormControl>
             <FormLabel>Mandar localização atual?</FormLabel>
-            Não <Switch {...register("currentLocation")} type="tel" /> Sim
+            Não{" "}
+            <Switch
+              colorScheme="brand"
+              {...register("currentLocation")}
+              type="tel"
+            />{" "}
+            Sim
           </FormControl>
         </Flex>
         <Flex
