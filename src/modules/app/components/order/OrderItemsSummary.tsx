@@ -261,6 +261,7 @@ const OrderItemsSummary = ({
             clear()
           }}
           onClose={() => {
+            setIsOptionsOpen(false)
             clear()
           }}
           onEdit={() => {
