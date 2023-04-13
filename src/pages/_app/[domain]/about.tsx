@@ -141,7 +141,7 @@ const Orders = ({ schedules, subdomain }: OrdersProps) => {
         </TabList>
         <TabPanels>
           <TabPanel p={0}>
-            <Flex direction="column" gap={2} p={6}>
+            <Flex direction="column" gap={4} p={6}>
               <Text fontSize="xl" color="gray.600">
                 Endereço
               </Text>

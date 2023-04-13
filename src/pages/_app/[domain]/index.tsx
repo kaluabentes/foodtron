@@ -289,8 +289,8 @@ const Index = ({ store = {}, categories }: IndexProps) => {
         <Box
           ml={{ lg: "68px" }}
           width={{ base: "100%", lg: "calc(100vw - 484px)" }}
-          pl={{ lg: 6 }}
-          pr={{ lg: 6 }}
+          p={{ lg: 6 }}
+          pb={{ lg: 0 }}
         >
           {renderStoreInfo}
           {renderAddressSelectButton}
@@ -311,7 +311,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
               }))
             }
           />
-          <Flex direction="column" gap={4} mb={4}>
+          <Flex direction="column" gap={4} mb={{ base: 4, lg: 0 }}>
             {sortCategories(applyFilters(categories)).map((category) => (
               <CategoryItem
                 key={category?.id}

@@ -179,7 +179,8 @@ const Addresses = () => {
       return <EmptyState message="Não há endereços ainda" />
     }
 
-    return addresses
+    return new Array(50)
+      .fill(addresses)
       .slice()
       .reverse()
       .map((address) => (

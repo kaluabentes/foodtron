@@ -234,7 +234,7 @@ const AppLayout = ({
         <Box
           as="main"
           paddingBottom={{ base: getMobilePaddingBottom(), lg: 6 }}
-          paddingTop={{ base: "60px", lg: 6 }}
+          paddingTop={{ base: "60px", lg: 0 }}
           maxWidth={maxWidth || { base: "100%", md: "container.md" }}
           width="100%"
           margin={margin || "0 auto"}
