@@ -1,28 +1,24 @@
 import { useTranslation } from "react-i18next"
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  Box,
   Button,
   Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Heading,
+  IconButton,
   Image,
   Input,
-  Text,
 } from "@chakra-ui/react"
 import * as Yup from "yup"
 import { getSession, signIn, useSession } from "next-auth/react"
-import { FcGoogle } from "react-icons/fc"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 
 import AuthLayout from "@/layouts/AuthLayout"
+import { BiArrowBack } from "react-icons/bi"
 
 export const getServerSideProps = async (context: any) => {
   const session = await getSession(context)
@@ -50,8 +46,6 @@ interface SignInData {
 const Signin = () => {
   const { t } = useTranslation()
   const router = useRouter()
-  const { callbackUrl } = router.query
-  const { data: session } = useSession()
 
   const [isLoadingEmail, setIsLoadingEmail] = useState(false)
 
@@ -79,6 +73,19 @@ const Signin = () => {
 
   return (
     <AuthLayout>
+      <IconButton
+        aria-label="Voltar"
+        variant="ghost"
+        color="gray.500"
+        icon={<BiArrowBack fontSize="24px" />}
+        onClick={() => router.back()}
+        height="24px"
+        width="24px"
+        minWidth="initial"
+        _hover={{
+          background: "transparent",
+        }}
+      />
       <Flex
         justifyContent="center"
         as="a"

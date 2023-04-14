@@ -17,8 +17,8 @@ const AuthLayout = ({ children, isLarge = false }: AuthLayoutProps) => (
       width="100%"
       maxWidth={isLarge ? "600px" : "448px"}
       backgroundColor={useColorModeValue("white", "gray.800")}
-      padding={{ base: 5, sm: 10 }}
-      boxShadow={{ base: "none", sm: useColorModeValue("md", "md-dark") }}
+      padding={{ base: 5, sm: 8 }}
+      boxShadow={{ base: "none", sm: "sm" }}
       borderRadius={{ base: "none", sm: 10 }}
     >
       {children}
