@@ -30,11 +30,6 @@ const StoreInfo = ({
   onInfoClick,
 }: StoreInfoProps) => (
   <Box shadow="sm" backgroundColor="white" overflow="hidden">
-    {/* <StoreMidiaUpload
-      defaultCover={store.cover!}
-      defaultLogo={store.logo!}
-      isEditable={false}
-    /> */}
     <Image
       src={store.cover}
       alt="Cover"
@@ -42,8 +37,8 @@ const StoreInfo = ({
       height={{ base: "110px" }}
       width="100%"
     />
-    <Flex p={4} direction="column" gap={4}>
-      <Flex>
+    <Flex p={4} direction="column" gap={0}>
+      <Flex alignItems="start" mb={2}>
         <Image
           marginTop="-50px"
           src={store.logo}
@@ -58,7 +53,7 @@ const StoreInfo = ({
           {store.name}
         </Heading>
       </Flex>
-      <Flex alignItems="center" justifyContent="space-between">
+      <Flex alignItems="center" justifyContent="space-between" mb={2}>
         <Schedule
           store={store}
           isEnabled={isEnabled}

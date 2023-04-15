@@ -29,7 +29,7 @@ const VerifyRequest = () => {
         <Image src="/comet-full.svg" height="50px" mb={14} mt={5} />
       </Flex>
       <Heading textAlign="center" size="lg" mb={4} fontWeight="semibold">
-        Link mágico enviado
+        Verifique seu email
       </Heading>
       <Text mb={4} color="gray.600" textAlign="center">
         Verifique seu email enviamos um link mágico, use-o para conectar ou
