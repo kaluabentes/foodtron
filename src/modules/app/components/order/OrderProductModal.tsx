@@ -265,7 +265,7 @@ const OrderProductModal = ({
                   alignItems="center"
                 >
                   <Box>
-                    <Heading fontSize="md" fontWeight="700">
+                    <Heading fontSize="md" fontWeight="600">
                       {optionGroup.title}
                     </Heading>
                     <Text fontSize="sm" color="gray.500">

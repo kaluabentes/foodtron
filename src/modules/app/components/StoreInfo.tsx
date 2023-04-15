@@ -3,7 +3,7 @@ import StripeSeparator from "@/components/StripeSeparator"
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import Location from "@/modules/admin/locations/types/Location"
 import Store from "@/modules/admin/stores/types/Store"
-import { Badge, Box, Flex, Heading, Icon, Text } from "@chakra-ui/react"
+import { Badge, Box, Flex, Heading, Icon, Image, Text } from "@chakra-ui/react"
 import { BiInfoCircle, BiTimeFive } from "react-icons/bi"
 import Schedule from "./store-info/Schedule"
 import MinimumOrderPrice from "./store-info/MinimumOrderPrice"
@@ -30,18 +30,35 @@ const StoreInfo = ({
   onInfoClick,
 }: StoreInfoProps) => (
   <Box shadow="sm" backgroundColor="white" overflow="hidden">
-    <StoreMidiaUpload
+    {/* <StoreMidiaUpload
       defaultCover={store.cover!}
       defaultLogo={store.logo!}
       isEditable={false}
+    /> */}
+    <Image
+      src={store.cover}
+      alt="Cover"
+      objectFit="cover"
+      height={{ base: "110px" }}
+      width="100%"
     />
-    <Flex flexDirection="column" alignItems="center" p={6}>
-      <Flex gap={2} alignItems="center" mb={4}>
-        <Heading maxWidth="400px" textAlign="center" size="lg" fontWeight="700">
+    <Flex p={4} direction="column" gap={4}>
+      <Flex>
+        <Image
+          marginTop="-50px"
+          src={store.logo}
+          alt="Logo"
+          objectFit="cover"
+          outline="3px solid white"
+          height="100px"
+          width="100px"
+          borderRadius="2xl"
+        />
+        <Heading size="md" ml={4} fontWeight="700">
           {store.name}
         </Heading>
       </Flex>
-      <Box mb={2}>
+      <Flex alignItems="center" justifyContent="space-between">
         <Schedule
           store={store}
           isEnabled={isEnabled}
@@ -49,10 +66,8 @@ const StoreInfo = ({
           weekDay={weekDay}
           schedule={schedule}
         />
-      </Box>
-      <Box mb={6}>
         <MinimumOrderPrice store={store} />
-      </Box>
+      </Flex>
       <StoreDetails
         location={location}
         store={store}
