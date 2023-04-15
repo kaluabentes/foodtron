@@ -45,11 +45,11 @@ const StoreInfo = ({
           alt="Logo"
           objectFit="cover"
           outline="3px solid white"
-          height="100px"
-          width="100px"
+          height="110px"
+          width="110px"
           borderRadius="2xl"
         />
-        <Heading size="md" ml={4} fontWeight="700">
+        <Heading size="lg" ml={4} fontWeight="600">
           {store.name}
         </Heading>
       </Flex>
