@@ -5,15 +5,26 @@ import { ReactNode } from "react"
 interface LinkProps {
   path: string
   children?: ReactNode
+  fontSize?: string
+  color?: string
 }
 
-const Link = ({ children, path }: LinkProps) => (
-  <Box as="span" sx={{ "& a:focus-visible": { outline: "none" } }}>
+const Link = ({
+  children,
+  path,
+  fontSize = "md",
+  color = "brand.500",
+}: LinkProps) => (
+  <Box
+    as="span"
+    sx={{ "& a:focus-visible": { outline: "none" } }}
+    fontSize={fontSize}
+  >
     <NextLink href={path} passHref>
       <ChackraLink
         as="span"
-        color={useColorModeValue("brand.500", "brand.300")}
-        fontWeight="semibold"
+        color={color}
+        fontWeight="500"
         _active={{
           outline: "none",
         }}

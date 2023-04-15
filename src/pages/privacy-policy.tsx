@@ -2,6 +2,7 @@ import ReactMarkdown from "react-markdown"
 
 import ContentLayout from "@/layouts/ContentLayout"
 import readContent from "@/lib/providers/content/readContent"
+import LandpageLayout from "@/layouts/LandpageLayout"
 
 export const getStaticProps = async () => {
   return {
@@ -16,9 +17,11 @@ interface PrivacyPolicyProps {
 }
 
 const PrivacyPolicy = ({ data }: PrivacyPolicyProps) => (
-  <ContentLayout>
-    <ReactMarkdown>{data}</ReactMarkdown>
-  </ContentLayout>
+  <LandpageLayout>
+    <ContentLayout>
+      <ReactMarkdown>{data}</ReactMarkdown>
+    </ContentLayout>
+  </LandpageLayout>
 )
 
 export default PrivacyPolicy

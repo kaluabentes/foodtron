@@ -11,9 +11,11 @@ const LandpageHeader = ({ onCTAClick }: LandpageHeaderProps) => (
         <Flex
           justifyContent="center"
           as="a"
-          href="https://foodtron.app"
-          target="_blank"
-          rel="noopener noreferrer"
+          href={
+            process.env.NODE_ENV === "production"
+              ? "https://foodtron.app"
+              : "http://localhost:3000"
+          }
           alignItems="center"
         >
           <Image src="/comet-full.svg" height="40px" />

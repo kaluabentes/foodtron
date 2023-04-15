@@ -8,6 +8,7 @@ interface ContentLayoutProps {
 const ContentLayout = ({ children }: ContentLayoutProps) => (
   <Box
     background="white"
+    mt={8}
     p={{ base: 4, lg: 6 }}
     sx={{
       "& p": {

@@ -1,3 +1,4 @@
+import LandpageFooter from "@/components/LandpageFooter"
 import LandpageHeader from "@/components/LandpageHeader"
 import { Box } from "@chakra-ui/react"
 import { useRouter } from "next/router"
@@ -22,6 +23,8 @@ const LandpageLayout = ({ children }: LandpageLayoutProps) => {
         mt="80px"
       >
         {children}
+
+        <LandpageFooter />
       </Box>
     </>
   )
