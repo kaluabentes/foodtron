@@ -6,7 +6,7 @@ const PageLoaderSpinner = () => (
     alignItems="center"
     height="100vh"
     width="100vw"
-    background="gray.100"
+    background="gray.200"
     transition="0.5s"
     zIndex="100"
     position="fixed"
@@ -16,7 +16,7 @@ const PageLoaderSpinner = () => (
     <Spinner
       thickness="4px"
       color="brand.400"
-      emptyColor="gray.100"
+      emptyColor="gray.200"
       size="xl"
     />
   </Flex>

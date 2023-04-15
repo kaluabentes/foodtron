@@ -54,7 +54,7 @@ const OrderCardTabs = ({
         pt={0}
         pb={0}
         borderBottom="1px solid transparent"
-        borderColor="gray.100"
+        borderColor="gray.200"
       >
         <PageHeader
           title="Pedidos"
@@ -110,7 +110,7 @@ const OrderCardTabs = ({
             ) : null}
           </Tab>
         </TabList>
-        <Box p={4} borderBottom="1px solid black" borderColor="gray.100">
+        <Box p={4} borderBottom="1px solid black" borderColor="gray.200">
           <InputGroup>
             <InputLeftElement
               pointerEvents="none"

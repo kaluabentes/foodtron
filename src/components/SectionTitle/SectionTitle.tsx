@@ -3,19 +3,22 @@ import { ReactNode } from "react"
 
 interface SectionTitleProps {
   children: ReactNode
+  isBorderless?: boolean
 }
 
-const SectionTitle = ({ children }: SectionTitleProps) => (
+const SectionTitle = ({
+  children,
+  isBorderless = false,
+}: SectionTitleProps) => (
   <Heading
-    backgroundColor="white"
     p={{ base: 4, md: 6 }}
     pt={{ base: 4, md: 4 }}
     pb={{ base: 4, md: 4 }}
     fontSize="17px"
     fontWeight="600"
-    borderBottom="1px solid transparent"
-    borderColor="gray.100"
-    background="gray.50"
+    borderBottom={!isBorderless ? "1px solid transparent" : undefined}
+    borderColor="gray.200"
+    background="white"
   >
     {children}
   </Heading>

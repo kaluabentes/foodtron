@@ -17,7 +17,7 @@ const MenuToggleButton = ({ onClick }: MenuToggleButtonProps) => (
     borderRadius="50%"
     boxShadow="sm"
     border="1px solid transparent"
-    borderColor="gray.100"
+    borderColor="gray.200"
     display="flex"
     justifyContent="center"
     alignItems="center"

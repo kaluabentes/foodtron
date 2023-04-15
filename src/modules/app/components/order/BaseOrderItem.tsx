@@ -6,9 +6,11 @@ interface BaseOrderItemProps {
   rightSlot: ReactNode
   alignItems?: string
   onClick?: () => void
+  isLast?: boolean
 }
 
 const BaseOrderItem = ({
+  isLast = false,
   leftSlot,
   rightSlot,
   alignItems = "center",
@@ -36,14 +38,16 @@ const BaseOrderItem = ({
           {rightSlot}
         </Box>
       </Flex>
-      <Box pl={4} pr={4} background="white">
-        <Box
-          className="separator"
-          height="0.8px"
-          width="100%"
-          backgroundColor="gray.200"
-        />
-      </Box>
+      {!isLast && (
+        <Box pl={{ base: 4, lg: 6 }} pr={{ base: 4, lg: 6 }} background="white">
+          <Box
+            className="separator"
+            height="0.8px"
+            width="100%"
+            backgroundColor="gray.200"
+          />
+        </Box>
+      )}
     </Box>
   )
 }

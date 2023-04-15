@@ -106,7 +106,7 @@ const Payment = () => {
                   pr={2}
                   pl={2}
                   borderBottom="1px solid transparent"
-                  borderColor="gray.100"
+                  borderColor="gray.200"
                   textAlign="left"
                   fontSize="md"
                 >

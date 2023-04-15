@@ -192,7 +192,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         mb={4}
         shadow="sm"
       >
-        <SectionTitle>Carrinho</SectionTitle>
+        <SectionTitle isBorderless>Carrinho</SectionTitle>
         <OrderItemsSummary />
       </Box>
       <Box
@@ -202,7 +202,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         shadow="sm"
         mb={4}
       >
-        <SectionTitle>Pagamento</SectionTitle>
+        <SectionTitle isBorderless>Pagamento</SectionTitle>
         <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
           <EditableDataItem
             field="Tipo"
@@ -227,7 +227,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         shadow="sm"
         mb={4}
       >
-        <SectionTitle>Entrega</SectionTitle>
+        <SectionTitle isBorderless>Entrega</SectionTitle>
         <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
           <EditableDataItem
             field="Endereço"
@@ -256,7 +256,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         borderRadius={{ base: undefined, lg: "md" }}
         shadow="sm"
       >
-        <SectionTitle>Dados de usuário</SectionTitle>
+        <SectionTitle isBorderless>Dados de usuário</SectionTitle>
         <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
           <EditableDataItem
             field="Nome"

@@ -40,7 +40,7 @@ const OrderCard = ({
   <Box
     key={order.id}
     borderBottom="1px solid transparent"
-    borderColor="gray.100"
+    borderColor="gray.200"
     p={4}
     pl={0}
     pr={0}
@@ -90,7 +90,7 @@ const OrderCard = ({
       position="relative"
     >
       <Box>
-        <Heading fontSize="lg" fontWeight="700" mb={1}>
+        <Heading fontSize="lg" fontWeight="600" mb={1}>
           {order.username}
         </Heading>
         <Text fontSize="xs" color="gray.500" mb={4}>

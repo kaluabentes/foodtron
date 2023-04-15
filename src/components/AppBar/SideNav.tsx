@@ -65,8 +65,8 @@ const SideNav = ({
             backgroundColor="white"
             borderRadius="50%"
             boxShadow="md"
-            _hover={{ backgroundColor: "gray.100" }}
-            _active={{ backgroundColor: "gray.100" }}
+            _hover={{ backgroundColor: "gray.200" }}
+            _active={{ backgroundColor: "gray.200" }}
           />
           {header}
           <Flex direction="column" flexGrow={1} justifyContent="space-between">

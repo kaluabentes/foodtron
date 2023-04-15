@@ -17,7 +17,7 @@ const EmptyState = ({ message, isGray, icon }: EmptyStateProps) => (
     backgroundColor={isGray ? "gray.50" : "white"}
     borderRadius="md"
     border="1px solid transparent"
-    borderColor={isGray ? "gray.100" : "transparent"}
+    borderColor={isGray ? "gray.200" : "transparent"}
     overflow="auto"
     p={10}
     gap={7}
@@ -25,7 +25,7 @@ const EmptyState = ({ message, isGray, icon }: EmptyStateProps) => (
     <Icon
       as={icon || BiFile}
       fontSize="130px"
-      color={!isGray ? "gray.100" : "gray.200"}
+      color={!isGray ? "gray.200" : "gray.200"}
     />
     <Heading fontWeight="500" fontSize="md" color="gray.700" textAlign="center">
       {message}

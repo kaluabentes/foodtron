@@ -259,7 +259,7 @@ const OrderProductModal = ({
             {optionGroups?.map((optionGroup: OptionGroup) => (
               <Box key={optionGroup.id}>
                 <Flex
-                  backgroundColor="gray.100"
+                  backgroundColor="gray.200"
                   p={4}
                   justifyContent="space-between"
                   alignItems="center"
@@ -326,7 +326,7 @@ const OrderProductModal = ({
                       <Box
                         height="0.8px"
                         width="100%"
-                        backgroundColor="gray.100"
+                        backgroundColor="gray.200"
                       />
                     </Box>
                   </Box>
@@ -354,7 +354,7 @@ const OrderProductModal = ({
           background="white"
           shadow="md"
           borderTop="1px solid transparent"
-          borderColor="gray.100"
+          borderColor="gray.200"
         >
           <QuantitySwitch onChange={setQuantity} value={quantity} min={1} />
           <Button

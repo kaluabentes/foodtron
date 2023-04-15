@@ -42,7 +42,7 @@ const OrderDetailsModal = ({
         alignItems="center"
         background="white"
         borderBottom="1px solid black"
-        borderColor="gray.100"
+        borderColor="gray.200"
       >
         <Heading fontSize="lg" fontWeight="600">
           Detalhes do pedido

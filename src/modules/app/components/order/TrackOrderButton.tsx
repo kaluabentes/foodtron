@@ -24,7 +24,7 @@ const TrackOrderButton = ({ onClick }: TrackOrderButtonProps) => (
     as="button"
     overflow="hidden"
     border="1px solid gray"
-    borderColor="gray.100"
+    borderColor="gray.200"
     fontWeight="500"
   >
     <Box

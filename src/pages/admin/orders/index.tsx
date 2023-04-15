@@ -144,7 +144,7 @@ const Orders = ({ user }: OrdersProps) => {
       <Box
         key={number}
         borderBottom="1px solid transparent"
-        borderColor="gray.100"
+        borderColor="gray.200"
         p={4}
         pl={0}
         pr={0}

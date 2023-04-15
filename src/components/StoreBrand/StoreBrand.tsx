@@ -1,9 +1,10 @@
+import subWord from "@/lib/helpers/string/subWord"
 import { Box, Button, Flex, Heading, Image } from "@chakra-ui/react"
 import { ReactNode } from "react"
 
 interface StoreBrandProps {
   logo: string
-  storeName: string | ReactNode
+  storeName: string
   hideBrandText?: boolean
   width?: string
   height?: string
@@ -42,7 +43,7 @@ const StoreBrand = ({
       transition="0.3s"
       color="gray.700"
     >
-      {storeName}
+      {subWord(storeName, 0, 3)}
     </Heading>
   </Flex>
 )

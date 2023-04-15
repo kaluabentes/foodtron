@@ -74,13 +74,8 @@ const OrderDetails = ({
         </Box>
       </Flex>
 
-      <Box
-        background="white"
-        overflow="hidden"
-        borderTop="1px solid transparent"
-        borderColor="gray.100"
-      >
-        <SectionTitle>Detalhes</SectionTitle>
+      <Box background="white" overflow="hidden">
+        <SectionTitle isBorderless>Detalhes</SectionTitle>
         <Box
           p={{ base: 4, md: 6 }}
           display="flex"
@@ -189,13 +184,8 @@ const OrderDetails = ({
         </Box>
       </Box>
 
-      <Box
-        background="white"
-        overflow="hidden"
-        borderTop="1px solid transparent"
-        borderColor="gray.100"
-      >
-        <SectionTitle>Produtos</SectionTitle>
+      <Box background="white" overflow="hidden">
+        <SectionTitle isBorderless>Produtos</SectionTitle>
         {order.orderProducts.map((orderProduct) => (
           <OrderProductItem
             key={orderProduct.id}
@@ -220,6 +210,7 @@ const OrderDetails = ({
           }
         />
         <BaseOrderItem
+          isLast
           leftSlot={<Text fontWeight="500">Total</Text>}
           rightSlot={
             <Text

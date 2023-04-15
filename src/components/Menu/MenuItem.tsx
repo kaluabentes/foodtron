@@ -45,7 +45,7 @@ const MenuItem = ({
         }
         color={isActive ? "brand.500" : "gray.500"}
         _hover={{
-          backgroundColor: "gray.100",
+          backgroundColor: "gray.200",
         }}
       >
         <Flex

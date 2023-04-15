@@ -97,7 +97,7 @@ const StoreMidiaUpload = ({
       <Box
         onClick={handleCoverUpload}
         as="button"
-        background="gray.100"
+        background="gray.200"
         cursor={isEditable ? "pointer" : "initial"}
         overflow="hidden"
         display="flex"
@@ -144,7 +144,7 @@ const StoreMidiaUpload = ({
           onClick={handleLogoUpload}
           as="button"
           type="button"
-          background="gray.100"
+          background="gray.200"
           cursor={isEditable ? "pointer" : "initial"}
           display="flex"
           justifyContent="start"

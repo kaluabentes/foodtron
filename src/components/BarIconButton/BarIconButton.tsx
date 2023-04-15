@@ -25,10 +25,10 @@ const BarIconButton = ({
     fontSize="23px"
     icon={icon}
     _hover={{
-      backgroundColor: "gray.100",
+      backgroundColor: "gray.200",
     }}
     _active={{
-      backgroundColor: "gray.100",
+      backgroundColor: "gray.200",
     }}
   />
 )
