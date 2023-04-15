@@ -101,7 +101,7 @@ const FilterBar = ({
         flex={1}
         width={{ base: "100%", lg: isFixed ? "calc(100% - 532px)" : "100%" }}
         zIndex="100"
-        mb={4}
+        mb={{ base: 4, lg: 6 }}
       >
         <IconButton
           onClick={
