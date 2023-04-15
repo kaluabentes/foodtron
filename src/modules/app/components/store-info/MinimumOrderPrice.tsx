@@ -9,7 +9,7 @@ interface MinimumOrderPriceProps {
 const MinimumOrderPrice = ({ store }: MinimumOrderPriceProps) => (
   <Flex
     direction={{ base: "column", lg: "row" }}
-    alignItems={{ base: "end", lg: "start" }}
+    alignItems={{ base: "end", lg: "center" }}
     gap={{ base: 0, lg: 1 }}
   >
     <Text
