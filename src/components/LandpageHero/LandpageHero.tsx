@@ -20,7 +20,7 @@ const LandpageHero = ({ onCTAClick }: LandpageHeroProps) => (
         Crie seu próprio aplicativo de entregas e agilize os processos do seu
         restaurante.
       </Heading>
-      <Text fontSize="lg" color="gray.600">
+      <Text fontSize="lg" color="gray.500">
         Sem taxas por pedido, experimente de graça.
       </Text>
       <Button onClick={onCTAClick} colorScheme="brand" size="lg">

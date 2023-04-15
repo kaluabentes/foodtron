@@ -67,25 +67,26 @@ const StoreInfoDesktop = ({
         <Flex
           alignItems="center"
           gap={4}
-          mb={6}
           justifyContent="space-between"
           width="100%"
         >
-          <Schedule
+          <StoreDetails
+            location={location}
             store={store}
-            isEnabled={isEnabled}
+            onSelectLocation={onSelectLocation}
             onSchedulesClick={onInfoClick}
-            weekDay={weekDay}
-            schedule={schedule}
           />
-          <MinimumOrderPrice store={store} />
+          <Flex direction="column" alignItems="end" gap={2}>
+            <Schedule
+              store={store}
+              isEnabled={isEnabled}
+              onSchedulesClick={onInfoClick}
+              weekDay={weekDay}
+              schedule={schedule}
+            />
+            <MinimumOrderPrice store={store} />
+          </Flex>
         </Flex>
-        <StoreDetails
-          location={location}
-          store={store}
-          onSelectLocation={onSelectLocation}
-          onSchedulesClick={onInfoClick}
-        />
       </Flex>
     </Flex>
   </Box>
