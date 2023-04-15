@@ -16,16 +16,13 @@ const CategoryItem = ({ category, onMenuItemClick }: CategoryItemProps) => (
     boxShadow={{ base: "sm", lg: "none" }}
   >
     <Heading
-      backgroundColor="white"
       p={{ base: 4, md: 6 }}
       pt={{ base: 4, md: 4, lg: 0 }}
       pl={{ base: 4, md: 6, lg: 0 }}
       pb={{ base: 4, md: 4 }}
       fontSize="17px"
       fontWeight="600"
-      borderBottom="1px solid transparent"
-      borderColor="gray.100"
-      background={{ base: "gray.50", lg: "transparent" }}
+      background={{ base: "white", lg: "transparent" }}
     >
       {category.title}
     </Heading>
