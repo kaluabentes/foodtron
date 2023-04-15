@@ -20,7 +20,7 @@ const IconActionButton = ({
     onClick={onClick}
     color="gray.500"
     background="white"
-    border="2px solid transparent"
+    border="1px solid transparent"
     borderColor="gray.300"
     width={size === "md" ? "28px" : "22px"}
     height={size === "md" ? "28px" : "22px"}

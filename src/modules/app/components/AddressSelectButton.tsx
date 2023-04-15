@@ -22,7 +22,7 @@ const AddressSelectButton = ({
     borderRadius={{ lg: "md" }}
     shadow={!isBordered ? "sm" : "none"}
     border={{ lg: "2px solid transparent" }}
-    _hover={{ borderColor: "brand.500" }}
+    _hover={{ borderColor: "brand.500", borderWidth: "2px" }}
     borderColor={{ lg: isBordered ? "gray.200" : "none" }}
   >
     <Icon
