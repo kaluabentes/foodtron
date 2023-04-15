@@ -49,7 +49,7 @@ const StoreInfo = ({
           width="100px"
           borderRadius="2xl"
         />
-        <Heading size="md" ml={3} fontWeight="700">
+        <Heading size="md" ml={4} fontWeight="700">
           {store.name}
         </Heading>
       </Flex>
