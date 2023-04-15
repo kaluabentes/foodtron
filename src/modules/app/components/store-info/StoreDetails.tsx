@@ -40,8 +40,8 @@ const StoreDetails = ({
       </Text>
     </Flex>
     <StripeSeparator />
-    <Flex direction="column" alignItems="start">
-      <Text as="span" fontSize="xs" color="gray.500">
+    <Flex direction="column" alignItems="start" justifyContent="start">
+      <Text as="span" fontSize="xs" color="gray.500" mt="-5px" mb="2px">
         Status
       </Text>
       {store.isOpen ? (
