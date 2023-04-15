@@ -34,7 +34,7 @@ const StoreInfo = ({
       src={store.cover}
       alt="Cover"
       objectFit="cover"
-      height={{ base: "110px" }}
+      height={{ base: "150px" }}
       width="100%"
     />
     <Flex p={4} direction="column" gap={0}>
