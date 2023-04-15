@@ -37,7 +37,7 @@ const StoreInfo = ({
       height={{ base: "110px" }}
       width="100%"
     />
-    <Flex p={4} direction="column" pt={2} gap={0}>
+    <Flex p={4} direction="column" gap={0}>
       <Flex alignItems="start" mb={2}>
         <Image
           marginTop="-50px"
