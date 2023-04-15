@@ -25,6 +25,7 @@ const Schedule = ({
     gap={1}
     textDecoration={store.isOpen && isEnabled ? undefined : "line-through"}
   >
+    <Icon color="gray.500" fontSize="22px" as={BiTimeFive} />
     <Text>{!weekDay ? "--- - ---" : `${weekDay}, ${schedule}`}</Text>
   </Flex>
 )
