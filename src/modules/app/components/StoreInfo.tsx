@@ -37,7 +37,7 @@ const StoreInfo = ({
       height={{ base: "110px" }}
       width="100%"
     />
-    <Flex p={4} direction="column" gap={0}>
+    <Flex p={4} direction="column" pt={3} gap={0}>
       <Flex alignItems="start" mb={2}>
         <Image
           marginTop="-50px"
@@ -49,7 +49,7 @@ const StoreInfo = ({
           width="100px"
           borderRadius="2xl"
         />
-        <Heading size="md" ml={4} fontWeight="700">
+        <Heading size="md" ml={3} fontWeight="700">
           {store.name}
         </Heading>
       </Flex>
