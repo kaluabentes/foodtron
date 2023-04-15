@@ -43,11 +43,6 @@ const FilterBar = ({
     }
   }
 
-  const getScrollTop = () => {
-    const { nextWrapper, mainWrapper } = getElements()
-    return nextWrapper?.scrollTop! || mainWrapper?.scrollTop!
-  }
-
   const clearSearch = () => {
     setIsSearchShow(false)
     onSearchChange("")
