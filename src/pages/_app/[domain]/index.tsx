@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react"
-import { Box, Flex, Heading, useBreakpointValue } from "@chakra-ui/react"
+import {
+  Box,
+  Container,
+  Flex,
+  Heading,
+  useBreakpointValue,
+} from "@chakra-ui/react"
 import { v4 as uuidv4 } from "uuid"
 import { motion } from "framer-motion"
 
@@ -292,43 +298,45 @@ const Index = ({ store = {}, categories }: IndexProps) => {
           p={{ lg: 6 }}
           pb={{ lg: 0 }}
         >
-          {renderStoreInfo}
-          {renderAddressSelectButton}
-          <FilterBar
-            search={filters.search}
-            categories={categories}
-            category={filters.category}
-            onCategoryChange={(category: string) =>
-              setFilters((prev) => ({
-                ...prev,
-                category,
-              }))
-            }
-            onSearchChange={(search: string) =>
-              setFilters((prev) => ({
-                ...prev,
-                search,
-              }))
-            }
-          />
-          <Flex direction="column" gap={4} mb={{ base: 4, lg: 0 }}>
-            {sortCategories(applyFilters(categories)).map((category) => (
-              <CategoryItem
-                key={category?.id}
-                onMenuItemClick={handleMenuItemClick}
-                category={category!}
-              />
-            ))}
-          </Flex>
-          <OrderProductModal
-            onConfirm={handleOrderConfirm}
-            optionGroups={selectedProduct?.productOptionGroups?.map(
-              (productOptionGroup) => productOptionGroup.optionGroup
-            )}
-            product={selectedProduct}
-            isOpen={Boolean(selectedProduct)}
-            onClose={() => setSelectedProduct(undefined)}
-          />
+          <Box margin="0 auto" maxWidth="container.lg">
+            {renderStoreInfo}
+            {renderAddressSelectButton}
+            <FilterBar
+              search={filters.search}
+              categories={categories}
+              category={filters.category}
+              onCategoryChange={(category: string) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  category,
+                }))
+              }
+              onSearchChange={(search: string) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  search,
+                }))
+              }
+            />
+            <Flex direction="column" gap={4} mb={{ base: 4, lg: 0 }}>
+              {sortCategories(applyFilters(categories)).map((category) => (
+                <CategoryItem
+                  key={category?.id}
+                  onMenuItemClick={handleMenuItemClick}
+                  category={category!}
+                />
+              ))}
+            </Flex>
+            <OrderProductModal
+              onConfirm={handleOrderConfirm}
+              optionGroups={selectedProduct?.productOptionGroups?.map(
+                (productOptionGroup) => productOptionGroup.optionGroup
+              )}
+              product={selectedProduct}
+              isOpen={Boolean(selectedProduct)}
+              onClose={() => setSelectedProduct(undefined)}
+            />
+          </Box>
         </Box>
         {renderMyOrder}
       </Flex>

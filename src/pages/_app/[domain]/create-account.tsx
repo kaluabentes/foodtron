@@ -1,18 +1,5 @@
 import React, { useEffect, useState } from "react"
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Heading,
-  Image,
-  Input,
-  Select,
-} from "@chakra-ui/react"
+import { Flex, FormControl, FormLabel, Input } from "@chakra-ui/react"
 import { BiLeftArrowAlt } from "react-icons/bi"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -22,12 +9,8 @@ import prisma from "@/lib/providers/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
 import { useAppContext } from "@/contexts/app"
 import { useRouter } from "next/router"
-import Location from "@/modules/admin/locations/types/Location"
 import BarIconButton from "@/components/BarIconButton"
 import ResponsiveButton from "@/components/ResponsiveButton"
-import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
-import { signIn, useSession } from "next-auth/react"
-import sendVerification from "@/lib/providers/sinch/sendVerification"
 import api from "@/lib/providers/axios/api"
 import formatPhone from "@/lib/helpers/string/formatPhone"
 

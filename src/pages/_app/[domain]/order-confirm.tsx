@@ -213,7 +213,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
             <>
               <StripeSeparator horizontal />
               <EditableDataItem
-                field="Troco pra quanto?"
+                field="Troco para quanto?"
                 value={formatToRealCurrency(Number(paymentMethod.change))}
               />
             </>
