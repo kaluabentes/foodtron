@@ -181,7 +181,7 @@ const OrderDetails = ({
             <>
               <StripeSeparator horizontal />
               <EditableDataItem
-                field="Troco pra quanto?"
+                field="Troco para quanto?"
                 value={formatToRealCurrency(Number(order.change))}
               />
             </>
