@@ -257,15 +257,17 @@ const OrderProductModal = ({
           </Box>
           <Box mb={4}>
             {optionGroups?.map((optionGroup: OptionGroup) => (
-              <Box key={optionGroup.id}>
+              <Box key={optionGroup.id} mb={8} _last={{ mb: 0 }}>
                 <Flex
-                  backgroundColor="gray.200"
+                  backgroundColor="white"
                   p={4}
+                  pt={0}
+                  pb={0}
                   justifyContent="space-between"
-                  alignItems="center"
+                  alignItems="start"
                 >
-                  <Box>
-                    <Heading fontSize="md" fontWeight="600">
+                  <Box width="100%">
+                    <Heading fontSize="md" fontWeight="500">
                       {optionGroup.title}
                     </Heading>
                     <Text fontSize="sm" color="gray.500">
@@ -275,8 +277,8 @@ const OrderProductModal = ({
                   </Box>
                   {optionGroup.required && (
                     <Badge
-                      background="gray.600"
-                      color="white"
+                      colorScheme="brand"
+                      variant="solid"
                       fontWeight="500"
                       pt="2px"
                       pr="5px"
