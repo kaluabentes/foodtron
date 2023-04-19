@@ -27,6 +27,7 @@ const StoreBrand = ({
     alignItems="center"
     width="200px"
     height="36px"
+    overflow="hidden"
   >
     <Image
       borderRadius="md"
