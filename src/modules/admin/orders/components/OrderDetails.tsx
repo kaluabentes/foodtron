@@ -68,7 +68,7 @@ const OrderDetails = ({
         </Box>
         <Box textAlign={{ base: "left", md: "right" }}>
           <Text mb={2} fontSize="xs" color="gray.400">
-            Código de identificação
+            ID
           </Text>
           <Badge fontSize="sm">{order.id}</Badge>
         </Box>
