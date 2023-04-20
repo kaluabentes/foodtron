@@ -8,12 +8,19 @@ import {
   useState,
 } from "react"
 
-import Location from "@/modules/admin/locations/types/Location"
 import OrderProduct from "@/modules/admin/orders/types/OrderProduct"
 import Store from "@/modules/admin/stores/types/Store"
 import Order from "@/modules/admin/orders/types/Order"
 import Address from "@/modules/app/addresses/types/Address"
 import AddressParam from "@/modules/app/addresses/types/AddressParam"
+
+interface LocalAddress extends Address {
+  currentLocation: boolean
+}
+
+interface LocalAddressParam extends AddressParam {
+  currentLocation?: boolean
+}
 
 interface AppState {
   store: Store
@@ -24,7 +31,7 @@ interface AppState {
     email: string
     token: string
     orders: Order[]
-    addresses: Address[]
+    addresses: LocalAddress[]
     selectedAddressId: string
   }
   order: {
@@ -46,7 +53,7 @@ interface AppStateParam {
     email?: string
     token?: string
     orders?: Order[]
-    addresses?: AddressParam[]
+    addresses?: LocalAddressParam[]
     selectedAddressId?: string
   }
   order?: {

@@ -77,6 +77,8 @@ const EditAddress = ({ locations }: EditAddressProps) => {
   } = useAppContext()
   const currentAddress = addresses.find((address) => address.id === id)
 
+  console.log("currentAddress", currentAddress)
+
   const [isLoading, setIsLoading] = useState(false)
 
   const { register, handleSubmit } = useForm({
@@ -84,7 +86,7 @@ const EditAddress = ({ locations }: EditAddressProps) => {
       street: currentAddress?.street,
       number: currentAddress?.number,
       location: currentAddress?.location.id,
-      currentLocation: false,
+      currentLocation: currentAddress?.currentLocation,
     },
   })
 

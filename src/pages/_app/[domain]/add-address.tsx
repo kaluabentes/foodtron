@@ -95,7 +95,10 @@ const EditAddress = ({ locations }: EditAddressProps) => {
         location: locations.find((location) => location.id === data.location)!,
       }
 
-      let mergedAddresses = [...addresses, address]
+      let mergedAddresses = [
+        ...addresses,
+        { ...address, currentLocation: data.currentLocation },
+      ]
 
       setIsLoading(true)
 
@@ -114,7 +117,10 @@ const EditAddress = ({ locations }: EditAddressProps) => {
             Authorization: token,
           },
         })
-        mergedAddresses = [...addresses, response.data]
+        mergedAddresses = [
+          ...addresses,
+          { ...response.data, currentLocation: data.currentLocation },
+        ]
       }
 
       setState({
