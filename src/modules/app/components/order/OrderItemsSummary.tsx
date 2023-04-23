@@ -194,7 +194,7 @@ const OrderItemsSummary = ({
       <>
         {!hideMinimumPrice && (
           <BaseOrderItem
-            leftSlot={<Text fontWeight="500">Pedido mínimo</Text>}
+            leftSlot={<Text fontWeight="400">Pedido mínimo</Text>}
             rightSlot={
               <Text fontSize="md" mb={1} textAlign="right">
                 {formatToRealCurrency(Number(minimumOrderPrice))}
@@ -203,7 +203,7 @@ const OrderItemsSummary = ({
           />
         )}
         <BaseOrderItem
-          leftSlot={<Text fontWeight="500">Subtotal</Text>}
+          leftSlot={<Text fontWeight="400">Subtotal</Text>}
           rightSlot={
             <Text fontSize="md" mb={1} textAlign="right">
               {formatToRealCurrency(sumOrderSubtotal(orderProducts))}
@@ -211,7 +211,7 @@ const OrderItemsSummary = ({
           }
         />
         <BaseOrderItem
-          leftSlot={<Text fontWeight="500">Taxa de entrega</Text>}
+          leftSlot={<Text fontWeight="400">Taxa de entrega</Text>}
           rightSlot={
             <Text fontSize="md" mb={1} textAlign="right">
               {address
@@ -223,13 +223,7 @@ const OrderItemsSummary = ({
         <BaseOrderItem
           leftSlot={<Text fontWeight="500">Total</Text>}
           rightSlot={
-            <Text
-              fontSize="md"
-              fontWeight="500"
-              mb={1}
-              textAlign="right"
-              color="brand.500"
-            >
+            <Text fontSize="md" fontWeight="500" mb={1} textAlign="right">
               {formatToRealCurrency(
                 address
                   ? sumOrderSubtotal(orderProducts) +

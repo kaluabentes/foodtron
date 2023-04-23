@@ -259,10 +259,8 @@ const OrderProductModal = ({
             {optionGroups?.map((optionGroup: OptionGroup) => (
               <Box key={optionGroup.id} mb={8} _last={{ mb: 0 }}>
                 <Flex
-                  backgroundColor="white"
+                  backgroundColor="gray.100"
                   p={4}
-                  pt={0}
-                  pb={0}
                   justifyContent="space-between"
                   alignItems="start"
                 >

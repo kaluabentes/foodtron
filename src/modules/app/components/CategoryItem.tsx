@@ -21,7 +21,7 @@ const CategoryItem = ({ category, onMenuItemClick }: CategoryItemProps) => (
       pl={{ base: 4, md: 6, lg: 0 }}
       pb={{ base: 4, md: 4 }}
       fontSize="17px"
-      fontWeight="600"
+      fontWeight="500"
       background={{ base: "white", lg: "transparent" }}
     >
       {category.title}

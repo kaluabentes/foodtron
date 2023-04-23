@@ -22,7 +22,7 @@ const OrderProductItem = ({
       onClick={onClick}
       leftSlot={
         <Flex direction="column" gap={1}>
-          <Heading fontSize="md" fontWeight="500">
+          <Heading fontSize="md" fontWeight="400">
             {product.quantity} {product.title}
           </Heading>
           {product.options!.map((opt, index) => (

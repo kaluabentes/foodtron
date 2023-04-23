@@ -22,7 +22,7 @@ import paymentMethods, { PaymentMethod } from "@/config/paymentMethods"
 
 const Payment = () => {
   const router = useRouter()
-  const { setState } = useAppContext()
+  const { setState, state } = useAppContext()
   const { redirect } = router.query
 
   const [isChangeModalOpen, setIsChangeModalOpen] = useState(false)
@@ -65,7 +65,7 @@ const Payment = () => {
 
     addPaymentMethod(paymentMethod.name)
   }
-
+  console.log("state", state)
   return (
     <AppLayout
       title="Pagamento"

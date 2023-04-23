@@ -34,7 +34,7 @@ const StoreBrand = ({
       src={logo}
       height="36px"
       marginRight={4}
-      marginLeft="5px"
+      marginLeft="3px"
     />
     <Heading
       size="sm"

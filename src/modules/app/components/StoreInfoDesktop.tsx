@@ -59,7 +59,7 @@ const StoreInfoDesktop = ({
           justifyContent="space-between"
           width="100%"
         >
-          <Heading size="lg" fontWeight="700">
+          <Heading size="lg" fontWeight="600">
             {store.name}
           </Heading>
           <IconActionButton onClick={onInfoClick} icon={<BiInfoCircle />} />
