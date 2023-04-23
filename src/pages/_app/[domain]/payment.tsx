@@ -94,7 +94,7 @@ const Payment = () => {
               overflow="hidden"
               p={4}
             >
-              <Heading fontWeight="600" p={2} fontSize="md">
+              <Heading fontWeight="600" p={0} mb={2} fontSize="md">
                 Escolha um método
               </Heading>
               {paymentMethods.map((paymentMethod) => (
@@ -103,8 +103,8 @@ const Payment = () => {
                   onClick={() => handlePaymentClick(paymentMethod)}
                   as="button"
                   p={4}
-                  pr={2}
-                  pl={2}
+                  pr={0}
+                  pl={0}
                   borderBottom="1px solid transparent"
                   borderColor="gray.200"
                   textAlign="left"

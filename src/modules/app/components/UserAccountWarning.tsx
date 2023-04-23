@@ -21,7 +21,7 @@ const UserAccountWarning = () => {
         ficaram armazenadas localmente, para salvar as suas informações na nuvem
         crie ou entre em uma conta.
       </Alert>
-      <Flex gap={3} direction={{ base: "column", lg: "row" }}>
+      <Flex gap={3}>
         <Button
           colorScheme="brand"
           size="sm"

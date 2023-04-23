@@ -29,7 +29,7 @@ const Shortcut = ({ icon, path, label }: ShortcutProps) => {
       flex={1}
       p={3}
       gap="2px"
-      color={isActive ? "brand.500" : "gray.600"}
+      color={isActive ? "brand.500" : "gray.500"}
       fontWeight={isActive ? "500" : "400"}
       onClick={() => router.push(path)}
     >
