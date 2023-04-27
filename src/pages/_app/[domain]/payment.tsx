@@ -92,7 +92,7 @@ const Payment = () => {
               backgroundColor="white"
               borderRadius="md"
               overflow="hidden"
-              p={4}
+              p={{ base: 4, lg: 6 }}
             >
               <Heading fontWeight="600" p={0} mb={2} fontSize="md">
                 Escolha um método

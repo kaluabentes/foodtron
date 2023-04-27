@@ -1,7 +1,7 @@
 import IconActionButton from "@/components/IconActionButton/IconActionButton"
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
 import OrderProduct from "@/modules/admin/orders/types/OrderProduct"
-import { Box, Flex, Heading, Text } from "@chakra-ui/react"
+import { Box, Flex, Heading, Image, Text } from "@chakra-ui/react"
 import { BiDotsHorizontalRounded, BiEdit, BiPlus } from "react-icons/bi"
 import BaseOrderItem from "./BaseOrderItem"
 
@@ -21,26 +21,37 @@ const OrderProductItem = ({
       alignItems="start"
       onClick={onClick}
       leftSlot={
-        <Flex direction="column" gap={1}>
-          <Heading fontSize="md" fontWeight="400">
-            {product.quantity} {product.title}
-          </Heading>
-          {product.options!.map((opt, index) => (
-            <Text key={String(index + 1)} fontSize="sm" color="gray.500">
-              {opt.quantity} {opt.title}
-            </Text>
-          ))}
-          {product.observation && (
-            <Text pt={2} fontSize="xs" color="gray.500">
-              Obs.: {product.observation}
-            </Text>
-          )}
-          {onClick && (
-            <Box mt={2}>
-              <IconActionButton icon={<BiDotsHorizontalRounded />} />
-            </Box>
-          )}
-        </Flex>
+        <>
+          <Flex>
+            <Image
+              borderRadius="md"
+              src={product.image}
+              height="60px"
+              width="60px"
+              mr={4}
+            />
+            <Flex direction="column" gap={1}>
+              <Heading fontSize="md" fontWeight="400">
+                {product.quantity} {product.title}
+              </Heading>
+              {product.options!.map((opt, index) => (
+                <Text key={String(index + 1)} fontSize="sm" color="gray.500">
+                  {opt.quantity} {opt.title}
+                </Text>
+              ))}
+              {product.observation && (
+                <Text pt={2} fontSize="xs" color="gray.500">
+                  Obs.: {product.observation}
+                </Text>
+              )}
+              {onClick && (
+                <Box mt={2}>
+                  <IconActionButton icon={<BiDotsHorizontalRounded />} />
+                </Box>
+              )}
+            </Flex>
+          </Flex>
+        </>
       }
       rightSlot={
         <>

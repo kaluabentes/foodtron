@@ -17,7 +17,7 @@ const MyOrder = ({ onAddressClick, onConfirm, address }: MyOrderProps) => (
     right={4}
     top={0}
     height="100vh"
-    boxShadow="md"
+    boxShadow="sm"
     overflow="auto"
   >
     <Box
