@@ -304,7 +304,11 @@ const Index = ({ store = {}, categories }: IndexProps) => {
                 }))
               }
             />
-            <Flex direction="column" gap={2} mb={{ base: 2, lg: 0 }}>
+            <Flex
+              direction="column"
+              gap={{ base: 2, lg: 4 }}
+              mb={{ base: 2, lg: 0 }}
+            >
               {sortCategories(applyFilters(categories)).map((category) => (
                 <CategoryItem
                   key={category?.id}
