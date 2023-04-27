@@ -30,11 +30,16 @@ const OrderProductItem = ({
             mr={4}
           />
           <Box>
-            <Heading fontSize="md" fontWeight="400">
+            <Heading fontSize="md" fontWeight="400" mb={1}>
               {product.quantity} {product.title}
             </Heading>
             {product.options!.map((opt, index) => (
-              <Text key={String(index + 1)} fontSize="sm" color="gray.500">
+              <Text
+                key={String(index + 1)}
+                fontSize="sm"
+                color="gray.500"
+                mb={1}
+              >
                 {opt.quantity} {opt.title}
               </Text>
             ))}
