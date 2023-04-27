@@ -13,7 +13,7 @@ const SectionTitle = ({
   <Heading
     p={{ base: 4, md: 6 }}
     pt={{ base: 4, md: 4 }}
-    pb={{ base: 4, md: 4 }}
+    pb={{ base: 2, md: 2 }}
     fontSize="17px"
     fontWeight="500"
     borderBottom={!isBorderless ? "1px solid transparent" : undefined}
