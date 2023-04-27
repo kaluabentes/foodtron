@@ -231,59 +231,6 @@ const Index = ({ store = {}, categories }: IndexProps) => {
     setSelectedProduct(product)
   }
 
-  const renderStoreInfo = useBreakpointValue({
-    base: (
-      <Box
-        borderRadius={{ lg: "md" }}
-        overflow="hidden"
-        boxShadow="sm"
-        mt={{ base: 0, md: 4 }}
-        mb={4}
-      >
-        <StoreInfo
-          onInfoClick={() => router.push("/about")}
-          onSelectLocation={() => router.push("/addresses")}
-          weekDay={currentWeekDay}
-          isEnabled={isEnabled!}
-          schedule={currentScheduleTime}
-          store={storeRealTime || store}
-          location={location}
-        />
-      </Box>
-    ),
-    lg: (
-      <StoreInfoDesktop
-        onInfoClick={() => router.push("/about")}
-        onSelectLocation={() => router.push("/addresses")}
-        weekDay={currentWeekDay}
-        isEnabled={isEnabled!}
-        schedule={currentScheduleTime}
-        store={storeRealTime || store}
-        location={location}
-      />
-    ),
-  })
-
-  const renderMyOrder = useBreakpointValue({
-    lg: (
-      <MyOrder
-        onConfirm={handleCartClick}
-        onAddressClick={() => router.push("/addresses")}
-        address={assembledAddress}
-      />
-    ),
-  })
-
-  const renderAddressSelectButton = useBreakpointValue({
-    base: (
-      <AddressSelectButton
-        onClick={() => router.push("/addresses")}
-        address={assembledAddress}
-      />
-    ),
-    lg: null,
-  })
-
   return (
     <AppLayout
       title="Menu"
@@ -299,8 +246,47 @@ const Index = ({ store = {}, categories }: IndexProps) => {
           pb={{ lg: 0 }}
         >
           <Box margin="0 auto" maxWidth="container.lg">
-            {renderStoreInfo}
-            {renderAddressSelectButton}
+            {useBreakpointValue({
+              base: (
+                <Box
+                  borderRadius={{ lg: "md" }}
+                  overflow="hidden"
+                  boxShadow="sm"
+                  mt={{ base: 0, md: 4 }}
+                  mb={2}
+                >
+                  <StoreInfo
+                    onInfoClick={() => router.push("/about")}
+                    onSelectLocation={() => router.push("/addresses")}
+                    weekDay={currentWeekDay}
+                    isEnabled={isEnabled!}
+                    schedule={currentScheduleTime}
+                    store={storeRealTime || store}
+                    location={location}
+                  />
+                </Box>
+              ),
+              lg: (
+                <StoreInfoDesktop
+                  onInfoClick={() => router.push("/about")}
+                  onSelectLocation={() => router.push("/addresses")}
+                  weekDay={currentWeekDay}
+                  isEnabled={isEnabled!}
+                  schedule={currentScheduleTime}
+                  store={storeRealTime || store}
+                  location={location}
+                />
+              ),
+            })}
+            {useBreakpointValue({
+              base: (
+                <AddressSelectButton
+                  onClick={() => router.push("/addresses")}
+                  address={assembledAddress}
+                />
+              ),
+              lg: null,
+            })}
             <FilterBar
               search={filters.search}
               categories={categories}
@@ -318,7 +304,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
                 }))
               }
             />
-            <Flex direction="column" gap={4} mb={{ base: 4, lg: 0 }}>
+            <Flex direction="column" gap={2} mb={{ base: 2, lg: 0 }}>
               {sortCategories(applyFilters(categories)).map((category) => (
                 <CategoryItem
                   key={category?.id}
@@ -338,7 +324,15 @@ const Index = ({ store = {}, categories }: IndexProps) => {
             />
           </Box>
         </Box>
-        {renderMyOrder}
+        {useBreakpointValue({
+          lg: (
+            <MyOrder
+              onConfirm={handleCartClick}
+              onAddressClick={() => router.push("/addresses")}
+              address={assembledAddress}
+            />
+          ),
+        })}
       </Flex>
     </AppLayout>
   )

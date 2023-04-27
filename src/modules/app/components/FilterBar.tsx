@@ -94,14 +94,14 @@ const FilterBar = ({
         borderRadius="md"
         shadow={isFixed ? "md" : "sm"}
         gap={2}
-        mt={!isFixed ? 4 : 0}
+        mt={!isFixed ? 2 : 0}
         top="0"
         left={{ base: "0", lg: "initial" }}
         alignSelf="stretch"
         flex={1}
         width={{ base: "100%", lg: isFixed ? "calc(100% - 532px)" : "100%" }}
         zIndex="100"
-        mb={{ base: 4, lg: 6 }}
+        mb={{ base: 2, lg: 6 }}
       >
         <IconButton
           onClick={

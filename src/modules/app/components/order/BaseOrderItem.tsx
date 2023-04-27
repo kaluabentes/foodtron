@@ -34,7 +34,7 @@ const BaseOrderItem = ({
         alignItems={alignItems}
       >
         <Box flex={1}>{leftSlot}</Box>
-        <Box flex={1} textAlign="right">
+        <Box flex={0.5} textAlign="right">
           {rightSlot}
         </Box>
       </Flex>

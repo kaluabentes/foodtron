@@ -21,37 +21,35 @@ const OrderProductItem = ({
       alignItems="start"
       onClick={onClick}
       leftSlot={
-        <>
-          <Flex>
-            <Image
-              borderRadius="md"
-              src={product.image}
-              height="60px"
-              width="60px"
-              mr={4}
-            />
-            <Flex direction="column" gap={1}>
-              <Heading fontSize="md" fontWeight="400">
-                {product.quantity} {product.title}
-              </Heading>
-              {product.options!.map((opt, index) => (
-                <Text key={String(index + 1)} fontSize="sm" color="gray.500">
-                  {opt.quantity} {opt.title}
-                </Text>
-              ))}
-              {product.observation && (
-                <Text pt={2} fontSize="xs" color="gray.500">
-                  Obs.: {product.observation}
-                </Text>
-              )}
-              {onClick && (
-                <Box mt={2}>
-                  <IconActionButton icon={<BiDotsHorizontalRounded />} />
-                </Box>
-              )}
-            </Flex>
-          </Flex>
-        </>
+        <Flex>
+          <Image
+            borderRadius="md"
+            src={product.image}
+            height="60px"
+            width="60px"
+            mr={4}
+          />
+          <Box>
+            <Heading fontSize="md" fontWeight="400">
+              {product.quantity} {product.title}
+            </Heading>
+            {product.options!.map((opt, index) => (
+              <Text key={String(index + 1)} fontSize="sm" color="gray.500">
+                {opt.quantity} {opt.title}
+              </Text>
+            ))}
+            {product.observation && (
+              <Text pt={2} fontSize="xs" color="gray.500">
+                Obs.: {product.observation}
+              </Text>
+            )}
+            {onClick && (
+              <Box mt={2}>
+                <IconActionButton icon={<BiDotsHorizontalRounded />} />
+              </Box>
+            )}
+          </Box>
+        </Flex>
       }
       rightSlot={
         <>
