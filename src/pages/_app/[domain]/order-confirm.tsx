@@ -189,7 +189,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         background="white"
         overflow="hidden"
         borderRadius={{ base: undefined, lg: "md" }}
-        mb={4}
+        mb={{ base: 2, lg: 4 }}
         shadow="sm"
       >
         <SectionTitle isBorderless>Carrinho</SectionTitle>
@@ -200,7 +200,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         overflow="hidden"
         borderRadius={{ base: undefined, lg: "md" }}
         shadow="sm"
-        mb={4}
+        mb={{ base: 2, lg: 4 }}
       >
         <SectionTitle isBorderless>Pagamento</SectionTitle>
         <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
@@ -225,7 +225,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         overflow="hidden"
         borderRadius={{ base: undefined, lg: "md" }}
         shadow="sm"
-        mb={4}
+        mb={{ base: 2, lg: 4 }}
       >
         <SectionTitle isBorderless>Entrega</SectionTitle>
         <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
