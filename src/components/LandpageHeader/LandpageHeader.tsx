@@ -6,7 +6,7 @@ interface LandpageHeaderProps {
 
 const LandpageHeader = ({ onCTAClick }: LandpageHeaderProps) => (
   <Box position="fixed" left="0" top="0" width="100%" p={4} background="white">
-    <Container maxWidth="container.xl">
+    <Container maxWidth="container.xl" p={0}>
       <Flex width="100%" alignItems="center" justifyContent="space-between">
         <Flex
           justifyContent="center"
@@ -18,9 +18,13 @@ const LandpageHeader = ({ onCTAClick }: LandpageHeaderProps) => (
           }
           alignItems="center"
         >
-          <Image src="/comet-full.svg" height="40px" />
+          <Image src="/comet-full.svg" height={{ base: "30px", md: "40px" }} />
         </Flex>
-        <Button onClick={onCTAClick} colorScheme="brand" size="lg">
+        <Button
+          onClick={onCTAClick}
+          colorScheme="brand"
+          size={{ base: "sm", md: "md" }}
+        >
           Entrar ou Cadastrar
         </Button>
       </Flex>

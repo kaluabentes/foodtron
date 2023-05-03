@@ -16,11 +16,11 @@ const LandpageLayout = ({ children }: LandpageLayoutProps) => {
       <LandpageHeader onCTAClick={() => router.push("/auth/signin")} />
       <Box
         as="main"
-        height="calc(100vh - 80px)"
+        height="calc(100vh - 64px)"
         width="100vw"
         background="white"
         overflow="auto"
-        mt="80px"
+        mt="64px"
       >
         {children}
 
