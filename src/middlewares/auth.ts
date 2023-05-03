@@ -3,7 +3,13 @@ import { getSession } from "next-auth/react"
 import { ParsedUrlQuery } from "querystring"
 
 import prisma from "@/lib/providers/prisma/client"
-import { User } from "@prisma/client"
+import { Store, User } from "@prisma/client"
+
+export interface AuthProps {
+  user: {
+    store: Store
+  }
+}
 
 const auth = async (
   context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>,

@@ -33,6 +33,7 @@ import match from "@/lib/helpers/string/match"
 import sortCategories from "@/modules/admin/categories/lib/sortCategories"
 import StoreInfoDesktop from "@/modules/app/components/StoreInfoDesktop"
 import MyOrder from "@/modules/app/components/MyOrder"
+import Schedule from "@/modules/admin/schedules/types/Schedule"
 
 export const getStaticPaths = async () => {
   const stores = await prisma.store.findMany()
@@ -120,6 +121,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
   const toast = useBottomToast()
 
   const { store: storeRealTime } = useGetStore(String(store.subdomain))
+  const currentStore = storeRealTime || store
 
   const [filters, setFilters] = useState({
     search: "",
@@ -140,8 +142,11 @@ const Index = ({ store = {}, categories }: IndexProps) => {
     : undefined
 
   const currentDay = new Date().getDay()
-  const currentSchedule = store!.schedules!.find(
-    (schedule) => schedule.weekDay === String(currentDay)
+  const currentSchedule = currentStore!.schedules!.find(
+    (schedule: Schedule) => {
+      console.log("schedule", schedule.isEnabled)
+      return schedule.weekDay === String(currentDay)
+    }
   )
   const isEnabled = currentSchedule?.isEnabled
   const currentWeekDay = String(weekDayMap.get(currentSchedule?.weekDay))
@@ -149,7 +154,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
 
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>()
 
-  const applyFilters = (categoriesList: Category[]): Category[] => {
+  const computeFilters = (categoriesList: Category[]): Category[] => {
     if (filters.search) {
       return categoriesList
         .map((category) => ({
@@ -231,6 +236,8 @@ const Index = ({ store = {}, categories }: IndexProps) => {
     setSelectedProduct(product)
   }
 
+  console.log("currentStore", currentStore)
+
   return (
     <AppLayout
       title="Menu"
@@ -245,7 +252,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
           p={{ lg: 6 }}
           pb={{ lg: 0 }}
         >
-          <Box margin="0 auto" maxWidth="container.lg">
+          <Box margin="0 auto" maxWidth="full">
             {useBreakpointValue({
               base: (
                 <Box
@@ -261,7 +268,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
                     weekDay={currentWeekDay}
                     isEnabled={isEnabled!}
                     schedule={currentScheduleTime}
-                    store={storeRealTime || store}
+                    store={currentStore}
                     location={location}
                   />
                 </Box>
@@ -273,7 +280,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
                   weekDay={currentWeekDay}
                   isEnabled={isEnabled!}
                   schedule={currentScheduleTime}
-                  store={storeRealTime || store}
+                  store={currentStore}
                   location={location}
                 />
               ),
@@ -309,7 +316,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
               gap={{ base: 2, lg: 4 }}
               mb={{ base: 2, lg: 0 }}
             >
-              {sortCategories(applyFilters(categories)).map((category) => (
+              {sortCategories(computeFilters(categories)).map((category) => (
                 <CategoryItem
                   key={category?.id}
                   onMenuItemClick={handleMenuItemClick}

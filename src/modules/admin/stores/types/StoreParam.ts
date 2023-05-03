@@ -11,6 +11,7 @@ interface StoreParam {
   state?: string
   cep?: string
   cnpj?: string
+  paymentMethods?: string
   whatsapp?: string
   subdomain?: string
   customDomain?: string

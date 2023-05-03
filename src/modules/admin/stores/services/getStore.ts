@@ -14,6 +14,9 @@ const getStore = async ({
       id: storeId,
       subdomain: domain,
     },
+    include: {
+      schedules: true,
+    },
   })
 }
 

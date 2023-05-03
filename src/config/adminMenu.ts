@@ -11,6 +11,7 @@ import {
   BiPurchaseTag,
   BiCheckCircle,
   BiCog,
+  BiMoney,
 } from "react-icons/bi"
 
 export const topMenu: RouteItem[] = [
@@ -43,6 +44,11 @@ export const topMenu: RouteItem[] = [
     icon: BiAlarm,
     label: "Horários",
     path: "/admin/schedules",
+  },
+  {
+    icon: BiMoney,
+    label: "Pagamentos",
+    path: "/admin/payments",
   },
   {
     icon: BiCog,

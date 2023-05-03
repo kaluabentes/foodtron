@@ -47,8 +47,8 @@ const StoreInfoDesktop = ({
         alt="Logo"
         objectFit="cover"
         outline="3px solid white"
-        height="160px"
-        width="160px"
+        height="150px"
+        width="150px"
         borderRadius="2xl"
       />
       <Flex direction="column" ml={6} width="100%">
@@ -78,7 +78,6 @@ const StoreInfoDesktop = ({
           />
           <Flex direction="column" alignItems="end" gap={2}>
             <Schedule
-              store={store}
               isEnabled={isEnabled}
               onSchedulesClick={onInfoClick}
               weekDay={weekDay}
