@@ -52,36 +52,25 @@ const OrderDetails = ({
 
   return (
     <>
-      <Flex
-        alignItems="start"
-        justifyContent="space-between"
-        background="white"
-        p={{ base: 4, md: 6 }}
-        direction={{ base: "column-reverse", md: "row" }}
-        gap={4}
-      >
-        <Box>
-          <Text fontWeight="500" fontSize="sm" mb={2}>
-            Nome
-          </Text>
-          <Heading fontSize="2xl">{order.username}</Heading>
-        </Box>
-        <Box textAlign={{ base: "left", md: "right" }}>
-          <Text mb={2} fontSize="xs" color="gray.400">
-            ID
-          </Text>
-          <Badge fontSize="sm">{order.id}</Badge>
-        </Box>
-      </Flex>
-
       <Box background="white" overflow="hidden">
-        <SectionTitle isBorderless>Detalhes</SectionTitle>
         <Box
           p={{ base: 4, md: 6 }}
+          pb={{ base: 0, md: 0 }}
           display="flex"
           flexDirection="column"
           gap={4}
         >
+          <EditableDataItem
+            field="ID"
+            value={
+              <Heading fontSize="1xl" textTransform="uppercase">
+                {order.id}
+              </Heading>
+            }
+          />
+          <StripeSeparator horizontal />
+          <EditableDataItem field="Nome" value={order.username} />
+          <StripeSeparator horizontal />
           {realtimeOrder ? (
             <EditableDataItem
               field="Status"
@@ -171,10 +160,9 @@ const OrderDetails = ({
 
           <StripeSeparator horizontal />
           <EditableDataItem field="Pagamento" value={order.paymentMethod} />
-
+          <StripeSeparator horizontal />
           {order.paymentMethod === "Dinheiro" && (
             <>
-              <StripeSeparator horizontal />
               <EditableDataItem
                 field="Troco para quanto?"
                 value={formatToRealCurrency(Number(order.change))}
