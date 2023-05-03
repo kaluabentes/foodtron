@@ -143,10 +143,7 @@ const Index = ({ store = {}, categories }: IndexProps) => {
 
   const currentDay = new Date().getDay()
   const currentSchedule = currentStore!.schedules!.find(
-    (schedule: Schedule) => {
-      console.log("schedule", schedule.isEnabled)
-      return schedule.weekDay === String(currentDay)
-    }
+    (schedule: Schedule) => schedule.weekDay === String(currentDay)
   )
   const isEnabled = currentSchedule?.isEnabled
   const currentWeekDay = String(weekDayMap.get(currentSchedule?.weekDay))
@@ -235,8 +232,6 @@ const Index = ({ store = {}, categories }: IndexProps) => {
 
     setSelectedProduct(product)
   }
-
-  console.log("currentStore", currentStore)
 
   return (
     <AppLayout

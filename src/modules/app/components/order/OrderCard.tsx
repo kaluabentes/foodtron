@@ -88,7 +88,7 @@ const OrderCard = ({
       position="relative"
     >
       <Box>
-        <Heading fontSize="lg" fontWeight="700" mb={1}>
+        <Heading fontSize="lg" fontWeight="600" mb={1}>
           {order.orderProducts
             .map((product) => `${product.quantity} ${product.title}`)
             .join(", ")}
