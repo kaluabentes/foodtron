@@ -55,7 +55,6 @@ const StoreInfo = ({
       </Flex>
       <Flex alignItems="center" justifyContent="space-between" mb={2}>
         <Schedule
-          store={store}
           isEnabled={isEnabled}
           onSchedulesClick={onInfoClick}
           weekDay={weekDay}
