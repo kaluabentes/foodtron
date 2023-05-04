@@ -1,5 +1,6 @@
 import QuantitySwitch from "@/components/QuantitySwitch"
 import formatToRealCurrency from "@/lib/helpers/number/formatToRealCurrency"
+import useBottomToast from "@/lib/hooks/useBottomToast"
 import Option from "@/modules/admin/options/types/Option"
 import OptionGroup from "@/modules/admin/options/types/OptionGroup"
 import Product from "@/modules/admin/products/types/Product"
@@ -45,6 +46,8 @@ const OrderProductModal = ({
   defaultQuantity = 1,
   optionGroups,
 }: OrderProductModalProps) => {
+  const toast = useBottomToast()
+
   const [optionGroupValues, setOptionGroupValues] = useState<OptionGroup[]>([])
   const [observation, setObservation] = useState("")
   const [quantity, setQuantity] = useState(defaultQuantity)
@@ -184,7 +187,46 @@ const OrderProductModal = ({
     onClose()
   }
 
+  console.log("optionGroupValues", optionGroupValues)
+
   const handleConfirm = () => {
+    const requiredOptionValues = optionGroupValues.filter(
+      (option) => option.required
+    )
+    const maxOptionRequiredValues = requiredOptionValues.filter(
+      (option) => option.maxOptionRequired
+    )
+
+    if (
+      requiredOptionValues.some((option) =>
+        option.options?.every((opt) => opt.quantity === 0)
+      )
+    ) {
+      toast({
+        title: "Atenção!",
+        description: "Preencha as opções obrigatórias",
+        status: "error",
+      })
+      return
+    }
+
+    const hasMaxOptionsNotFilled = maxOptionRequiredValues.some((option) => {
+      const total = option?.options?.reduce(
+        (prev, curr) => prev + curr?.quantity!,
+        0
+      )
+      return total !== Number(option.maxOption)
+    })
+
+    if (maxOptionRequiredValues.length && hasMaxOptionsNotFilled) {
+      toast({
+        title: "Atenção!",
+        description: "Preencha as opções com total de opções obrigatórias",
+        status: "error",
+      })
+      return
+    }
+
     clear()
     onConfirm({
       optionGroupValues,
@@ -273,9 +315,9 @@ const OrderProductModal = ({
                       {optionGroup.maxOption}
                     </Text>
                   </Box>
-                  {optionGroup.required && (
+                  {(optionGroup.required || optionGroup.maxOptionRequired) && (
                     <Badge
-                      colorScheme="brand"
+                      colorScheme="red"
                       variant="solid"
                       fontWeight="500"
                       pt="2px"
@@ -284,7 +326,9 @@ const OrderProductModal = ({
                       pb="2px"
                       fontSize="10px"
                     >
-                      Obrigatório
+                      {optionGroup.maxOptionRequired
+                        ? "Obrigatório total de opções"
+                        : "Obrigatório"}
                     </Badge>
                   )}
                 </Flex>
