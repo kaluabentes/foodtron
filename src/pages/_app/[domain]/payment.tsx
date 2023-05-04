@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   Box,
   Flex,
@@ -19,11 +19,16 @@ import BarIconButton from "@/components/BarIconButton"
 import { BiLeftArrowAlt } from "react-icons/bi"
 import ChangeModal from "@/modules/app/components/ChangeModal"
 import paymentMethods, { PaymentMethod } from "@/config/paymentMethods"
+import useGetStore from "@/modules/admin/stores/hooks/useGetStore"
+import { useFetchStore } from "@/modules/admin/stores/api/fetchStore"
 
 const Payment = () => {
   const router = useRouter()
   const { setState, state } = useAppContext()
   const { redirect } = router.query
+
+  const { store, fetchStore } = useFetchStore()
+  const storePayments = store?.paymentMethods?.split(",")
 
   const [isChangeModalOpen, setIsChangeModalOpen] = useState(false)
 
@@ -65,7 +70,11 @@ const Payment = () => {
 
     addPaymentMethod(paymentMethod.name)
   }
-  console.log("state", state)
+
+  useEffect(() => {
+    fetchStore(String(router.query.domain))
+  }, [router.query.domain])
+
   return (
     <AppLayout
       title="Pagamento"
@@ -93,26 +102,35 @@ const Payment = () => {
               borderRadius="md"
               overflow="hidden"
               p={{ base: 4, lg: 6 }}
+              pb={0}
+              sx={{
+                "& .payment:last-of-type": {
+                  border: "none",
+                },
+              }}
             >
               <Heading fontWeight="600" p={0} mb={2} fontSize="md">
                 Escolha um método
               </Heading>
-              {paymentMethods.map((paymentMethod) => (
-                <Box
-                  key={paymentMethod.type}
-                  onClick={() => handlePaymentClick(paymentMethod)}
-                  as="button"
-                  p={4}
-                  pr={0}
-                  pl={0}
-                  borderBottom="1px solid transparent"
-                  borderColor="gray.200"
-                  textAlign="left"
-                  fontSize="md"
-                >
-                  {paymentMethod.name}
-                </Box>
-              ))}
+              {paymentMethods
+                .filter((p) => storePayments?.includes(p.type))
+                .map((paymentMethod) => (
+                  <Box
+                    className="payment"
+                    key={paymentMethod.type}
+                    onClick={() => handlePaymentClick(paymentMethod)}
+                    as="button"
+                    p={4}
+                    pr={0}
+                    pl={0}
+                    borderBottom="1px solid transparent"
+                    borderColor="gray.200"
+                    textAlign="left"
+                    fontSize="md"
+                  >
+                    {paymentMethod.name}
+                  </Box>
+                ))}
             </Flex>
           </TabPanel>
         </TabPanels>

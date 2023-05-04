@@ -7,24 +7,48 @@ import auth, { AuthProps } from "@/middlewares/auth"
 import paymentMethods, { PaymentMethod } from "@/config/paymentMethods"
 import useUpdateStore from "@/modules/admin/stores/hooks/useUpdateStore"
 import { useEffect, useState } from "react"
+import useBottomToast from "@/lib/hooks/useBottomToast"
+import useIsPageLoaded from "@/lib/hooks/useIsPageLoaded"
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   return auth(context, ["admin"])
 }
 
 const Payments = ({ user: { store } }: AuthProps) => {
-  const [payments, setPayments] = useState<string[]>([])
-  const { updateStore, isSaving } = useUpdateStore()
+  const toast = useBottomToast()
 
-  useEffect(() => {
-    if (payments.length > 0) {
-      updateStore({
-        paymentMethods: payments.join(","),
+  const storePayments = store.paymentMethods
+    ? store.paymentMethods?.split(",")
+    : []
+  const [payments, setPayments] = useState<string[]>(storePayments)
+  const { updateStore } = useUpdateStore()
+  const isPageLoaded = useIsPageLoaded()
+
+  const handleSavePayment = (payments: string[]) => {
+    updateStore({
+      paymentMethods: payments.join(","),
+    }).then(() => {
+      toast({
+        title: "Sucesso",
+        description: "Método de pagamento salvo",
+        status: "success",
       })
-    }
-  }, [payments])
+    })
+  }
 
-  console.log("payments", payments)
+  const handleSwitchChange = (paymentMethod: PaymentMethod) => {
+    setPayments((prev) => {
+      const value = payments.includes(paymentMethod.type)
+        ? prev.filter(
+            (prevPaymentMethod) => prevPaymentMethod !== paymentMethod.type
+          )
+        : [...prev, paymentMethod.type]
+
+      handleSavePayment(value)
+
+      return value
+    })
+  }
 
   return (
     <AdminLayout>
@@ -40,17 +64,8 @@ const Payments = ({ user: { store } }: AuthProps) => {
           >
             <Text>{paymentMethod.name}</Text>
             <Switch
-              checked={payments.includes(paymentMethod.type)}
-              onChange={() =>
-                setPayments((prev) =>
-                  payments.includes(paymentMethod.type)
-                    ? prev.filter(
-                        (prevPaymentMethod) =>
-                          prevPaymentMethod !== paymentMethod.type
-                      )
-                    : [...prev, paymentMethod.type]
-                )
-              }
+              isChecked={payments.includes(paymentMethod.type)}
+              onChange={() => handleSwitchChange(paymentMethod)}
               colorScheme="brand"
             />
           </Flex>
