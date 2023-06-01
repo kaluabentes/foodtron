@@ -9,7 +9,7 @@ const UserAccountWarning = () => {
       direction="column"
       gap={4}
       mb={{ base: 0, md: 4 }}
-      p={{ base: 4, md: 6 }}
+      p={{ base: 4, md: 5 }}
       background="white"
       borderRadius="md"
       shadow="sm"

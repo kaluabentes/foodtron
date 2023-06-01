@@ -22,12 +22,7 @@ import prisma from "@/lib/providers/prisma/client"
 import AppLayout from "@/layouts/AppLayout"
 import { useAppContext } from "@/contexts/app"
 import { useRouter } from "next/router"
-import Location from "@/modules/admin/locations/types/Location"
 import BarIconButton from "@/components/BarIconButton"
-import ResponsiveButton from "@/components/ResponsiveButton"
-import UserAccountWarning from "@/modules/app/components/UserAccountWarning"
-import { signIn, useSession } from "next-auth/react"
-import sendVerification from "@/lib/providers/sinch/sendVerification"
 import api from "@/lib/providers/axios/api"
 import formatPhone from "@/lib/helpers/string/formatPhone"
 
@@ -115,7 +110,7 @@ const CreateAccount = () => {
           backgroundColor="white"
           borderRadius="md"
           overflow="hidden"
-          p={{ base: 4, md: 6 }}
+          p={{ base: 4, md: 5 }}
         >
           <FormControl>
             <FormLabel>{t("phone")}</FormLabel>

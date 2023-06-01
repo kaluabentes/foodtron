@@ -141,7 +141,7 @@ const EditUser = () => {
           backgroundColor="white"
           borderRadius="md"
           overflow="hidden"
-          p={{ base: 4, md: 6 }}
+          p={{ base: 4, md: 5 }}
         >
           <FormControl mb={5}>
             <FormLabel>{t("name")}</FormLabel>

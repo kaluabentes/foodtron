@@ -105,7 +105,7 @@ const CreateAccount = () => {
           backgroundColor="white"
           borderRadius="md"
           overflow="hidden"
-          p={{ base: 4, md: 6 }}
+          p={{ base: 4, md: 5 }}
         >
           <FormControl mb={4}>
             <FormLabel>{t("name")}</FormLabel>

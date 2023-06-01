@@ -13,7 +13,7 @@ const addressesIndexHandler = async (
   res: NextApiResponse
 ) => {
   await NextCors(req, res, {
-    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    methods: ALLOWED_METHODS,
     origin: "*",
     optionsSuccessStatus: 200,
   })

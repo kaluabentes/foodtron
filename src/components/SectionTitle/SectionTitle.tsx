@@ -11,10 +11,10 @@ const SectionTitle = ({
   isBorderless = false,
 }: SectionTitleProps) => (
   <Heading
-    p={{ base: 4, md: 6 }}
+    p={{ base: 4, md: 5 }}
     pt={{ base: 4, md: 4 }}
     pb={{ base: 0, md: 2 }}
-    fontSize="17px"
+    fontSize="md"
     fontWeight="500"
     borderBottom={!isBorderless ? "1px solid transparent" : undefined}
     borderColor="gray.200"

@@ -203,7 +203,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         mb={{ base: 2, lg: 4 }}
       >
         <SectionTitle isBorderless>Pagamento</SectionTitle>
-        <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
+        <Flex p={{ base: 4, md: 5 }} gap={4} direction="column">
           <EditableDataItem
             field="Tipo"
             value={paymentMethod.name || "---"}
@@ -228,7 +228,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         mb={{ base: 2, lg: 4 }}
       >
         <SectionTitle isBorderless>Entrega</SectionTitle>
-        <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
+        <Flex p={{ base: 4, md: 5 }} gap={4} direction="column">
           <EditableDataItem
             field="Endereço"
             value={assembledAddress}
@@ -257,7 +257,7 @@ const OrderConfirm = ({ storeId }: OrderConfirmProps) => {
         shadow="sm"
       >
         <SectionTitle isBorderless>Dados de usuário</SectionTitle>
-        <Flex p={{ base: 4, md: 6 }} gap={4} direction="column">
+        <Flex p={{ base: 4, md: 5 }} gap={4} direction="column">
           <EditableDataItem
             field="Nome"
             value={user.name ? user.name : "---"}

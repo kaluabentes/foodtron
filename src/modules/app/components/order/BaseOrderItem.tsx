@@ -28,7 +28,7 @@ const BaseOrderItem = ({
       onClick={onClick}
     >
       <Flex
-        p={{ base: 4, md: 6 }}
+        p={{ base: 4, md: 5 }}
         pt={{ lg: 4 }}
         pb={{ lg: 4 }}
         alignItems={alignItems}

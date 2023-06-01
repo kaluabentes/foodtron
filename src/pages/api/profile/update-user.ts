@@ -2,19 +2,19 @@ import { NextApiRequest, NextApiResponse } from "next"
 import jwt from "jsonwebtoken"
 
 import prisma from "@/lib/providers/prisma/client"
-import serverAuth from "@/middlewares/serverAuth"
 import { User } from "@prisma/client"
 import NextCors from "nextjs-cors"
 
+const ALLOWED_METHODS = ["PATCH"]
+
 const updateUserHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   await NextCors(req, res, {
-    // Options
-    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    methods: ALLOWED_METHODS,
     origin: "*",
     optionsSuccessStatus: 200,
   })
 
-  if (req.method !== "PATCH") {
+  if (!ALLOWED_METHODS.includes(req.method!)) {
     return res.status(400).send("Method not allowed")
   }
 

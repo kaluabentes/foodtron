@@ -136,7 +136,7 @@ const CreateAccount = () => {
           backgroundColor="white"
           borderRadius="md"
           overflow="hidden"
-          p={{ base: 4, md: 6 }}
+          p={{ base: 4, md: 5 }}
         >
           <Text mb={4}>Em instantes você receberá um código por SMS.</Text>
           <FormControl>

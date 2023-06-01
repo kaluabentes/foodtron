@@ -22,7 +22,6 @@ const Payments = ({ user: { store } }: AuthProps) => {
     : []
   const [payments, setPayments] = useState<string[]>(storePayments)
   const { updateStore } = useUpdateStore()
-  const isPageLoaded = useIsPageLoaded()
 
   const handleSavePayment = (payments: string[]) => {
     updateStore({
