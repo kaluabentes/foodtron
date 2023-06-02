@@ -1,6 +1,6 @@
 # Foodtron
 
-O Foodtron é uma plataforma de delivery white label para restaurantes, lachonetes e distribuidoras.
+O Foodtron é uma plataforma de delivery white label para restaurantes, lanchonetes e distribuidoras.
 
 ## Instalação
 
