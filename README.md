@@ -1,6 +1,10 @@
 # Foodtron
 
-O Foodtron é uma plataforma de delivery white label para restaurantes, lanchonetes e distribuidoras.
+O Foodtron é uma plataforma de delivery para restaurantes, lanchonetes e distribuidoras.
+
+<p>
+  <img alt="Foodtron Screenshot" width="100%" src="https://foodtron.app/screenshot.png" />
+</p>
 
 ## Instalação
 
@@ -8,7 +12,7 @@ Para instalar e rodar o projeto você precisará ter um banco de dados para o sh
 
 ## Requisitos
 
-- NodeJS v16+
+- NodeJS v18 Hydrogen
 - Yarn
 - Mysql
 - Conta na GoDaddy (para os recursos de multisite)
