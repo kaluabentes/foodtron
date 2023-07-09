@@ -244,7 +244,9 @@ const Index = ({ store = {}, categories }: IndexProps) => {
         <Box
           ml={{ lg: "68px" }}
           width={{ base: "100%", lg: "calc(100vw - 484px)" }}
-          p={{ lg: 6 }}
+          pt={{ lg: 6 }}
+          pl={{ lg: 20 }}
+          pr={{ lg: 20 }}
           pb={{ lg: 0 }}
         >
           <Box margin="0 auto" maxWidth="full">

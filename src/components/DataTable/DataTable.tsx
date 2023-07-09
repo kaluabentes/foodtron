@@ -5,13 +5,14 @@ interface Props {
   children: ReactNode
 }
 
-export const DataCell = ({ children }: Props) => (
-  <Flex
-    direction={{ base: "column", md: "row" }}
-    borderBottom="1px solid #fff"
-    borderColor="gray.200"
-    alignItems="center"
-  >
+export const DataCell = ({
+  children,
+  isBorderless = false,
+}: {
+  children: ReactNode
+  isBorderless?: boolean
+}) => (
+  <Flex direction={{ base: "column", md: "row" }} alignItems="center">
     {children}
   </Flex>
 )
